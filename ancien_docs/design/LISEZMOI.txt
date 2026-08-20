@@ -1,0 +1,10 @@
+Maquettes HTML statiques
+========================
+
+index.html            sommaire, ouvrir en premier
+maquettes/*.html      une page par maquette (HTML pur, aucun script, aucun composant React)
+tokens/tokens.css     jetons de design : couleurs, thèmes clair et sombre, polices
+tokens/tokens.json    les mêmes jetons en JSON
+
+Thème sombre : remplacer data-theme="light" par data-theme="dark" sur <html>.
+Polices : Archivo, Public Sans, IBM Plex Mono (chargées depuis Google Fonts).

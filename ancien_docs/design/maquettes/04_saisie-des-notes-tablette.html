@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saisie des notes — tablette 1024 px</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+.hv1:hover{border-color:var(--primary) !important;color:var(--primary) !important}
+.hv2:hover{background:var(--danger) !important;color:var(--danger-ink) !important}
+.hv3:hover{background:var(--primary-hover) !important;border-color:var(--primary-hover) !important}
+</style>
+</head>
+<body>
+<div style="width:1088px;margin:0 auto;padding:0 32px 72px">
+
+  <header style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding:44px 0 22px">
+    <div style="max-width:640px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;letter-spacing:0.12em;color:var(--text-muted)">TABLETTE · 1024 PX · PAYSAGE · POSTE PARTAGÉ</div>
+      <h1 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.02em;line-height:1.15;margin:10px 0 8px">La saisie d’un devoir</h1>
+      <p style="font-size:15px;color:var(--text-muted);margin:0;text-wrap:pretty">Trente et une notes se saisissent au clavier, sans souris et sans quitter les touches. Chaque note part au fil de l’eau ; hors ligne, elle attend. La machine peut proposer une appréciation, elle ne décide de rien.</p>
+    </div>
+    <button class="hv1" style="display:flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-size:14px;font-weight:500;cursor:pointer;flex:0 0 auto">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"></path></svg>
+      <span>Thème sombre</span>
+    </button>
+  </header>
+
+  <!-- ===================== TABLETTE ===================== -->
+  <div style="width:1024px;height:768px;border:1px solid var(--border-strong);border-radius:18px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column;box-shadow:0 18px 40px rgba(0,0,0,.10)">
+
+    <!-- barre de compte — poste partagé -->
+    <div style="display:flex;align-items:center;gap:12px;height:50px;padding:0 16px;background:var(--surface);border-bottom:1px solid var(--border);flex:0 0 auto">
+      <span style="width:26px;height:26px;border-radius:7px;background:var(--primary);color:var(--primary-ink);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:11px;flex:0 0 auto">GP</span>
+      <span style="font-size:14px;font-weight:600">Les Palmiers · Cocody</span>
+      <span style="display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:999px;background:var(--surface-sunken);color:var(--text-muted);font-size:12.5px;font-weight:500">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="13" rx="2"></rect><path d="M8 21h8"></path></svg>
+        Poste partagé · salle des professeurs
+      </span>
+      <span style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <span style="text-align:right;line-height:1.2">
+          <span style="display:block;font-size:13.5px;font-weight:600">M. Kouassi Yao</span>
+          <span style="display:block;font-size:12px;color:var(--text-muted)">Mathématiques · session ouverte à 09h58</span>
+        </span>
+        <span style="width:30px;height:30px;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:12px">KY</span>
+        <button class="hv2" style="display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border:1px solid var(--danger);border-radius:8px;background:var(--surface);color:var(--danger);font-size:13.5px;font-weight:600;cursor:pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+          Se déconnecter
+        </button>
+      </span>
+    </div>
+
+    <!-- bandeau de contexte -->
+    <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--border);flex:0 0 auto">
+      <div style="min-width:0">
+        <div style="display:flex;align-items:center;gap:10px">
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.02em;margin:0">Mathématiques · 3e B</h2>
+          <span style="display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:999px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);font-size:12.5px;font-weight:600"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Non publiée</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;font-size:13px;color:var(--text-muted)">
+          <span>Devoir de niveau n°2</span>
+          <span style="color:var(--border-strong)">·</span>
+          <span>Coefficient <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">4</span></span>
+          <span style="color:var(--border-strong)">·</span>
+          <span>Barème <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">0 – 20</span></span>
+          <span style="color:var(--border-strong)">·</span>
+          <span>Vendredi <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">18/09/2026</span></span>
+          <span style="color:var(--border-strong)">·</span>
+          <span><span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">31</span> élèves</span>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;flex:0 0 auto;font-size:12.5px;color:var(--text-muted)">
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:5px;background:var(--surface-sunken);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11.5px;color:var(--text)">Entrée</span>valider et descendre</span>
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:5px;background:var(--surface-sunken);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11.5px;color:var(--text)">↑ ↓</span>naviguer</span>
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:5px;background:var(--surface-sunken);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11.5px;color:var(--text)">A</span>absent</span>
+      </div>
+    </div>
+
+    <!-- ruban d'état de saisie -->
+    <div style="display:flex;align-items:center;gap:10px;padding:0 16px;height:42px;flex:0 0 auto;background:var(--accent-soft);color:var(--accent);border-bottom:1px solid var(--accent);">
+      <span style="width:8px;height:8px;border-radius:999px;background:currentColor;flex:0 0 auto;"></span>
+      <span style="font-size:13.5px;font-weight:600">Hors ligne · 6 notes conservées, envoi à la reconnexion</span>
+      <span style="font-size:13px;opacity:.85">Aucune saisie n’est perdue.</span>
+      <span style="margin-left:auto;font-size:12.5px;opacity:.85">Dernier envoi réussi à 10h04</span>
+    </div>
+
+    <div style="flex:1;min-height:0;display:flex">
+
+      <!-- ===== TABLEAU ===== -->
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:var(--surface);border-right:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:0;padding:0 14px;height:34px;background:var(--surface-sunken);border-bottom:1px solid var(--border);font-size:11.5px;font-weight:600;letter-spacing:0.06em;color:var(--text-muted);text-transform:uppercase;flex:0 0 auto">
+          <span style="flex:0 0 30px">#</span>
+          <span style="flex:0 0 104px">Matricule</span>
+          <span style="flex:1;min-width:0">Nom de l’élève</span>
+          <span style="flex:0 0 92px;text-align:center">Note /20</span>
+          <span style="flex:0 0 96px;text-align:center">Absent</span>
+          <span style="flex:0 0 232px">Appréciation courte</span>
+        </div>
+
+        <div style="flex:1;min-height:0;overflow-y:auto">
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">01</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-001</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ABÉ <span style="font-weight:400;color:var(--text-muted)">Nadège</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="13" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="Bon trimestre qui commence." placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">02</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-002</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ADJÉ <span style="font-weight:400;color:var(--text-muted)">Marie-Christelle</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="15,5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">03</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-003</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">AKA <span style="font-weight:400;color:var(--text-muted)">Serge</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="8,5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">04</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-004</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">BAMBA <span style="font-weight:400;color:var(--text-muted)">Fatoumata</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="17" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="Devoir très bien mené." placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">05</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-005</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">BOHOUSSOU <span style="font-weight:400;color:var(--text-muted)">Yannick</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="11" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">06</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-006</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">BROU <span style="font-weight:400;color:var(--text-muted)">Kévin</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="6,5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">07</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-007</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">COULIBALY <span style="font-weight:400;color:var(--text-muted)">Ismaël</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="12" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">08</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-008</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">DAGO <span style="font-weight:400;color:var(--text-muted)">Sylvie</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="14,5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">09</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-009</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">DIABATÉ <span style="font-weight:400;color:var(--text-muted)">Aminata</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="16" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">10</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-010</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">DIOMANDÉ <span style="font-weight:400;color:var(--text-muted)">Franck</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="9,5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">11</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-011</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ÉHOUMAN <span style="font-weight:400;color:var(--text-muted)">Grâce</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="13,5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">12</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-012</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">GBANE <span style="font-weight:400;color:var(--text-muted)">Mohamed</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="10" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">13</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-013</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">GNAHORÉ <span style="font-weight:400;color:var(--text-muted)">Prisca</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="7,5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);background:var(--surface-sunken);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">14</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-014</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">GUÉI <span style="font-weight:400;color:var(--text-muted)">Landry</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="true" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);opacity:.4;">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;background:var(--accent);color:var(--accent-ink);">
+                      
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"></path></svg>
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="—" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">15</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-015</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">KOFFI <span style="font-weight:400;color:var(--text-muted)">Ange-Désiré</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="12,5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">16</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-016</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">KONAN <span style="font-weight:400;color:var(--text-muted)">Rebecca</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="18" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">17</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-017</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">KONÉ <span style="font-weight:400;color:var(--text-muted)">Ibrahim</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">18</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-018</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">KOUAMÉ <span style="font-weight:400;color:var(--text-muted)">Junior</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="11,5" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);background:var(--primary-soft);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">19</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-019</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">KOUASSI <span style="font-weight:400;color:var(--text-muted)">Estelle</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1.5px solid var(--primary);box-shadow:0 0 0 3px var(--primary-soft);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">20</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-020</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">LOBA <span style="font-weight:400;color:var(--text-muted)">Priscille</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">21</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-021</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">N’GUESSAN <span style="font-weight:400;color:var(--text-muted)">Roland</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">22</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-022</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">OUATTARA <span style="font-weight:400;color:var(--text-muted)">Salif</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">23</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-023</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SÉRY <span style="font-weight:400;color:var(--text-muted)">Wilfried</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">24</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-024</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SORO <span style="font-weight:400;color:var(--text-muted)">Mariam</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">25</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-025</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">TANOH <span style="font-weight:400;color:var(--text-muted)">Cédric</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">26</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-026</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">TOURÉ <span style="font-weight:400;color:var(--text-muted)">Awa</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">27</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-027</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">VANIÉ <span style="font-weight:400;color:var(--text-muted)">Alexis</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">28</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-028</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">YAO <span style="font-weight:400;color:var(--text-muted)">Bénédicte</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">29</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-029</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">YAPI <span style="font-weight:400;color:var(--text-muted)">Olivier</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">30</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-030</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ZADI <span style="font-weight:400;color:var(--text-muted)">Carine</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);">
+              <div style="display:flex;align-items:center;gap:0;padding:0 14px;min-height:52px">
+                <span style="flex:0 0 30px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">31</span>
+                <span style="flex:0 0 104px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text-muted)">3B-2026-031</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ZOUZOUA <span style="font-weight:400;color:var(--text-muted)">Éric</span></span>
+                <span style="flex:0 0 92px;display:flex;justify-content:center">
+                  <input type="text" inputMode="decimal" value="" placeholder="—" disabled="" style="width:72px;height:40px;text-align:center;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:16px;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--text);border:1px solid var(--border-strong);">
+                </span>
+                <span style="flex:0 0 96px;display:flex;justify-content:center">
+                  <button style="display:flex;align-items:center;gap:6px;height:40px;padding:0 9px;border-radius:8px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text-muted);">
+                    <span style="width:18px;height:18px;flex:0 0 auto;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--border-strong);">
+                      
+                    </span>
+                    <span style="font-size:12.5px;font-weight:500">Absent</span>
+                  </button>
+                </span>
+                <span style="flex:0 0 232px;display:flex;align-items:center;gap:6px">
+                  <input type="text" value="" placeholder="facultative" style="flex:1;min-width:0;height:36px;padding:0 10px;border-radius:8px;font-size:12.5px;background:var(--surface);color:var(--text);border:1px solid var(--border);">
+                  
+                </span>
+              </div>
+
+              
+
+              
+            </div>
+          
+        </div>
+      </div>
+
+      <!-- ===== COLONNE DE DROITE ===== -->
+      <div style="flex:0 0 306px;background:var(--bg);overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px">
+
+        <div style="border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:14px">
+          <div style="display:flex;align-items:baseline;gap:8px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.12em;color:var(--text-muted)">STATISTIQUES EN DIRECT</span>
+            <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;font-variant-numeric:tabular-nums"><span style="color:var(--text)">18</span><span style="color:var(--text-muted)"> / 31 saisies</span></span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+            <div style="border:1px solid var(--border);border-radius:8px;padding:9px 11px">
+              <div style="font-size:11.5px;color:var(--text-muted)">Moyenne de la classe</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin-top:2px">11,9</div>
+            </div>
+            <div style="border:1px solid var(--border);border-radius:8px;padding:9px 11px">
+              <div style="font-size:11.5px;color:var(--text-muted)">Médiane</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin-top:2px">12</div>
+            </div>
+            <div style="border:1px solid var(--border);border-radius:8px;padding:9px 11px">
+              <div style="font-size:11.5px;color:var(--text-muted)">Note la plus haute</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin-top:2px;color:var(--success)">18</div>
+            </div>
+            <div style="border:1px solid var(--border);border-radius:8px;padding:9px 11px">
+              <div style="font-size:11.5px;color:var(--text-muted)">Note la plus basse</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin-top:2px;color:var(--danger)">5</div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px">
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Distribution par tranches de 2 points</div>
+            <div style="display:flex;align-items:flex-end;gap:4px;height:96px">
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text-muted);font-variant-numeric:tabular-nums">0</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:3px;background:var(--surface-sunken);"></span>
+                </div>
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text-muted);font-variant-numeric:tabular-nums">0</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:3px;background:var(--surface-sunken);"></span>
+                </div>
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text);font-variant-numeric:tabular-nums">1</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:19px;background:var(--primary);"></span>
+                </div>
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text);font-variant-numeric:tabular-nums">2</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:37px;background:var(--primary);"></span>
+                </div>
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text);font-variant-numeric:tabular-nums">2</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:37px;background:var(--primary);"></span>
+                </div>
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text);font-variant-numeric:tabular-nums">3</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:56px;background:var(--primary);"></span>
+                </div>
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text);font-variant-numeric:tabular-nums">4</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:74px;background:var(--primary);"></span>
+                </div>
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text);font-variant-numeric:tabular-nums">2</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:37px;background:var(--primary);"></span>
+                </div>
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text);font-variant-numeric:tabular-nums">2</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:37px;background:var(--primary);"></span>
+                </div>
+              
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:10.5px;color:var(--text);font-variant-numeric:tabular-nums">1</span>
+                  <span style="width:100%;border-radius:4px 4px 2px 2px;height:19px;background:var(--primary);"></span>
+                </div>
+              
+            </div>
+            <div style="display:flex;gap:4px;margin-top:5px">
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">0</span>
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">2</span>
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">4</span>
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">6</span>
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">8</span>
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">10</span>
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">12</span>
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">14</span>
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">16</span>
+              
+                <span style="flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:9.5px;color:var(--text-muted)">18</span>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- ENCART IA -->
+        <div style="border:1px dashed var(--border-strong);border-radius:10px;background:var(--surface-sunken);padding:13px">
+          <div style="display:flex;align-items:flex-start;gap:9px">
+            <span style="width:26px;height:26px;flex:0 0 auto;border-radius:7px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted);display:flex;align-items:center;justify-content:center">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"></path><circle cx="12" cy="12" r="3.2"></circle></svg>
+            </span>
+            <div style="min-width:0">
+              <div style="font-size:13.5px;font-weight:600;line-height:1.3">Proposition d’appréciations</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:1px">à relire et valider</div>
+            </div>
+          </div>
+          <p style="font-size:12.5px;color:var(--text-muted);margin:10px 0 0;text-wrap:pretty">Le texte est rédigé à partir de la note et de l’écart à la moyenne. Il reste marqué <span style="color:var(--accent);font-weight:600">Proposé — non validé</span> tant que vous ne l’avez pas relu.</p>
+          <button style="width:100%;height:42px;margin-top:11px;border:1px solid var(--border-strong);border-radius:999px;background:var(--surface);color:var(--text);font-size:13.5px;font-weight:600;cursor:pointer;">Proposer les appréciations</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- barre d'actions -->
+    <div style="display:flex;align-items:center;gap:12px;padding:0 16px;height:66px;background:var(--surface);border-top:1px solid var(--border);flex:0 0 auto">
+      <span style="font-size:13px;color:var(--text-muted)"><span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text);font-variant-numeric:tabular-nums">18</span> notes sur 31 · <span style="color:var(--text)">1</span> absents au devoir</span>
+      <span style="margin-left:auto;display:flex;align-items:center;gap:10px">
+        <span style="text-align:right;line-height:1.25">
+          <span style="display:block;font-size:12.5px;color:var(--text-muted)">31 notifications · 0 SMS</span>
+          <span style="display:block;font-size:12px;color:var(--text-muted)">publication dans l’espace en ligne</span>
+        </span>
+        <button class="hv1" style="height:44px;padding:0 16px;border:1px solid var(--border-strong);border-radius:8px;background:var(--surface);color:var(--text);font-size:14px;font-weight:500;cursor:pointer">Exporter en PDF</button>
+        <button style="height:44px;padding:0 16px;border-radius:8px;font-size:14px;font-weight:600;border:1px solid var(--primary);background:var(--surface);color:var(--primary);cursor:pointer;">Publier aux familles</button>
+        <button class="hv3" style="height:44px;padding:0 22px;border:1px solid var(--primary);border-radius:8px;background:var(--primary);color:var(--primary-ink);font-size:14px;font-weight:600;cursor:pointer">Enregistrer</button>
+      </span>
+    </div>
+  </div>
+
+  <!-- ===================== LÉGENDE ===================== -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:34px;border-top:1px solid var(--border);padding-top:24px">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;letter-spacing:0.12em;color:var(--text-muted)">LES MAINS RESTENT SUR LE CLAVIER</div>
+      <p style="font-size:14px;color:var(--text-muted);margin:8px 0 0;text-wrap:pretty">Entrée descend d’une ligne, les flèches naviguent, la touche A coche l’absence de la ligne courante. Trente et une notes se saisissent sans jamais viser une case à la souris.</p>
+    </div>
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;letter-spacing:0.12em;color:var(--text-muted)">HORS LIGNE N’EST PAS UNE PANNE</div>
+      <p style="font-size:14px;color:var(--text-muted);margin:8px 0 0;text-wrap:pretty">Le ruban ocre annonce ce qui est conservé et ce qui partira. Rien ne se bloque, rien ne demande de réessayer : la saisie continue exactement comme en ligne.</p>
+    </div>
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;letter-spacing:0.12em;color:var(--text-muted)">L’IA NE DÉCIDE PAS</div>
+      <p style="font-size:14px;color:var(--text-muted);margin:8px 0 0;text-wrap:pretty">Encart en pointillés, hors du flux de saisie, jamais rempli d’office. Chaque proposition porte sa pastille jusqu’à relecture, et la publication reste fermée tant qu’une proposition n’a pas été validée par un humain.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:22px;display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--primary);flex:0 0 auto"><path d="M12 9v4M12 17h.01"></path><circle cx="12" cy="12" r="9"></circle></svg>
+    <span style="font-size:13.5px;text-wrap:pretty">Essayez : saisissez <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">25</span> dans une case de note. Le message dit quoi faire — corriger la note ou cocher l’absence — et ne reproche rien à personne.</span>
+  </div>
+
+</div>
+</body>
+</html>

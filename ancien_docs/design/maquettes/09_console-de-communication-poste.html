@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Console de communication — poste 1440 px</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+.hv1:hover{color:var(--primary) !important;border-color:var(--primary) !important}
+.hv2:hover{border-color:var(--border-strong) !important}
+.hv3:hover{color:var(--text) !important}
+.hv4:hover{border-color:var(--primary) !important;color:var(--primary) !important}
+.hv5:hover{background:var(--surface-sunken) !important;color:var(--text) !important}
+.hv6:hover{background:var(--primary-hover) !important;border-color:var(--primary-hover) !important}
+.hv7:hover{background:var(--surface-sunken) !important}
+.hv8:hover{border-color:var(--primary) !important}
+</style>
+</head>
+<body>
+<div style="width:1440px;margin:0 auto;background:var(--bg);min-height:100vh;display:flex;flex-direction:column">
+
+  <div style="display:flex;align-items:center;gap:8px;height:52px;padding:0 16px;background:var(--surface);border-bottom:1px solid var(--border);flex:0 0 auto;position:sticky;top:0;z-index:5">
+    <button class="hv1" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text-muted);cursor:pointer;flex:0 0 auto"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16"></path></svg></button>
+    <div class="hv2" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;flex:0 0 auto">
+      <span style="width:22px;height:22px;border-radius:6px;background:var(--primary);color:var(--primary-ink);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:11px;flex:0 0 auto">GP</span>
+      <span style="font-size:13px;font-weight:600;white-space:nowrap">Les Palmiers · les 2 sites</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+    </div>
+    <div class="hv2" style="display:flex;align-items:center;gap:6px;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;flex:0 0 auto">
+      <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px">2026-2027</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted)"><path d="m6 9 6 6 6-6"></path></svg>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;height:32px;width:340px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);margin-left:12px;cursor:text">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);flex:0 0 auto"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4.3-4.3"></path></svg>
+      <span style="font-size:13px;color:var(--text-muted)">Rechercher un élève, un reçu, un agent</span>
+      <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-muted);border:1px solid var(--border);border-radius:4px;padding:1px 5px">Ctrl K</span>
+    </div>
+    <div style="display:flex;align-items:center;border:1px solid var(--border-strong);border-radius:6px;overflow:hidden;height:28px;margin-left:auto;flex:0 0 auto">
+      <span style="padding:0 8px;height:100%;display:flex;align-items:center;background:var(--primary);color:var(--primary-ink);font-size:12px;font-weight:600;cursor:pointer">FR</span>
+      <span class="hv3" style="padding:0 8px;height:100%;display:flex;align-items:center;color:var(--text-muted);font-size:12px;font-weight:500;cursor:pointer">EN</span>
+    </div>
+    <button class="hv4" style="display:flex;align-items:center;gap:7px;height:30px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;flex:0 0 auto;white-space:nowrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"></path></svg>
+      <span>Sombre</span>
+    </button>
+    <button class="hv1" style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text-muted);cursor:pointer;flex:0 0 auto">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+    </button>
+    <span style="display:flex;align-items:center;gap:9px;flex:0 0 auto">
+      <span style="width:30px;height:30px;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:12px">AN</span>
+      <span style="font-size:13px;color:var(--text-muted);white-space:nowrap">Mme Adjoua N’Guessan</span>
+    </span>
+  </div>
+
+  <div style="display:flex;flex:1;min-height:0;align-items:stretch">
+
+    <nav style="flex:0 0 auto;width:232px;background:var(--surface);border-right:1px solid var(--border);padding:10px;display:flex;flex-direction:column;gap:2px;overflow:hidden;position:sticky;top:52px;align-self:flex-start;height:calc(100vh - 52px)">
+      <div class="hv5" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-size:14px;font-weight:500;cursor:pointer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>
+        <span style="white-space:nowrap">Tableau de bord</span>
+      </div>
+
+      <div style="padding:14px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Élèves</div>
+      <div class="hv5" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-size:14px;font-weight:500;cursor:pointer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <span style="white-space:nowrap">Scolarité</span>
+      </div>
+      <div class="hv5" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-size:14px;font-weight:500;cursor:pointer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.9"></path></svg>
+        <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Vie scolaire<span style="min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;display:inline-flex;align-items:center;justify-content:center">73</span></span>
+      </div>
+
+      <div style="padding:14px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Enseignement</div>
+      <div class="hv5" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-size:14px;font-weight:500;cursor:pointer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto"><path d="M22 9 12 5 2 9l10 4z"></path><path d="M6 11.5V16c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6v-4.5"></path></svg>
+        <span style="white-space:nowrap">Pédagogie</span>
+      </div>
+      <div class="hv5" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-size:14px;font-weight:500;cursor:pointer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="m9 13 2 2 4-4"></path></svg>
+        <span style="white-space:nowrap">Évaluations</span>
+      </div>
+
+      <div style="padding:14px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Gestion</div>
+      <div class="hv5" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-size:14px;font-weight:500;cursor:pointer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4z"></path></svg>
+        <span style="white-space:nowrap">Finances</span>
+      </div>
+      <div class="hv5" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-size:14px;font-weight:500;cursor:pointer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="11" r="2.2"></circle><path d="M5.5 17a4 4 0 0 1 7 0M15 9h4M15 13h4"></path></svg>
+        <span style="white-space:nowrap">Personnel</span>
+      </div>
+
+      <div style="padding:14px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Communication</div>
+      <div style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;background:var(--primary-soft);color:var(--primary);font-size:14px;font-weight:600;cursor:pointer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span style="white-space:nowrap">Messages et relances</span>
+      </div>
+
+      <div style="padding:14px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Paramètres</div>
+      <div class="hv5" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-size:14px;font-weight:500;cursor:pointer">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"></path><circle cx="16" cy="7" r="2.2"></circle><circle cx="8" cy="17" r="2.2"></circle></svg>
+        <span style="white-space:nowrap">Établissement</span>
+      </div>
+    </nav>
+
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg)">
+      <div style="flex:1;padding:26px 28px 40px;display:flex;flex-direction:column;gap:16px">
+
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px">
+          <div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);margin-bottom:6px"><a href="#0">Communication</a><span>/</span><span style="color:var(--text);font-weight:500">Routage et coût des envois</span></div>
+            <h1 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;line-height:1.1;margin:0">Ce que coûte le fait de prévenir</h1>
+            <p style="font-size:14px;color:var(--text-muted);margin:8px 0 0">Septembre 2026 · relevé au 22 septembre · 1 240 élèves · 1 SMS facturé 12 F</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex:0 0 auto">
+            <button class="hv4" style="height:34px;padding:0 14px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer">Journal des envois</button>
+            <button class="hv6" style="height:34px;padding:0 14px;border:1px solid var(--primary);border-radius:6px;background:var(--primary);color:var(--primary-ink);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer">Enregistrer le routage</button>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.85fr 1fr;gap:16px;align-items:stretch">
+
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px 20px">
+            <div style="display:flex;align-items:baseline;gap:10px">
+              <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.02em">Consommation du mois</span>
+              <span style="font-size:13px;color:var(--text-muted)">budget mensuel 90 000 F</span>
+            </div>
+
+            <div style="display:flex;align-items:flex-end;gap:32px;margin-top:16px">
+              <div style="flex:0 0 auto">
+                <div style="font-size:13px;color:var(--text-muted);white-space:nowrap">Consommé au 22 septembre</div>
+                <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px">
+                  <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1.1;white-space:nowrap">68 400 F</span>
+                  <span style="font-family:'Archivo',sans-serif;font-weight:500;font-size:18px;color:var(--text-muted);font-variant-numeric:tabular-nums;white-space:nowrap">/ 90 000 F</span>
+                </div>
+              </div>
+              <div style="flex:0 0 auto;padding-left:32px;border-left:1px solid var(--border)">
+                <div style="font-size:13px;color:var(--text-muted);white-space:nowrap">Au rythme actuel, fin de mois</div>
+                <div style="display:flex;align-items:baseline;gap:10px;margin-top:4px">
+                  <span key="proj-0-n" style="font-family:'Archivo',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1.1;white-space:nowrap;color:var(--danger);animation:majChiffre .45s ease">93 200 F</span>
+                  <span style="font-size:13px;font-weight:600;white-space:nowrap;color:var(--danger)">dépassement de 3 200 F</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="position:relative;height:12px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);overflow:hidden;margin:18px 0 8px">
+              <div style="position:absolute;left:0;top:0;bottom:0;width:100.0%;background:var(--danger);opacity:.28"></div>
+              <div style="position:absolute;left:0;top:0;bottom:0;width:76%;background:var(--accent)"></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:20px;font-size:13px;color:var(--text-muted)">
+              <span style="display:inline-flex;align-items:center;gap:7px;white-space:nowrap"><span style="width:14px;height:8px;border-radius:2px;background:var(--accent);flex:0 0 auto"></span>consommé, 76 %</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;white-space:nowrap"><span style="width:14px;height:8px;border-radius:2px;background:var(--danger);opacity:.35;flex:0 0 auto"></span>projeté au 30 septembre</span>
+            </div>
+            <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted)">Vous enverrez <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">7 767</span> SMS ce mois-ci, soit <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">75 F</span> par élève et par mois.</div>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px 20px">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:16px">
+              <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.02em">Par motif</span>
+              <span style="font-size:13px;color:var(--text-muted)">68 400 F déjà dépensés</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:13px">
+              <div style="display:flex;align-items:center;gap:14px">
+                <span style="width:172px;flex:0 0 auto;font-size:14px">Absences non justifiées</span>
+                <span style="flex:1;height:10px;background:var(--surface-sunken);border-radius:2px;overflow:hidden"><span style="display:block;width:100%;height:100%;background:var(--text-muted);opacity:.7"></span></span>
+                <span style="width:72px;flex:0 0 auto;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;font-variant-numeric:tabular-nums">41 200 F</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px">
+                <span style="width:172px;flex:0 0 auto;font-size:14px">Échéances dépassées</span>
+                <span style="flex:1;height:10px;background:var(--surface-sunken);border-radius:2px;overflow:hidden"><span style="display:block;width:29.9%;height:100%;background:var(--text-muted);opacity:.7"></span></span>
+                <span style="width:72px;flex:0 0 auto;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;font-variant-numeric:tabular-nums">12 300 F</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px">
+                <span style="width:172px;flex:0 0 auto;font-size:14px">Circulaires</span>
+                <span style="flex:1;height:10px;background:var(--surface-sunken);border-radius:2px;overflow:hidden"><span style="display:block;width:15.8%;height:100%;background:var(--text-muted);opacity:.7"></span></span>
+                <span style="width:72px;flex:0 0 auto;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;font-variant-numeric:tabular-nums">6 500 F</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px">
+                <span style="width:172px;flex:0 0 auto;font-size:14px">Convocations</span>
+                <span style="flex:1;height:10px;background:var(--surface-sunken);border-radius:2px;overflow:hidden"><span style="display:block;width:13.1%;height:100%;background:var(--text-muted);opacity:.7"></span></span>
+                <span style="width:72px;flex:0 0 auto;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;font-variant-numeric:tabular-nums">5 400 F</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px">
+                <span style="width:172px;flex:0 0 auto;font-size:14px">Résultats</span>
+                <span style="flex:1;height:10px;background:var(--surface-sunken);border-radius:2px;overflow:hidden"><span style="display:block;width:7.3%;height:100%;background:var(--text-muted);opacity:.7"></span></span>
+                <span style="width:72px;flex:0 0 auto;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;font-variant-numeric:tabular-nums">3 000 F</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+          <div style="display:flex;align-items:flex-end;gap:16px;padding:18px 20px 14px">
+            <div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.02em">Matrice de routage</div>
+              <p style="font-size:13px;color:var(--text-muted);margin:6px 0 0;max-width:760px;text-wrap:pretty">Ce qui part, par quel canal, et à qui. Le routage se règle par rubrique, jamais personne par personne : le père reçoit le financier, la mère le scolaire, sans que vous ayez à le redire à chaque envoi. Chaque interrupteur met à jour la projection en haut de l’écran.</p>
+            </div>
+            <div style="margin-left:auto;flex:0 0 auto;text-align:right">
+              <div style="font-size:13px;color:var(--text-muted)">SMS retenus dans la matrice</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:18px;font-variant-numeric:tabular-nums;margin-top:4px">93 200 F / mois</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:flex-end;gap:0;padding:0 20px 8px;border-bottom:1px solid var(--border);background:var(--surface-sunken)">
+            <span style="flex:1;min-width:0;padding:10px 0 4px;font-size:13px;font-weight:600;color:var(--text-muted)">Rubrique</span>
+            <span style="width:104px;flex:0 0 auto;padding:10px 0 4px;text-align:center;font-size:13px;font-weight:600;color:var(--text-muted)">Espace en ligne</span>
+            <span style="width:104px;flex:0 0 auto;padding:10px 0 4px;text-align:center;font-size:13px;font-weight:600;color:var(--text-muted)">WhatsApp</span>
+            <span style="width:112px;flex:0 0 auto;padding:10px 0 4px;text-align:center;font-size:13px;font-weight:600;color:var(--text)">SMS <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;color:var(--text-muted)">12 F</span></span>
+            <span style="width:96px;flex:0 0 auto;padding:10px 0 4px;text-align:center;font-size:13px;font-weight:600;color:var(--text-muted)">Papier</span>
+            <span style="width:246px;flex:0 0 auto;padding:10px 0 4px 20px;font-size:13px;font-weight:600;color:var(--text-muted)">Destinataires</span>
+          </div>
+
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:transparent">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Absence non justifiée</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">déclenchée à la clôture de l’appel</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver SMS" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;color:var(--text-muted);font-variant-numeric:tabular-nums">50 100 F</span>
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer Papier" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Responsable scolaire</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:transparent">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Retard répété</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">à partir du 3ᵉ retard sur 10 jours</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer SMS" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer Papier" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Responsable scolaire</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:var(--surface)">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Convocation</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">conseil de discipline, entretien</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Ce message part toujours en SMS. Non désactivable." style="width:36px;height:20px;border-radius:999px;background:var(--accent);border:1px solid var(--accent);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:not-allowed;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                    <span title="Ce message part toujours en SMS. Non désactivable." style="display:flex;align-items:center;gap:4px;color:var(--accent);font-size:11px;font-weight:500">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+                      verrouillé
+                    </span>
+                  
+                  
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;color:var(--text-muted);font-variant-numeric:tabular-nums">7 400 F</span>
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Papier" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Les deux responsables</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:transparent">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Échéance à J-3</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">rappel avant la date limite</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver SMS" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;color:var(--text-muted);font-variant-numeric:tabular-nums">8 900 F</span>
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer Papier" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Responsable financier</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:transparent">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Échéance dépassée</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">relance de recouvrement</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver SMS" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;color:var(--text-muted);font-variant-numeric:tabular-nums">16 800 F</span>
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer Papier" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Responsable financier</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:transparent">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Note publiée</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">à la validation par le professeur</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer SMS" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer Papier" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Responsable scolaire</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:transparent">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Bulletin disponible</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">après le conseil de classe</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer SMS" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Papier" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Les deux responsables</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:transparent">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Circulaire générale</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">information à tout l’établissement</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver SMS" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;color:var(--text-muted);font-variant-numeric:tabular-nums">8 800 F</span>
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer Papier" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Destinataire déclaré</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:transparent">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Réunion de parents</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">convocation collective, par niveau</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer SMS" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Papier" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Les deux responsables</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+            <div class="hv7" style="display:flex;align-items:center;gap:0;padding:0 20px;border-bottom:1px solid var(--border);background:var(--surface)">
+              <span style="flex:1;min-width:0;padding:12px 16px 12px 0">
+                <span style="display:block;font-size:14px;font-weight:500">Urgence santé</span>
+                <span style="display:block;font-size:12px;color:var(--text-muted);margin-top:2px">accident, évacuation, fièvre</span>
+              </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver Espace en ligne" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:104px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Désactiver WhatsApp" style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+                <span style="width:112px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Ce message part toujours en SMS. Non désactivable." style="width:36px;height:20px;border-radius:999px;background:var(--accent);border:1px solid var(--accent);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;cursor:not-allowed;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span>
+                  </span>
+                  
+                    <span title="Ce message part toujours en SMS. Non désactivable." style="display:flex;align-items:center;gap:4px;color:var(--accent);font-size:11px;font-weight:500">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+                      verrouillé
+                    </span>
+                  
+                  
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;color:var(--text-muted);font-variant-numeric:tabular-nums">1 200 F</span>
+                  
+                </span>
+              
+                <span style="width:96px;flex:0 0 auto;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <span title="Activer Papier" style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;cursor:pointer;flex:0 0 auto">
+                    <span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span>
+                  </span>
+                  
+                  
+                </span>
+              
+              <span style="width:246px;flex:0 0 auto;padding:10px 0 10px 20px">
+                <span class="hv8" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;cursor:pointer;background:var(--surface)">
+                  <span style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Responsables + contact d’urgence</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);margin-left:auto;flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+                </span>
+              </span>
+            </div>
+          
+
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 20px;font-size:13px;color:var(--text-muted)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="color:var(--accent);flex:0 0 auto"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+            <span>Convocation et Urgence santé partent toujours en SMS. Non désactivable, et le coût reste dû même si le budget est atteint.</span>
+            <span style="margin-left:auto">Le « destinataire déclaré » est la personne inscrite au dossier pour cette rubrique, responsable ou non.</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:16px;align-items:start">
+
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px 20px">
+            <div style="display:flex;align-items:flex-start;gap:16px">
+              <div>
+                <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.02em">Récapitulatif groupé</div>
+                <p style="font-size:13px;color:var(--text-muted);margin:6px 0 0;max-width:520px;text-wrap:pretty">Les messages non urgents ne partent plus un par un : ils sont réunis dans un seul SMS envoyé le vendredi à 17h00. Convocation, urgence santé et échéance dépassée continuent de partir immédiatement.</p>
+              </div>
+              <span style="margin-left:auto;flex:0 0 auto;width:44px;height:24px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 3px;cursor:pointer">
+                <span style="width:16px;height:16px;border-radius:999px;background:var(--border-strong)"></span>
+              </span>
+            </div>
+
+            <div style="display:flex;gap:32px;margin:18px 0 16px">
+              <div>
+                <div style="font-size:13px;color:var(--text-muted)">Économie estimée</div>
+                <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:4px;color:var(--text)">38 040 F</div>
+                <div style="font-size:13px;color:var(--text-muted);margin-top:2px">par mois, sur les rubriques groupables</div>
+              </div>
+              <div style="padding-left:32px;border-left:1px solid var(--border)">
+                <div style="font-size:13px;color:var(--text-muted)">Messages en moins</div>
+                <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:4px">3 170</div>
+                <div style="font-size:13px;color:var(--text-muted);margin-top:2px">620 familles reçoivent le récapitulatif</div>
+              </div>
+            </div>
+
+            <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px">Le message tel qu’il partira</div>
+            <div style="border:1px solid var(--border);border-radius:8px;background:var(--surface-sunken);padding:14px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;line-height:1.55;text-wrap:pretty">Les Palmiers. Semaine du 21/09 : Awa 2 absences non justifiées, 1 retard. Solde scolarité 145 000 F au 30/09. Bulletin T1 en ligne. Infos 07 07 88 12 40</div>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:8px;font-size:12px;color:var(--text-muted)">
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">152 / 160</span>
+              <span>caractères — 1 seul SMS facturé, aucun caractère accentué hors norme GSM.</span>
+            </div>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px 20px 20px">
+            <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.02em">Fenêtres d’envoi</div>
+            <p style="font-size:13px;color:var(--text-muted);margin:6px 0 16px;text-wrap:pretty">Hors de ces plages, les messages sont conservés et partent à l’ouverture suivante.</p>
+
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--border)">
+              <span style="font-size:14px">Plage autorisée</span>
+              <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:14px;font-variant-numeric:tabular-nums">07h00 — 19h00</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--border)">
+              <span style="font-size:14px">Jours exclus</span>
+              <span style="margin-left:auto;font-size:14px;color:var(--text-muted)">dimanche, jours fériés</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+              <span style="font-size:14px">Urgence santé</span>
+              <span style="margin-left:auto;font-size:14px;color:var(--text-muted)">sans restriction d’horaire</span>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:10px;margin:16px 0 10px">
+              <span style="font-size:13px;font-weight:600;color:var(--text-muted)">File d’attente</span>
+              <span style="min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;display:inline-flex;align-items:center;justify-content:center">3</span>
+              <a href="#0" style="margin-left:auto;font-size:13px;font-weight:500">Tout voir</a>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px">
+              <span style="font-size:13px;min-width:0">Absences du 22 — 41 familles</span>
+              <span style="margin-left:auto;flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">demain 07h00</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px">
+              <span style="font-size:13px;min-width:0">Échéances du 30 — 88 familles</span>
+              <span style="margin-left:auto;flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">27/09 08h00</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:8px">
+              <span style="font-size:13px;min-width:0">Circulaire du 2 octobre — 1 240 familles</span>
+              <span style="margin-left:auto;flex:0 0 auto;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--accent)">en attente de validation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 20px;border-top:1px solid var(--border);background:var(--surface);font-size:13px;flex:0 0 auto;position:sticky;bottom:0">
+        <span style="display:inline-flex;align-items:center;gap:8px;color:var(--success);font-weight:500"><span style="width:7px;height:7px;border-radius:999px;background:currentColor"></span>Tout est enregistré</span>
+        <span style="color:var(--border-strong)">|</span>
+        <span style="color:var(--text-muted)">Dernière modification du routage à <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">08:15</span> par Mme N’Guessan</span>
+        <span style="color:var(--border-strong)">|</span>
+        <span style="color:var(--text-muted)">Les changements s’appliquent aux envois à venir, pas à la file d’attente</span>
+        <span style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;color:var(--text-muted)">
+          <span style="display:flex;align-items:flex-end;gap:2px;height:12px">
+            <span style="width:3px;height:5px;border-radius:999px;background:var(--success)"></span>
+            <span style="width:3px;height:8px;border-radius:999px;background:var(--success)"></span>
+            <span style="width:3px;height:12px;border-radius:999px;background:var(--success)"></span>
+          </span>
+          Lien bon
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Système de design — jetons et composants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+.hv1:hover{border-color:var(--primary) !important;color:var(--primary) !important}
+.hv2:hover{background:var(--primary-hover) !important;border-color:var(--primary-hover) !important}
+.hv3:hover{background:var(--surface-sunken) !important;color:var(--text) !important}
+.hv4:hover{filter:brightness(0.92) !important}
+.hv5:focus{border-color:var(--primary) !important;box-shadow:0 0 0 3px var(--primary-soft) !important}
+.hv6:hover{background:var(--surface-sunken) !important}
+.hv7:hover{background:var(--danger-soft) !important}
+.hv8:hover{color:var(--primary) !important;border-color:var(--primary) !important}
+.hv9:hover{border-color:var(--border-strong) !important}
+.hv10:hover{color:var(--text) !important}
+.hv11:hover{border-color:var(--danger) !important;color:var(--danger) !important}
+</style>
+</head>
+<body>
+<div style="max-width:1320px;margin:0 auto;padding:0 40px 96px">
+
+  <header style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding:56px 0 32px">
+    <div style="max-width:640px">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)">Système de design · v0.1</div>
+      <h1 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;line-height:1.15;margin:12px 0 8px">Plateforme de gestion scolaire</h1>
+      <p style="font-size:16px;color:var(--text-muted);margin:0;text-wrap:pretty">Pour les établissements privés de Côte d’Ivoire. La référence est le registre relié et le reçu numéroté : rigueur, densité, aucune décoration. Chaque écran dit ce qui est enregistré.</p>
+    </div>
+    <button class="hv1" style="display:flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;flex:0 0 auto">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"></path></svg>
+      <span>Thème sombre</span>
+    </button>
+  </header>
+
+  <section style="border-top:1px solid var(--border);padding:40px 0">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:4px">
+      <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;color:var(--text-muted)">01</span>
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;margin:0">Couleur</h2>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);margin:0 0 24px;max-width:640px">Le vert profond vient du tableau d’école. L’ocre porte l’attente et l’échéance, jamais l’erreur. Le rouge est réservé à l’impayé et à l’absence non justifiée.</p>
+
+    <div data-theme="light" style="background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:16px">Thème clair</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:16px">
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#F6F7F4"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--bg</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#F6F7F4</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#FFFFFF"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--surface</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#FFFFFF</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#EFF2ED"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--surface-sunken</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#EFF2ED</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#E1E6DE"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--border</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#E1E6DE</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#C9D2C7"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--border-strong</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#C9D2C7</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#131A16"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--text</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#131A16</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#5C6B63"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--text-muted</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#5C6B63</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#12503F"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--primary</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#12503F</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#0D3D30"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--primary-hover</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#0D3D30</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#E3F0EA"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--primary-soft</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#E3F0EA</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#B8791C"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--accent</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#B8791C</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#FAF0DC"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--accent-soft</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#FAF0DC</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#A8291F"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--danger</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#A8291F</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#FBE9E6"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--danger-soft</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#FBE9E6</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#1F7A4D"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--success</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#1F7A4D</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#E4F3EA"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--success-soft</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#E4F3EA</div></div>
+      </div>
+    </div>
+
+    <div data-theme="dark" style="background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:24px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:16px">Thème sombre</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:16px">
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#0F1110"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--bg</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#0F1110</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#181A19"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--surface</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#181A19</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#131514"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--surface-sunken</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#131514</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#282B29"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--border</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#282B29</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#3C403E"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--border-strong</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#3C403E</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#EAEBEA"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--text</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#EAEBEA</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#9BA09D"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--text-muted</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#9BA09D</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#4FB48C"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--primary</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#4FB48C</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#1B2A25"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--primary-soft</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#1B2A25</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#D9A44E"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--accent</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#D9A44E</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#33280F"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--accent-soft</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#33280F</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#E0705F"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--danger</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#E0705F</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#3A1A15"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--danger-soft</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#3A1A15</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#4FB48C"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--success</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#4FB48C</div></div>
+        <div><div style="height:56px;border-radius:6px;border:1px solid var(--border-strong);background:#182A24"></div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;margin-top:8px">--success-soft</div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted)">#182A24</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid var(--border);padding:40px 0">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:4px">
+      <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;color:var(--text-muted)">02</span>
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;margin:0">Typographie</h2>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);margin:0 0 24px;max-width:640px">Archivo pour les titres et les chiffres clés. Public Sans pour tout le reste. Le mono sert au matricule, au reçu, au montant et à l’identifiant de transaction — nulle part ailleurs.</p>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:20px 24px;background:var(--surface)">
+        <div><div style="font-size:13px;font-weight:600">Titre de page</div><div style="font-size:12px;color:var(--text-muted)">Archivo 700 · 34 px · −0.02em</div></div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;line-height:1.15">Recouvrement du 2<sup style="font-size:18px">e</sup> trimestre</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:20px 24px;background:var(--surface)">
+        <div><div style="font-size:13px;font-weight:600">Titre de section</div><div style="font-size:12px;color:var(--text-muted)">Archivo 600 · 26 px</div></div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em">Finances et recouvrement</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:20px 24px;background:var(--surface)">
+        <div><div style="font-size:13px;font-weight:600">Chiffre clé</div><div style="font-size:12px;color:var(--text-muted)">Archivo 600 · 34 px · tabulaire</div></div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums">42 380 000 F</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:20px 24px;background:var(--surface)">
+        <div><div style="font-size:13px;font-weight:600">Sous-titre</div><div style="font-size:12px;color:var(--text-muted)">Archivo 600 · 20 px</div></div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.02em">Classe de 6<sup style="font-size:12px">e</sup> B — 38 élèves</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:20px 24px;background:var(--surface)">
+        <div><div style="font-size:13px;font-weight:600">Texte courant</div><div style="font-size:12px;color:var(--text-muted)">Public Sans 400 · 16 px</div></div>
+        <div style="font-size:16px;max-width:560px;text-wrap:pretty">Les notes du deuxième trimestre sont enregistrées. Le bulletin sera disponible dès que le conseil de classe aura validé les moyennes.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:20px 24px;background:var(--surface)">
+        <div><div style="font-size:13px;font-weight:600">Interface</div><div style="font-size:12px;color:var(--text-muted)">Public Sans 500 · 14 px</div></div>
+        <div style="font-size:14px;font-weight:500">Enregistrer les notes</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:20px 24px;background:var(--surface)">
+        <div><div style="font-size:13px;font-weight:600">Étiquette et méta</div><div style="font-size:12px;color:var(--text-muted)">Public Sans 500/600 · 13 px</div></div>
+        <div style="font-size:13px;font-weight:500;color:var(--text-muted)">Dernière modification par Mme Adjoua N’Guessan, hier à 17:12</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:20px 24px;background:var(--surface)">
+        <div><div style="font-size:13px;font-weight:600">Mention</div><div style="font-size:12px;color:var(--text-muted)">Public Sans 400 · 12 px</div></div>
+        <div style="font-size:12px;color:var(--text-muted)">Un SMS coûte 12 F. Le solde de crédits est vérifié avant l’envoi.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:20px 24px;background:var(--surface)">
+        <div><div style="font-size:13px;font-weight:600">Données</div><div style="font-size:12px;color:var(--text-muted)">IBM Plex Mono 500 · 12–14 px</div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px 24px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:14px;font-variant-numeric:tabular-nums">
+          <span>ELV-2026-0413</span><span>REC-000241</span><span>145 000 F</span><span>6EME-B</span><span>WV-8842-1173</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid var(--border);padding:40px 0">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:4px">
+      <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;color:var(--text-muted)">03</span>
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;margin:0">Composants</h2>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);margin:0 0 24px;max-width:640px">Radius 8 px pour les cartes, 6 px pour les champs et les boutons. Bordures de 1 px, pas d’ombre hors popover et modale.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:16px">
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:16px">Boutons</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+          <button class="hv2" style="height:36px;padding:0 16px;border:1px solid var(--primary);border-radius:6px;background:var(--primary);color:var(--primary-ink);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer">Enregistrer les notes</button>
+          <button class="hv1" style="height:36px;padding:0 16px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer">Exporter le registre</button>
+          <button class="hv3" style="height:36px;padding:0 12px;border:1px solid transparent;border-radius:6px;background:transparent;color:var(--text-muted);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer">Annuler</button>
+          <button class="hv4" style="height:36px;padding:0 16px;border:1px solid var(--danger);border-radius:6px;background:var(--danger);color:var(--danger-ink);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer">Supprimer l’inscription</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <button disabled="disabled" style="height:36px;padding:0 16px;border:1px solid var(--border);border-radius:6px;background:var(--surface-sunken);color:var(--text-muted);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:not-allowed">Envoyer les relances</button>
+          <span style="font-size:12px;color:var(--text-muted)">Inactif : aucun élève sélectionné.</span>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:16px">Champs</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:13px;font-weight:500">Nom de l’élève</span>
+            <input class="hv5" value="Koffi Aya Estelle" style="height:36px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:14px;outline:none">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:13px;font-weight:500">Classe</span>
+            <div style="position:relative">
+              <select class="hv5" style="height:36px;width:100%;padding:0 32px 0 10px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:14px;appearance:none;outline:none">
+                <option>6e B — collège, site Cocody</option>
+                <option>5e A — collège, site Cocody</option>
+                <option>CM2 — primaire, site Angré</option>
+              </select>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="position:absolute;right:10px;top:10px;color:var(--text-muted);pointer-events:none"><path d="m6 9 6 6 6-6"></path></svg>
+            </div>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:13px;font-weight:500">Matricule</span>
+            <input class="hv5" value="ELV-2026-0413" style="height:36px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:14px;font-variant-numeric:tabular-nums;outline:none">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:13px;font-weight:500">Montant versé</span>
+            <input value="145 000 F" style="height:36px;padding:0 10px;border:1px solid var(--danger);border-radius:6px;background:var(--surface);color:var(--text);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:14px;font-variant-numeric:tabular-nums;outline:none">
+            <span style="font-size:12px;color:var(--danger)">Le montant dépasse le solde dû de 20 000 F.</span>
+          </label>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+            <span style="width:16px;height:16px;border-radius:4px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:center;flex:0 0 auto"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"></path></svg></span>
+            <span style="font-size:14px">Envoyer le reçu par SMS au parent</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+            <span style="width:16px;height:16px;border-radius:4px;background:var(--surface);border:1px solid var(--border-strong);flex:0 0 auto"></span>
+            <span style="font-size:14px">Imprimer le reçu papier</span>
+          </label>
+        </div>
+        <div style="height:1px;background:var(--border);margin:20px 0"></div>
+        <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:12px">Interrupteurs</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <label style="display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer">
+            <span style="font-size:14px">Les parents voient les bulletins en ligne</span>
+            <span style="width:36px;height:20px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);display:flex;align-items:center;justify-content:flex-end;padding:0 2px;flex:0 0 auto"><span style="width:14px;height:14px;border-radius:999px;background:var(--surface)"></span></span>
+          </label>
+          <label style="display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer">
+            <span style="font-size:14px">Autoriser le paiement en trois fois</span>
+            <span style="width:36px;height:20px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:flex-start;padding:0 2px;flex:0 0 auto"><span style="width:14px;height:14px;border-radius:999px;background:var(--border-strong)"></span></span>
+          </label>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:16px">Pastilles d’état</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Payé</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Échéance proche</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Impayé</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Justifié</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Non justifié</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Validé</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>En attente de validation</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:transparent;border:1px dashed var(--accent);color:var(--accent);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;border:1px solid currentColor"></span>Proposé — non validé</span>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin:12px 0 0">« Proposé — non validé » marque une saisie faite par une personne qui n’a pas la capacité de la valider. Le contour ouvert dit que rien n’est encore inscrit au registre.</p>
+        <div style="height:1px;background:var(--border);margin:20px 0"></div>
+        <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:12px">Pastilles de canal</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-radius:999px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:0.06em">Web</span>
+          <span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-radius:999px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:0.06em">WhatsApp</span>
+          <span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--primary);border-radius:999px;background:var(--primary-soft);color:var(--primary);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:0.06em">SMS</span>
+          <span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-radius:999px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:0.06em">Papier</span>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin:12px 0 0">Le SMS est un canal de premier rang : il est mis en avant et son coût est toujours écrit à côté de l’action — <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">12 F</span> par message, <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">456 F</span> pour une classe de 38.</p>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:16px">Recherche, avatar, fil d’ariane, onglets</div>
+        <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);margin-bottom:16px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);flex:0 0 auto"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4.3-4.3"></path></svg>
+          <input placeholder="Rechercher un élève, un matricule, un reçu" style="flex:1;border:none;background:transparent;color:var(--text);font-family:'Public Sans',sans-serif;font-size:14px;outline:none">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-muted);border:1px solid var(--border);border-radius:4px;padding:1px 5px">Ctrl K</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <span style="width:36px;height:36px;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;flex:0 0 auto">AN</span>
+          <span style="width:28px;height:28px;border-radius:999px;background:var(--surface-sunken);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:12px;flex:0 0 auto">KE</span>
+          <div><div style="font-size:14px;font-weight:500">Mme Adjoua N’Guessan</div><div style="font-size:12px;color:var(--text-muted)">Directrice générale</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);margin-bottom:16px">
+          <a href="#0">Finances</a>
+          <span>/</span>
+          <a href="#0">Recouvrement</a>
+          <span>/</span>
+          <span style="color:var(--text);font-weight:500">6e B</span>
+        </div>
+        <div style="display:flex;gap:24px;border-bottom:1px solid var(--border)">
+          <span style="padding:0 0 8px;font-size:14px;font-weight:500;color:var(--text-muted);cursor:pointer">Élèves</span>
+          <span style="padding:0 0 8px;font-size:14px;font-weight:600;color:var(--text);box-shadow:inset 0 -2px 0 var(--primary);cursor:pointer">Paiements</span>
+          <span style="padding:0 0 8px;font-size:14px;font-weight:500;color:var(--text-muted);cursor:pointer">Relances</span>
+          <span style="padding:0 0 8px;font-size:14px;font-weight:500;color:var(--text-muted);cursor:pointer">Documents</span>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:16px">Cartes d’indicateur</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+          <div style="border:1px solid var(--border);border-radius:8px;padding:16px;background:var(--surface)">
+            <div style="font-size:13px;color:var(--text-muted)">Encaissé en août</div>
+            <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin:6px 0 4px">42 380 000 F</div>
+            <div style="font-size:12px;color:var(--success)">+ 6 200 000 F sur juillet</div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:8px;padding:16px;background:var(--surface)">
+            <div style="font-size:13px;color:var(--text-muted)">Impayés</div>
+            <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin:6px 0 4px;color:var(--danger)">8 150 000 F</div>
+            <div style="font-size:12px;color:var(--text-muted)">61 familles concernées</div>
+          </div>
+          <div style="border:1px solid var(--border);border-radius:8px;padding:16px;background:var(--surface)">
+            <div style="font-size:13px;color:var(--text-muted)">Élèves inscrits</div>
+            <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin:6px 0 4px">1 240</div>
+            <div style="font-size:12px;color:var(--text-muted)">2 sites, 4 cycles</div>
+          </div>
+        </div>
+        <div style="height:1px;background:var(--border);margin:20px 0"></div>
+        <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:12px">Alertes</div>
+        <div style="display:flex;gap:12px;padding:12px 14px;border:1px solid var(--accent);border-radius:8px;background:var(--accent-soft);margin-bottom:8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--accent);flex:0 0 auto;margin-top:1px"><path d="M12 9v4M12 17h.01"></path><circle cx="12" cy="12" r="9"></circle></svg>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--text)">3 relances SMS ne sont pas parties</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-top:2px">Le crédit SMS est épuisé. Les messages sont conservés et partiront dès la recharge.</div>
+            <a href="#0" style="display:inline-block;font-size:13px;font-weight:500;margin-top:8px">Recharger le crédit</a>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--success-soft)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--success);flex:0 0 auto;margin-top:1px"><path d="m5 13 4 4L19 7"></path></svg>
+          <div style="font-size:14px;color:var(--text)">Le reçu <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">REC-000241</span> est enregistré. Le parent a reçu la confirmation.</div>
+        </div>
+      </div>
+
+      <div style="grid-column:1/-1;background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+        <div style="padding:20px 24px 16px;font-size:13px;font-weight:600;color:var(--text-muted)">Lignes de tableau</div>
+        <table style="width:100%;border-collapse:collapse;font-size:14px">
+          <thead>
+            <tr style="background:var(--surface-sunken)">
+              <th style="text-align:left;padding:8px 24px;font-size:13px;font-weight:600;color:var(--text-muted);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">Élève</th>
+              <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">Matricule</th>
+              <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">Classe</th>
+              <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">Reste à payer</th>
+              <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">État</th>
+              <th style="text-align:left;padding:8px 24px;font-size:13px;font-weight:600;color:var(--text-muted);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">Dernier contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hv6" style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 24px"><div style="display:flex;align-items:center;gap:10px"><span style="width:26px;height:26px;border-radius:999px;background:var(--surface-sunken);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:12px">KA</span><span style="font-weight:500">Koffi Aya Estelle</span></div></td>
+              <td style="padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">ELV-2026-0413</td>
+              <td style="padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">6EME-B</td>
+              <td style="padding:10px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">0 F</td>
+              <td style="padding:10px 16px"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Payé</span></td>
+              <td style="padding:10px 24px;color:var(--text-muted);font-size:13px"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-radius:999px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;margin-right:8px">SMS</span>12 août</td>
+            </tr>
+            <tr class="hv6" style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 24px"><div style="display:flex;align-items:center;gap:10px"><span style="width:26px;height:26px;border-radius:999px;background:var(--surface-sunken);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:12px">TB</span><span style="font-weight:500">Traoré Bakary</span></div></td>
+              <td style="padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">ELV-2026-0088</td>
+              <td style="padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">TERM-D</td>
+              <td style="padding:10px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">145 000 F</td>
+              <td style="padding:10px 16px"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Échéance proche</span></td>
+              <td style="padding:10px 24px;color:var(--text-muted);font-size:13px"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-radius:999px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;margin-right:8px">WhatsApp</span>9 août</td>
+            </tr>
+            <tr class="hv7" style="border-bottom:1px solid var(--border);background:var(--danger-soft)">
+              <td style="padding:10px 24px"><div style="display:flex;align-items:center;gap:10px"><span style="width:26px;height:26px;border-radius:999px;background:var(--surface);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:12px">YS</span><span style="font-weight:500">Yao Serge Emmanuel</span></div></td>
+              <td style="padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">ELV-2026-0742</td>
+              <td style="padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">CM2-A</td>
+              <td style="padding:10px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;color:var(--danger)">310 000 F</td>
+              <td style="padding:10px 16px"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--surface);color:var(--danger);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Impayé</span></td>
+              <td style="padding:10px 24px;color:var(--text-muted);font-size:13px"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-radius:999px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;margin-right:8px">Papier</span>28 juillet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid var(--border);padding:40px 0">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:4px">
+      <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;color:var(--text-muted)">04</span>
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;margin:0">Le ruban d’état de saisie</h2>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);margin:0 0 24px;max-width:720px">Ancré en bas de chaque écran de saisie. Il dit l’heure du dernier enregistrement, le nombre de saisies en attente et la qualité du lien. Il ne bloque jamais la saisie, il informe.</p>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+
+      <div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Synchronisé</div>
+        <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface)">
+          <div style="height:56px;background:var(--surface-sunken);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;font-size:13px;color:var(--text-muted)">Saisie des notes — 6e B, mathématiques, 2e trimestre</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--border);background:var(--surface);font-size:13px">
+            <span style="display:inline-flex;align-items:center;gap:8px;color:var(--success);font-weight:500"><span style="width:7px;height:7px;border-radius:999px;background:currentColor"></span>Tout est enregistré</span>
+            <span style="color:var(--border-strong)">|</span>
+            <span style="color:var(--text-muted)">Dernier enregistrement à <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">10:42</span></span>
+            <span style="color:var(--border-strong)">|</span>
+            <span style="color:var(--text-muted)">Aucune saisie en attente</span>
+            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;color:var(--text-muted)">
+              <span style="display:flex;align-items:flex-end;gap:2px;height:12px">
+                <span style="width:3px;height:5px;border-radius:999px;background:var(--success)"></span>
+                <span style="width:3px;height:8px;border-radius:999px;background:var(--success)"></span>
+                <span style="width:3px;height:12px;border-radius:999px;background:var(--success)"></span>
+              </span>
+              Lien bon
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Envoi en cours</div>
+        <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface)">
+          <div style="height:56px;background:var(--surface-sunken);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;font-size:13px;color:var(--text-muted)">Saisie des notes — 6e B, mathématiques, 2e trimestre</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--border);background:var(--surface-sunken);font-size:13px">
+            <span style="display:inline-flex;align-items:center;gap:8px;color:var(--primary);font-weight:500"><span style="width:7px;height:7px;border-radius:999px;background:currentColor;animation:pulseDot 1.2s ease-in-out infinite"></span>Envoi de 2 saisies</span>
+            <span style="color:var(--border-strong)">|</span>
+            <span style="color:var(--text-muted)">Dernier enregistrement à <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">10:44</span></span>
+            <span style="color:var(--border-strong)">|</span>
+            <span style="color:var(--text-muted)">Vous pouvez continuer à saisir</span>
+            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;color:var(--text-muted)">
+              <span style="display:flex;align-items:flex-end;gap:2px;height:12px">
+                <span style="width:3px;height:5px;border-radius:999px;background:var(--accent)"></span>
+                <span style="width:3px;height:8px;border-radius:999px;background:var(--accent)"></span>
+                <span style="width:3px;height:12px;border-radius:999px;background:var(--border-strong)"></span>
+              </span>
+              Lien faible
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:8px">Hors ligne</div>
+        <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface)">
+          <div style="height:56px;background:var(--surface-sunken);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;font-size:13px;color:var(--text-muted)">Saisie des notes — 6e B, mathématiques, 2e trimestre</div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--accent);background:var(--accent-soft);font-size:13px">
+            <span style="display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l18 18M8.5 16.5a5 5 0 0 1 7 0M5 13a9 9 0 0 1 3.5-2.2M19 13a9 9 0 0 0-6-2.9M12 20h.01"></path></svg>Hors ligne</span>
+            <span style="color:var(--accent)">|</span>
+            <span style="color:var(--text)"><span style="font-family:'IBM Plex Mono',monospace;font-weight:500">4</span> saisies conservées, envoi à la reconnexion</span>
+            <span style="color:var(--accent)">|</span>
+            <span style="color:var(--text-muted)">Continuez, rien ne sera perdu</span>
+            <span style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;color:var(--text-muted)">
+              <span style="display:flex;align-items:flex-end;gap:2px;height:12px">
+                <span style="width:3px;height:5px;border-radius:999px;background:var(--border-strong)"></span>
+                <span style="width:3px;height:8px;border-radius:999px;background:var(--border-strong)"></span>
+                <span style="width:3px;height:12px;border-radius:999px;background:var(--border-strong)"></span>
+              </span>
+              Pas de lien
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid var(--border);padding:40px 0">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:4px">
+      <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;color:var(--text-muted)">05</span>
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;margin:0">Le shell d’application</h2>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);margin:0 0 8px;max-width:760px">Il n’y a pas d’interface de l’économe ni d’interface du censeur. Il y a un seul back-office. La barre latérale n’est pas une liste fixe : elle est composée à partir des capacités effectives de la personne connectée. Un domaine apparaît si elle détient au moins une capacité dedans, sinon il n’existe pas. Aucune entrée grisée, jamais.</p>
+    <p style="font-size:14px;color:var(--text-muted);margin:0 0 24px;max-width:760px">« Tableau de bord » n’est pas un domaine : c’est l’écran d’accueil, lui aussi composé à partir des mêmes capacités. En dessous de quatre domaines la liste reste à plat ; au-delà, elle se regroupe par famille.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start">
+
+      <div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+          <span style="font-size:13px;font-weight:600">Un domaine</span>
+          <span style="font-size:13px;color:var(--text-muted)">M. Yao Kouamé, surveillant — capacités dans Vie scolaire seulement</span>
+        </div>
+        <div style="border:1px solid var(--border-strong);border-radius:8px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column;height:520px">
+
+      <div style="display:flex;align-items:center;gap:8px;height:52px;padding:0 12px;background:var(--surface);border-bottom:1px solid var(--border);flex:0 0 auto">
+        <button class="hv8" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text-muted);cursor:pointer;flex:0 0 auto"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16"></path></svg></button>
+        <div class="hv9" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;flex:0 1 auto;min-width:0">
+          <span style="width:22px;height:22px;border-radius:6px;background:var(--primary);color:var(--primary-ink);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:11px;flex:0 0 auto">GP</span>
+          <span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Les Palmiers · Cocody</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+        </div>
+        <div class="hv9" style="display:flex;align-items:center;gap:6px;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;flex:0 0 auto">
+          <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px">2026-2027</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted)"><path d="m6 9 6 6 6-6"></path></svg>
+        </div>
+        <div style="display:flex;align-items:center;border:1px solid var(--border-strong);border-radius:6px;overflow:hidden;height:28px;margin-left:auto;flex:0 0 auto">
+          <span style="padding:0 8px;height:100%;display:flex;align-items:center;background:var(--primary);color:var(--primary-ink);font-size:12px;font-weight:600;cursor:pointer">FR</span>
+          <span class="hv10" style="padding:0 8px;height:100%;display:flex;align-items:center;color:var(--text-muted);font-size:12px;font-weight:500;cursor:pointer">EN</span>
+        </div>
+        <button class="hv8" style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text-muted);cursor:pointer;flex:0 0 auto">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+        </button>
+        <span title="M. Yao Kouamé" style="width:30px;height:30px;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:12px;cursor:pointer;flex:0 0 auto">YK</span>
+        <button class="hv11" style="display:flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;flex:0 0 auto;white-space:nowrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+          Se déconnecter
+        </button>
+      </div>
+          <div style="display:flex;flex:1;min-height:0">
+            <nav style="background:var(--surface);border-right:1px solid var(--border);padding:8px;display:flex;flex-direction:column;gap:2px;flex:0 0 auto;overflow:hidden;width:208px">
+
+          <div style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;background:var(--primary-soft);color:var(--primary);font-weight:600;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="m9 13 2 2 4-4"></path></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Appel du jour</span>
+          </div>
+
+          <div class="hv3" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-weight:500;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Absences et retards<span style="min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;display:inline-flex;align-items:center;justify-content:center">12</span></span>
+          </div>
+
+          <div class="hv3" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-weight:500;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M12 3 3 7v6c0 5 4 8 9 8s9-3 9-8V7z"></path><path d="M12 9v4M12 16h.01"></path></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Sanctions</span>
+          </div>
+            </nav>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg)">
+              <div style="flex:1;overflow:auto;padding:20px">
+                <h3 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.02em;margin:0">Bonjour M. Kouamé</h3>
+                <p style="font-size:13px;color:var(--text-muted);margin:4px 0 16px">Mardi 18 août · 3 appels à faire avant 10:00</p>
+                <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+                  <div style="padding:10px 14px;border-bottom:1px solid var(--border);font-family:'Archivo',sans-serif;font-weight:600;font-size:14px">Appels du matin</div>
+                  <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border)">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">6EME-B</span>
+                    <span style="font-size:14px;font-weight:500">Mathématiques</span>
+                    <span style="margin-left:auto"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Fait</span></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border)">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">5EME-A</span>
+                    <span style="font-size:14px;font-weight:500">Histoire-géographie</span>
+                    <span style="margin-left:auto"><button class="hv2" style="height:30px;padding:0 12px;border:1px solid var(--primary);border-radius:6px;background:var(--primary);color:var(--primary-ink);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Faire l’appel</button></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px;padding:10px 14px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">TERM-D</span>
+                    <span style="font-size:14px;font-weight:500">Philosophie</span>
+                    <span style="margin-left:auto"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:transparent;border:1px dashed var(--accent);color:var(--accent);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;border:1px solid currentColor"></span>Proposé — non validé</span></span>
+                  </div>
+                </div>
+              </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-top:1px solid var(--border);background:var(--surface);font-size:12px;flex:0 0 auto">
+            <span style="display:inline-flex;align-items:center;gap:7px;color:var(--success);font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Tout est enregistré</span>
+            <span style="color:var(--border-strong)">|</span>
+            <span style="color:var(--text-muted)">Dernier enregistrement à <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">10:42</span></span>
+            <span style="margin-left:auto;display:flex;align-items:flex-end;gap:2px;height:11px">
+              <span style="width:3px;height:5px;border-radius:999px;background:var(--success)"></span>
+              <span style="width:3px;height:8px;border-radius:999px;background:var(--success)"></span>
+              <span style="width:3px;height:11px;border-radius:999px;background:var(--success)"></span>
+            </span>
+          </div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin:8px 0 0">Trois entrées, aucune famille : sous quatre domaines le regroupement n’apporte rien. Ni Finances, ni Personnel, ni Paramètres — ces domaines n’existent pas pour lui.</p>
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+          <span style="font-size:13px;font-weight:600">Sept domaines</span>
+          <span style="font-size:13px;color:var(--text-muted)">Mme Adjoua N’Guessan, directrice générale</span>
+        </div>
+        <div style="border:1px solid var(--border-strong);border-radius:8px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column;height:520px">
+
+      <div style="display:flex;align-items:center;gap:8px;height:52px;padding:0 12px;background:var(--surface);border-bottom:1px solid var(--border);flex:0 0 auto">
+        <button class="hv8" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text-muted);cursor:pointer;flex:0 0 auto"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16"></path></svg></button>
+        <div class="hv9" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;flex:0 1 auto;min-width:0">
+          <span style="width:22px;height:22px;border-radius:6px;background:var(--primary);color:var(--primary-ink);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:11px;flex:0 0 auto">GP</span>
+          <span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Les Palmiers · Cocody</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+        </div>
+        <div class="hv9" style="display:flex;align-items:center;gap:6px;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;flex:0 0 auto">
+          <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px">2026-2027</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted)"><path d="m6 9 6 6 6-6"></path></svg>
+        </div>
+        <div style="display:flex;align-items:center;border:1px solid var(--border-strong);border-radius:6px;overflow:hidden;height:28px;margin-left:auto;flex:0 0 auto">
+          <span style="padding:0 8px;height:100%;display:flex;align-items:center;background:var(--primary);color:var(--primary-ink);font-size:12px;font-weight:600;cursor:pointer">FR</span>
+          <span class="hv10" style="padding:0 8px;height:100%;display:flex;align-items:center;color:var(--text-muted);font-size:12px;font-weight:500;cursor:pointer">EN</span>
+        </div>
+        <button class="hv8" style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text-muted);cursor:pointer;flex:0 0 auto">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+        </button>
+        <span title="Mme Adjoua N’Guessan" style="width:30px;height:30px;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:12px;cursor:pointer;flex:0 0 auto">AN</span>
+        <button class="hv11" style="display:flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;flex:0 0 auto;white-space:nowrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+          Se déconnecter
+        </button>
+      </div>
+          <div style="display:flex;flex:1;min-height:0">
+            <nav style="background:var(--surface);border-right:1px solid var(--border);padding:8px;display:flex;flex-direction:column;gap:2px;flex:0 0 auto;overflow:auto;width:208px">
+
+          <div style="padding:12px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Élèves</div>
+
+          <div class="hv3" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-weight:500;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Inscriptions</span>
+          </div>
+
+          <div class="hv3" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-weight:500;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.9"></path><path d="M16 3.1a4 4 0 0 1 0 7.8"></path></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Vie scolaire</span>
+          </div>
+
+          <div style="padding:12px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Enseignement</div>
+
+          <div class="hv3" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-weight:500;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="m9 13 2 2 4-4"></path></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Évaluations</span>
+          </div>
+
+          <div style="padding:12px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Gestion</div>
+
+          <div style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;background:var(--primary-soft);color:var(--primary);font-weight:600;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4z"></path></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Finances<span style="min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;display:inline-flex;align-items:center;justify-content:center">61</span></span>
+          </div>
+
+          <div class="hv3" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-weight:500;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="11" r="2.2"></circle><path d="M5.5 17a4 4 0 0 1 7 0M15 9h4M15 13h4"></path></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Personnel</span>
+          </div>
+
+          <div style="padding:12px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Communication</div>
+
+          <div class="hv3" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-weight:500;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Messages et relances</span>
+          </div>
+
+          <div style="padding:12px 10px 4px;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--text-muted)">Paramètres</div>
+
+          <div class="hv3" style="display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:6px;color:var(--text-muted);font-weight:500;font-size:14px;cursor:pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"></path><circle cx="16" cy="7" r="2.2"></circle><circle cx="8" cy="17" r="2.2"></circle></svg>
+            <span style="white-space:nowrap;display:flex;align-items:center;gap:8px">Établissement</span>
+          </div>
+            </nav>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg)">
+              <div style="flex:1;overflow:auto;padding:20px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);margin-bottom:6px"><a href="#0">Gestion</a><span>/</span><span style="color:var(--text);font-weight:500">Finances</span></div>
+                <h3 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.02em;margin:0">Recouvrement</h3>
+                <p style="font-size:13px;color:var(--text-muted);margin:4px 0 16px">1 240 élèves · 2 sites</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+                  <div style="border:1px solid var(--border);border-radius:8px;padding:12px 14px;background:var(--surface)">
+                    <div style="font-size:12px;color:var(--text-muted)">Encaissé en août</div>
+                    <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin-top:2px">42 380 000 F</div>
+                  </div>
+                  <div style="border:1px solid var(--border);border-radius:8px;padding:12px 14px;background:var(--surface)">
+                    <div style="font-size:12px;color:var(--text-muted)">Impayés</div>
+                    <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin-top:2px;color:var(--danger)">8 150 000 F</div>
+                  </div>
+                </div>
+                <div style="display:flex;gap:10px;padding:10px 12px;border:1px solid var(--accent);border-radius:8px;background:var(--accent-soft);margin-bottom:16px;font-size:13px">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--accent);flex:0 0 auto;margin-top:2px"><path d="M12 9v4M12 17h.01"></path><circle cx="12" cy="12" r="9"></circle></svg>
+                  <div>61 familles en retard. Une relance SMS pour toutes coûte <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">732 F</span>. <a href="#0" style="font-weight:500">Voir la liste</a></div>
+                </div>
+                <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+                  <table style="width:100%;border-collapse:collapse;font-size:13px">
+                    <thead><tr style="background:var(--surface-sunken)">
+                      <th style="text-align:left;padding:7px 14px;font-size:12px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Reçu</th>
+                      <th style="text-align:left;padding:7px 14px;font-size:12px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Élève</th>
+                      <th style="text-align:right;padding:7px 14px;font-size:12px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Montant</th>
+                    </tr></thead>
+                    <tbody>
+                      <tr class="hv6" style="border-bottom:1px solid var(--border)">
+                        <td style="padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-weight:500">REC-000241</td>
+                        <td style="padding:8px 14px;font-weight:500">Koffi Aya Estelle</td>
+                        <td style="padding:8px 14px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">145 000 F</td>
+                      </tr>
+                      <tr class="hv6">
+                        <td style="padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-weight:500">REC-000240</td>
+                        <td style="padding:8px 14px;font-weight:500">Diallo Mariam</td>
+                        <td style="padding:8px 14px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">90 000 F</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-top:1px solid var(--border);background:var(--surface);font-size:12px;flex:0 0 auto">
+            <span style="display:inline-flex;align-items:center;gap:7px;color:var(--success);font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Tout est enregistré</span>
+            <span style="color:var(--border-strong)">|</span>
+            <span style="color:var(--text-muted)">Dernier enregistrement à <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">10:42</span></span>
+            <span style="margin-left:auto;display:flex;align-items:flex-end;gap:2px;height:11px">
+              <span style="width:3px;height:5px;border-radius:999px;background:var(--success)"></span>
+              <span style="width:3px;height:8px;border-radius:999px;background:var(--success)"></span>
+              <span style="width:3px;height:11px;border-radius:999px;background:var(--success)"></span>
+            </span>
+          </div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin:8px 0 0">Sept domaines, regroupés en cinq familles. Les familles sont des étiquettes de lecture, pas des pages : elles n’apparaissent que si elles contiennent un domaine.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:32px">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:600">Aucune capacité</span>
+        <span style="font-size:13px;color:var(--text-muted)">Compte créé, domaines pas encore attribués — M. Bamba Issouf, nouvel enseignant</span>
+      </div>
+      <div style="border:1px solid var(--border-strong);border-radius:8px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column;height:420px">
+
+      <div style="display:flex;align-items:center;gap:8px;height:52px;padding:0 12px;background:var(--surface);border-bottom:1px solid var(--border);flex:0 0 auto">
+        
+        <div class="hv9" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;flex:0 1 auto;min-width:0">
+          <span style="width:22px;height:22px;border-radius:6px;background:var(--primary);color:var(--primary-ink);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:11px;flex:0 0 auto">GP</span>
+          <span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Les Palmiers · Cocody</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted);flex:0 0 auto"><path d="m6 9 6 6 6-6"></path></svg>
+        </div>
+        <div class="hv9" style="display:flex;align-items:center;gap:6px;height:32px;padding:0 8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;flex:0 0 auto">
+          <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px">2026-2027</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="color:var(--text-muted)"><path d="m6 9 6 6 6-6"></path></svg>
+        </div>
+        <div style="display:flex;align-items:center;border:1px solid var(--border-strong);border-radius:6px;overflow:hidden;height:28px;margin-left:auto;flex:0 0 auto">
+          <span style="padding:0 8px;height:100%;display:flex;align-items:center;background:var(--primary);color:var(--primary-ink);font-size:12px;font-weight:600;cursor:pointer">FR</span>
+          <span class="hv10" style="padding:0 8px;height:100%;display:flex;align-items:center;color:var(--text-muted);font-size:12px;font-weight:500;cursor:pointer">EN</span>
+        </div>
+        <button class="hv8" style="position:relative;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text-muted);cursor:pointer;flex:0 0 auto">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+        </button>
+        <span title="M. Bamba Issouf" style="width:30px;height:30px;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:12px;cursor:pointer;flex:0 0 auto">BI</span>
+        <button class="hv11" style="display:flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;flex:0 0 auto;white-space:nowrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+          Se déconnecter
+        </button>
+      </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:32px">
+          <div style="max-width:520px;text-align:left">
+            <div style="width:40px;height:40px;border-radius:8px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0"></path></svg>
+            </div>
+            <h3 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:26px;letter-spacing:-0.02em;margin:0 0 8px">Votre compte n’a encore aucun domaine</h3>
+            <p style="font-size:16px;color:var(--text-muted);margin:0 0 8px;text-wrap:pretty">Vous êtes bien connecté. L’administrateur de l’établissement doit vous attribuer vos domaines pour que votre espace se compose.</p>
+            <p style="font-size:14px;color:var(--text-muted);margin:0 0 20px">Contactez M. Konan Bertin, administrateur du Groupe Scolaire Les Palmiers, au <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">07 07 88 12 40</span>.</p>
+            <div style="display:flex;gap:8px">
+              <button class="hv2" style="height:36px;padding:0 16px;border:1px solid var(--primary);border-radius:6px;background:var(--primary);color:var(--primary-ink);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer">Demander mes accès</button>
+              <button class="hv11" style="height:36px;padding:0 16px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer">Se déconnecter</button>
+            </div>
+          </div>
+        </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;border-top:1px solid var(--border);background:var(--surface);font-size:12px;flex:0 0 auto">
+            <span style="display:inline-flex;align-items:center;gap:7px;color:var(--success);font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Tout est enregistré</span>
+            <span style="color:var(--border-strong)">|</span>
+            <span style="color:var(--text-muted)">Dernier enregistrement à <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">10:42</span></span>
+            <span style="margin-left:auto;display:flex;align-items:flex-end;gap:2px;height:11px">
+              <span style="width:3px;height:5px;border-radius:999px;background:var(--success)"></span>
+              <span style="width:3px;height:8px;border-radius:999px;background:var(--success)"></span>
+              <span style="width:3px;height:11px;border-radius:999px;background:var(--success)"></span>
+            </span>
+          </div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin:8px 0 0">Zéro domaine, donc pas de barre latérale : il n’y a rien à naviguer. L’écran nomme la personne à joindre et propose une action. Ce n’est ni une page vide, ni une erreur.</p>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

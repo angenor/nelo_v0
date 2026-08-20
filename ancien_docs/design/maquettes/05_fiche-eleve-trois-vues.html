@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiche élève — trois vues selon le rôle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+.hv1:hover{border-color:var(--primary) !important;color:var(--primary) !important}
+.hv2:hover{color:var(--text) !important}
+.hv3:hover{background:var(--primary-hover) !important;border-color:var(--primary-hover) !important}
+.hv4:hover{background:var(--surface-sunken) !important}
+</style>
+</head>
+<body>
+<div style="width:1440px;margin:0 auto;padding:0 32px 80px;--cue:var(--primary)">
+
+  <header style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding:48px 0 24px">
+    <div style="max-width:860px">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)">Planche de démonstration · Fiche élève</div>
+      <h1 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;line-height:1.15;margin:12px 0 8px">Une fiche élève, trois vues</h1>
+      <p style="font-size:16px;color:var(--text-muted);margin:0;text-wrap:pretty">La même fiche, le même élève, le même poste de travail. L’en-tête ne bouge pas : c’est l’identité de l’élève, elle est la même pour tout le monde. Ce sont les onglets et les actions qui se composent à partir des capacités de la personne connectée. Un onglet qu’une personne n’a pas le droit d’ouvrir n’est pas grisé : il n’existe pas dans sa fiche.</p>
+    </div>
+    <button class="hv1" style="display:flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;flex:0 0 auto">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"></path></svg>
+      <span>Thème sombre</span>
+    </button>
+  </header>
+
+  <div style="display:flex;align-items:center;gap:20px;padding:14px 0;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted)">
+    <span style="display:inline-flex;align-items:center;gap:8px"><span style="width:3px;height:16px;border-radius:2px;background:var(--primary)"></span>En-tête de fiche — identique dans les trois vues</span>
+    <span style="margin-left:auto;font-size:12px">Poste de travail 1440 px · Fatoumata Diabaté · année 2026-2027</span>
+  </div>
+
+  <!-- ============ VUE 1 — M. DIOMANDÉ ============ -->
+  <div style="padding:32px 0;border-top:1px solid var(--border)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:16px">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted)">Vue 01 — M. Diomandé, économe</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);margin-top:5px">Capacités : finances — site de Cocody</div>
+      </div>
+      <p style="max-width:520px;margin:0;font-size:14px;color:var(--text-muted);text-wrap:pretty">Il encaisse et il justifie. Il n’a ni Notes ni Vie scolaire : ces onglets ne sont pas dans sa fiche.</p>
+    </div>
+
+    <div style="border:1px solid var(--border-strong);border-radius:8px;overflow:hidden;background:var(--surface)">
+
+      <div style="display:flex;align-items:flex-start;gap:18px;padding:22px 24px;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:inset 3px 0 0 var(--cue)">
+        <span style="width:54px;height:54px;flex:0 0 auto;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.02em">FD</span>
+        <div style="min-width:0">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:24px;letter-spacing:-0.02em;margin:0">Fatoumata Diabaté</h2>
+            <span style="display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Élève affectée — État</span>
+          </div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0 14px;margin-top:8px;font-size:14px;color:var(--text-muted)">
+            <span style="color:var(--text);font-weight:600">3e B</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span>Premier cycle du secondaire</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span>Site de Cocody</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span>Née le 12 mars 2011</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text)">ELV-2026-0188</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px">2026-2027</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:4px;padding:0 24px;border-bottom:1px solid var(--border);background:var(--surface)">
+        <div class="hv2" style="display:flex;align-items:center;height:46px;padding:0 14px;font-size:14px;font-weight:500;color:var(--text-muted);cursor:pointer">Identité</div>
+        <div class="hv2" style="display:flex;align-items:center;height:46px;padding:0 14px;font-size:14px;font-weight:500;color:var(--text-muted);cursor:pointer">Famille</div>
+        <div style="display:flex;align-items:center;height:46px;padding:0 14px;font-size:14px;font-weight:600;color:var(--primary);box-shadow:inset 0 -2px 0 var(--primary);cursor:pointer">Finances</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <button class="hv1" style="height:34px;padding:0 14px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Rééditer un reçu</button>
+          <button class="hv3" style="height:34px;padding:0 14px;border:1px solid var(--primary);border-radius:6px;background:var(--primary);color:var(--primary-ink);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Encaisser un paiement</button>
+        </div>
+      </div>
+
+      <div style="padding:24px;background:var(--bg)">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px">
+            <div style="font-size:13px;color:var(--text-muted)">Scolarité due — année</div>
+            <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin:6px 0 4px;white-space:nowrap">225 000 F</div>
+            <div style="font-size:13px;color:var(--text-muted)">tarif 3e · externe</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px">
+            <div style="font-size:13px;color:var(--text-muted)">Part État</div>
+            <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin:6px 0 4px;white-space:nowrap">180 000 F</div>
+            <div style="font-size:13px;color:var(--text-muted)">élève affectée · 2 tranches</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px">
+            <div style="font-size:13px;color:var(--text-muted)">Part famille</div>
+            <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin:6px 0 4px;white-space:nowrap">45 000 F</div>
+            <div style="font-size:13px;color:var(--text-muted)">30 000 F versés</div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--accent);border-radius:8px;padding:16px 18px">
+            <div style="font-size:13px;color:var(--text-muted)">Solde de l’élève</div>
+            <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin:6px 0 4px;color:var(--accent);white-space:nowrap">15 000 F</div>
+            <div style="font-size:13px;color:var(--text-muted)">échéance du 10 avril</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:16px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+            <div style="display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)">
+              <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:16px">Échéancier — part famille</span>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:14px">
+              <thead><tr style="background:var(--surface-sunken)">
+                <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Échéance</th>
+                <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Montant</th>
+                <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">État</th>
+              </tr></thead>
+              <tbody>
+                <tr style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px">10 octobre 2026</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">15 000 F</td>
+                  <td style="padding:11px 16px;text-align:right"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Réglée</span></td>
+                </tr>
+                <tr style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px">10 janvier 2027</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">15 000 F</td>
+                  <td style="padding:11px 16px;text-align:right"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Réglée</span></td>
+                </tr>
+                <tr>
+                  <td style="padding:11px 16px">10 avril 2027</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">15 000 F</td>
+                  <td style="padding:11px 16px;text-align:right"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>À venir</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="padding:12px 16px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted);text-wrap:pretty">La part État est notifiée par la direction régionale ; elle n’est pas réclamée à la famille.</div>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+            <div style="display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)">
+              <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:16px">Historique des paiements</span>
+              <span style="margin-left:auto;font-size:13px;color:var(--text-muted)">4 mouvements depuis le 1er septembre</span>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:14px">
+              <thead><tr style="background:var(--surface-sunken)">
+                <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Reçu</th>
+                <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Date</th>
+                <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Origine</th>
+                <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Moyen</th>
+                <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Montant</th>
+              </tr></thead>
+              <tbody>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px">REC-2026-01842</td>
+                  <td style="padding:11px 16px;color:var(--text-muted)">04 oct. 2026</td>
+                  <td style="padding:11px 16px">Famille</td>
+                  <td style="padding:11px 16px;color:var(--text-muted)">Espèces — guichet</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">15 000 F</td>
+                </tr>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px">REC-2026-02310</td>
+                  <td style="padding:11px 16px;color:var(--text-muted)">18 nov. 2026</td>
+                  <td style="padding:11px 16px">État — 1re tranche</td>
+                  <td style="padding:11px 16px;color:var(--text-muted)">Virement Trésor</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">90 000 F</td>
+                </tr>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px">REC-2027-00074</td>
+                  <td style="padding:11px 16px;color:var(--text-muted)">09 janv. 2027</td>
+                  <td style="padding:11px 16px">Famille</td>
+                  <td style="padding:11px 16px;color:var(--text-muted)">Mobile money</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">15 000 F</td>
+                </tr>
+                <tr class="hv4">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px">REC-2027-00518</td>
+                  <td style="padding:11px 16px;color:var(--text-muted)">02 févr. 2027</td>
+                  <td style="padding:11px 16px">État — 2e tranche</td>
+                  <td style="padding:11px 16px;color:var(--text-muted)">Virement Trésor</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">90 000 F</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ VUE 2 — M. KOUASSI YAO ============ -->
+  <div style="padding:32px 0;border-top:1px solid var(--border)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:16px">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted)">Vue 02 — M. Kouassi Yao, enseignant</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);margin-top:5px">Capacités : évaluations — mathématiques, 3e B</div>
+      </div>
+      <p style="max-width:520px;margin:0;font-size:14px;color:var(--text-muted);text-wrap:pretty">Il voit la même élève et ses propres notes. Aucune donnée financière n’apparaît, pas même en résumé.</p>
+    </div>
+
+    <div style="border:1px solid var(--border-strong);border-radius:8px;overflow:hidden;background:var(--surface)">
+
+      <div style="display:flex;align-items:flex-start;gap:18px;padding:22px 24px;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:inset 3px 0 0 var(--cue)">
+        <span style="width:54px;height:54px;flex:0 0 auto;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.02em">FD</span>
+        <div style="min-width:0">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:24px;letter-spacing:-0.02em;margin:0">Fatoumata Diabaté</h2>
+            <span style="display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Élève affectée — État</span>
+          </div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0 14px;margin-top:8px;font-size:14px;color:var(--text-muted)">
+            <span style="color:var(--text);font-weight:600">3e B</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span>Premier cycle du secondaire</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span>Site de Cocody</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span>Née le 12 mars 2011</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text)">ELV-2026-0188</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px">2026-2027</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:4px;padding:0 24px;border-bottom:1px solid var(--border);background:var(--surface)">
+        <div class="hv2" style="display:flex;align-items:center;height:46px;padding:0 14px;font-size:14px;font-weight:500;color:var(--text-muted);cursor:pointer">Identité</div>
+        <div style="display:flex;align-items:center;height:46px;padding:0 14px;font-size:14px;font-weight:600;color:var(--primary);box-shadow:inset 0 -2px 0 var(--primary);cursor:pointer">Évaluations</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <button class="hv3" style="height:34px;padding:0 14px;border:1px solid var(--primary);border-radius:6px;background:var(--primary);color:var(--primary-ink);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Saisir une note de mathématiques</button>
+        </div>
+      </div>
+
+      <div style="padding:24px;background:var(--bg)">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;margin-bottom:16px;border:1px solid var(--border);border-radius:8px;background:var(--surface);font-size:13px;color:var(--text-muted)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg>
+          <span>Vous voyez les matières que vous enseignez à cette classe pour l’année 2026-2027.</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:16px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+            <div style="display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)">
+              <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:16px">Mathématiques — 3e B</span>
+              <span style="margin-left:auto;font-size:13px;color:var(--text-muted)">coefficient 4</span>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:14px">
+              <thead><tr style="background:var(--surface-sunken)">
+                <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Trimestre</th>
+                <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Interro.</th>
+                <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Devoir</th>
+                <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Composition</th>
+                <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Moyenne</th>
+                <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">État</th>
+              </tr></thead>
+              <tbody>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-weight:500">1er trimestre</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">12,50</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">14,00</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">11,50</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;color:var(--text)">12,75</td>
+                  <td style="padding:11px 16px;text-align:right"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Validée</span></td>
+                </tr>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-weight:500">2e trimestre</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">13,00</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">15,50</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">13,25</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;color:var(--text)">13,81</td>
+                  <td style="padding:11px 16px;text-align:right"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Validée</span></td>
+                </tr>
+                <tr class="hv4">
+                  <td style="padding:11px 16px;font-weight:500">3e trimestre</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">14,25</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">12,75</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;color:var(--text-muted)">—</td>
+                  <td style="padding:11px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;color:var(--text-muted)">13,50</td>
+                  <td style="padding:11px 16px;text-align:right"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:transparent;border:1px dashed var(--accent);color:var(--accent);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;border:1px solid currentColor"></span>Composition à saisir</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="padding:12px 16px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted)">Les autres matières de la 3e B existent dans la fiche, mais pas dans cette vue : elles appartiennent aux enseignants qui les tiennent.</div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px">
+              <div style="font-size:13px;color:var(--text-muted)">Moyenne de mathématiques — année en cours</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:30px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;margin:6px 0 4px">13,35</div>
+              <div style="font-size:13px;color:var(--text-muted)">sur les deux trimestres validés</div>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+              <div style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:'Archivo',sans-serif;font-weight:600;font-size:16px">Dernières copies</div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Devoir n°2 — Thalès</span><span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">12,75</span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Interro. — équations</span><span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums">14,25</span></div>
+              <div style="padding:12px 16px;font-size:13px;color:var(--text-muted)">Composition du 3e trimestre : à rendre avant le conseil du 12 juin.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ VUE 3 — MME ALINE KACOU ============ -->
+  <div style="padding:32px 0;border-top:1px solid var(--border)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:16px">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted)">Vue 03 — Mme Aline Kacou, éducatrice</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);margin-top:5px">Capacités : vie scolaire, discipline — site de Cocody</div>
+      </div>
+      <p style="max-width:520px;margin:0;font-size:14px;color:var(--text-muted);text-wrap:pretty">Elle tient l’assiduité et rend l’élève à la bonne personne. Aucune note, aucun solde.</p>
+    </div>
+
+    <div style="border:1px solid var(--border-strong);border-radius:8px;overflow:hidden;background:var(--surface)">
+
+      <div style="display:flex;align-items:flex-start;gap:18px;padding:22px 24px;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:inset 3px 0 0 var(--cue)">
+        <span style="width:54px;height:54px;flex:0 0 auto;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:700;font-size:19px;letter-spacing:0.02em">FD</span>
+        <div style="min-width:0">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:24px;letter-spacing:-0.02em;margin:0">Fatoumata Diabaté</h2>
+            <span style="display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Élève affectée — État</span>
+          </div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0 14px;margin-top:8px;font-size:14px;color:var(--text-muted)">
+            <span style="color:var(--text);font-weight:600">3e B</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span>Premier cycle du secondaire</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span>Site de Cocody</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span>Née le 12 mars 2011</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text)">ELV-2026-0188</span>
+            <span style="color:var(--border-strong)">·</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px">2026-2027</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:4px;padding:0 24px;border-bottom:1px solid var(--border);background:var(--surface)">
+        <div class="hv2" style="display:flex;align-items:center;height:46px;padding:0 14px;font-size:14px;font-weight:500;color:var(--text-muted);cursor:pointer">Identité</div>
+        <div style="display:flex;align-items:center;height:46px;padding:0 14px;font-size:14px;font-weight:600;color:var(--primary);box-shadow:inset 0 -2px 0 var(--primary);cursor:pointer">Vie scolaire</div>
+        <div class="hv2" style="display:flex;align-items:center;height:46px;padding:0 14px;font-size:14px;font-weight:500;color:var(--text-muted);cursor:pointer">Discipline</div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <button class="hv1" style="height:34px;padding:0 14px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Consigner un incident</button>
+          <button class="hv3" style="height:34px;padding:0 14px;border:1px solid var(--primary);border-radius:6px;background:var(--primary);color:var(--primary-ink);font-family:'Public Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer">Justifier une absence</button>
+        </div>
+      </div>
+
+      <div style="padding:24px;background:var(--bg)">
+        <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)">
+              <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:16px">Assiduité — depuis la rentrée</span>
+              <span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;background:var(--surface-sunken);color:var(--text-muted);font-size:13px;font-weight:500">4 absences · 3 retards</span>
+              <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>1 absence non justifiée</span>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:14px">
+              <thead><tr style="background:var(--surface-sunken)">
+                <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Date</th>
+                <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Fait observé</th>
+                <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Justificatif</th>
+                <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Saisi par</th>
+              </tr></thead>
+              <tbody>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;white-space:nowrap">14/10/2026</td>
+                  <td style="padding:11px 16px">Absente — journée entière</td>
+                  <td style="padding:11px 16px"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Mot du tuteur</span></td>
+                  <td style="padding:11px 16px;text-align:right;font-size:13px;color:var(--text-muted)">A. Kacou</td>
+                </tr>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;white-space:nowrap">07/11/2026</td>
+                  <td style="padding:11px 16px">Retard de 18 min — cours de 7h30</td>
+                  <td style="padding:11px 16px;color:var(--text-muted);font-size:13px">Sans objet</td>
+                  <td style="padding:11px 16px;text-align:right;font-size:13px;color:var(--text-muted)">Surveillance</td>
+                </tr>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;white-space:nowrap">21/11/2026</td>
+                  <td style="padding:11px 16px">Absente — 2 heures, après-midi</td>
+                  <td style="padding:11px 16px"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Justificatif déposé</span></td>
+                  <td style="padding:11px 16px;text-align:right;font-size:13px;color:var(--text-muted)">A. Kacou</td>
+                </tr>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;white-space:nowrap">09/01/2027</td>
+                  <td style="padding:11px 16px">Retard de 9 min — cours de 10h00</td>
+                  <td style="padding:11px 16px;color:var(--text-muted);font-size:13px">Sans objet</td>
+                  <td style="padding:11px 16px;text-align:right;font-size:13px;color:var(--text-muted)">Surveillance</td>
+                </tr>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;white-space:nowrap">03/02/2027</td>
+                  <td style="padding:11px 16px">Absente — journée entière</td>
+                  <td style="padding:11px 16px"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Non justifiée</span></td>
+                  <td style="padding:11px 16px;text-align:right;font-size:13px;color:var(--text-muted)">A. Kacou</td>
+                </tr>
+                <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;white-space:nowrap">26/02/2027</td>
+                  <td style="padding:11px 16px">Retard de 12 min — cours de 7h30</td>
+                  <td style="padding:11px 16px;color:var(--text-muted);font-size:13px">Sans objet</td>
+                  <td style="padding:11px 16px;text-align:right;font-size:13px;color:var(--text-muted)">Surveillance</td>
+                </tr>
+                <tr class="hv4">
+                  <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;white-space:nowrap">11/03/2027</td>
+                  <td style="padding:11px 16px">Absente — 1 heure, cours de 15h00</td>
+                  <td style="padding:11px 16px"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Convocation infirmerie</span></td>
+                  <td style="padding:11px 16px;text-align:right;font-size:13px;color:var(--text-muted)">A. Kacou</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+              <div style="display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)">
+                <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:16px">Incidents</span>
+                <span style="margin-left:auto;font-size:13px;color:var(--text-muted)">2 consignés cette année</span>
+              </div>
+              <div style="padding:12px 16px;border-bottom:1px solid var(--border)">
+                <div style="display:flex;align-items:baseline;gap:10px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">18/11/2026</span>
+                  <span style="font-weight:500">Téléphone utilisé en classe</span>
+                </div>
+                <div style="font-size:13px;color:var(--text-muted);margin-top:4px;text-wrap:pretty">Rappel au règlement. Tuteur informé le jour même. Aucune suite disciplinaire.</div>
+              </div>
+              <div style="padding:12px 16px">
+                <div style="display:flex;align-items:baseline;gap:10px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">03/02/2027</span>
+                  <span style="font-weight:500">Sortie de l’établissement sans autorisation</span>
+                </div>
+                <div style="font-size:13px;color:var(--text-muted);margin-top:4px;text-wrap:pretty">Rattaché à l’absence non justifiée du même jour. Entretien avec le tuteur le 05/02.</div>
+              </div>
+            </div>
+
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+              <div style="padding:12px 16px;border-bottom:1px solid var(--border);font-family:'Archivo',sans-serif;font-weight:600;font-size:16px">Autorisations de sortie</div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Sortie après le dernier cours</span><span style="margin-left:auto"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Autorisée</span></span></div>
+              <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);font-size:14px"><span>Sortie entre deux cours</span><span style="margin-left:auto"><span style="display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-size:13px;font-weight:500"><span style="width:6px;height:6px;border-radius:999px;background:currentColor"></span>Refusée</span></span></div>
+              <div style="padding:12px 16px;font-size:13px;color:var(--text-muted);text-wrap:pretty">Signé par le tuteur légal le 18 septembre 2026. Valable jusqu’au 30 juin 2027.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+          <div style="display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)">
+            <span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:16px">Personnes autorisées à récupérer l’élève</span>
+            <span style="margin-left:auto;font-size:13px;color:var(--text-muted)">Pièce d’identité exigée au portail</span>
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:14px">
+            <thead><tr style="background:var(--surface-sunken)">
+              <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Nom</th>
+              <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Lien de responsabilité</th>
+              <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Pièce d’identité</th>
+              <th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Téléphone</th>
+              <th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Portée</th>
+            </tr></thead>
+            <tbody>
+              <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                <td style="padding:11px 16px;font-weight:500">Mariam Diabaté</td>
+                <td style="padding:11px 16px">Mère — tutrice légale</td>
+                <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">CNI C0192834571</td>
+                <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">07 08 44 12 60</td>
+                <td style="padding:11px 16px;text-align:right"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-size:13px;font-weight:500">Sans restriction</span></td>
+              </tr>
+              <tr class="hv4" style="border-bottom:1px solid var(--border)">
+                <td style="padding:11px 16px;font-weight:500">Sékou Diabaté</td>
+                <td style="padding:11px 16px">Oncle paternel</td>
+                <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">CNI C0447102983</td>
+                <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">05 41 90 73 22</td>
+                <td style="padding:11px 16px;text-align:right"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;background:var(--surface-sunken);color:var(--text-muted);font-size:13px;font-weight:500">Mardi et jeudi</span></td>
+              </tr>
+              <tr class="hv4">
+                <td style="padding:11px 16px;font-weight:500">Awa Koné</td>
+                <td style="padding:11px 16px">Voisine désignée par la tutrice</td>
+                <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">Passeport 21AB09344</td>
+                <td style="padding:11px 16px;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:13px;color:var(--text-muted)">01 22 65 38 04</td>
+                <td style="padding:11px 16px;text-align:right"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;background:var(--surface-sunken);color:var(--text-muted);font-size:13px;font-weight:500">Urgence uniquement</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div style="border-top:1px solid var(--border);padding-top:28px">
+    <div style="display:flex;gap:18px;padding:22px 24px;border:1px solid var(--border);border-radius:8px;background:var(--surface)">
+      <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);flex:0 0 168px;padding-top:2px">Ce que personne ne voit</span>
+      <p style="margin:0;font-size:15px;max-width:900px;text-wrap:pretty">Aucune de ces trois personnes ne voit d’onglet Santé. Le dossier médical, le dossier psychosocial et les signalements de protection de l’enfance ne s’attribuent pas par un rôle : ils s’ouvrent nominativement, une personne à la fois, avec motif et traçabilité.</p>
+    </div>
+  </div>
+  
+
+</div>
+</body>
+</html>
