@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Appel de séance — mobile 390 px</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="../theme.css">
+<style>
+.hv1:hover{border-color:var(--primary) !important;color:var(--primary) !important}
+.hv2:hover{background:var(--surface-sunken) !important}
+.hv3:hover{background:var(--primary-hover) !important;border-color:var(--primary-hover) !important}
+.hv4:hover{background:var(--danger-soft) !important}
+</style>
+</head>
+<body>
+<div style="width:940px;margin:0 auto;padding:0 32px 72px">
+
+  <header style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding:44px 0 22px">
+    <div style="max-width:600px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">MOBILE · 390 PX · ENSEIGNANT</div>
+      <h1 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.02em;line-height:1.15;margin:10px 0 8px">L’appel d’une séance</h1>
+      <p style="font-size:15px;color:var(--text-muted);margin:0;text-wrap:pretty">Tous présents par défaut. On ne touche qu’aux exceptions : un geste par élève, une saisie qui part seule, un coût rendu visible au moment où on l’engage.</p>
+    </div>
+    <button class="hv1" style="display:flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--border-strong);border-radius:6px;background:var(--surface);color:var(--text);font-size:14px;font-weight:500;cursor:pointer;flex:0 0 auto">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"></path></svg>
+      <span>Thème sombre</span>
+    </button>
+  </header>
+
+  <div style="display:flex;gap:56px;align-items:flex-start;border-top:1px solid var(--border);padding-top:26px">
+
+    <!-- ================= ÉTAT 1 — SAISIE EN COURS ================= -->
+    <div style="flex:0 0 390px">
+      <div style="margin-bottom:14px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ÉTAT 1</div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:17px;margin-top:4px">Liste en cours de saisie</div>
+        <p style="font-size:13px;color:var(--text-muted);margin:6px 0 0;text-wrap:pretty">Chaque tap part immédiatement. Taper une seconde fois annule l’exception et remet l’élève présent.</p>
+      </div>
+
+      <div style="width:390px;height:844px;border:1px solid var(--border-strong);border-radius:26px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column;box-shadow:0 18px 40px rgba(0,0,0,.10)">
+
+        <div style="display:flex;align-items:center;gap:8px;height:30px;padding:0 18px;background:var(--surface);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted);flex:0 0 auto">
+          <span>08:04</span>
+          <span style="margin-left:auto;display:flex;align-items:flex-end;gap:2px;height:10px">
+            <span style="width:3px;height:4px;border-radius:999px;background:var(--accent)"></span>
+            <span style="width:3px;height:7px;border-radius:999px;background:var(--accent)"></span>
+            <span style="width:3px;height:10px;border-radius:999px;background:var(--border-strong)"></span>
+          </span>
+          <span>2G</span>
+          <span style="width:20px;height:10px;border:1px solid var(--border-strong);border-radius:2px;padding:1px;display:inline-block"><span style="display:block;width:60%;height:100%;background:var(--text-muted)"></span></span>
+        </div>
+
+        <div style="flex:0 0 auto;background:var(--surface);border-bottom:1px solid var(--border);padding:6px 12px 10px">
+          <div style="display:flex;align-items:center;gap:4px">
+            <button class="hv2" style="width:44px;height:44px;border:0;background:transparent;color:var(--text);display:flex;align-items:center;justify-content:center;border-radius:8px;cursor:pointer;flex:0 0 auto">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+            </button>
+            <div style="min-width:0;flex:1">
+              <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:17px;letter-spacing:-0.01em">Mathématiques · 6e A</div>
+              <div style="font-size:12.5px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">mar. 22 sept. · 08h00–09h00 · salle B12 · 34 élèves</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:8px;padding-left:4px">
+            <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:600"><span style="font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">31</span> présents</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-size:13px;font-weight:600"><span style="font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">2</span> absents</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600"><span style="font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">1</span> retard</span>
+            
+          </div>
+        </div>
+
+        <div style="flex:1;min-height:0;overflow-y:auto;background:var(--surface)">
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">AJ</span>
+                  
+                    <span style="position:absolute;top:4px;right:4px;width:11px;height:11px;border-radius:999px;background:var(--accent);border:2px solid var(--surface)"></span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Assi <span style="font-weight:500">Jean-Marc</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0101</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">BS</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Bakayoko <span style="font-weight:500">Salif</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0107</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--danger-soft);box-shadow:inset 3px 0 0 var(--danger)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">BK</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Bamba <span style="font-weight:500">Koffi</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0118</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--danger);background:var(--danger);color:var(--danger-ink)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+                <div style="display:flex;align-items:center;gap:8px;margin:6px 0 2px 56px">
+                  <span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--danger);border-radius:999px;color:var(--danger);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.06em;flex:0 0 auto">SMS</span>
+                  <span style="font-size:13px;color:var(--text)">au responsable à <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">09h05</span></span>
+                </div>
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">CA</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Camara <span style="font-weight:500">Aïcha</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0132</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">CI</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Cissé <span style="font-weight:500">Ibrahim</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0145</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">CA</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Coulibaly <span style="font-weight:500">Aminata</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0206</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">DM</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Dembélé <span style="font-weight:500">Moussa</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0214</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--danger-soft);box-shadow:inset 3px 0 0 var(--danger)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">DF</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Diabaté <span style="font-weight:500">Fatoumata</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0308</span>
+                    
+                      <span style="display:inline-flex;align-items:center;height:20px;padding:0 8px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:11.5px;font-weight:600">Justifié</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--danger);background:var(--danger);color:var(--danger-ink)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+                <div style="margin:6px 0 2px 56px;font-size:13px;color:var(--text-muted)">Absence déjà justifiée — aucun SMS ne partira.</div>
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">DN</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Diarra <span style="font-weight:500">Nadège</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0311</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">DY</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Doumbia <span style="font-weight:500">Yacouba</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0327</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">FR</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Fofana <span style="font-weight:500">Rokia</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0334</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">GP</span>
+                  
+                    <span style="position:absolute;top:4px;right:4px;width:11px;height:11px;border-radius:999px;background:var(--accent);border:2px solid var(--surface)"></span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Gnahoré <span style="font-weight:500">Prisca</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0341</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">GL</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Guédé <span style="font-weight:500">Landry</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0356</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">KA</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Kanté <span style="font-weight:500">Adama</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0402</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">KA</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Konan <span style="font-weight:500">Affoué</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0409</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">KS</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Koné <span style="font-weight:500">Souleymane</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0412</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">KS</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Kouadio <span style="font-weight:500">Serge</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0415</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">KY</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Kouamé <span style="font-weight:500">Yao</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0418</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+                <div style="display:flex;align-items:center;gap:8px;margin:8px 0 2px 56px">
+                  <span style="font-size:13px;color:var(--text-muted)">Arrivé avec</span>
+                  <div style="display:flex;align-items:center;border:1px solid var(--border-strong);border-radius:9px;overflow:hidden;background:var(--surface)">
+                    <button style="width:48px;height:48px;border:0;border-right:1px solid var(--border);background:transparent;color:var(--text);font-size:20px;font-weight:600;cursor:pointer">−</button>
+                    <span style="min-width:72px;text-align:center;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:15px;font-variant-numeric:tabular-nums">7 min</span>
+                    <button style="width:48px;height:48px;border:0;border-left:1px solid var(--border);background:transparent;color:var(--text);font-size:20px;font-weight:600;cursor:pointer">+</button>
+                  </div>
+                </div>
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">KA</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Kouassi <span style="font-weight:500">Ange</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0423</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">LÉ</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Lorougnon <span style="font-weight:500">Émile</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0431</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">MD</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Meité <span style="font-weight:500">Djeneba</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0447</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">NK</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">N’Dri <span style="font-weight:500">Kévin</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0511</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">NC</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">N’Guessan <span style="font-weight:500">Chantal</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0523</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">OM</span>
+                  
+                    <span style="position:absolute;top:4px;right:4px;width:11px;height:11px;border-radius:999px;background:var(--accent);border:2px solid var(--surface)"></span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Ouattara <span style="font-weight:500">Mariam</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0530</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">SD</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Sangaré <span style="font-weight:500">Drissa</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0604</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">SB</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Sanogo <span style="font-weight:500">Bintou</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0612</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">SG</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Séri <span style="font-weight:500">Gérard</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0619</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">ST</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Silué <span style="font-weight:500">Tenin</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0625</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">SK</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Soro <span style="font-weight:500">Kolo</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0633</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">TM</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Tanoh <span style="font-weight:500">Michelle</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0702</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">TS</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Touré <span style="font-weight:500">Sékou</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0714</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">TA</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Traoré <span style="font-weight:500">Aya</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0721</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">YC</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Yao <span style="font-weight:500">Christelle</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0805</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+            <div style="border-bottom:1px solid var(--border);padding:8px 12px 8px 9px;background:var(--surface)">
+              <div style="display:flex;gap:8px;align-items:center">
+                <button style="width:48px;height:48px;flex:0 0 48px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer;position:relative">
+                  <span style="width:40px;height:40px;border-radius:999px;background:var(--surface-sunken);border:1px solid var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px">ZO</span>
+                  
+                </button>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.25;text-wrap:pretty">Zadi <span style="font-weight:500">Olivier</span></div>
+                  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0812</span>
+                    
+                  </div>
+                </div>
+                <div style="display:flex;gap:4px;flex:0 0 auto">
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M15 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"></path><circle cx="8.5" cy="7" r="3.5"></circle><path d="m17 8 5 5m0-5-5 5"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Absent</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Retard</span>
+                  </button>
+                  <button style="width:48px;height:52px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font-family:inherit;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16"></path><path d="M9 12h11l-3.5-4M20 12l-3.5 4"></path></svg>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">Vie sco.</span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              
+
+              
+
+              
+
+              
+            </div>
+          
+          <div style="padding:14px 16px 22px;font-size:12.5px;color:var(--text-muted);text-align:center">Fin de la liste · 34 élèves</div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-top:1px solid var(--border);background:var(--surface-sunken);font-size:12.5px;flex:0 0 auto">
+          <span style="width:13px;height:13px;border:2px solid var(--border-strong);border-top-color:var(--primary);border-radius:999px;animation:spin 1s linear infinite;flex:0 0 auto"></span>
+          <span style="font-weight:600;color:var(--text)">Envoi en cours</span>
+          <span style="color:var(--text-muted)">· 2 en attente</span>
+          <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:500">
+            <span style="display:flex;align-items:flex-end;gap:2px;height:11px">
+              <span style="width:3px;height:4px;border-radius:999px;background:var(--accent)"></span>
+              <span style="width:3px;height:7px;border-radius:999px;background:var(--accent)"></span>
+              <span style="width:3px;height:11px;border-radius:999px;background:var(--border-strong)"></span>
+            </span>
+            Lien faible
+          </span>
+        </div>
+
+        <div style="flex:0 0 auto;padding:10px 12px 6px;background:var(--surface);border-top:1px solid var(--border)">
+          <button class="hv3" style="width:100%;height:54px;border:1px solid var(--primary);border-radius:10px;background:var(--primary);color:var(--primary-ink);font-size:16px;font-weight:600;cursor:pointer">Enregistrer l’appel</button>
+          <div style="display:flex;justify-content:center">
+            <a href="#0" style="display:inline-flex;align-items:center;justify-content:center;gap:7px;height:44px;font-size:13px;font-weight:500;color:var(--text-muted)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8V3h10v5"></path><rect x="4" y="8" width="16" height="7" rx="2"></rect><path d="M7 15h10v6H7z"></path></svg>
+              Imprimer la feuille de secours
+            </a>
+          </div>
+        </div>
+
+        <nav style="display:flex;flex:0 0 auto;height:62px;background:var(--surface);border-top:1px solid var(--border);padding-bottom:4px">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--primary);font-weight:600;cursor:pointer;box-shadow:inset 0 2px 0 var(--primary)">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+            <span style="font-size:11px">Ma classe</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text-muted);font-weight:500;cursor:pointer">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="m9 13 2 2 4-4"></path></svg>
+            <span style="font-size:11px">Évaluations</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text-muted);font-weight:500;cursor:pointer">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span style="font-size:11px">Communication</span>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ================= ÉTAT 2 — CONFIRMATION ================= -->
+    <div style="flex:0 0 390px">
+      <div style="margin-bottom:14px">
+        <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ÉTAT 2</div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:17px;margin-top:4px">Après enregistrement</div>
+        <p style="font-size:13px;color:var(--text-muted);margin:6px 0 0;text-wrap:pretty">L’écran dit ce qui va partir, à qui, et à quelle heure — et laisse trente minutes pour se rétracter.</p>
+      </div>
+
+      <div style="width:390px;height:844px;border:1px solid var(--border-strong);border-radius:26px;overflow:hidden;background:var(--bg);display:flex;flex-direction:column;box-shadow:0 18px 40px rgba(0,0,0,.10)">
+
+        <div style="display:flex;align-items:center;gap:8px;height:30px;padding:0 18px;background:var(--surface);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted);flex:0 0 auto">
+          <span>08:07</span>
+          <span style="margin-left:auto;display:flex;align-items:flex-end;gap:2px;height:10px">
+            <span style="width:3px;height:4px;border-radius:999px;background:var(--accent)"></span>
+            <span style="width:3px;height:7px;border-radius:999px;background:var(--accent)"></span>
+            <span style="width:3px;height:10px;border-radius:999px;background:var(--border-strong)"></span>
+          </span>
+          <span>2G</span>
+          <span style="width:20px;height:10px;border:1px solid var(--border-strong);border-radius:2px;padding:1px;display:inline-block"><span style="display:block;width:60%;height:100%;background:var(--text-muted)"></span></span>
+        </div>
+
+        <div style="flex:0 0 auto;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px 12px">
+          <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:17px;letter-spacing:-0.01em">Mathématiques · 6e A</div>
+          <div style="font-size:12.5px;color:var(--text-muted)">mar. 22 sept. · 08h00–09h00 · salle B12</div>
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:13px;font-weight:600"><span style="font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">29</span> présents</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;background:var(--danger-soft);color:var(--danger);font-size:13px;font-weight:600"><span style="font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">4</span> absents</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600"><span style="font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">1</span> retard</span>
+          </div>
+        </div>
+
+        <div style="flex:1;min-height:0;overflow-y:auto">
+          <div style="padding:22px 16px 18px;background:var(--surface);border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="width:48px;height:48px;border-radius:999px;background:var(--success-soft);color:var(--success);display:flex;align-items:center;justify-content:center;flex:0 0 auto">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"></path></svg>
+              </span>
+              <div>
+                <div style="font-family:'Archivo',sans-serif;font-weight:600;font-size:19px;letter-spacing:-0.01em">Appel enregistré à 08h07</div>
+                <div style="font-size:13.5px;color:var(--text-muted);margin-top:2px">3 SMS partiront à <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">09h05</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:14px 16px 6px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)">Ce qui va partir</div>
+          <div style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border);box-shadow:inset 3px 0 0 var(--danger);background:var(--danger-soft)">
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14.5px;font-weight:600">Bamba <span style="font-weight:500">Koffi</span></div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0118</div>
+              </div>
+              <span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--danger);border-radius:999px;color:var(--danger);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.06em">SMS</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text)">09h05</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border);box-shadow:inset 3px 0 0 var(--danger);background:var(--danger-soft)">
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14.5px;font-weight:600">Coulibaly <span style="font-weight:500">Aminata</span></div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0206</div>
+              </div>
+              <span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--danger);border-radius:999px;color:var(--danger);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.06em">SMS</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text)">09h05</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border);box-shadow:inset 3px 0 0 var(--danger);background:var(--danger-soft)">
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14.5px;font-weight:600">N’Guessan <span style="font-weight:500">Chantal</span></div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0523</div>
+              </div>
+              <span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border:1px solid var(--danger);border-radius:999px;color:var(--danger);font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.06em">SMS</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12.5px;color:var(--text)">09h05</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border)">
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14.5px;font-weight:600">Diabaté <span style="font-weight:500">Fatoumata</span></div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0308</div>
+              </div>
+              <span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:999px;background:var(--success-soft);color:var(--success);font-size:11.5px;font-weight:600">Justifié</span>
+              <span style="font-size:12.5px;color:var(--text-muted)">aucun SMS</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 16px;box-shadow:inset 3px 0 0 var(--accent);background:var(--accent-soft)">
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14.5px;font-weight:600">Kouamé <span style="font-weight:500">Yao</span></div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted)">ELV-2026-0418</div>
+              </div>
+              <span style="font-size:12.5px;color:var(--text)">retard de <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">7 min</span></span>
+            </div>
+          </div>
+
+          <div style="margin:16px 12px 0;padding:14px;border:1px solid var(--border-strong);border-radius:12px;background:var(--surface)">
+            <div style="display:flex;align-items:baseline;gap:8px">
+              <span style="font-size:14px;font-weight:600">Annulable pendant 30 minutes</span>
+              <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:14px;font-variant-numeric:tabular-nums;color:var(--text-muted)">29:00</span>
+            </div>
+            <div style="height:4px;border-radius:999px;background:var(--surface-sunken);margin:10px 0 12px;overflow:hidden">
+              <div style="height:100%;border-radius:999px;background:var(--accent);width:97%"></div>
+            </div>
+            <button class="hv4" style="width:100%;height:50px;border:1px solid var(--danger);border-radius:10px;background:transparent;color:var(--danger);font-size:15px;font-weight:600;cursor:pointer">Annuler l’envoi des 3 SMS</button>
+            <p style="margin:10px 0 0;font-size:12.5px;color:var(--text-muted);text-wrap:pretty">Passé ce délai, les SMS sont remis à l’opérateur et l’appel n’est plus modifiable par l’enseignant — la vie scolaire peut encore corriger.</p>
+          </div>
+
+          <div style="display:flex;justify-content:center;padding:6px 12px 18px">
+            <a href="#0" style="display:inline-flex;align-items:center;justify-content:center;gap:7px;height:44px;font-size:13px;font-weight:500;color:var(--text-muted)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8V3h10v5"></path><rect x="4" y="8" width="16" height="7" rx="2"></rect><path d="M7 15h10v6H7z"></path></svg>
+              Imprimer la feuille de secours
+            </a>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-top:1px solid var(--border);background:var(--surface-sunken);font-size:12.5px;flex:0 0 auto">
+          <span style="width:7px;height:7px;border-radius:999px;background:var(--success);flex:0 0 auto"></span>
+          <span style="font-weight:600;color:var(--success)">Tout est envoyé</span>
+          <span style="color:var(--text-muted)">· 0 en attente</span>
+          <span style="margin-left:auto;color:var(--text-muted)">dernier envoi <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--text)">08:07</span></span>
+        </div>
+
+        <nav style="display:flex;flex:0 0 auto;height:62px;background:var(--surface);border-top:1px solid var(--border);padding-bottom:4px">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--primary);font-weight:600;cursor:pointer;box-shadow:inset 0 2px 0 var(--primary)">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+            <span style="font-size:11px">Ma classe</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text-muted);font-weight:500;cursor:pointer">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="m9 13 2 2 4-4"></path></svg>
+            <span style="font-size:11px">Évaluations</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text-muted);font-weight:500;cursor:pointer">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span style="font-size:11px">Communication</span>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;border-top:1px solid var(--border);padding-top:26px">
+      <div style="display:flex;gap:12px;padding:16px 18px;border:1px solid var(--border);border-radius:8px;background:var(--surface)">
+        <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted);flex:0 0 auto">01</span>
+        <p style="margin:0;font-size:14px;text-wrap:pretty">Trois entrées en bas, pas cinq : cet enseignant ne détient que sa classe et le domaine Évaluations. Un domaine absent est absent, jamais grisé.</p>
+      </div>
+      <div style="display:flex;gap:12px;padding:16px 18px;border:1px solid var(--border);border-radius:8px;background:var(--surface)">
+        <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted);flex:0 0 auto">02</span>
+        <p style="margin:0;font-size:14px;text-wrap:pretty">Le point ocre signale l’existence d’une consigne d’urgence, jamais le dossier. Le contenu médical reste dans le domaine Santé, attribué nominativement.</p>
+      </div>
+      <div style="display:flex;gap:12px;padding:16px 18px;border:1px solid var(--border);border-radius:8px;background:var(--surface)">
+        <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:12px;color:var(--text-muted);flex:0 0 auto">03</span>
+        <p style="margin:0;font-size:14px;text-wrap:pretty">Aucun envoi n’attend l’enregistrement : chaque exception part par petits lots dès le tap, et le ruban dit toujours combien restent en attente.</p>
+      </div>
+    </div>
+  
+
+</div>
+</body>
+</html>

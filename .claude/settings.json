@@ -1,0 +1,21 @@
+{
+  "enabledPlugins": {
+    "playwright@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "d=\"${CLAUDE_PROJECT_DIR:-.}\"; [ -x \"$d/scripts/verifier.sh\" ] || exit 0; \"$d/scripts/verifier.sh\" >&2 || exit 2",
+            "timeout": 600,
+            "asyncRewake": true,
+            "statusMessage": "Vérification — scripts/verifier.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

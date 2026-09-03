@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Éditeurs
+.idea/
+.vscode/
+*.swp
+
+# Environnement
+.env
+.env.local
+
+# Brouillons
+docs/bouillon.md
+
+# Spec Kit — état local à l'agent, jamais partagé
+.claude/settings.local.json
+.claude/.credentials.json
+
+# Canvas de design — les sources (.dc.html, canvas.json) SE VERSIONNENT ;
+# le fichier assemble fait ~2 Mo dont l'essentiel est le code de l'editeur,
+# et se regenere en une commande a partir des sources.
+docs/design/canvas/*.html
+!docs/design/canvas/*.dc.html
+specs/**/design/*.html
+!specs/**/design/*.dc.html
+
+# Rust
+/target/
+**/target/
+
+# Node
+node_modules/
+.nuxt/
+.output/
+dist/
+
+# Python (sidecar IA)
+__pycache__/
+*.pyc
+.venv/
