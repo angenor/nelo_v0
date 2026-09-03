@@ -1,8 +1,10 @@
 # Nelo
 
 Plateforme de gestion pour établissements scolaires. Pilote : établissements privés d'Abidjan,
-Côte d'Ivoire. Backend FastAPI/Pydantic, application Nuxt 4 mobile-first, assistance IA **intégrée au
-socle et désactivable par réglage**, PostgreSQL, Valkey, Garage.
+Côte d'Ivoire — **par le cycle primaire, seul segment du MVP**
+([ADR 018](docs/adr/018-le-mvp-commence-par-le-primaire.md)). Backend FastAPI/Pydantic, application
+Nuxt 4 mobile-first, assistance IA **intégrée au socle et désactivable par réglage**, PostgreSQL,
+Valkey, Garage.
 
 **Toute la documentation est dans [`docs/`](docs/). Lis ce dont tu as besoin, ne devine pas.**
 
@@ -70,6 +72,9 @@ la porte **P-08**, [docs/01-stack.md § 7.1](docs/01-stack.md). Lire la stratég
 moment d'écrire une tranche expose au premier risque du projet : sur-généraliser un socle qui n'a
 encore aucun client.
 
+- **pas d'autre segment que le primaire au MVP** — le préscolaire, le secondaire général, le
+  technique et le supérieur viennent après, **dans cet ordre**
+  ([ADR 018](docs/adr/018-le-mvp-commence-par-le-primaire.md)) ;
 - **pas de mode hors connexion au MVP** — **différé, pas exclu** ; quatre fondations se posent
   maintenant ([ADR 001](docs/adr/001-hors-connexion-differe.md)) ;
 - **pas d'application native** — une application web installable ; Capacitor plus tard

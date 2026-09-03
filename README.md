@@ -1,7 +1,8 @@
 # Nelo
 
 Plateforme de gestion pour établissements scolaires.
-Pilote : établissements privés d'Abidjan, Côte d'Ivoire.
+Pilote : établissements privés d'Abidjan, Côte d'Ivoire — par le cycle **primaire**, seul segment du
+MVP ([ADR 018](docs/adr/018-le-mvp-commence-par-le-primaire.md)).
 
 Backend FastAPI/Pydantic · application Nuxt 4 mobile-first · assistance IA intégrée au socle,
 désactivable par réglage · PostgreSQL · Valkey · Garage.

@@ -170,7 +170,7 @@ dont l'interface a besoin pour **ne rendre que ce qui existe** :
 {
   "compte": { "id": "…", "nom": "…", "prenoms": "…", "langue": "fr" },
   "etablissements": [
-    { "id": "…", "nom": "…", "sites": [ … ], "cycles_actifs": ["PRIMAIRE", "SECONDAIRE_1"],
+    { "id": "…", "nom": "…", "sites": [ … ], "cycles_actifs": ["PRIMAIRE"],
       "modules_actifs": ["SCOLARITE", "EVALUATION", "VIE_SCOLAIRE", "FINANCE", "COMMUNICATION"] }
   ],
   "etablissement_actif": "…",
@@ -352,6 +352,11 @@ ouvertes).
 `STR_ELEVE_DEUX_CLASSES`, `STR_EFFECTIF_DEPASSE` (**avertissement, `200` avec `alertes[]`**, pas un
 refus), `STR_STRUCTURE_FIGEE_NOTES_SAISIES`, `STR_COEFFICIENT_SUR_MATIERE_REFUSE`.
 
+> **Au primaire — le segment du MVP** : `/series` répond une collection vide, `serie_code` est absent
+> partout, et le même enseignant porte autant de `services-enseignants` qu'il enseigne de matières sur
+> sa classe. **Aucune route ne change** ; c'est la démonstration que la structure était bien
+> agnostique ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)).
+
 ### 2.8 Scolarité
 
 | Méthode | Route | Rôle | Cap. |
@@ -451,6 +456,10 @@ X-Nelo-Requete: 01936b7e-…
 
 `CON_QUORUM_NON_ATTEINT`, `CON_DECISION_VERROUILLEE`, `CON_SERIE_CIBLE_MANQUANTE`,
 `CON_RECOURS_HORS_DELAI`.
+
+> **Au primaire** : l'instance est le **conseil des maîtres** — le libellé vient du pack, les routes
+> ne bougent pas. La composition n'a ni délégué élève ni délégué parent, et
+> `CON_SERIE_CIBLE_MANQUANTE` ne se produit pas, faute de série au niveau cible.
 
 ### 2.12 Finance
 

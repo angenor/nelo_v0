@@ -5,6 +5,20 @@ coller.*
 
 ---
 
+## Le segment couvert
+
+**Les vingt-et-une tranches servent un seul segment : le primaire.** Six niveaux du CP1 au CM2, un
+maître polyvalent par classe, un appel par demi-journée, aucune série. Le préscolaire, le secondaire
+général, le technique et le supérieur arrivent après le MVP, **dans cet ordre**
+([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)).
+
+Ce choix ne change **aucune** tranche de place et n'en ajoute aucune : il change les **hypothèses de
+travail** de six d'entre elles — T2b, T5, T6a, T6b, T6c et T7 — et le cas nominal d'une septième, T8c.
+Le tableau des conséquences est dans l'ADR ; ce qu'une tranche doit en retenir est écrit dans son
+propre bloc.
+
+---
+
 ## Comment cette liste est ordonnée
 
 Quatre règles ont produit cet ordre, et elles priment sur l'envie de commencer par ce qui est
@@ -63,18 +77,18 @@ mais appartient à l'epic communication. La colonne **rang** donne l'ordre réel
 | 3 | **T1a** Se connecter et savoir où l'on est | ▪▪▪ | **Élevé** | Une enseignante ouvre son espace par OTP, et aucun tenant n'en voit un autre |
 | 4 | **T1b** Les capacités, les rôles et les périmètres | ▪▪▪ | **Élevé, irréversible** | Un censeur qui tient aussi la pédagogie voit **une** interface, et le dossier psychosocial reste fermé |
 | 5 | **T2a** L'année scolaire et sa bascule | ▪▪▪ | **Élevé, irréversible** | Deux années coexistent : on réinscrit pour septembre pendant que le 3ᵉ trimestre tourne |
-| 6 | **T2b** La structure pédagogique | ▪▪ | Moyen | Une classe dédoublée en deux groupes de TP a un appel juste |
+| 6 | **T2b** La structure pédagogique | ▪▪ | Moyen | Une classe de CM2 dédoublée en deux groupes de soutien a un appel juste |
 | 7 | **T3a** Les personnes, les foyers et les liens | ▪▪▪ | **Élevé** | Un enfant confié à sa tante en ville a un tuteur de fait, et la facture s'éclate 60/40 |
 | 8 | **T3b** L'élève et son inscription | ▪▪▪ | Moyen | Un dossier incomplet dit ce qui manque **avant** qu'on tente de valider |
 | 9 | **T4a** Le moteur de messages, le routage et le budget | ▪▪▪ | **Élevé** | Un événement produit un SMS de moins de 160 caractères, dans la fenêtre horaire, sous budget |
 | 10 | **T5** L'appel, l'absence et sa justification | ▪▪▪ | **Élevé, ergonomique** | Une classe de 40 est appelée **en moins de 45 s**, et la famille reçoit le SMS en moins de 10 min |
-| 11 | **T6a** Le référentiel d'évaluation et son moteur | ▪▪▪ | **Très élevé, irréversible** | Un pack fictif sur 10 avec deux périodes produit des moyennes justes |
+| 11 | **T6a** Le référentiel d'évaluation et son moteur | ▪▪▪ | **Très élevé, irréversible** | Un pack fictif sur 10 avec deux périodes produit des moyennes justes, et une échelle non numérique ne coûte aucune ligne de moteur |
 | 12 | **T6b** La saisie de notes | ▪▪ | **Élevé, ergonomique** | Le réseau tombe à la 38ᵉ note sur 40 : **rien n'est perdu** |
 | 13 | **T6c** Le bulletin | ▪▪▪ | Élevé | Un bulletin réédité trois ans plus tard est identique à l'original |
-| 14 | **T7** Le conseil de classe et la décision de passage | ▪▪▪ | Élevé | Le dossier du conseil est prêt sans qu'on l'ait compilé ; la décision se verrouille à la notification |
+| 14 | **T7** Le conseil de classe et la décision de passage | ▪▪▪ | Élevé | Le conseil des maîtres a son dossier prêt sans qu'on l'ait compilé ; la décision se verrouille à la notification |
 | 15 | **T8a** La grille tarifaire et la facturation par foyer | ▪▪▪ | Élevé | Une fratrie de trois sur deux cycles produit **une** facture, remise fratrie comprise |
 | 16 | **T8b** L'encaissement, la caisse et le reçu | ▪▪▪ | **Très élevé** | Un webhook qui arrive deux fois n'encaisse qu'une fois ; la caisse tombe juste |
-| 17 | **T8c** Les élèves affectés et la créance sur l'État | ▪▪ | Élevé | L'état des arriérés par année sort en un clic |
+| 17 | **T8c** Le financement public et la créance sur l'État | ▪▪ | Élevé | L'état des arriérés par année sort en un clic |
 | 18 | **T4b** Les circulaires et la messagerie journalisée | ▪▪ | Moyen | Aucun message adulte-mineur n'est supprimable, et un tiers peut le lire |
 | 19 | **T9** Le registre de protection de l'enfance | ▪▪ | **Très élevé** | Un signalement confidentiel part sans auteur, et le chef d'établissement concerné ne le lit pas |
 | 20 | **T10a** L'import et la reprise | ▪▪▪ | Élevé | Un établissement de 800 élèves est opérationnel en moins de deux semaines |
@@ -97,8 +111,9 @@ dédiée, avant `plan`. Le gabarit est en fin de [05-design.md](05-design.md).
 
 ## Ce qu'une tranche ne doit pas fermer
 
-Le produit d'aujourd'hui sert un collège privé d'Abidjan ; [06-apres-mvp.md](06-apres-mvp.md) décrit
-ce qui pourrait venir ensuite — quatre segments, trois vagues de pays, quarante-trois modules.
+Le produit d'aujourd'hui sert l'école primaire d'un groupe scolaire privé d'Abidjan ;
+[06-apres-mvp.md](06-apres-mvp.md) décrit ce qui pourrait venir ensuite — quatre segments, trois
+vagues de pays, quarante-trois modules.
 **Neuf tranches sur vingt-et-une peuvent, sans le vouloir, rendre cette suite impossible.** Les douze
 autres n'ont rien à surveiller, et le savoir est aussi utile.
 
@@ -123,7 +138,7 @@ notes du produit pour qu'un pack ghanéen puisse noter sur 100 avec décimales.
 | **T5** | L'absence en paire de dates au lieu d'un intervalle — l'appel par UE du supérieur devient un second modèle | Porte **P-08** |
 | **T6a** | **La tranche la plus exposée du corpus.** Une échelle sur 20 en dur, un `match pays`, une règle d'arrondi implicite : chacune condamne l'extension anglophone | Porte **P-09** + le **test d'agnosticité**, permanent |
 | **T8a** | Un montant en virgule flottante ; une devise sans exposant | Porte **P-08** |
-| **T10b** | Des indicateurs taillés pour un collège seul, alors que le consolidé devra comparer une maternelle et un lycée | Revue |
+| **T10b** | Des indicateurs taillés pour une école primaire seule, alors que le consolidé devra comparer une maternelle et un lycée | Revue |
 
 **Ce qui n'est pas demandé** : construire quoi que ce soit pour ces extensions. Une provision est une
 colonne ou un référentiel, jamais une fonctionnalité. Ce qui est demandé est plus modeste et plus
@@ -146,7 +161,7 @@ tranché** et le rend opposable à chaque plan.
 ```text
 /speckit-constitution Rédige la constitution du projet Nelo à partir des quinze principes ci-dessous.
 Ils ne sont pas à inventer : ils condensent des décisions déjà prises et documentées. Lis d'abord
-CLAUDE.md, docs/00-brief.md, docs/01-stack.md et les dix-huit fichiers de docs/adr/ pour en tirer les
+CLAUDE.md, docs/00-brief.md, docs/01-stack.md et les dix-neuf fichiers de docs/adr/ pour en tirer les
 motifs — un principe sans son pourquoi ne survit pas à la première contrainte de calendrier.
 
 1. LE SERVEUR EST LA SEULE AUTORITÉ. L'interface masque, l'API refuse. Chaque appel revérifie la
@@ -174,10 +189,12 @@ motifs — un principe sans son pourquoi ne survit pas à la première contraint
    d'accès sont définis pour chaque traitement, DANS LE MODÈLE. Aucune donnée d'élève n'existe sans
    qu'on sache qui peut la lire, combien de temps, et à quel titre.
 
-5. LE PAYS NE VIT QUE DANS LE COUNTRY PACK. Aucune littérale de pays, de devise, d'examen, de
-   découpage d'année ou d'échelle de notation hors du pack. Aucune branche de code conditionnée par
-   le pays. Le test d'agnosticité — un pack fictif à échelle sur 10 et deux périodes fonctionnant de
-   bout en bout — est permanent.
+5. LE PAYS NE VIT QUE DANS LE COUNTRY PACK, ET LE SEGMENT NON PLUS. Aucune littérale de pays, de
+   devise, d'examen, de découpage d'année ou d'échelle de notation hors du pack. Aucun cycle, aucun
+   niveau, aucune série, aucune composition d'instance écrits dans le code. Aucune branche
+   conditionnée par le pays ni par le segment : le MVP sert le primaire, et aucune ligne ne le sait.
+   Le test d'agnosticité — un pack fictif à échelle sur 10 et deux périodes fonctionnant de bout en
+   bout — est permanent.
 
 6. LE RÉFÉRENTIEL D'ÉVALUATION EST UNE DONNÉE VERSIONNÉE, PAS DU CODE. Échelle, table de conversion,
    formule de composition en arbre déclaratif, règles d'arrondi, règles de rang, gabarit de bulletin.
@@ -477,8 +494,8 @@ docs/01-stack.md section 5.1 (session sur poste partagé). Ne rien inventer hors
 
 ```text
 /speckit-specify Besoin : décider ce qu'une personne peut faire et sur quoi, sachant que la
-répartition des fonctions varie énormément d'un établissement à l'autre À TAILLE ÉGALE. Dans un
-collège de 400 élèves, une seule personne tient la scolarité, la pédagogie et l'emploi du temps ;
+répartition des fonctions varie énormément d'un établissement à l'autre À TAILLE ÉGALE. Dans une
+école de 400 élèves, une seule personne tient la scolarité, la pédagogie et l'emploi du temps ;
 dans un groupe de 3000, ce sont trois services. Un produit qui impose un découpage fixe force le
 petit établissement à partager des mots de passe et le grand à accorder des droits trop larges.
 
@@ -604,7 +621,9 @@ qui se ressemblent et qui n'ont rien à voir : le niveau, la classe et le groupe
 
 Livrer :
 - la hiérarchie cycle, niveau, série, classe, groupe, dont les trois premiers niveaux viennent du
-  pack de pays ;
+  pack de pays. LE SEGMENT DU MVP EST LE PRIMAIRE : six niveaux du CP1 au CM2, ET AUCUNE SÉRIE. La
+  série reste dans le modèle, nullable, parce que le secondaire la remplira ; le pack primaire ne la
+  déclare pas ;
 - la classe, rattachée à une salle, à un site et à un professeur principal — ce dernier étant un rôle
   attaché au COUPLE classe-année, pas à une personne globalement ;
 - le groupe, qui porte les options, les langues vivantes, les travaux pratiques, le soutien et
@@ -612,14 +631,17 @@ Livrer :
 - les matières et les enseignements, un enseignement étant le croisement d'une matière, d'un niveau et
   éventuellement d'une série, PORTANT LE COEFFICIENT, le volume horaire, le statut obligatoire ou
   optionnel et le mode d'évaluation ;
-- l'affectation des enseignants aux enseignements et aux classes ou groupes ;
+- l'affectation des enseignants aux enseignements et aux classes ou groupes. AU PRIMAIRE, LE MAÎTRE
+  EST POLYVALENT : la même personne porte autant d'affectations qu'elle enseigne de matières sur sa
+  classe, et elle en est le professeur principal. La polyvalence est un CUMUL D'AFFECTATIONS, jamais
+  un cas particulier du modèle ;
 - les salles et leur capacité ;
 - l'emploi du temps EN SAISIE MANUELLE : les séances, leurs créneaux, leurs salles.
 
 Contraintes non négociables :
 - LE COEFFICIENT EST PORTÉ PAR L'ENSEIGNEMENT, PAS PAR LA MATIÈRE. Le même français n'a pas le même
-  coefficient en série A et en série C. Une matière qui porte un coefficient est une erreur de
-  modèle, pas un raccourci ;
+  coefficient au CP1 et au CM2, ni — quand le secondaire arrivera — en série A et en série C. Une
+  matière qui porte un coefficient est une erreur de modèle, pas un raccourci ;
 - LE DÉDOUBLEMENT SE MODÉLISE AU NIVEAU DU GROUPE, jamais de la classe. Une classe scindée en deux
   groupes pour les travaux pratiques a un emploi du temps et un appel corrects seulement à cette
   condition ; sinon les deux sont faux ;
@@ -632,9 +654,10 @@ Contraintes non négociables :
 Hors périmètre : la génération automatique d'emploi du temps, qui est un solveur et appartient à
 l'après-MVP ; la constitution automatique des classes, idem.
 
-Risque : moyen. Le coefficient mal placé se paie au premier bulletin de série C.
-Critère de fin : une classe dédoublée en deux groupes de travaux pratiques a un appel juste sur
-chacun, et le même enseignement porte deux coefficients dans deux séries.
+Risque : moyen. Le coefficient mal placé se paie au premier bulletin.
+Critère de fin : une classe de CM2 dédoublée en deux groupes de soutien a un appel juste sur chacun ;
+le même enseignement porte deux coefficients sur deux niveaux ; et un maître titulaire porte huit
+affectations sur sa classe sans qu'aucune ligne de code ne connaisse le mot « polyvalent ».
 
 Contexte projet : lire docs/02-domaine.md section 5 en entier, et docs/03-api.md section 2.7. Ne rien
 inventer hors de ces fichiers.
@@ -881,16 +904,17 @@ de quarante-cinq secondes, debout, sur un téléphone d'entrée de gamme, avec u
 à tout moment — et faire que la famille sache l'absence avant midi.
 
 Livrer :
-- la liste des séances du jour de la personne connectée, allégée au maximum : c'est sa route d'entrée
-  dans le produit ;
-- la grille d'appel, un geste par élève, une page par séance : pas de navigation, pas de modale
+- la liste des appels du jour de la personne connectée, allégée au maximum : c'est sa route d'entrée
+  dans le produit. AU PRIMAIRE, SEGMENT DU MVP, CE SONT DEUX DEMI-JOURNÉES ; au secondaire ce sera une
+  séance par cours. La même route, la même page, la même grille ;
+- la grille d'appel, un geste par élève, une page par appel : pas de navigation, pas de modale
   intermédiaire ;
 - L'ENREGISTREMENT PAR PETITS LOTS AU FIL DE L'EAU, chaque lot portant sa clé d'idempotence et
   renvoyant l'état de chaque ligne ;
 - l'état par ligne visible en permanence — enregistré, ou en attente — et le ruban d'état de saisie
   qui dit l'heure du dernier enregistrement, le nombre de saisies en attente et la qualité du lien ;
 - la présence avec ses états : présent, absent, retard avec ses minutes, excusé ;
-- l'absence comme INTERVALLE, agrégée à partir des séances, avec son état justifiée ou non justifiée ;
+- l'absence comme INTERVALLE, agrégée à partir des appels, avec son état justifiée ou non justifiée ;
 - l'événement d'absence non justifiée écrit DANS LA MÊME TRANSACTION que l'appel, qui déclenche le
   message court par la politique de routage ;
 - le dépôt de justificatif par le responsable légal ou par la vie scolaire, et son traitement ;
@@ -908,8 +932,10 @@ Contraintes non négociables :
 - perdre le réseau à la dernière ligne ne coûte JAMAIS les précédentes ;
 - le ruban informe, IL NE BLOQUE JAMAIS LA SAISIE ;
 - un retard n'est pas une absence : il porte ses minutes et alimente ses propres statistiques ;
-- l'absence est un intervalle, jamais une paire de dates ni un booléen par demi-journée. Le primaire
-  appelle par demi-journée, le secondaire par cours : l'intervalle absorbe les deux ;
+- l'absence est un intervalle, jamais une paire de dates ni un booléen par demi-journée — Y COMPRIS
+  QUAND LE CAS NOMINAL EST LA DEMI-JOURNÉE. C'est exactement là que la provision se dégrade : le
+  primaire appelle par demi-journée, le secondaire par cours, le supérieur par unité d'enseignement,
+  et l'intervalle absorbe les trois. Un booléen matin/après-midi coûterait les deux autres ;
 - la sortie d'un élève exige la vérification de la personne autorisée, et elle s'écrit. C'est un
   contrôle de sécurité physique ;
 - le dossier disciplinaire en cours d'instruction est cloisonné.
@@ -960,8 +986,13 @@ Livrer :
   notes en mémoire ;
 - la route de simulation qui rejoue une formule sur un jeu d'essai AVANT publication ;
 - le gel d'un référentiel publié : on en crée une version, on ne le modifie pas ;
-- le pack de pays ivoirien complet dans sa partie évaluation, ET un pack fictif minimal — un cycle, un
-  niveau, une échelle sur dix, deux périodes — qui sert de test permanent.
+- le pack de pays ivoirien dans sa partie évaluation DU PRIMAIRE — l'échelle, la conversion en
+  mention, la composition périodique et annuelle, les règles d'arrondi et de rang —, ET un pack
+  fictif minimal — un cycle, un niveau, une échelle sur dix, deux périodes — qui sert de test
+  permanent ;
+- SI LE PACK DÉCLARE UNE ÉCHELLE D'ACQUISITION PAR COMPÉTENCE — quatre niveaux nommés plutôt qu'un
+  nombre —, LE MOTEUR LA TRAITE COMME UNE ÉCHELLE DE PLUS. C'est le test que le référentiel est bien
+  déclaratif : une échelle non numérique ne doit demander AUCUNE ligne de moteur.
 
 Contraintes non négociables :
 - AUCUNE BORNE D'ÉCHELLE EN DUR hors des tests. Ni vingt, ni cent ;
@@ -976,7 +1007,9 @@ Contraintes non négociables :
 - LE TEST D'AGNOSTICITÉ EST PERMANENT : le pack fictif produit des moyennes, des mentions et des rangs
   justes, de bout en bout.
 
-Hors périmètre : la saisie, livrée par T6b ; le document, livré par T6c.
+Hors périmètre : la saisie, livrée par T6b ; le document, livré par T6c ; LE SUIVI LONGITUDINAL DES
+ACQUIS FONDAMENTAUX — l'acquis qui se conserve d'une période à l'autre et se valide une fois — qui
+n'est PAS une échelle et n'entre pas au MVP.
 
 Risque : TRÈS ÉLEVÉ ET IRRÉVERSIBLE. C'est la tranche la plus exposée du corpus.
 Critère de fin : le pack fictif sur dix avec deux périodes produit des moyennes, des mentions et des
@@ -1002,6 +1035,8 @@ Livrer :
   état ;
 - la grille de saisie par classe ou par groupe, colonne d'élèves, clavier numérique ouvert seul,
   tabulation qui descend la colonne ;
+- LE CHANGEMENT DE MATIÈRE SANS QUITTER L'ÉCRAN : au primaire, le même maître saisit les huit matières
+  de sa classe. Le faire ressortir vers un menu à chaque matière coûte huit navigations par période ;
 - L'ENREGISTREMENT PAR PETITS LOTS AU FIL DE L'EAU, même contrat que l'appel : une clé d'idempotence
   par lot, l'état de chaque ligne en retour, le ruban d'état de saisie ancré ;
 - la saisie de l'absence à une évaluation, distincte d'une note nulle ;
@@ -1025,7 +1060,8 @@ Hors périmètre : les appréciations, livrées par T6c ; le bulletin, idem.
 
 Risque : élevé et ergonomique.
 Critère de fin : on coupe le réseau à la trente-huitième note sur quarante et rien n'est perdu ; une
-note de vingt-deux sur une échelle de vingt est refusée en nommant les bornes.
+note hors des bornes de l'échelle est refusée en nommant ces bornes ; et un maître enchaîne deux
+matières de sa classe sans quitter la grille.
 
 Contexte projet : lire docs/02-domaine.md sections 7.3, 7.4 et 7.5, docs/03-api.md section 2.9 (la
 saisie par lot), et docs/design/ecrans/04_saisie-des-notes-tablette.html. Ne rien inventer hors de ces
@@ -1043,9 +1079,11 @@ journée au lieu d'une semaine.
 
 Livrer :
 - le calcul du bulletin sur une classe et une période, produisant moyennes par matière, moyenne
-  générale, rang, mention et assiduité ;
+  générale, rang, mention et assiduité — et, SI LE PACK DÉCLARE UNE ÉCHELLE D'ACQUISITION, le niveau
+  atteint par compétence, restitué par le même moteur et par le même gabarit ;
 - l'appréciation par matière et l'appréciation générale, portant leur auteur ET LEUR ORIGINE — humaine
-  ou proposée par assistance et validée par une personne nommée ;
+  ou proposée par assistance et validée par une personne nommée. AU PRIMAIRE, LE MÊME MAÎTRE LES REDIGE
+  TOUTES : la saisie s'enchaîne matière après matière sans changer d'écran ;
 - l'assistance à la rédaction des appréciations EN PROPOSITION VALIDÉE : elle propose, un humain nommé
   valide avant effet, la sortie est étiquetée comme telle, et le journal enregistre quelle capacité,
   quel modèle, quelles données, quelle sortie, quel validateur ;
@@ -1071,7 +1109,9 @@ Contraintes non négociables :
 - le document imprimé est lisible en noir et blanc, aucune couleur ne porte d'information.
 
 Hors périmètre : la décision de passage, livrée par T7 ; la publication conditionnée à la tenue du
-conseil, qui est un paramètre livré ici mais dont l'effet arrive avec T7.
+conseil, qui est un paramètre livré ici mais dont l'effet arrive avec T7 ; le livret d'acquis
+fondamentaux suivi d'une année sur l'autre, qui n'est pas un bulletin de période et attend le
+segment primaire complet.
 
 Risque : élevé. C'est le livrable qui décide de la vente.
 Critère de fin : un bulletin est produit pour une classe entière, réédité trois ans plus tard à
@@ -1094,19 +1134,23 @@ Elle garde sa tranche avec le conseil, parce que l'un ne se teste pas sans l'aut
 **Risque** : élevé.
 
 ```text
-/speckit-specify Besoin : tenir le conseil de classe sans que personne n'ait compilé le dossier à la
-main, et produire une décision de fin d'année qui a une valeur juridique, une voie de recours et un
-verrouillage.
+/speckit-specify Besoin : tenir le conseil sans que personne n'ait compilé le dossier à la main, et
+produire une décision de fin d'année qui a une valeur juridique, une voie de recours et un
+verrouillage. AU PRIMAIRE — LE SEGMENT DU MVP — L'INSTANCE EST LE CONSEIL DES MAÎTRES : mêmes tables,
+même circuit, un libellé qui vient du pack. Le code `CONSEIL_CLASSE` n'est pas un libellé.
 
 Livrer :
-- la convocation du conseil : date, ordre du jour, participants dont les délégués élèves et parents,
-  quorum ;
+- la convocation du conseil : date, ordre du jour, participants, quorum. LA COMPOSITION VIENT DU PACK :
+  au primaire, l'équipe des maîtres et la direction, SANS délégué élève ni délégué parent ; au
+  secondaire, avec. Une liste de qualités écrite dans le code est une erreur de modèle ;
 - LE DOSSIER PRÉPARÉ AUTOMATIQUEMENT : moyennes, rang, assiduité, incidents, appréciations par
   matière. Le conseil délibère, il ne compile pas ;
 - la délibération par élève : appréciation générale, mention, sanction positive — tableau d'honneur,
   encouragements, avertissement de travail ou de conduite ;
 - la décision de fin d'année, entité en soi : admis, admis sous condition, redoublement, réorientation
-  vers une autre série, orientation vers l'enseignement technique, exclusion ;
+  vers une autre série, orientation vers l'enseignement technique, exclusion. LES ISSUES OUVERTES À UN
+  NIVEAU VIENNENT DU PACK : au primaire, aucune série n'existe, donc ni réorientation ni orientation
+  technique — les valeurs restent au modèle et ne sont pas proposées ;
 - la notification aux familles, qui VERROUILLE la décision ;
 - la voie de recours avec son délai, qui vient du pack de pays et non d'une constante ;
 - le procès-verbal signé, immuable, portant son empreinte ;
@@ -1117,7 +1161,11 @@ Contraintes non négociables :
   scolaire ;
 - une décision se verrouille après notification : avant, elle est modifiable ; après, elle ne l'est
   plus que par la voie de recours ;
-- une réorientation exige sa série cible ; sans elle, la décision est refusée ;
+- une réorientation exige sa série cible DÈS QUE LE PACK DÉCLARE DES SÉRIES AU NIVEAU VISÉ ; sans
+  elle, la décision est refusée. Au primaire, ce refus ne se produit jamais, et le code qui le porte
+  ne s'écrit pas différemment pour autant ;
+- L'EXAMEN DE FIN DE CYCLE APPARTIENT AU MINISTÈRE. Le passage en sixième en dépend : le produit
+  enregistre la décision et le résultat, il n'organise ni l'inscription ni l'épreuve ;
 - le délai de recours est une donnée du pack, jamais une constante du code ;
 - le procès-verbal est immuable et porte son empreinte ;
 - L'ASSISTANCE NE PRONONCE JAMAIS UNE DÉCISION DE PASSAGE. Elle peut au mieux préparer un dossier.
@@ -1129,7 +1177,9 @@ constitution reste manuelle.
 
 Risque : élevé — la décision de passage a une valeur juridique et une voie de recours.
 Critère de fin : le dossier du conseil est complet sans qu'on l'ait compilé ; une décision notifiée
-n'est plus modifiable ; une réorientation sans série cible est refusée.
+n'est plus modifiable ; le conseil des maîtres du pack primaire se tient sans délégué et atteint son
+quorum ; et le même code, avec un pack qui déclare des séries, refuse une réorientation sans série
+cible.
 
 Contexte projet : lire docs/02-domaine.md section 9 en entier, docs/03-api.md section 2.11, et
 docs/design/ecrans/08_conseil-de-classe-poste.html. Ne rien inventer hors de ces fichiers.
@@ -1140,8 +1190,14 @@ docs/design/ecrans/08_conseil-de-classe-poste.html. Ne rien inventer hors de ces
 # T8 — L'argent
 
 **C'est la fonctionnalité qui fait payer.** Le modèle simple « les parents paient l'école » est faux
-pour une part majeure des effectifs du privé ivoirien : plus d'un tiers des élèves du premier cycle du
-secondaire sont scolarisés dans un établissement privé financé par l'État.
+pour une part majeure des effectifs du privé ivoirien : l'État est un payeur, par le conventionnement
+de l'établissement et — au secondaire — par l'affectation d'élèves, dont plus d'un tiers des effectifs
+du premier cycle relèvent dans le privé.
+
+> **Le MVP sert le primaire, où l'affectation d'élèves n'existe pas.** T8c garde donc son modèle
+> entier et change de cas nominal : la subvention à l'établissement conventionné remplace l'élève
+> affecté. Le motif est dans [ADR 018](adr/018-le-mvp-commence-par-le-primaire.md) — c'est le seul
+> endroit du corpus où le changement de segment coûte quelque chose.
 
 L'epic se découpe en trois parce que la facturation, l'encaissement et la créance sur l'État ont trois
 natures de risque : la justesse du calcul, l'idempotence face à un tiers, et la conformité d'une pièce
@@ -1181,7 +1237,7 @@ Contraintes non négociables :
 - la grille tarifaire est versionnée et figée après publication ;
 - le client n'additionne rien : le serveur renvoie les montants déjà calculés.
 
-Hors périmètre : l'encaissement, livré par T8b ; les élèves affectés, livrés par T8c.
+Hors périmètre : l'encaissement, livré par T8b ; le financement public, livré par T8c.
 
 Risque : élevé.
 Critère de fin : une fratrie de trois élèves sur deux cycles produit une facture unique avec remise
@@ -1238,18 +1294,24 @@ Contexte projet : lire docs/02-domaine.md sections 10.3 et 10.4, docs/03-api.md 
 docs/adr/009-agregateur-de-paiement-derriere-une-interface.md. Ne rien inventer hors de ces fichiers.
 ```
 
-## T8c — Les élèves affectés et la créance sur l'État
+## T8c — Le financement public et la créance sur l'État
 
 **Risque** : élevé. **Poids** : 25 % de l'epic.
 
 ```text
 /speckit-specify Besoin : modéliser le circuit de financement public, parce que pour un établissement
 conventionné la trésorerie dépend de subventions versées avec retard, parfois d'une année sur l'autre,
-et qu'aucun tableau de bord n'est honnête sans lui.
+et qu'aucun tableau de bord n'est honnête sans lui. LE CAS NOMINAL DU MVP EST LA SUBVENTION À
+L'ÉTABLISSEMENT PRIMAIRE CONVENTIONNÉ ; l'affectation d'un élève par l'État, qui est un dispositif du
+secondaire, est le MÊME modèle avec un fait générateur par élève — on le prévoit, on ne le construit
+pas.
 
 Livrer :
 - le rattachement d'une inscription à une décision d'affectation de l'État et à sa cohorte, avec le
-  montant pris en charge ;
+  montant pris en charge — la table existe et reste VIDE au primaire, où l'État finance l'effectif et
+  non l'élève. Elle se remplit avec le segment secondaire, sans migration ;
+- LA CRÉANCE PORTÉE PAR L'ÉTABLISSEMENT ET L'ANNÉE DE RATTACHEMENT, avec ses trois effectifs : c'est
+  le cas nominal du MVP, et le modèle le portait déjà ;
 - la SÉPARATION STRICTE entre ce que l'État couvre et ce qui est facturable à la famille — sujet
   sensible et contrôlé ;
 - la créance sur l'État par année de rattachement : montant dû, ancienneté, encaissements partiels ;

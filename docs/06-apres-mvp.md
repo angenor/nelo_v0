@@ -33,7 +33,7 @@ Elles ne coûtent rien aujourd'hui et évitent une reprise de toutes les donnée
 | **Country pack, aucune littérale de pays hors du pack** | Chaque nouveau pays devient un déploiement |
 | **Notes et coefficients en `NUMERIC`** | Migrer toutes les notes du produit le jour où un pack passe au pourcentage à décimales |
 | **`annee_id NOT NULL` sur toute table pédagogique** | Les référentiels de N+1 écrasent ceux de N, et les bulletins archivés deviennent faux |
-| **Absences en intervalle `[début, fin)`** | L'appel par demi-journée du primaire, par cours du secondaire et par UE du supérieur exigent trois modèles |
+| **Absences en intervalle `[début, fin)`** | L'appel par demi-journée du primaire — le cas du MVP —, par cours du secondaire et par UE du supérieur exigeraient trois modèles |
 | **Capacités + périmètre, jamais des rôles fixes** | Un système de rôles ne se transforme pas en ABAC : il se remplace, avec toutes les vérifications d'accès |
 | **`protection` sans dépendance entrante** | Le cloisonnement devient une convention, et une convention se contourne |
 | **`inscription.regime` nullable** | L'internat devient une migration |
@@ -53,8 +53,8 @@ socle/          tenants · personnes · habilitations · annees · communication
 metier/         structure · scolarite · evaluation · vie_scolaire · conseil · finance · protection
                 → le métier scolaire, commun à tous les segments
 
-segments/       secondaire  [livré]
-                prescolaire · primaire · technique · superieur  [à venir]
+segments/       primaire  [livré]
+                prescolaire · secondaire · technique · superieur  [à venir, dans cet ordre]
                 → les spécialisations, additives
 ```
 
@@ -108,17 +108,23 @@ des crédits ; un parcours est une suite de `groupe`. La structure absorbe, elle
 
 ### 3.3 La nature de l'évaluation — note contre compétence
 
-Trois segments n'évaluent pas avec des notes :
+Trois segments n'évaluent pas seulement avec des notes :
 
-| Segment | Ce qu'il évalue |
-|---|---|
-| **Préscolaire** | **Observation par domaine d'apprentissage.** Il n'y a pas de note, pas de moyenne, pas de rang |
-| **Primaire** | Évaluation **par compétence**, avec suivi des acquis fondamentaux — lecture, écriture, calcul |
-| **Technique** | **Compétence certifiante**, avec livret de suivi et validation par le tuteur d'entreprise |
+| Segment | Ce qu'il évalue | Où il en est |
+|---|---|---|
+| **Primaire** | Évaluation **par compétence**, avec suivi des acquis fondamentaux — lecture, écriture, calcul | **Au MVP** pour la partie « échelle » ; le suivi longitudinal reste ici |
+| **Préscolaire** | **Observation par domaine d'apprentissage.** Il n'y a pas de note, pas de moyenne, pas de rang | À venir |
+| **Technique** | **Compétence certifiante**, avec livret de suivi et validation par le tuteur d'entreprise | À venir |
 
-Le référentiel d'évaluation déclaratif absorbe le premier cas — une échelle à quatre niveaux
-d'acquisition est une échelle. Il n'absorbe **pas** le troisième : une compétence certifiante n'est pas
-une note dans une période, c'est un état qui se valide une fois et se conserve.
+Le référentiel d'évaluation déclaratif absorbe les deux premiers cas — **une échelle à quatre niveaux
+d'acquisition est une échelle**, et le MVP le vérifie sur le primaire
+([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)). Il n'absorbe **pas** le troisième : une
+compétence certifiante n'est pas une note dans une période, c'est un état qui se valide une fois et se
+conserve.
+
+**Le suivi longitudinal des acquis fondamentaux relève de la même fracture** : un acquis qui se
+conserve d'une période à l'autre n'est pas une note de période. Il est hors MVP, même si le primaire y
+est.
 
 **Coût estimé : 3 à 5 semaines** pour le référentiel de compétences et le livret de suivi.
 
@@ -138,15 +144,21 @@ catalogue.
 
 | Segment | Ce qu'il ajoute | Coût | Rang |
 |---|---|---|---|
-| **Primaire** | Évaluation par compétences, acquis fondamentaux, cantine subventionnée, coopérative scolaire | **2-4 sem.** | 1 |
-| **Préscolaire** | Journal de vie quotidienne, ratio d'encadrement, observation par domaine, album photo à consentement révocable, **remise de l'enfant avec contrôle systématique** | **3-5 sem.** | 2 |
+| **Préscolaire** | Journal de vie quotidienne, ratio d'encadrement, observation par domaine, album photo à consentement révocable, **remise de l'enfant avec contrôle systématique** | **3-5 sem.** | 1 |
+| **Secondaire général** | Séries et coefficient par série, emploi du temps par matière, conseil de classe avec délégués, **élèves affectés par l'État** | **4-6 sem.** | 2 |
 | **Technique et professionnel** | Ateliers et plateaux, alternance, stages et conventions tripartites, compétences certifiantes, équipements et EPI, relations entreprises | **8-12 sem.** | 3 |
 | **Supérieur** | UE et crédits, LMD, concours, délibérations et jurys, recherche et CAMES, international, formation continue, vie étudiante, BU, qualité | **14-20 sem.** | 4 |
 
-> **Le primaire est le moins cher parce que le socle a été conçu pour lui** : appel par demi-journée
-> (l'intervalle), enseignant polyvalent (un `service_enseignant` couvrant toutes les matières), remise
-> à la personne autorisée (déjà dans le modèle). Il valide surtout que le référentiel déclaratif
-> absorbe une échelle non numérique.
+> **Le primaire a quitté cette table : c'est le segment du MVP**
+> ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)). Le motif est exactement celui qui le
+> classait premier ici : **le socle a été conçu pour lui** — appel par demi-journée (l'intervalle),
+> enseignant polyvalent (un `service_enseignant` par matière pour la même personne), remise à la
+> personne autorisée (déjà dans le modèle). Ce qui restait de sa ligne — cantine subventionnée,
+> coopérative scolaire — n'était pas du segment mais des **services d'établissement**, et vit au § 7.
+
+> **Le secondaire coûte plus cher que le primaire dans les deux sens.** Il ajoute la série, qui
+> traverse la structure, l'évaluation et le bulletin, et il ouvre l'**affectation d'élèves par
+> l'État** — dont T8c porte déjà le modèle, et qui attend seulement son fait générateur par élève.
 
 ---
 
@@ -300,6 +312,7 @@ notifications critiques, Capacitor n'apporte rien qu'un raccourci sur l'écran d
 | Tentation | Pourquoi c'est une erreur |
 |---|---|
 | **Construire `segments/superieur` « pendant qu'on y est »** | C'est une autre unité d'inscription. Le faire maintenant spécialiserait le socle sur un besoin sans client |
+| **Ajouter le secondaire « puisque le corpus était écrit pour lui »** | Le corpus l'a quitté volontairement ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)). La série traverse la structure, l'évaluation et le bulletin : c'est un segment, pas un reliquat |
 | **Généraliser le référentiel d'évaluation « pour tous les cas »** | Il est déjà déclaratif. Le généraliser davantage sans un deuxième pays réel produit une abstraction fausse |
 | **Écrire les country packs V2 à l'avance** | Un pack écrit sans client se découvre faux au premier client |
 | **Ouvrir C4** | Profilage de mineurs, sans le retour terrain qui dirait ce qui est utile et ce qui étiquette |
@@ -317,12 +330,12 @@ Après que le pilote a abandonné son classeur, et pas avant :
 |---|---|---|---|
 | 1 | **SMS entrant par mot-clé** | 2-3 sem. | De la marge, tous les mois |
 | 2 | **C3 — solveur** (EDT + constitution des classes) | 6-10 sem. | La corvée la plus détestée de l'année scolaire |
-| 3 | **Segment primaire** | 2-4 sem. | Le groupe scolaire multi-cycles complet |
+| 3 | **Segment préscolaire** | 3-5 sem. | La maternelle du groupe scolaire |
 | 4 | **Transport** | 5-7 sem. | Un module qui se facture aux familles |
 | 5 | **Country packs V2** (2 pays) | 2-4 sem. | Le marché régional francophone |
 | 6 | **Économat** | 4-6 sem. | Une source de revenu pour l'établissement |
 | 7 | **RH et paie** | 8-12 sem. | Le dernier classeur papier de l'administration |
-| 8 | **Segment préscolaire** | 3-5 sem. | La maternelle du groupe scolaire |
+| 8 | **Segment secondaire général** | 4-6 sem. | Le collège et le lycée du groupe — et les élèves affectés par l'État |
 | 9 | **C2 — question-réponse** | 3-4 sem. | Une baisse du volume d'appels au secrétariat |
 | 10 | **Country pack anglophone** | 3-5 sem. | **Le test de la conception du référentiel** |
 | 11 | **Segment technique** | 8-12 sem. | Un segment volumineux et négligé par la concurrence |

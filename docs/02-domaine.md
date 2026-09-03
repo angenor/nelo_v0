@@ -51,6 +51,11 @@ tenant  (le groupe scolaire ou la fondation qui souscrit)
 Le **groupe scolaire multi-cycles** — une même fondation exploitant maternelle, primaire, collège et
 lycée, parfois sur plusieurs sites — est le client type. Le modèle le suppose, il ne l'ajoute pas.
 
+**Le MVP n'en sert qu'un cycle : le primaire**
+([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)). Le modèle, lui, ne connaît aucun segment et
+n'en connaîtra jamais : `cycle_actif` est une donnée, et c'est tout ce qui distingue une maternelle
+d'un lycée dans ces tables.
+
 ### 1.2 Entités
 
 | Table | Champs porteurs de sens |
@@ -321,9 +326,14 @@ etablissement
  └─ cycle          (préscolaire, primaire, secondaire 1er cycle, 2nd cycle, technique, supérieur)
      └─ niveau     (CP1, CM2, 6e, Tle, L1…)
          └─ serie  (A, C, D ; Science/Arts/Business ; Génie civil…)   — facultative
-             └─ classe   (6e A, Form 2 Blue) ── salle + professeur principal
-                 └─ groupe  (LV2 espagnol, groupe TP 1, soutien, option EPS)
+             └─ classe   (CM2 A, 6e A, Form 2 Blue) ── salle + professeur principal
+                 └─ groupe  (soutien lecture, LV2 espagnol, groupe TP 1, option EPS)
 ```
+
+**Au primaire — le seul segment du MVP** : le cycle est `PRIMAIRE`, les niveaux vont du CP1 au CM2,
+**la série reste vide**, et le groupe sert le soutien et l'éducation physique, pas les options ni les
+travaux pratiques. Rien n'est retiré du modèle pour autant : `serie_code` est nullable parce que le
+secondaire la remplira.
 
 ### 5.2 Entités
 
@@ -349,8 +359,10 @@ etablissement
   groupes pour les TP a un emploi du temps et un appel corrects seulement à cette condition ; sinon
   les deux sont faux.
 - **Le professeur principal est rattaché au couple (classe, année)**, pas à une personne globalement.
+  Au primaire, c'est le **maître titulaire** de la classe, et il porte en plus un `service_enseignant`
+  par matière : la polyvalence est un cumul d'affectations, jamais un cas particulier du modèle.
 - **Un enseignement porte le coefficient**, pas la matière. Le même français n'a pas le même
-  coefficient en série A et en série C.
+  coefficient au CP1 et au CM2, ni en série A et en série C.
 - **`effectif_max` est un avertissement, pas un refus** : une classe surchargée existe dans la
   réalité et doit pouvoir exister dans le système, avec un signalement visible.
 - **La structure d'une année ne se modifie plus après la première note saisie** sur un enseignement,
@@ -388,6 +400,9 @@ candidature ──► dossier_incomplet ──► dossier_complet ──► vali
   y compris en changeant de cycle au sein du groupe.
 - **Une inscription `validee` exige un dossier complet**, ou une dérogation explicite tracée avec son
   auteur et son motif.
+- **`affectation_etat` reste vide au primaire** — le segment du MVP : l'État y finance un effectif
+  conventionné, pas un élève nommé. La table existe, et elle se remplit avec le segment secondaire
+  sans migration ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)).
 - **Un élève affecté par l'État porte une `affectation_etat`.** La séparation entre ce que l'État
   couvre et ce qui est facturable à la famille est stricte : c'est un sujet contrôlé.
 - **Une radiation ne supprime rien.** Le dossier reste consultable pour la durée légale de
@@ -519,6 +534,10 @@ connexion lente**, et rien d'autre ne compte devant cette contrainte.
 Le conseil de **classe** est le rituel central de l'année. Il ne se confond jamais avec le conseil de
 **discipline**, qui relève de [`vie_scolaire`](#8-schéma-vie_scolaire).
 
+**`conseil_classe` est un code, pas un libellé.** Au primaire — le segment du MVP — l'instance est le
+**conseil des maîtres** : mêmes tables, même circuit, un libellé qui vient du pack. Ce qui change est
+la composition : ni délégués élèves, ni délégués parents. Le quorum, lui, est déjà une donnée.
+
 ### 9.1 Entités
 
 | Table | Champs porteurs de sens |
@@ -537,7 +556,7 @@ Le conseil de **classe** est le rituel central de l'année. Il ne se confond jam
 | `ADMIS` | En classe supérieure |
 | `ADMIS_SOUS_CONDITION` | Avec la condition écrite |
 | `REDOUBLEMENT` | |
-| `REORIENTATION` | Vers une autre série — `serie_cible_code` obligatoire |
+| `REORIENTATION` | Vers une autre série — `serie_cible_code` obligatoire **dès que le pack déclare des séries au niveau cible**. Au primaire, il n'y en a pas : la valeur existe et ne sert pas |
 | `ORIENTATION_TECHNIQUE` | Vers l'enseignement technique |
 | `EXCLUSION` | |
 
@@ -548,6 +567,9 @@ Le conseil de **classe** est le rituel central de l'année. Il ne se confond jam
 - **Une décision se verrouille après notification aux familles.** Avant, elle est modifiable ; après,
   elle ne l'est plus que par la voie de recours.
 - **Le délai de recours est une donnée du country pack**, pas une constante.
+- **L'issue de fin de cycle peut dépendre d'un examen national** — le passage en sixième au primaire,
+  par exemple. Cet examen appartient au ministère : le produit enregistre la décision et son
+  résultat, il ne les organise pas.
 - **Le procès-verbal est immuable et porte une empreinte.**
 - **L'IA ne prononce jamais une décision de passage** ([§ 13.3](#133-les-trois-niveaux-dautonomie)).
 
@@ -796,9 +818,9 @@ Le modèle utilise des codes neutres et stables ; les libellés viennent du coun
 | `ANNEE` | Année scolaire / universitaire | Academic year / session |
 | `PERIODE` | Trimestre / Semestre | Term |
 | `CLASSE` | Classe | Class / Form / Stream |
-| `PROFESSEUR_PRINCIPAL` | Professeur principal | Form master / Class teacher |
+| `PROFESSEUR_PRINCIPAL` | Professeur principal / maître titulaire | Form master / Class teacher |
 | `BULLETIN` | Bulletin | Terminal report / Report card |
-| `NOTE` | Note (sur 20) | Score / Mark (%) |
+| `NOTE` | Note — l'échelle vient du référentiel, jamais du code | Score / Mark (%) |
 | `MENTION` | Mention | Grade (A1–F9) |
 | `RANG` | Rang | Position in class |
 | `RESPONSABLE` | Responsable légal | Parent / Guardian |
@@ -807,8 +829,9 @@ Le modèle utilise des codes neutres et stables ; les libellés viennent du coun
 | `ECONOME` | Économe / Intendant | Bursar |
 | `INSTANCE_PARENTS` | APE / COGES | PTA |
 | `FRAIS_SCOLARITE` | Frais de scolarité / écolage | School fees / levies |
-| `EXAMEN_NATIONAL` | Examen national (BEPC, BAC) | National examination (BECE, WASSCE) |
+| `EXAMEN_NATIONAL` | Examen national (CEPE, BEPC, BAC) | National examination (BECE, WASSCE) |
 | `CONSEIL_ELEVES` | Conseil des élèves / délégués | Prefects / Student council |
+| `CONSEIL_CLASSE` | Conseil de classe / conseil des maîtres | Class committee |
 
 ---
 

@@ -247,6 +247,14 @@ Douze écrans, plus la planche du système. Ils sont dans `design/ecrans/`, somm
 > centrale du produit : **une fiche élève, plusieurs vues** — l'éducateur y voit la discipline,
 > l'économe le solde, l'enseignant les notes de ses seules matières. Jamais quatre écrans concurrents.
 
+> ⚠️ **Les treize maquettes portent des données de secondaire** — « 6ᵉ A », professeurs de matière,
+> conseil de classe. Elles ont été dessinées avant que le MVP ne bascule sur le primaire
+> ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)). **Le système de design ne change pas** : ce
+> sont des jeux de données fictifs, et ils se reprennent **écran par écran à la revue visuelle qui
+> suit chaque `specify`**, jamais en une passe globale qui les toucherait tous sans besoin. Un
+> artboard dessiné à partir d'une maquette non reprise **remplace ses données par du primaire** — CM2,
+> maître titulaire, conseil des maîtres.
+
 ---
 
 ## 7. Le mode dégradé se dessine
@@ -275,7 +283,8 @@ seul est une dette qui se découvre au moment du premier client anglophone, c'es
 
 **Aucun libellé métier n'est une littérale.** « Classe », « trimestre », « bulletin », « professeur
 principal » sont des **codes** dont le mot affiché vient du pack. Le même écran dit *Classe* en Côte
-d'Ivoire et *Form* au Ghana, sans une ligne de code différente.
+d'Ivoire et *Form* au Ghana, sans une ligne de code différente — et *conseil des maîtres* au primaire
+là où il dira *conseil de classe* au secondaire.
 
 Ce qui suit est le vocabulaire **canonique en français**, celui que `lexique.md` figera :
 
@@ -290,7 +299,7 @@ Ce qui suit est le vocabulaire **canonique en français**, celui que `lexique.md
 | Échéance | Deadline, date limite |
 | Enregistré | Sauvegardé, synchronisé |
 | Signalement | Alerte, dénonciation |
-| Établissement | École — le produit sert aussi des lycées et des groupes scolaires |
+| Établissement | École — le MVP sert des écoles primaires, le produit servira aussi des lycées et des groupes scolaires |
 
 ### 8.2 Les règles de rédaction
 

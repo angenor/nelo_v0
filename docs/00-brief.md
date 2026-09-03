@@ -1,14 +1,15 @@
 # 00 — Brief produit
 
 *Nelo — plateforme de gestion pour établissements scolaires.*
-*Pilote : établissements privés d'Abidjan, Côte d'Ivoire.*
+*Pilote : établissements privés d'Abidjan, Côte d'Ivoire — **par le cycle primaire**
+([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)).*
 
 ---
 
 ## 1. Le problème
 
 Un groupe scolaire privé d'Abidjan tient sa scolarité dans un classeur, ses notes dans un fichier
-Excel par professeur, et sa communication aux familles dans un groupe WhatsApp. Trois fois par an,
+Excel par maître, et sa communication aux familles dans un groupe WhatsApp. Trois fois par an,
 l'édition des bulletins mobilise le secrétariat pendant une semaine : on ressaisit les notes de
 quarante feuilles de classeur, on recalcule les moyennes pondérées à la calculatrice, on découvre les
 erreurs à la relecture des parents.
@@ -37,7 +38,7 @@ Une application web unique, **mobile-first et responsive**, dont la surface se c
 **capacités effectives** de la personne connectée. Le même code sert le téléphone d'un enseignant en
 salle de classe, la tablette de la saisie de notes, le poste de l'économe et le portail du parent.
 
-**Il n'y a pas d'« interface du censeur » ni d'« interface de l'économe ».** Dans un collège de
+**Il n'y a pas d'« interface du censeur » ni d'« interface de l'économe ».** Dans une école de
 400 élèves, une seule personne tient la scolarité, la pédagogie et l'emploi du temps ; dans un groupe
 de 3 000, ce sont trois services. Un produit qui impose un découpage fixe force le petit établissement
 à jongler entre plusieurs comptes — avec le partage de mots de passe qui s'ensuit — et oblige le grand
@@ -55,8 +56,9 @@ d'ergonomie : c'est une exigence structurante, et elle est dans le MVP.
 
 ## 3. Objectif
 
-**Un groupe scolaire d'Abidjan édite ses bulletins du trimestre dans Nelo, et encaisse la scolarité du
-trimestre suivant dedans.** C'est le seul critère de réussite du premier jalon.
+**L'école primaire d'un groupe scolaire d'Abidjan édite ses bulletins du trimestre dans Nelo, et
+encaisse la scolarité du trimestre suivant dedans.** C'est le seul critère de réussite du premier
+jalon.
 
 Indicateurs qui le mesurent :
 
@@ -99,10 +101,16 @@ référentiel d'évaluation configurable ; capacités, cloisonnement et composit
 communication multicanale ; country pack Côte d'Ivoire.
 
 **Le fonctionnel** — inscription et réinscription ; dossier élève ; appel et absences ; notification
-d'absence par SMS ; saisie de notes ; bulletin conforme ; conseil de classe et décision de passage ;
-facturation et échéancier ; encaissement mobile money et espèces ; suivi des élèves affectés et de la
-créance sur l'État ; messagerie et circulaires ; registre de signalement de protection de l'enfance ;
+d'absence par SMS ; saisie de notes ; bulletin conforme ; conseil des maîtres et décision de passage ;
+facturation et échéancier ; encaissement mobile money et espèces ; financement public et créance sur
+l'État ; messagerie et circulaires ; registre de signalement de protection de l'enfance ;
 import Excel.
+
+**Le segment** — **le primaire, et lui seul** : six niveaux du CP1 au CM2, un maître polyvalent par
+classe, un appel par demi-journée, aucune série. Les quatre autres segments sont datés dans
+[06-apres-mvp.md § 4](06-apres-mvp.md), dans l'ordre préscolaire, secondaire général, technique,
+supérieur — et le motif de cet ordre est dans
+[ADR 018](adr/018-le-mvp-commence-par-le-primaire.md).
 
 **L'IA** — deux capacités seulement : la rédaction assistée d'appréciations et de courriers, **en
 proposition validée par une personne nommée**, et l'extraction documentaire pour l'import. Rien
@@ -131,6 +139,7 @@ d'être.
 | **Le mode hors connexion** | Réexaminé une fois le produit installé et la couverture réseau réelle mesurée en salle de classe. **Différé n'est pas exclu** : quatre fondations se posent maintenant pour que la reprise soit additive — [ADR 001](adr/001-hors-connexion-differe.md) |
 | **L'application native** | L'accès se fait par le web, installable sur l'écran d'accueil. Capacitor enveloppera la même base Nuxt le jour où les notifications natives ou la caméra en usage intensif le justifieront — [ADR 002](adr/002-web-d-abord-capacitor-plus-tard.md) |
 | **Le SMS entrant par mot-clé** | V2. Le numéro long virtuel et le contrôle d'accès par numéro appelant sont conçus dès le socle, pas construits |
+| **Le préscolaire et le secondaire général** | V2. Ce sont les deux autres cycles du groupe scolaire, et ils arrivent dans cet ordre — [ADR 018](adr/018-le-mvp-commence-par-le-primaire.md) |
 | **Les segments supérieur et technique** | V3. Le socle doit les absorber sans réécriture ; il ne les sert pas |
 | **Le monde anglophone** | V3. Le passage n'est pas une traduction, c'est un changement de modèle d'évaluation — et c'est précisément pour cela que le référentiel est une donnée versionnée dès le premier jour |
 
@@ -147,10 +156,10 @@ Le document de conception d'origine décrit **55 services et modules**, six segm
 et trois vagues de pays. C'est une feuille de route d'éditeur sur cinq ans, pas un périmètre de
 première version.
 
-Le MVP retenu ici en garde **le socle complet et douze modules fonctionnels**. C'est encore
-considérable pour un développeur seul, et la roadmap le découpe en tranches dont chacune se livre et
-se vérifie séparément. Ce qui n'entre pas est rangé dans [06-apres-mvp.md](06-apres-mvp.md), avec son
-ordre et son coût — **et ce fichier ne s'ouvre pas pour coder.**
+Le MVP retenu ici en garde **le socle complet, douze modules fonctionnels et un seul segment — le
+primaire**. C'est encore considérable pour un développeur seul, et la roadmap le découpe en tranches
+dont chacune se livre et se vérifie séparément. Ce qui n'entre pas est rangé dans
+[06-apres-mvp.md](06-apres-mvp.md), avec son ordre et son coût — **et ce fichier ne s'ouvre pas pour coder.**
 
 Deux choses ne se négocient pas dans ce découpage, parce qu'elles sont des refontes de schéma si
 elles arrivent après coup :
@@ -162,7 +171,7 @@ elles arrivent après coup :
 
 ## 8. Ce qu'on saura seulement en allant voir
 
-Onze questions à poser aux cinq premiers établissements pilotes valent plus que n'importe quelle
+Treize questions à poser aux cinq premiers établissements pilotes valent plus que n'importe quelle
 spécification. Elles sont listées dans [progress.md](progress.md), section « Ce qui attend une
 réponse » — parce que ce sont des questions ouvertes, pas des décisions prises.
 

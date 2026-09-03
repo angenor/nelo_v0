@@ -31,12 +31,13 @@ Trois règles :
 
 | | |
 |---|---|
+| **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
 | **Tranche en cours** | Aucune — le corpus documentaire vient d'être posé |
 | **Prochaine** | **Étape 0 — la constitution**, puis **T0a — Le socle serveur** |
 | **Code existant** | Aucun |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. La constitution est encore le gabarit vide |
-| **Design** | Le système est arrêté sur la couleur, la typographie et les composants. Douze écrans maquettés dans `design/ecrans/`, plus la planche du système |
+| **Design** | Le système est arrêté sur la couleur, la typographie et les composants. Douze écrans maquettés dans `design/ecrans/`, plus la planche du système. **Leurs jeux de données sont du secondaire** : ils se reprennent écran par écran aux revues visuelles, pas en une passe ([05-design.md § 6](05-design.md)) |
 
 ---
 
@@ -62,13 +63,13 @@ Rien ici ne bloque le démarrage. Chaque ligne dit ce qu'elle bloquera, et quand
 | **Q7** | **État exact du droit de la protection des données en Côte d'Ivoire.** La loi n° 2013-450 a fait l'objet de travaux de révision. Quelles **formalités ARTCI** pour un éditeur traitant des données de mineurs — déclaration, autorisation préalable, ou les deux ? | Rien techniquement. **La mise en service d'un pilote payant**, oui |
 | **Q8** | **Localisation des données** : le stockage hors du territoire national est-il autorisé, et sous quelles conditions ? | Le choix d'hébergement. À documenter et encadrer, ou à faire changer |
 | **Q9** | **Convention État – établissements privés** : contenu à jour, montants, calendrier, pièces exigées pour le contrôle d'effectif, format de remontée | Les **valeurs par défaut** de T8c, pas son modèle |
-| **Q10** | **Format réglementaire du bulletin** et des documents officiels, s'il en existe un imposé | Le gabarit de T6c |
+| **Q10** | **Format réglementaire du bulletin DU PRIMAIRE** et des documents officiels, s'il en existe un imposé | Le gabarit de T6c |
 | **Q11** | **Obligations en matière de protection de l'enfance** : le signalement est-il obligatoire ? Quelle autorité destinataire, quels délais ? | Les délais du circuit de T9 |
 | **Q12** | **Dénominations et attributions ministérielles à jour** — elles changent fréquemment — et format officiel des remontées statistiques | Le pack de pays complet, reporté après le MVP |
 | **Q13** | **Conditions de l'agrégateur SMS** : obtention d'un numéro long virtuel pour l'entrant, tarif unitaire, couverture des quatre opérateurs, accusés de réception | Les **valeurs par défaut** de T4a, et le chiffrage du modèle économique |
 | **Q14** | **Obligations comptables et fiscales** d'un établissement privé et d'un éditeur SaaS : SYSCOHADA révisé, TVA, facturation normalisée éventuelle | Rien au MVP. L'export comptable, reporté |
 
-### Ce qu'on ne saura qu'en allant voir — les onze questions aux pilotes
+### Ce qu'on ne saura qu'en allant voir — les treize questions aux pilotes
 
 Elles valent plus que n'importe quelle spécification, et **trois d'entre elles peuvent changer
 l'architecture** (marquées ⚠).
@@ -79,17 +80,54 @@ l'architecture** (marquées ⚠).
 | **Q16** ⚠ | **Quelle proportion de parents a un smartphone avec data active ? Quelle proportion sait lire couramment ?** | Le poids du canal SMS dans le modèle économique, et l'urgence du SMS entrant |
 | **Q17** ⚠ | **Qui fait quoi, nommément ?** Combien de personnes à l'administration, quelles fonctions chacune cumule-t-elle réellement ? | Les **modèles de rôles livrés** et les personas sur lesquels les cumuls seront testés (T1b) |
 | **Q18** | Combien d'élèves, de sites, de cycles ? Combien de responsables légaux par élève en moyenne ? | Le dimensionnement, et la validation du modèle de foyer |
-| **Q19** | Quelle proportion d'élèves affectés par l'État ? Quel est l'encours de créance ? | La priorité relative de T8c |
+| **Q19** | **L'école primaire pilote est-elle conventionnée ?** Quelle subvention perçoit-elle, sur quel calendrier, quel est l'encours ? *(L'affectation d'élèves par l'État est un dispositif du secondaire : elle ne se pose pas ici — [ADR 018](adr/018-le-mvp-commence-par-le-primaire.md))* | Les valeurs par défaut de T8c, et sa priorité relative |
 | **Q20** | Combien de temps prend aujourd'hui l'édition des bulletins d'un trimestre ? Combien de personnes y travaillent ? | La ligne de base de l'indicateur qui vend le produit |
 | **Q21** | Quelle proportion des paiements se fait en espèces ? | L'équilibre entre l'écran de caisse et le parcours en ligne (T8b) |
 | **Q22** | Que se passe-t-il aujourd'hui quand un élève est absent ? Combien de temps avant que la famille le sache ? | La ligne de base de l'indicateur le plus visible |
 | **Q23** | Comment sont constituées les classes de l'année suivante, et par qui ? | La priorité de la capacité de planification, après le MVP |
 | **Q24** | Où sont les données aujourd'hui, et dans quel état ? | Le dimensionnement de T10a |
 | **Q25** | Quel est le budget annuel actuel consacré aux outils, et **qui décide de la dépense** ? Que s'est-il passé la dernière fois qu'un outil informatique a été introduit ? | Le prix, et le canal de vente |
+| **Q26** | **Comment le primaire pilote évalue-t-il ?** Barème sur dix ou sur vingt ; une échelle d'acquisition par compétence sur le bulletin, ou seulement des moyennes ; le suivi des acquis fondamentaux d'une période à l'autre est-il attendu ? | **Le contenu du pack de T6a et le gabarit de T6c — jamais le moteur.** Le suivi longitudinal est hors MVP : si le pilote l'exige, c'est un arbitrage de périmètre, pas une ligne de code |
+| **Q27** | **Le groupe scolaire pilote accepte-t-il d'entrer par son école primaire seule**, ses collège et lycée restant au classeur pendant la première année ? | La vente du pilote. C'est le prix de [ADR 018](adr/018-le-mvp-commence-par-le-primaire.md), et il se pose au premier rendez-vous |
 
 ---
 
 ## Journal
+
+## 2026-09-03 — Le MVP change de segment : le primaire d'abord
+
+**Fait** : le corpus bascule du **secondaire général** au **primaire** comme seul segment du MVP.
+Onze fichiers touchés, **aucune tranche ajoutée, retirée ni déplacée** : `segments/secondaire/` devient
+`segments/primaire/` dans l'arborescence, le modèle et le contrat gagnent leurs notes de segment — la
+série reste nullable et vide, `affectation_etat` reste vide, le conseil devient le conseil des maîtres
+par un libellé de pack — et six blocs `/speckit-specify` changent d'hypothèses de travail : T2b (pas
+de série, maître polyvalent), T5 (appel par demi-journée), T6a (le pack primaire, et l'échelle
+d'acquisition traitée comme une échelle de plus), T6b (changement de matière sans quitter la grille),
+T6c (le niveau atteint par compétence au bulletin), T7 (conseil des maîtres, sans délégué).
+**T8c change de cas nominal** : la subvention à l'établissement conventionné remplace l'élève affecté.
+
+**Décidé** — un ADR, et quatre conséquences nommées :
+
+- **[ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)** porte la décision et son prix. Le motif
+  était déjà écrit dans [06-apres-mvp.md § 4](06-apres-mvp.md) — *le primaire est le moins cher parce
+  que le socle a été conçu pour lui* — et il se retourne : **si le segment le moins cher est celui que
+  le socle absorbe le mieux, c'est par lui qu'on éprouve le socle.**
+- **L'ordre des segments devient** primaire *(MVP)* → préscolaire → secondaire général → technique →
+  supérieur. La file d'après-MVP est renumérotée en conséquence.
+- **Le principe 5 de la constitution s'élargit** : le pack ne porte plus seulement le pays, il porte
+  aussi le segment. Aucune branche conditionnée par le cycle, aucune composition d'instance en dur.
+- **Une seule perte, et elle est nommée** : au primaire, l'État ne finance pas un élève affecté mais un
+  effectif conventionné. T8c garde tout son modèle — `creance_etat` le portait déjà — et perd son
+  argument de vente le plus direct jusqu'au segment secondaire.
+- **Les treize maquettes portent encore des données de secondaire.** Le système de design ne bouge
+  pas ; les jeux de données se reprennent **écran par écran aux revues visuelles**, pas en une passe.
+
+**Bloqué / à faire ensuite** : inchangé — **l'étape 0, la constitution** (son prompt est à jour :
+principe 5 élargi, dix-neuf fichiers d'ADR à lire). Deux questions nouvelles pour le premier
+rendez-vous pilote : **Q26**, comment le primaire évalue-t-il, et **Q27**, le groupe accepte-t-il
+d'entrer par son école primaire seule.
+
+---
 
 ## 2026-08-21 — La pile serveur passe de Rust à FastAPI
 

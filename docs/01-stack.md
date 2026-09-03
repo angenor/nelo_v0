@@ -154,7 +154,7 @@ nelo_v0/
 │   │   ├── vie_scolaire/  conseil/  finance/
 │   │   └── protection/       # CLOISONNÉ — aucun paquet ne l'importe
 │   ├── segments/             # spécialisations par segment d'établissement
-│   │   └── secondaire/       # le seul livré au MVP
+│   │   └── primaire/         # le seul livré au MVP — ADR 018
 │   └── shared/               # schémas Pydantic d'échange, bus d'événements, erreurs
 └── migrations/<module>/      # Alembic, un dossier par module
 ```
@@ -170,9 +170,11 @@ paquet que plusieurs modules appellent appartient au socle, sinon la hiérarchie
 d'une moyenne est une opération pure, sans E/S, testable sur un jeu de formules et de notes en
 mémoire. Le module `evaluation` lit, écrit et orchestre ; il n'arbitre aucun barème.
 
-**Pourquoi `segments/` existe avant d'avoir plus d'un segment** : le préscolaire, le technique et le
-supérieur arrivent en V2 et V3. S'ils s'ajoutent dans `metier/`, ils spécialisent le noyau ; s'ils
-ont leur famille dès le départ, ils s'ajoutent. Le répertoire coûte zéro ligne aujourd'hui.
+**Pourquoi `segments/` existe avant d'avoir plus d'un segment** : le préscolaire et le secondaire
+général arrivent en V2, le technique et le supérieur en V3
+([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)). S'ils s'ajoutent dans `metier/`, ils
+spécialisent le noyau ; s'ils ont leur famille dès le départ, ils s'ajoutent. Le répertoire coûte zéro
+ligne aujourd'hui.
 
 ### 2.4 La hiérarchie de dépendance des paquets — non négociable
 
