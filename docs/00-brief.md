@@ -137,7 +137,7 @@ d'être.
 | Ce qui est différé | Jusqu'à quand |
 |---|---|
 | **Le mode hors connexion** | Réexaminé une fois le produit installé et la couverture réseau réelle mesurée en salle de classe. **Différé n'est pas exclu** : quatre fondations se posent maintenant pour que la reprise soit additive — [ADR 001](adr/001-hors-connexion-differe.md) |
-| **L'application native** | L'accès se fait par le web, installable sur l'écran d'accueil. Capacitor enveloppera la même base Nuxt le jour où les notifications natives ou la caméra en usage intensif le justifieront — [ADR 002](adr/002-web-d-abord-capacitor-plus-tard.md) |
+| **L'application native** | **La PWA est la cible, pas un confort** : installable sur l'écran d'accueil dès le MVP. C'est elle que Capacitor (mobile — l'enseignant, le parent) et Tauri (le poste du back-office — le censeur, l'économe) empaqueteront ensuite, **sans réécriture**, le jour où un besoin le justifiera — notifications natives, caméra en usage intensif, présence en magasin. Aucune chaîne native au MVP — [ADR 002](adr/002-web-d-abord-capacitor-plus-tard.md) |
 | **Le SMS entrant par mot-clé** | V2. Le numéro long virtuel et le contrôle d'accès par numéro appelant sont conçus dès le socle, pas construits |
 | **Le préscolaire et le secondaire général** | V2. Ce sont les deux autres cycles du groupe scolaire, et ils arrivent dans cet ordre — [ADR 018](adr/018-le-mvp-commence-par-le-primaire.md) |
 | **Les segments supérieur et technique** | V3. Le socle doit les absorber sans réécriture ; il ne les sert pas |

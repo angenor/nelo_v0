@@ -94,6 +94,30 @@ l'architecture** (marquées ⚠).
 
 ## Journal
 
+## 2026-09-05 — La PWA est la cible, Tauri et Capacitor l'empaqueteront
+
+**Fait** : trois ajustements arbitrés sur le projet frère Kaya ont été confrontés au corpus. Deux
+étaient déjà en place — le hors-connexion est « différé, pas exclu » avec ses quatre fondations
+([ADR 001](adr/001-hors-connexion-differe.md)) ; l'exposant est porté par la devise du country pack
+(R2), et aucun écran n'impose un appareil au personnel. Le troisième manquait : **l'ADR 002 est
+amendé** — la PWA est la cible, pas un confort, et **Tauri n'est plus écarté, il est différé comme
+Capacitor** ([ADR 002](adr/002-web-d-abord-capacitor-plus-tard.md)).
+
+**Décidé** : Capacitor empaquettera la PWA pour le mobile (l'enseignant, le parent), Tauri pour le
+poste du back-office (le censeur, l'économe), sans réécriture, le jour où un besoin le justifiera —
+aucune chaîne native au MVP. Le MVP livre quatre provisions : PWA installable sur Chromium et WebKit,
+aucune dépendance à la barre d'adresse, capacités de plateforme derrière une interface unique à une
+seule implémentation web, service worker mince sans logique métier. **La constitution v1.0.0 n'est pas
+amendée** : « web et installable, sans Capacitor » reste vrai au MVP.
+
+**Touché** : `00-brief.md § 6` (ligne « L'application native »), `CLAUDE.md` (ce que le produit ne
+fait pas), `01-stack.md § 10`, le prompt de **T0b** dans `04-roadmap.md` — la coquille installable et
+l'interface de plateforme y sont livrées, et l'ADR 002 entre dans son contexte de lecture.
+
+**Bloqué / à faire ensuite** : rien de nouveau — **Q28** précède toujours `/speckit-plan` sur T0a.
+
+---
+
 ## 2026-09-03 — Le MVP change de segment : le primaire d'abord
 
 **Fait** : le corpus bascule du **secondaire général** au **primaire** comme seul segment du MVP.

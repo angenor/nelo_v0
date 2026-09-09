@@ -77,7 +77,8 @@ encore aucun client.
   ([ADR 018](docs/adr/018-le-mvp-commence-par-le-primaire.md)) ;
 - **pas de mode hors connexion au MVP** — **différé, pas exclu** ; quatre fondations se posent
   maintenant ([ADR 001](docs/adr/001-hors-connexion-differe.md)) ;
-- **pas d'application native** — une application web installable ; Capacitor plus tard
+- **pas d'application native au MVP** — **la PWA est la cible**, installable dès le MVP ; Capacitor
+  (mobile) et Tauri (poste) l'empaqueteront plus tard, sans réécriture
   ([ADR 002](docs/adr/002-web-d-abord-capacitor-plus-tard.md)) ;
 - **pas un agent IA par service** — six capacités, dont deux au MVP
   ([ADR 011](docs/adr/011-six-capacites-ia-pas-trente-quatre-agents.md)) ;

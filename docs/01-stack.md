@@ -555,7 +555,7 @@ applicative livrée, si** : elle relève du même régime.
 | Absent | Pourquoi |
 |---|---|
 | Service worker avec cache d'écriture, IndexedDB, file de synchronisation, résolution de conflit | Le hors-connexion est **différé**, pas exclu → [ADR 001](adr/001-hors-connexion-differe.md). Les quatre fondations qui le rendront additif, elles, se posent maintenant |
-| Capacitor, chaîne de build mobile, magasins d'applications | Le produit est une application web installable → [ADR 002](adr/002-web-d-abord-capacitor-plus-tard.md) |
+| Capacitor, Tauri, chaîne de build native, magasins d'applications | **La PWA est la cible**, installable dès le MVP ; Capacitor (mobile) et Tauri (poste) l'empaqueteront plus tard, sans réécriture → [ADR 002](adr/002-web-d-abord-capacitor-plus-tard.md) |
 | Serveur dans l'établissement | Électricité intermittente, sécurité physique, maintenance à distance impossible |
 | Kubernetes, file de messages, microservices | Un seul processus, un seul VPS, un worker in-process → [ADR 003](adr/003-monolithe-modulaire-microservices-plus-tard.md) |
 | ORM | SQLAlchemy **Core** et `asyncpg`. Le SQL est écrit, pas deviné — et P-12 le vérifie contre une base réelle |

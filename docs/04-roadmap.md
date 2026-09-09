@@ -378,6 +378,12 @@ du plus petit gabarit vers le plus grand.
 Livrer :
 - l'application mobile-first et responsive, avec le fichier de thème copié TEL QUEL depuis les actifs
   de design — il est autosuffisant et ne se réécrit pas ;
+- la coquille INSTALLABLE — la PWA est la cible, pas un confort : manifeste, icônes, affichage
+  autonome, installation vérifiée sur Chromium et WebKit, aucune dépendance à la barre d'adresse ni à
+  un rechargement manuel ; les capacités de plateforme (état du réseau, stockage, caméra,
+  notifications) derrière UNE interface unique côté client à une seule implémentation web, pour que
+  Capacitor et Tauri l'empaquettent plus tard sans réécriture ; un service worker mince, sans logique
+  métier ni cache d'écriture ;
 - les quatorze composants canoniques dans TOUS leurs états, en clair et en sombre : bouton, champ,
   interrupteur, pastille d'état, pastille de canal, recherche, avatar, fil d'Ariane, onglets, carte
   d'indicateur, alerte, ligne de tableau, ruban d'état de saisie, coquille d'application ;
@@ -416,13 +422,13 @@ s'affichent sur des données de démonstration.
 
 Risque : faible, mais bloquant. C'est la tranche dont dépend la vitesse de toutes les suivantes.
 Critère de fin : la page de style montre les quatorze composants dans tous leurs états, en clair et
-en sombre, et la porte de poids échoue quand on ajoute une image de 300 Ko à l'écran budgété le plus
-serré.
+en sombre, la porte de poids échoue quand on ajoute une image de 300 Ko à l'écran budgété le plus
+serré, et l'application s'installe sur l'écran d'accueil depuis Chromium et WebKit.
 
 Contexte projet : lire docs/05-design.md en entier, docs/design/theme.css (la seule source des
-valeurs), docs/design/ecrans/13_systeme-de-design.html (les composants et leurs états), et
-docs/03-api.md section 1.9 (le contexte qui compose l'interface). Ne rien inventer hors de ces
-fichiers.
+valeurs), docs/design/ecrans/13_systeme-de-design.html (les composants et leurs états),
+docs/03-api.md section 1.9 (le contexte qui compose l'interface) et docs/adr/002 (la PWA est la
+cible, et ce que le MVP livre pour l'empaquetage). Ne rien inventer hors de ces fichiers.
 ```
 
 ---
