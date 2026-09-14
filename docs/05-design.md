@@ -420,6 +420,71 @@ décident pas en écrivant un composant.
 Son but n'est pas de dessiner : c'est de **rendre une dérive visible** — une entité, un état ou un
 champ absent du domaine doit sauter aux yeux.
 
+### D'abord une question, et elle décide de tout
+
+> **Cette tranche produit-elle un écran qu'une personne regarde ?**
+
+| Réponse | Ce qu'on lance | Pourquoi |
+|---|---|---|
+| **Oui** | **`/design`** — la forme A ci-dessous | Il faut voir la facture, les états, la densité, le mode sombre. Rien d'autre ne les montre |
+| **Non** — socle serveur, moteur, contrat, chaîne de vérification, migration | **Une planche de diagrammes Mermaid** — la forme B. **On ne lance pas `/design`** | Un artboard qui représente une migration ou un test **est du texte mis en page**. Le diagramme dit la même chose, il se relit dans un diff, il se versionne, et il coûte deux ordres de grandeur de moins |
+
+> ⚠️ **Le piège, et il s'est produit.** La forme A porte un paragraphe entier de contraintes d'écran
+> — cibles tactiles, clair et sombre, lexique, montants. Collée sur une tranche d'infrastructure,
+> **elle noie la clause « sinon un diagramme » et produit huit artboards pour dessiner des tests.**
+> On ne choisit pas la forme dans le prompt : **on la choisit avant de l'écrire.**
+
+**Mermaid, et pas une image** : c'est du texte. Il se relit dans une revue, il se corrige sans
+rouvrir un éditeur, et il s'affiche tel quel dans GitHub comme dans un artifact.
+
+---
+
+### Forme B — la tranche n'a pas d'écran
+
+Un seul fichier, `specs/00X-nom-de-la-tranche/design/diagrammes.md`, fait de blocs ```mermaid.
+**Pas de canvas, pas d'artboard, pas de `.dc.html`.**
+
+Le gabarit — remplacer ce qui est entre crochets :
+
+```text
+Produis la planche de diagrammes de la tranche [nom], à partir de [chemin du spec.md].
+
+Pas d'écran dans cette tranche : ne dessine aucune interface, n'ouvre ni le fichier de composants,
+ni le dossier d'écrans, ni le lexique. Aucun mode sombre, aucune cible tactile, aucun jeton de
+couleur — ce sont des diagrammes, pas des maquettes.
+
+Écris UN SEUL fichier : [chemin]/design/diagrammes.md, composé de blocs mermaid séparés par un
+titre de niveau 2 et une phrase qui dit ce que le diagramme rend visible.
+
+[trois à cinq] diagrammes, pas un de plus. Pour chacun : sa grammaire, ce qu'il montre, et les
+user stories qu'il couvre.
+  1. [graph LR | sequenceDiagram | stateDiagram-v2 | erDiagram] — [ce qu'il montre] — couvre [US…]
+  …
+
+À lire avant, et à ne pas dépasser : [le spec.md, et les deux ou trois sections de docs/ qui font foi].
+
+Ne rien inventer hors de ces fichiers. Le but est de rendre visible une dérive : une entité, une
+étape ou un contrôle qui n'existe pas dans le corpus doit sauter aux yeux. Aucune prose hors des
+phrases d'introduction.
+```
+
+**Choisir la grammaire selon ce qu'on veut voir** — et une seule par diagramme :
+
+| Ce qu'on veut voir | Grammaire |
+|---|---|
+| Une frontière, une dépendance, **une arête interdite** | `graph LR`, l'arête interdite en pointillé avec la porte qui la refuse |
+| Un enchaînement d'acteurs, un aller-retour | `sequenceDiagram` |
+| Un cycle de vie, des transitions | `stateDiagram-v2` |
+| Une structure de données et ses cardinalités | `erDiagram` |
+| Une chaîne qui s'arrête au premier échec | `graph LR`, la sortie en échec explicite |
+
+**Trois règles qui évitent le diagramme illisible** : un diagramme répond à **une** question ·
+trois mots par nœud, jamais une phrase · **s'il faut une légende, le diagramme est raté**.
+
+---
+
+### Forme A — la tranche a des écrans
+
 ### Où les fichiers atterrissent
 
 `/design` ne dépose rien tout seul — c'est à l'agent d'écrire les fichiers de travail, et **il faut le
