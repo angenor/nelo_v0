@@ -1,0 +1,260 @@
+# Contrat attendu — T0a, le socle serveur
+#
+# Ce fichier n'est PAS la spécification servie : celle-ci est générée par FastAPI depuis les schémas
+# Pydantic et écrite dans contrat/openapi.json (porte P-03). Ce fichier dit ce que la génération
+# DOIT produire pour les trois routes de la tranche, telles que docs/03-api.md § 2.3 et § 2.16 les
+# réservent. Un test compare les chemins, méthodes, codes de réponse et noms de schémas de
+# contrat/openapi.json à ce qui est déclaré ici.
+openapi: 3.1.0
+info:
+  title: Nelo — API
+  version: "1"
+servers:
+  - url: /api/v1
+
+paths:
+  /sante:
+    get:
+      operationId: sante
+      summary: Sonde publique — sans authentification, sans donnée
+      responses:
+        "200":
+          description: Le serveur est levé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReponseSante"
+
+  /parametres:
+    get:
+      operationId: lire_parametres
+      summary: Paramètres effectifs du catalogue, résolus à la portée de l'établissement de l'en-tête
+      parameters:
+        - $ref: "#/components/parameters/XNeloEtablissement"
+      responses:
+        "200":
+          description: Chaque clé du catalogue, sa valeur effective et la portée où elle a été résolue
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReponseParametres"
+        "400":
+          $ref: "#/components/responses/EnTeteEtablissement"
+        "404":
+          $ref: "#/components/responses/Introuvable"
+        "500":
+          $ref: "#/components/responses/ErreurInterne"
+
+  /parametres/{cle}:
+    put:
+      operationId: poser_parametre
+      summary: Poser une valeur à une portée — capacité `tenant.parametre.definir` (point d'insertion jusqu'à T1b)
+      parameters:
+        - $ref: "#/components/parameters/XNeloEtablissement"
+        - $ref: "#/components/parameters/XNeloRequete"
+        - name: cle
+          in: path
+          required: true
+          schema:
+            type: string
+            examples: ["assistance.suspendue"]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsPoserParametre"
+      responses:
+        "200":
+          description: Valeur posée — une écriture qui ne crée rien de nouveau au sens du contrat (UPSERT)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParametrePose"
+        "400":
+          description: >
+            Refusé par un middleware, avant toute validation : `REQUETE_CLE_MANQUANTE`,
+            `REQUETE_CLE_INVALIDE`, `TEN_ETABLISSEMENT_REQUIS`
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+        "404":
+          $ref: "#/components/responses/Introuvable"
+        "409":
+          description: "`REQUETE_REJOUEE_DIFFEREMMENT` (même clé, corps différent) · `REQUETE_EN_COURS` (même clé, première exécution non terminée)"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+        "422":
+          description: >
+            Deux natures, un statut, distinguées par `code` : `VAL_SCHEMA_INVALIDE` (corps invalide,
+            `details.champs` liste le chemin de chaque champ fautif) — ou règle métier sur un corps
+            valide : `TEN_PARAMETRE_INCONNU`, `TEN_PORTEE_INVALIDE`, `TEN_VALEUR_INVALIDE`
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+        "500":
+          $ref: "#/components/responses/ErreurInterne"
+
+components:
+  parameters:
+    XNeloEtablissement:
+      name: X-Nelo-Etablissement
+      in: header
+      required: true
+      description: UUID de l'établissement actif. Lu par un middleware — absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` ; inconnu, `404 TEN_RESSOURCE_INTROUVABLE`. Résolution provisoire du tenant jusqu'à T1a.
+      schema:
+        type: string
+        format: uuid
+    XNeloRequete:
+      name: X-Nelo-Requete
+      in: header
+      required: true
+      description: UUID v7 généré par le client. Lu par un middleware — absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant.
+      schema:
+        type: string
+        format: uuid
+
+  responses:
+    EnTeteEtablissement:
+      description: "`TEN_ETABLISSEMENT_REQUIS` — en-tête absent ou malformé, refusé par le middleware"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnveloppeErreur"
+    Introuvable:
+      description: "`TEN_RESSOURCE_INTROUVABLE` — ressource inexistante dans le périmètre du tenant ; jamais `403`"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnveloppeErreur"
+    ErreurInterne:
+      description: "`API_ERREUR_INTERNE` — aucun détail technique dans `message` ; `requete_id` suffit à retrouver la trace"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnveloppeErreur"
+
+  schemas:
+    ReponseSante:
+      type: object
+      required: [etat]
+      properties:
+        etat:
+          type: string
+          const: "OK"
+
+    Portee:
+      type: string
+      enum: [TENANT, ETABLISSEMENT, SITE, CYCLE]
+
+    TypeParametre:
+      type: string
+      enum: [ENTIER, DECIMAL, BOOLEEN, CHAINE, PLAGE_HORAIRE]
+
+    ValeurParametre:
+      description: La valeur brute, typée par le catalogue. Un DECIMAL voyage en chaîne (03-api.md § 1.4).
+      oneOf:
+        - type: boolean
+        - type: integer
+        - type: string
+      nullable: true
+
+    ParametreEffectif:
+      type: object
+      required: [cle, type, valeur, portee_resolue, portee_id, source]
+      properties:
+        cle:
+          type: string
+        type:
+          $ref: "#/components/schemas/TypeParametre"
+        valeur:
+          $ref: "#/components/schemas/ValeurParametre"
+        portee_resolue:
+          description: La portée à laquelle la valeur a été trouvée ; `null` si aucune valeur n'est posée
+          oneOf:
+            - $ref: "#/components/schemas/Portee"
+            - type: "null"
+        portee_id:
+          type: [string, "null"]
+          format: uuid
+        source:
+          type: string
+          enum: [VALEUR, DEFAUT, NON_DEFINIE]
+
+    ReponseParametres:
+      type: object
+      required: [etablissement_id, parametres]
+      properties:
+        etablissement_id:
+          type: string
+          format: uuid
+        parametres:
+          type: array
+          items:
+            $ref: "#/components/schemas/ParametreEffectif"
+
+    CorpsPoserParametre:
+      type: object
+      required: [portee, portee_id, valeur]
+      additionalProperties: false
+      properties:
+        portee:
+          $ref: "#/components/schemas/Portee"
+        portee_id:
+          type: string
+          format: uuid
+        valeur:
+          $ref: "#/components/schemas/ValeurParametre"
+
+    ParametrePose:
+      type: object
+      required: [cle, portee, portee_id, valeur, pose_le]
+      properties:
+        cle:
+          type: string
+        portee:
+          $ref: "#/components/schemas/Portee"
+        portee_id:
+          type: string
+          format: uuid
+        valeur:
+          $ref: "#/components/schemas/ValeurParametre"
+        pose_le:
+          type: string
+          format: date-time
+
+    ChampFautif:
+      type: object
+      required: [chemin, motif]
+      properties:
+        chemin:
+          type: string
+          description: Chemin du champ dans le corps, ex. `valeur` ou `portee`
+        motif:
+          type: string
+          description: Le motif de Pydantic, factuel, destiné au journal
+
+    EnveloppeErreur:
+      description: docs/03-api.md § 1.6 — `code` est ce que le client teste, jamais `message`
+      type: object
+      required: [code, message, champ, details, requete_id]
+      properties:
+        code:
+          type: string
+          description: Stable, préfixé par domaine
+        message:
+          type: string
+          description: Français, factuel, destiné au journal — pas affiché tel quel
+        champ:
+          type: [string, "null"]
+        details:
+          type: object
+          additionalProperties: true
+          description: "De quoi construire l'issue — pour `VAL_SCHEMA_INVALIDE`, `champs` est une liste de `ChampFautif`"
+        requete_id:
+          type: [string, "null"]
+          description: L'`X-Nelo-Requete` reçu ; `null` si la requête n'en portait pas

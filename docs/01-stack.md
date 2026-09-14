@@ -141,6 +141,8 @@ les gabarits, eux, se commitent — c'est la méthode partagée.
 ```
 nelo_v0/
 ├── CLAUDE.md · compose.yml · docs/ · .specify/ · specs/ · scripts/
+├── pyproject.toml · uv.lock · package.json · pnpm-lock.yaml   # les espaces de travail, à la racine
+├── contrat/                  # openapi.json écrit par le serveur, client.d.ts dérivé — commités, régénérés par P-03
 ├── web/                      # Nuxt 4 — app/ : components/ composables/ core/ pages/ assets/
 ├── api/                      # FastAPI — composition des modules, routes fines
 ├── modules/
@@ -211,7 +213,9 @@ Il connaît `annee_scolaire`, `perimetre`, `capacite` et `envoi`. Les notions p�
    **aucune clé étrangère ne traverse un schéma de module** (porte P-01). Les lectures inter-modules
    passent par l'interface publique du module propriétaire : `finance` ne fait pas de `SELECT` dans
    `scolarite.eleve`, il appelle l'interface du module `scolarite`.
-2. **Toute transition d'état métier écrit un événement outbox dans la même transaction SQL.**
+2. **Toute transition d'état métier écrit un événement outbox dans la même transaction SQL** —
+   dans la table `evenement_outbox` **du schéma du module**, puisqu'aucune transaction ne traverse
+   deux modules ; le travailleur consomme chaque table, par tenant, dans l'ordre d'écriture.
 3. **Aucune transaction SQL ne couvre deux modules.** Les opérations inter-modules sont des séquences
    avec compensation explicite.
 4. **Chaque paquet expose son interface de service dans son `__init__.py`**, et rien d'autre n'en
@@ -234,7 +238,7 @@ ne peut pas dépendre du réseau.
 
 ```
 docker compose up -d          # postgres + valkey + garage
-cd api && uv run fastapi dev  # l'API sur :8000, OpenAPI sur /openapi.json
+uv run fastapi dev api/main.py  # depuis la racine — l'API sur :8000, OpenAPI sur /openapi.json
 cd web && pnpm dev            # l'application sur :3000
 ```
 
