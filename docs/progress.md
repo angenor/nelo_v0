@@ -32,8 +32,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | Aucune — **T0a — Le socle serveur est fusionnée dans `main`** le 2026-09-15 (95 tâches sur 95, [tasks.md](../specs/001-socle-serveur/tasks.md)), `scripts/verifier.sh` vert après fusion |
-| **Prochaine** | **T0b — Le socle client**, sur sa propre branche créée depuis `main` — son point de jonction est `contrat/client.d.ts` |
+| **Tranche en cours** | **T0b — Le socle d'interface**, sur la branche `002-socle-interface` créée depuis `main` — **`specify` conclu** le 2026-09-15 ([spec.md](../specs/002-socle-interface/spec.md), huit user stories, checklist verte). T0a est fusionnée dans `main` depuis le 2026-09-15 |
+| **Prochaine** | **La revue visuelle de T0b** en session dédiée — forme A, `/design`, huit artboards ([prompt-design.md](../specs/002-socle-interface/design/prompt-design.md)) — puis `/speckit-plan` |
 | **Code existant** | Le socle serveur de T0a : `api/`, `modules/` (tenants, assistance, communication, finance, protection), `migrations/tenants/`, `scripts/` (sept portes et leurs tests négatifs), `tests/` (102 tests), `contrat/` — [01-stack.md § 2.1](01-stack.md) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -93,6 +93,30 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-15 — T0b : la spécification du socle d'interface est écrite
+
+**Fait** : `/speckit-specify` sur la branche `002-socle-interface`, créée depuis `main`.
+[spec.md](../specs/002-socle-interface/spec.md) — huit user stories, cinquante-sept scénarios,
+FR-001 à FR-093, SC-001 à SC-012, checklist de qualité verte en une itération. Le prompt de revue
+visuelle est prêt en **forme A** ([prompt-design.md](../specs/002-socle-interface/design/prompt-design.md)) :
+un artboard par story, celui de la page de style destiné à `docs/design/canvas/`.
+**Décidé** — dérivé du corpus, tracé, sans question à l'utilisateur, selon l'arbitrage délégué du 2026-09-14 :
+- **Diff appliqué sur [03-api.md § 1.9](03-api.md)** : chaque établissement du contexte porte
+  `administrateur { nom, prenoms, telephone }` — la constitution (II) exige que l'écran « aucune
+  capacité » **nomme** l'administrateur, la planche le montre, le contrat ne le portait pas. T1a le sert.
+- **Seuil de regroupement : à plat jusqu'à cinq domaines, regroupé dès six** — le domaine (§ 3.4)
+  gagne sur la planche (« en dessous de quatre »), écart documenté.
+- **L'atterrissage de la coquille est budgété à 120 Ko**, le plafond de l'appel : l'appel s'y
+  assemblera, si la coquille seule dépasse rien ne tiendra.
+- **Q1 (polices) se tranche dans le plan** sous contrainte — servies localement, OFL 1.1,
+  attribution sur un écran « à propos » ; **Q2** reçoit un nom et une icône provisoires portés en un
+  seul endroit ; **Q3** n'est pas touchée ; **Q4** reste une hypothèse que le plan dit retenir ou non.
+- Le thème suit l'appareil et se force depuis la coquille, mémorisé localement (poste partagé) ; le
+  service worker ne garde que les fichiers statiques immuables ; le réordonnancement des blocs du
+  tableau composé est différé à T10b (préférence persistée, hors périmètre).
+**Bloqué / à faire ensuite** : la revue visuelle en session dédiée, puis `/speckit-plan`. Le plan
+doit nommer les versions des polices (Q1) et dire ce qu'il fait de la stratégie de rendu (Q4).
 
 ## 2026-09-15 — T0a : le socle serveur est implémenté, sept portes sur sept tiennent
 

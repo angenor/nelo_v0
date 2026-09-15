@@ -222,7 +222,8 @@ dont l'interface a besoin pour **ne rendre que ce qui existe** :
   "compte": { "id": "…", "nom": "…", "prenoms": "…", "langue": "fr" },
   "etablissements": [
     { "id": "…", "nom": "…", "sites": [ … ], "cycles_actifs": ["PRIMAIRE"],
-      "modules_actifs": ["SCOLARITE", "EVALUATION", "VIE_SCOLAIRE", "FINANCE", "COMMUNICATION"] }
+      "modules_actifs": ["SCOLARITE", "EVALUATION", "VIE_SCOLAIRE", "FINANCE", "COMMUNICATION"],
+      "administrateur": { "nom": "…", "prenoms": "…", "telephone": "…" } }
   ],
   "etablissement_actif": "…",
   "annees": [{ "id": "…", "libelle": "2026-2027", "etat": "ACTIVE" },
@@ -247,6 +248,12 @@ dont l'interface a besoin pour **ne rendre que ce qui existe** :
 >
 > **Aucune liste de rôles n'est codée en dur côté front.** Sinon chaque nouveau modèle de rôle
 > exigerait un déploiement.
+>
+> **Chaque établissement porte son `administrateur`** — nom, prénoms, téléphone. C'est ce qui permet
+> à une personne sans capacité de voir un message qui **nomme** qui peut lui attribuer ses domaines,
+> jamais une page vide ([02-domaine.md § 3.4](02-domaine.md#34-composition-de-linterface--les-règles)).
+> Le téléphone est celui d'un membre du personnel, montré dans le détail du contexte de la personne,
+> jamais dans une liste (R5, [§ 3](#3-règles-de-conception-opposables)). *Ajouté par T0b.*
 
 ### 1.10 Les documents sont rendus par le serveur
 
