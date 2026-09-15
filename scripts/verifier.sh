@@ -30,6 +30,8 @@ porte() { # P-XX
 
 etape "ruff check" uv run ruff check .
 etape "ruff format" uv run ruff format --check .
+porte P-04
+porte P-11
 porte P-01
 porte P-03
 

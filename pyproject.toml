@@ -73,3 +73,36 @@ testpaths = ["tests"]
 
 [tool.coverage.run]
 source = ["modules", "api"]
+
+# Portes P-04 et P-11 — le graphe d'imports (docs/01-stack.md § 2.4 et § 7.4).
+[tool.importlinter]
+root_packages = ["api", "modules"]
+include_external_packages = false
+
+[[tool.importlinter.contracts]]
+id = "hierarchie"
+name = "La hiérarchie des paquets : api › segments › metier › socle › shared | domaine"
+type = "layers"
+layers = [
+    "api",
+    "(modules.segments)",
+    "modules.metier",
+    "modules.socle",
+    "modules.shared | modules.domaine",
+]
+
+[[tool.importlinter.contracts]]
+id = "protection"
+name = "Aucun paquet n'importe le module cloisonné"
+type = "forbidden"
+source_modules = [
+    "api",
+    "modules.socle",
+    "modules.metier",
+    "modules.shared",
+    "modules.domaine",
+]
+forbidden_modules = ["modules.metier.protection"]
+# Le module cloisonné peut s'importer lui-même : ses imports internes ne sont pas des arêtes entrantes.
+ignore_imports = ["modules.metier.protection.** -> modules.metier.protection"]
+unmatched_ignore_imports_alerting = "none"
