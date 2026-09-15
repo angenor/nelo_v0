@@ -18,8 +18,11 @@ from api.idempotence import Idempotence
 from api.routes import parametres, sante
 from api.tenant_provisoire import TenantProvisoire
 from api.travailleur import Travailleur
+from modules.metier.finance import SimulationAgregateurPaiement
 from modules.shared import bd
 from modules.socle import tenants
+from modules.socle.assistance.service_inference import SimulationServiceInference
+from modules.socle.communication import SimulationPasserelleSms
 
 journal = logging.getLogger("nelo.api")
 
@@ -48,6 +51,18 @@ def creer_application(configuration: Configuration | None = None) -> FastAPI:
     )
     application.state.configuration = configuration
     application.state.valkey = valkey.from_url(configuration.valkey_url)
+    # Les trois dépendances externes, simulées par défaut ; aucune route de T0a ne les appelle —
+    # elles existent pour être remplacées (T4a, T8b).
+    delai = configuration.simulation_delai
+    application.state.passerelle_sms = SimulationPasserelleSms(
+        configuration.simulation_sms_mode, delai
+    )
+    application.state.agregateur_paiement = SimulationAgregateurPaiement(
+        configuration.simulation_paiement_mode, delai
+    )
+    application.state.service_inference = SimulationServiceInference(
+        configuration.simulation_inference_mode, delai
+    )
 
     # Le dernier ajouté est le plus extérieur : l'établissement d'abord, l'idempotence ensuite.
     application.add_middleware(Idempotence)

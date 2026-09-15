@@ -422,15 +422,19 @@ name = "nelo-api"
 version = "0.1.0"
 source = { virtual = "api" }
 dependencies = [
+    { name = "nelo-metier-finance" },
     { name = "nelo-shared" },
     { name = "nelo-socle-assistance" },
+    { name = "nelo-socle-communication" },
     { name = "nelo-socle-tenants" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "nelo-metier-finance", virtual = "modules/metier/finance" },
     { name = "nelo-shared", virtual = "modules/shared" },
     { name = "nelo-socle-assistance", virtual = "modules/socle/assistance" },
+    { name = "nelo-socle-communication", virtual = "modules/socle/communication" },
     { name = "nelo-socle-tenants", virtual = "modules/socle/tenants" },
 ]
 
