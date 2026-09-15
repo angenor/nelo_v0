@@ -27,6 +27,7 @@ dev = [
     "pytest-asyncio==1.4.0",
     "httpx==0.28.1",
     "coverage==7.16.0",
+    "fastapi-cli==0.0.32",
     "ruff==0.16.6",
     "import-linter==2.15",
     "pip-licenses==5.5.5",
