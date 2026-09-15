@@ -8,6 +8,7 @@ dépendances sont injectées ici, jamais importées d'un module à l'autre.
 import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from uuid import UUID
 
 import valkey.asyncio as valkey
 from fastapi import FastAPI
@@ -21,7 +22,7 @@ from api.travailleur import Travailleur
 from modules.metier.finance import SimulationAgregateurPaiement
 from modules.shared import bd
 from modules.socle import tenants
-from modules.socle.assistance.service_inference import SimulationServiceInference
+from modules.socle.assistance import Assistance, SimulationServiceInference
 from modules.socle.communication import SimulationPasserelleSms
 
 journal = logging.getLogger("nelo.api")
@@ -62,6 +63,17 @@ def creer_application(configuration: Configuration | None = None) -> FastAPI:
     )
     application.state.service_inference = SimulationServiceInference(
         configuration.simulation_inference_mode, delai
+    )
+
+    async def assistance_suspendue(tenant_id: UUID, etablissement_id: UUID) -> bool:
+        effective = await tenants.valeur_effective(
+            tenant_id, "assistance.suspendue", tenants.Portee.ETABLISSEMENT, etablissement_id
+        )
+        return effective.valeur is True
+
+    # L'injection se fait ici : l'assistance n'importe jamais tenants.
+    application.state.assistance = Assistance(
+        assistance_suspendue, application.state.service_inference
     )
 
     # Le dernier ajouté est le plus extérieur : l'établissement d'abord, l'idempotence ensuite.

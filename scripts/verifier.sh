@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # La vérification — une seule commande (docs/01-stack.md § 7).
 #
-#   ruff → P-02 → P-07 → P-04 → P-11 → P-01 → P-12 → P-03
+#   ruff → P-02 → P-07 → P-04 → P-11 → P-01 → P-12 → P-03 → reparcours sous suspension
 #
 # Du moins coûteux au plus coûteux (research.md R-18). Sort au premier contrôle rouge, en nommant
-# la porte et le motif. Cible : moins de trois minutes (SC-010) — mesurée à 14 s sur le dépôt
+# la porte et le motif. Cible : moins de trois minutes (SC-010) — mesurée à 19 s sur le dépôt
 # conforme le 2026-09-15 (poste de développement, base PostgreSQL déjà levée).
 set -euo pipefail
 
@@ -42,6 +42,7 @@ porte P-11
 porte P-01
 porte P-12
 porte P-03
+etape "reparcours sous suspension" scripts/portes/reparcours-suspension.sh
 
 duree=$(( $(date +%s) - debut ))
 echo "VÉRIFICATION : $portes_vertes portes vertes en $((duree / 60)) min $((duree % 60)) s"
