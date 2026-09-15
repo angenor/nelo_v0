@@ -32,8 +32,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T0a — Le socle serveur**, **implémentée** sur la branche **`001-socle-serveur`** — 95 tâches sur 95 ([tasks.md](../specs/001-socle-serveur/tasks.md)), `scripts/verifier.sh` vert. **Attend la relecture et la fusion dans `main` par l'utilisateur** |
-| **Prochaine** | **T0b — Le socle client**, après la fusion de T0a — son point de jonction est `contrat/client.d.ts` |
+| **Tranche en cours** | Aucune — **T0a — Le socle serveur est fusionnée dans `main`** le 2026-09-15 (95 tâches sur 95, [tasks.md](../specs/001-socle-serveur/tasks.md)), `scripts/verifier.sh` vert après fusion |
+| **Prochaine** | **T0b — Le socle client**, sur sa propre branche créée depuis `main` — son point de jonction est `contrat/client.d.ts` |
 | **Code existant** | Le socle serveur de T0a : `api/`, `modules/` (tenants, assistance, communication, finance, protection), `migrations/tenants/`, `scripts/` (sept portes et leurs tests négatifs), `tests/` (102 tests), `contrat/` — [01-stack.md § 2.1](01-stack.md) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -141,8 +141,8 @@ la transaction · **6, 7, 8, 10** sans objet — aucun écran, aucun document ·
 l'assistance est une clé du catalogue · **11** ✓ `X-Nelo-Requete` exigée, rejeu testé · **12** ✓
 aucune provision touchée · **13** ✓ `scripts/verifier.sh` passe en une commande.
 
-**Bloqué / à faire ensuite** : **la relecture de la branche et sa fusion dans `main`** — le geste
-de l'utilisateur. Puis **T0b**, dont le prompt est dans [04-roadmap.md](04-roadmap.md).
+**Bloqué / à faire ensuite** : rien — la branche est **fusionnée dans `main`** le même jour, à la
+demande de l'utilisateur, vérification verte après fusion. **T0b**, dont le prompt est dans [04-roadmap.md](04-roadmap.md).
 
 ---
 
