@@ -32,9 +32,9 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T0a — Le socle serveur**, sur la branche **`001-socle-serveur`** — `specify`, `plan` et `tasks` conclus : [spec.md](../specs/001-socle-serveur/spec.md), [plan.md](../specs/001-socle-serveur/plan.md), [research.md](../specs/001-socle-serveur/research.md), [data-model.md](../specs/001-socle-serveur/data-model.md), [contracts/](../specs/001-socle-serveur/contracts/), [quickstart.md](../specs/001-socle-serveur/quickstart.md), [tasks.md](../specs/001-socle-serveur/tasks.md) — **95 tâches en dix phases** |
-| **Prochaine** | `/speckit-implement` sur T0a, sur la branche `001-socle-serveur` — ou `/speckit-analyze` avant, pour une relecture croisée spec / plan / tâches |
-| **Code existant** | Aucun |
+| **Tranche en cours** | **T0a — Le socle serveur**, **implémentée** sur la branche **`001-socle-serveur`** — 95 tâches sur 95 ([tasks.md](../specs/001-socle-serveur/tasks.md)), `scripts/verifier.sh` vert. **Attend la relecture et la fusion dans `main` par l'utilisateur** |
+| **Prochaine** | **T0b — Le socle client**, après la fusion de T0a — son point de jonction est `contrat/client.d.ts` |
+| **Code existant** | Le socle serveur de T0a : `api/`, `modules/` (tenants, assistance, communication, finance, protection), `migrations/tenants/`, `scripts/` (sept portes et leurs tests négatifs), `tests/` (101 tests), `contrat/` — [01-stack.md § 2.1](01-stack.md) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
 | **Design** | Le système est arrêté sur la couleur, la typographie et les composants. Douze écrans maquettés dans `design/ecrans/`, plus la planche du système. **Leurs jeux de données sont du secondaire** : ils se reprennent écran par écran aux revues visuelles, pas en une passe ([05-design.md § 6](05-design.md)) |
@@ -93,6 +93,55 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-15 — T0a : le socle serveur est implémenté, sept portes sur sept tiennent
+
+**Fait** : `/speckit-implement` — les **95 tâches** de T0a, en onze commits sur `001-socle-serveur`.
+Le module doré répond (`GET /parametres`, `PUT /parametres/{cle}`, `/sante`), l'isolation par RLS
+forcée est prouvée sur chaque table et sur une connexion réutilisée, le rejeu est mémorisé dans
+Valkey et le travailleur consomme l'outbox dans l'ordre par tenant, les trois dépendances externes
+sont simulées à cinq modes, l'assistance connaît ses six capacités et aucune n'est livrée.
+**Mesures** : `scripts/verifier.sh` **18 s** (SC-010, cible 3 min) ; `scripts/tests-negatifs.sh`
+**49 s**, 7 portes cassées, 7 échecs, dépôt intact (SC-003) ; P-12 inspecte **14 fonctions
+d'accès**, P-04 **35 modules** ; reparcours sous suspension : **25 tests**, résultat identique
+(SC-008) ; clone frais → première réponse du module doré en **14 s** (SC-001) ; 101 tests.
+
+**Décidé** — dix écarts d'implémentation, chacun écrit là où il vit, aucun ne touche le contrat :
+
+- **L'expression de tenant est `NULLIF(current_setting('app.current_tenant', true), '')::uuid`** :
+  sur une connexion réutilisée, la variable revient à la chaîne vide et non à `NULL` — sans le
+  `NULLIF`, une transaction sans tenant lèverait au lieu de ne rien voir.
+- **Le `downgrade` garde le schéma `tenants`** : il porte `tenants.alembic_version`, qu'Alembic doit
+  pouvoir mettre à jour (R-08) ; tout le reste est retiré, et P-01 l'exerce.
+- **Un second point d'ouverture, `bd.sans_tenant()`**, sert aux deux seules fonctions
+  `SECURITY DEFINER` ; sous la RLS forcée il ne voit rien. Le propriétaire des schémas contourne
+  la RLS (superutilisateur en développement) — sinon ces fonctions ne rendraient rien.
+- **Trois épinglages de plus** : `greenlet` (SQLAlchemy asynchrone l'exige sous 3.14), `pyyaml`
+  (le test du contrat attendu), `fastapi-cli` (la commande `uv run fastapi dev` du corpus). P-07
+  les accepte.
+- **Les règles 2 et 3 du modèle rendent les deux détails** `portee_la_plus_basse` et
+  `portees_disponibles` : aucune clé du catalogue n'a de portée plus fine qu'`ÉTABLISSEMENT`, la
+  règle 3 seule n'aurait jamais été atteinte.
+- **Le travailleur prend les événements un par un et arrête le lot au premier échec** : sinon le
+  suivant passerait devant celui qui a échoué, et l'ordre par tenant ne tiendrait plus.
+- **Les ports de la composition se surchargent par `.env`** ; P-01 recrée `nelo_verification`, les
+  tests `nelo_test` — la base de développement n'est jamais effacée par la vérification.
+- Le test négatif de P-03 **indexe** sa retouche : la régénération écrase la copie de travail, seul
+  l'index garde la trace d'une modification à la main. `ruff` ignore `E501` : `ruff format` tient
+  la longueur du code. Le journal applicatif `nelo.*` est au niveau INFO.
+
+**Définition de terminé** (01-stack § 8.3), relue point par point : **1** ✓ critères couverts, dont
+les transitions de l'outbox · **2** ✓ schémas Pydantic, client régénéré sans retouche (P-03) · **3** ✓
+migration dans `migrations/tenants/`, réversible, sur base vierge, toute requête exercée (P-12) ·
+**4** ✓ RLS activée et forcée, isolation entre deux tenants · **5** ✓ `tenants.parametre.pose` dans
+la transaction · **6, 7, 8, 10** sans objet — aucun écran, aucun document · **9** ✓ la suspension de
+l'assistance est une clé du catalogue · **11** ✓ `X-Nelo-Requete` exigée, rejeu testé · **12** ✓
+aucune provision touchée · **13** ✓ `scripts/verifier.sh` passe en une commande.
+
+**Bloqué / à faire ensuite** : **la relecture de la branche et sa fusion dans `main`** — le geste
+de l'utilisateur. Puis **T0b**, dont le prompt est dans [04-roadmap.md](04-roadmap.md).
+
+---
 
 ## 2026-09-15 — T0a : les tâches sont écrites
 

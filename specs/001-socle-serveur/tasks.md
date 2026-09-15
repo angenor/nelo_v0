@@ -276,11 +276,11 @@ par `PUT /parametres`).
 **But** : le guide de démarrage est vrai, le corpus dit que le code existe, les chiffres des
 critères de succès sont notés, la définition de terminé est relue.
 
-- [ ] T091 Dérouler [quickstart.md](quickstart.md) de bout en bout sur un clone frais dans le bac à sable (`git clone` local, `docker compose up -d`, `uv sync`, `pnpm install --frozen-lockfile`, `scripts/bd-vierge.sh --avec-jeu-d-essai`, chaque `curl` et chaque `pytest`) ; chronométrer jusqu'à la première réponse du module doré (SC-001 < 5 min) ; corriger dans `specs/001-socle-serveur/quickstart.md` toute commande ou sortie attendue qui diverge
-- [ ] T092 [P] Mettre à jour `docs/01-stack.md § 2.1` « Ce qui existe aujourd'hui » (l'arborescence réelle après T0a, plus « Rien d'autre. Aucun code ») et `README.md` (les cinq commandes de démarrage et les deux commandes de vérification)
-- [ ] T093 [P] Mesurer et noter : durée de `scripts/verifier.sh` (SC-010), durée de `scripts/tests-negatifs.sh`, nombre de fonctions d'accès inspectées par P-12, nombre de modules inspectés par P-04 — dans l'entrée de session de `docs/progress.md`
-- [ ] T094 Relire la définition de terminé de `docs/01-stack.md § 8.3` point par point contre la tranche (les points 6, 7, 8, 10 sont sans objet : aucun écran, aucun document) et cocher le résultat dans `docs/progress.md` ; mettre à jour la ligne « Code existant » et « Tranche en cours » de l'état courant ; « Prochaine » = T0b
-- [ ] T095 `uv run ruff check . && uv run ruff format .` puis `scripts/verifier.sh` une dernière fois ; commiter sur `001-socle-serveur` ; **ne pas fusionner dans `main`** — la fusion est le geste de l'utilisateur, après relecture
+- [X] T091 Dérouler [quickstart.md](quickstart.md) de bout en bout sur un clone frais dans le bac à sable (`git clone` local, `docker compose up -d`, `uv sync`, `pnpm install --frozen-lockfile`, `scripts/bd-vierge.sh --avec-jeu-d-essai`, chaque `curl` et chaque `pytest`) ; chronométrer jusqu'à la première réponse du module doré (SC-001 < 5 min) ; corriger dans `specs/001-socle-serveur/quickstart.md` toute commande ou sortie attendue qui diverge
+- [X] T092 [P] Mettre à jour `docs/01-stack.md § 2.1` « Ce qui existe aujourd'hui » (l'arborescence réelle après T0a, plus « Rien d'autre. Aucun code ») et `README.md` (les cinq commandes de démarrage et les deux commandes de vérification)
+- [X] T093 [P] Mesurer et noter : durée de `scripts/verifier.sh` (SC-010), durée de `scripts/tests-negatifs.sh`, nombre de fonctions d'accès inspectées par P-12, nombre de modules inspectés par P-04 — dans l'entrée de session de `docs/progress.md`
+- [X] T094 Relire la définition de terminé de `docs/01-stack.md § 8.3` point par point contre la tranche (les points 6, 7, 8, 10 sont sans objet : aucun écran, aucun document) et cocher le résultat dans `docs/progress.md` ; mettre à jour la ligne « Code existant » et « Tranche en cours » de l'état courant ; « Prochaine » = T0b
+- [X] T095 `uv run ruff check . && uv run ruff format .` puis `scripts/verifier.sh` une dernière fois ; commiter sur `001-socle-serveur` ; **ne pas fusionner dans `main`** — la fusion est le geste de l'utilisateur, après relecture
 
 ---
 
