@@ -28,11 +28,22 @@ from modules.socle.communication import SimulationPasserelleSms
 journal = logging.getLogger("nelo.api")
 
 
+def configurer_journal() -> None:
+    """Le journal applicatif `nelo.*` au niveau INFO, sans toucher à celui du serveur ASGI."""
+    racine = logging.getLogger("nelo")
+    if not racine.handlers:
+        gestionnaire = logging.StreamHandler()
+        gestionnaire.setFormatter(logging.Formatter("%(levelname)s:     %(name)s — %(message)s"))
+        racine.addHandler(gestionnaire)
+        racine.setLevel(logging.INFO)
+
+
 def creer_application(configuration: Configuration | None = None) -> FastAPI:
     configuration = configuration or Configuration()
 
     @asynccontextmanager
     async def cycle_de_vie(application: FastAPI) -> AsyncIterator[None]:
+        configurer_journal()
         bd.configurer(configuration.bd_url_application, taille_pool=configuration.bd_taille_pool)
         travailleur = Travailleur(configuration)
         await travailleur.demarrer()

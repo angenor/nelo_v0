@@ -9,12 +9,12 @@ corps d'implémentation : les formes sont dans [contracts/](contracts/), le mod�
 | Outil | Version constatée le 2026-09-10 | Rôle |
 |---|---|---|
 | Docker Desktop, Compose v2 | 29.1.3 / v2.40.3 | les trois services |
-| `uv` | 0.10.12 | Python 3.14, dépendances, `uv.lock` |
+| `uv` | 0.10.12 | Python 3.14, dépendances, `uv.lock` — `uv run fastapi dev` vient de `fastapi-cli`, épinglé en dépendance de développement |
 | `pnpm` | 10.26.2 | `openapi-typescript`, `pnpm-lock.yaml` |
 | `git` | — | les tests négatifs travaillent dans des `worktree` |
 
 Aucun compte, aucune clé d'API, aucun service distant (FR-002). `psql` est utile pour regarder,
-jamais requis.
+jamais requis : les scripts passent par `docker compose exec postgres psql`.
 
 ## Démarrer — US1, scénario 1
 
@@ -31,8 +31,14 @@ et son journal annonce le travailleur d'événements ; `curl -s localhost:8000/a
 `{"etat":"OK"}` sans en-tête (US1-7).
 
 **Jeu de données de départ** : `scripts/bd-vierge.sh --avec-jeu-d-essai` crée deux tenants, A et B,
-avec un établissement chacun, et imprime leurs identifiants. Les exemples ci-dessous supposent
-`ETAB_A` et `ETAB_B` exportés.
+avec un établissement chacun, et imprime leurs identifiants en forme `export` — d'où
+`eval "$(scripts/bd-vierge.sh --avec-jeu-d-essai | tail -1)"` pour avoir `ETAB_A` et `ETAB_B`.
+
+**Ports déjà pris sur le poste** : copier `.env.exemple` en `.env` et changer ensemble les
+`NELO_PORT_*` et les URL. La composition, la configuration et les scripts lisent tous `.env`.
+
+Mesuré le 2026-09-15 sur un clone frais, services déjà téléchargés : **14 s** du `git clone` à la
+première réponse du module doré (SC-001).
 
 ## Lire et poser — US1, scénarios 2 à 5
 
@@ -55,9 +61,10 @@ Attendu : la lecture rend dix-sept entrées, `source` à `DEFAUT` pour les clés
 `tenants.parametre.pose` écrit **dans la même transaction** (le test le prouve en faisant échouer la
 transaction : zéro événement, US3-4).
 
-**Refus de schéma, deux champs** (US1-4) — corps `{"portee":"NULLE_PART","valeur":true}` :
-`422`, `code: VAL_SCHEMA_INVALIDE`, `details.champs` cite `portee` **et** `portee_id`, `requete_id`
-reprend `$REQ`.
+**Refus de schéma, deux champs** (US1-4) — corps `{"portee":"NULLE_PART","valeur":true}` avec une
+**nouvelle** clé `X-Nelo-Requete` (réutiliser `$REQ` avec un autre corps rend
+`409 REQUETE_REJOUEE_DIFFEREMMENT`, et c'est voulu) : `422`, `code: VAL_SCHEMA_INVALIDE`,
+`details.champs` cite `portee` **et** `portee_id`, `requete_id` reprend la clé envoyée.
 
 **Refus métier** (US1-5) — clé `inconnue.cle` : `422 TEN_PARAMETRE_INCONNU`, `details.cles_connues` ;
 portée `SITE` : `422 TEN_PORTEE_INVALIDE`, `details.portees_disponibles`. Même statut que le
@@ -111,6 +118,7 @@ nommant l'arête, le verrou ou le fichier.
 
 ```bash
 scripts/verifier.sh          # ruff, P-02, P-07, P-04, P-11, P-01, P-12, P-03, reparcours sous suspension
+                             # (P-01 travaille sur la base « nelo_verification », les tests sur « nelo_test »)
 scripts/tests-negatifs.sh    # sept portes cassées une à une, sept échecs attendus, dépôt intact
 ```
 
@@ -122,9 +130,12 @@ la nommant** (SC-006).
 ## Les dépendances externes simulées — US6
 
 ```bash
-NELO_SIMULATION_SMS_MODE=JAMAIS_RECU NELO_SIMULATION_SMS_DELAI_MS=200 uv run pytest tests/simulations -q
-uv run pytest tests/simulations -q        # tous les modes, par paramétrage du test
+uv run pytest tests/simulations -q        # les cinq modes de chaque abstraction, par paramétrage du test
 ```
+
+En exécution, les modes viennent de la configuration — `NELO_SIMULATION_SMS_MODE`,
+`NELO_SIMULATION_PAIEMENT_MODE`, `NELO_SIMULATION_INFERENCE_MODE`, et `NELO_SIMULATION_DELAI_MS`
+commun aux trois — sans modifier le code.
 
 Attendu : chaque abstraction, dans chacun des cinq modes, se comporte comme le tableau de
 [contracts/interfaces-python.md](contracts/interfaces-python.md) ; en `JAMAIS_RECU` l'appelant rend
