@@ -11,9 +11,10 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from api import erreurs
+from api import contrat, erreurs
 from api.configuration import Configuration
 from api.idempotence import Idempotence
+from api.routes import parametres, sante
 from api.tenant_provisoire import TenantProvisoire
 from modules.shared import bd
 from modules.socle import tenants
@@ -34,7 +35,11 @@ def creer_application(configuration: Configuration | None = None) -> FastAPI:
             await bd.fermer()
 
     application = FastAPI(
-        title="Nelo — API", version="1", root_path="/api/v1", lifespan=cycle_de_vie
+        title="Nelo — API",
+        version="1",
+        root_path="/api/v1",
+        servers=[{"url": "/api/v1"}],
+        lifespan=cycle_de_vie,
     )
     application.state.configuration = configuration
 
@@ -42,6 +47,9 @@ def creer_application(configuration: Configuration | None = None) -> FastAPI:
     application.add_middleware(Idempotence)
     application.add_middleware(TenantProvisoire, resolveur=tenants.tenant_de_etablissement)
     erreurs.installer(application)
+    application.include_router(sante.routeur)
+    application.include_router(parametres.routeur)
+    contrat.installer(application)
     return application
 
 

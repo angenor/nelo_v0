@@ -30,6 +30,7 @@ porte() { # P-XX
 
 etape "ruff check" uv run ruff check .
 etape "ruff format" uv run ruff format --check .
+porte P-03
 
 duree=$(( $(date +%s) - debut ))
 echo "VÉRIFICATION : $portes_vertes portes vertes en ${duree} s"
