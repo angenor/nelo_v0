@@ -4,7 +4,8 @@
 #   ruff → P-02 → P-07 → P-04 → P-11 → P-01 → P-12 → P-03
 #
 # Du moins coûteux au plus coûteux (research.md R-18). Sort au premier contrôle rouge, en nommant
-# la porte et le motif. Cible : moins de trois minutes (SC-010).
+# la porte et le motif. Cible : moins de trois minutes (SC-010) — mesurée à 14 s sur le dépôt
+# conforme le 2026-09-15 (poste de développement, base PostgreSQL déjà levée).
 set -euo pipefail
 
 RACINE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

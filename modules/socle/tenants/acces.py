@@ -6,9 +6,10 @@ tests contre une base fraîchement migrée, ou la porte P-12 échoue en la nomma
 """
 
 import uuid
+from datetime import timedelta
 from uuid import UUID
 
-from sqlalchemy import RowMapping, func, select
+from sqlalchemy import RowMapping, func, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
@@ -145,3 +146,73 @@ async def inserer_evenement(
         )
     )
     return evenement_id
+
+
+async def prendre_evenements(
+    connexion: AsyncConnection, tenant_id: UUID, n: int
+) -> list[RowMapping]:
+    """Les `n` plus anciens événements en attente, verrouillés puis passés à `pris`, dans l'ordre."""
+    candidats = (
+        select(evenement_outbox.c.id)
+        .where(evenement_outbox.c.tenant_id == tenant_id, evenement_outbox.c.etat == "en_attente")
+        .order_by(evenement_outbox.c.ecrit_le, evenement_outbox.c.id)
+        .limit(n)
+        .with_for_update(skip_locked=True)
+    )
+    resultat = await connexion.execute(
+        update(evenement_outbox)
+        .where(evenement_outbox.c.id.in_(candidats.scalar_subquery()))
+        .values(etat="pris", pris_le=func.now())
+        .returning(
+            evenement_outbox.c.id,
+            evenement_outbox.c.type,
+            evenement_outbox.c.charge,
+            evenement_outbox.c.ecrit_le,
+        )
+    )
+    return sorted(resultat.mappings(), key=lambda e: (e["ecrit_le"], e["id"]))
+
+
+async def marquer_traite(connexion: AsyncConnection, evenement_id: UUID) -> None:
+    await connexion.execute(
+        update(evenement_outbox)
+        .where(evenement_outbox.c.id == evenement_id)
+        .values(etat="traite", traite_le=func.now())
+    )
+
+
+async def marquer_echec(connexion: AsyncConnection, evenement_id: UUID, erreur: str) -> None:
+    await connexion.execute(
+        update(evenement_outbox)
+        .where(evenement_outbox.c.id == evenement_id)
+        .values(
+            etat="en_echec",
+            tentatives=evenement_outbox.c.tentatives + 1,
+            derniere_erreur=erreur,
+        )
+    )
+
+
+async def reprendre_pris_orphelins(
+    connexion: AsyncConnection, tenant_id: UUID, delai: timedelta
+) -> int:
+    """Un `pris` dont le processus est mort repasse `en_attente` passé le délai : jamais perdu."""
+    resultat = await connexion.execute(
+        update(evenement_outbox)
+        .where(
+            evenement_outbox.c.tenant_id == tenant_id,
+            evenement_outbox.c.etat == "pris",
+            evenement_outbox.c.pris_le < func.now() - delai,
+        )
+        .values(etat="en_attente", pris_le=None)
+    )
+    return resultat.rowcount
+
+
+async def reprendre_en_echec(connexion: AsyncConnection, tenant_id: UUID) -> int:
+    resultat = await connexion.execute(
+        update(evenement_outbox)
+        .where(evenement_outbox.c.tenant_id == tenant_id, evenement_outbox.c.etat == "en_echec")
+        .values(etat="en_attente", pris_le=None)
+    )
+    return resultat.rowcount

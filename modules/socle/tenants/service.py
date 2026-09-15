@@ -7,7 +7,8 @@ toute écriture ; l'événement s'écrit dans la transaction du changement d'ét
 
 import re
 import uuid
-from collections.abc import Mapping
+from collections.abc import Awaitable, Callable, Mapping
+from datetime import timedelta
 from decimal import Decimal, InvalidOperation
 from typing import Any
 from uuid import UUID
@@ -266,3 +267,43 @@ def _portee_invalide(portee: Portee, la_plus_basse: Portee | None) -> ErreurMeti
         champ="portee",
         details=details,
     )
+
+
+# --- L'outbox : consommée par tenant, dans l'ordre d'écriture, au moins une fois ---------------
+
+type Consommateur = Callable[[UUID, UUID, Evenement], Awaitable[None]]
+
+
+async def reprendre_evenements(tenant_id: UUID, delai_orphelin: timedelta) -> None:
+    """Les `pris` orphelins et les `en_echec` repassent `en_attente` : ils seront livrés à nouveau."""
+    async with transaction(tenant_id) as connexion:
+        await acces.reprendre_pris_orphelins(connexion, tenant_id, delai_orphelin)
+        await acces.reprendre_en_echec(connexion, tenant_id)
+
+
+async def consommer_lot(tenant_id: UUID, consommateur: Consommateur, n: int) -> int:
+    """Jusqu'à `n` événements du tenant, un par un, dans l'ordre d'écriture.
+
+    Chaque événement est pris dans sa transaction, passé au consommateur hors transaction, puis
+    marqué dans une autre. Au premier échec, le lot s'arrête : l'événement suivant ne passe pas
+    devant celui qui a échoué, qui sera repris au tour suivant. Rend le nombre d'événements traités.
+    """
+    traites = 0
+    for _ in range(n):
+        async with transaction(tenant_id) as connexion:
+            pris = await acces.prendre_evenements(connexion, tenant_id, 1)
+        if not pris:
+            break
+        ligne = pris[0]
+        try:
+            await consommateur(tenant_id, ligne["id"], Evenement(ligne["type"], ligne["charge"]))
+        except Exception as erreur:
+            async with transaction(tenant_id) as connexion:
+                await acces.marquer_echec(
+                    connexion, ligne["id"], f"{type(erreur).__name__} : {erreur}"[:500]
+                )
+            break
+        async with transaction(tenant_id) as connexion:
+            await acces.marquer_traite(connexion, ligne["id"])
+        traites += 1
+    return traites

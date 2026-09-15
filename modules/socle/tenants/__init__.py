@@ -12,10 +12,13 @@ from modules.socle.tenants.schemas import (
     ReponseSante,
 )
 from modules.socle.tenants.service import (
+    Consommateur,
+    consommer_lot,
     creer_etablissement,
     creer_tenant,
     lire_parametres_effectifs,
     poser_parametre,
+    reprendre_evenements,
     tenant_de_etablissement,
     tenants_pour_travailleur,
     valeur_effective,
@@ -35,4 +38,7 @@ __all__ = [
     "CorpsPoserParametre",
     "ReponseParametres",
     "ReponseSante",
+    "Consommateur",
+    "consommer_lot",
+    "reprendre_evenements",
 ]
