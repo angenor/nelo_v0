@@ -151,17 +151,24 @@ async def inserer_evenement(
 async def prendre_evenements(
     connexion: AsyncConnection, tenant_id: UUID, n: int
 ) -> list[RowMapping]:
-    """Les `n` plus anciens événements en attente, verrouillés puis passés à `pris`, dans l'ordre."""
+    """Les `n` plus anciens événements en attente, verrouillés puis passés à `pris`, dans l'ordre.
+
+    La sélection est une CTE `MATERIALIZED`, évaluée **une seule fois** : placée dans un
+    `IN (SELECT … LIMIT n FOR UPDATE SKIP LOCKED)`, PostgreSQL peut la réévaluer selon le plan et
+    passer à `pris` plus de `n` lignes — celles qu'on ne rend pas resteraient bloquées.
+    """
     candidats = (
         select(evenement_outbox.c.id)
         .where(evenement_outbox.c.tenant_id == tenant_id, evenement_outbox.c.etat == "en_attente")
         .order_by(evenement_outbox.c.ecrit_le, evenement_outbox.c.id)
         .limit(n)
         .with_for_update(skip_locked=True)
+        .cte("candidats")
+        .prefix_with("MATERIALIZED")
     )
     resultat = await connexion.execute(
         update(evenement_outbox)
-        .where(evenement_outbox.c.id.in_(candidats.scalar_subquery()))
+        .where(evenement_outbox.c.id == candidats.c.id)
         .values(etat="pris", pris_le=func.now())
         .returning(
             evenement_outbox.c.id,

@@ -106,6 +106,20 @@ async def test_un_echec_n_inverse_pas_l_ordre(tenants_ab, configuration_rapide):
     assert consommateur.recus[tenants_ab.tenant_a] == ["1", "2"]
 
 
+async def test_la_prise_ne_depasse_jamais_n(tenants_ab):
+    ids = [await ecrire(tenants_ab.tenant_a, str(n)) for n in range(5)]
+    async with transaction(tenants_ab.tenant_a) as connexion:
+        pris = await acces.prendre_evenements(connexion, tenants_ab.tenant_a, 2)
+        assert [e["id"] for e in pris] == ids[:2]
+        etats = await connexion.execute(
+            text(
+                "SELECT etat, count(*) FROM tenants.evenement_outbox WHERE id = ANY(:ids) GROUP BY etat"
+            ),
+            {"ids": ids},
+        )
+        assert dict(etats.all()) == {"pris": 2, "en_attente": 3}
+
+
 async def test_pris_orphelin_repris(tenants_ab, configuration_rapide):
     consommateur = Consommateur({tenants_ab.tenant_a})
     evenement_id = await ecrire(tenants_ab.tenant_a, "1")
@@ -130,7 +144,8 @@ async def test_arrete_accumule_relance_consomme(tenants_ab, configuration_rapide
     assert {(await etat(tenants_ab.tenant_a, i)).etat for i in ids} == {"en_attente"}
 
     await travailleur.demarrer()
-    for _ in range(100):
+    # Un tour parcourt tous les tenants de la base de test : l'attente est bornée, pas serrée.
+    for _ in range(1000):
         if len(consommateur.recus[tenants_ab.tenant_a]) == 3:
             break
         await asyncio.sleep(0.02)
