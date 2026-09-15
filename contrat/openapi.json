@@ -1,0 +1,445 @@
+{
+  "components": {
+    "schemas": {
+      "CorpsPoserParametre": {
+        "additionalProperties": false,
+        "properties": {
+          "portee": {
+            "$ref": "#/components/schemas/Portee"
+          },
+          "portee_id": {
+            "format": "uuid",
+            "title": "Portee Id",
+            "type": "string"
+          },
+          "valeur": {
+            "$ref": "#/components/schemas/ValeurParametre"
+          }
+        },
+        "required": [
+          "portee",
+          "portee_id",
+          "valeur"
+        ],
+        "title": "CorpsPoserParametre",
+        "type": "object"
+      },
+      "EnveloppeErreur": {
+        "description": "docs/03-api.md § 1.6 — `code` est ce que le client teste, jamais `message`.",
+        "properties": {
+          "champ": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Champ"
+          },
+          "code": {
+            "description": "Stable, préfixé par domaine",
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "additionalProperties": true,
+            "description": "De quoi construire l'issue — pour `VAL_SCHEMA_INVALIDE`, `champs` est une liste de `{chemin, motif}`",
+            "title": "Details",
+            "type": "object"
+          },
+          "message": {
+            "description": "Français, factuel, destiné au journal — pas affiché tel quel",
+            "title": "Message",
+            "type": "string"
+          },
+          "requete_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "L'`X-Nelo-Requete` reçu ; `null` si la requête n'en portait pas",
+            "title": "Requete Id"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "champ",
+          "details",
+          "requete_id"
+        ],
+        "title": "EnveloppeErreur",
+        "type": "object"
+      },
+      "ParametreEffectif": {
+        "properties": {
+          "cle": {
+            "title": "Cle",
+            "type": "string"
+          },
+          "portee_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Portee Id"
+          },
+          "portee_resolue": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Portee"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "La portée à laquelle la valeur a été trouvée ; `null` si aucune valeur n'est posée"
+          },
+          "source": {
+            "enum": [
+              "VALEUR",
+              "DEFAUT",
+              "NON_DEFINIE"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/TypeParametre"
+          },
+          "valeur": {
+            "$ref": "#/components/schemas/ValeurParametre",
+            "description": "La valeur brute, typée par le catalogue. Un DECIMAL voyage en chaîne."
+          }
+        },
+        "required": [
+          "cle",
+          "type",
+          "valeur",
+          "portee_resolue",
+          "portee_id",
+          "source"
+        ],
+        "title": "ParametreEffectif",
+        "type": "object"
+      },
+      "ParametrePose": {
+        "properties": {
+          "cle": {
+            "title": "Cle",
+            "type": "string"
+          },
+          "portee": {
+            "$ref": "#/components/schemas/Portee"
+          },
+          "portee_id": {
+            "format": "uuid",
+            "title": "Portee Id",
+            "type": "string"
+          },
+          "pose_le": {
+            "format": "date-time",
+            "title": "Pose Le",
+            "type": "string"
+          },
+          "valeur": {
+            "$ref": "#/components/schemas/ValeurParametre"
+          }
+        },
+        "required": [
+          "cle",
+          "portee",
+          "portee_id",
+          "valeur",
+          "pose_le"
+        ],
+        "title": "ParametrePose",
+        "type": "object"
+      },
+      "Portee": {
+        "enum": [
+          "TENANT",
+          "ETABLISSEMENT",
+          "SITE",
+          "CYCLE"
+        ],
+        "title": "Portee",
+        "type": "string"
+      },
+      "ReponseParametres": {
+        "properties": {
+          "etablissement_id": {
+            "format": "uuid",
+            "title": "Etablissement Id",
+            "type": "string"
+          },
+          "parametres": {
+            "items": {
+              "$ref": "#/components/schemas/ParametreEffectif"
+            },
+            "title": "Parametres",
+            "type": "array"
+          }
+        },
+        "required": [
+          "etablissement_id",
+          "parametres"
+        ],
+        "title": "ReponseParametres",
+        "type": "object"
+      },
+      "ReponseSante": {
+        "properties": {
+          "etat": {
+            "const": "OK",
+            "title": "Etat",
+            "type": "string"
+          }
+        },
+        "required": [
+          "etat"
+        ],
+        "title": "ReponseSante",
+        "type": "object"
+      },
+      "TypeParametre": {
+        "enum": [
+          "ENTIER",
+          "DECIMAL",
+          "BOOLEEN",
+          "CHAINE",
+          "PLAGE_HORAIRE"
+        ],
+        "title": "TypeParametre",
+        "type": "string"
+      },
+      "ValeurParametre": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Nelo — API",
+    "version": "1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/parametres": {
+      "get": {
+        "operationId": "lire_parametres",
+        "parameters": [
+          {
+            "description": "UUID de l'établissement actif. Lu par un middleware — absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` ; inconnu, `404 TEN_RESSOURCE_INTROUVABLE`. Résolution provisoire du tenant jusqu'à T1a.",
+            "in": "header",
+            "name": "X-Nelo-Etablissement",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseParametres"
+                }
+              }
+            },
+            "description": "Chaque clé du catalogue, sa valeur effective et la portée où elle a été résolue"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_ETABLISSEMENT_REQUIS` — en-tête absent ou malformé, refusé par le middleware"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_RESSOURCE_INTROUVABLE` — ressource inexistante dans le périmètre du tenant ; jamais `403`"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`API_ERREUR_INTERNE` — aucun détail technique dans `message` ; `requete_id` suffit à retrouver la trace"
+          }
+        },
+        "summary": "Paramètres effectifs du catalogue, résolus à la portée de l'établissement de l'en-tête"
+      }
+    },
+    "/parametres/{cle}": {
+      "put": {
+        "operationId": "poser_parametre",
+        "parameters": [
+          {
+            "description": "UUID de l'établissement actif. Lu par un middleware — absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` ; inconnu, `404 TEN_RESSOURCE_INTROUVABLE`. Résolution provisoire du tenant jusqu'à T1a.",
+            "in": "header",
+            "name": "X-Nelo-Etablissement",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware — absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "cle",
+            "required": true,
+            "schema": {
+              "title": "Cle",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsPoserParametre"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParametrePose"
+                }
+              }
+            },
+            "description": "Valeur posée — une écriture qui ne crée rien de nouveau au sens du contrat (UPSERT)"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "Refusé par un middleware, avant toute validation : `REQUETE_CLE_MANQUANTE`, `REQUETE_CLE_INVALIDE`, `TEN_ETABLISSEMENT_REQUIS`"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_RESSOURCE_INTROUVABLE` — ressource inexistante dans le périmètre du tenant ; jamais `403`"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`REQUETE_REJOUEE_DIFFEREMMENT` (même clé, corps différent) · `REQUETE_EN_COURS` (même clé, première exécution non terminée)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "Deux natures, un statut, distinguées par `code` : `VAL_SCHEMA_INVALIDE` (corps invalide, `details.champs` liste le chemin de chaque champ fautif) — ou règle métier sur un corps valide : `TEN_PARAMETRE_INCONNU`, `TEN_PORTEE_INVALIDE`, `TEN_VALEUR_INVALIDE`"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`API_ERREUR_INTERNE` — aucun détail technique dans `message` ; `requete_id` suffit à retrouver la trace"
+          }
+        },
+        "summary": "Poser une valeur à une portée — capacité `tenant.parametre.definir` (point d'insertion jusqu'à T1b)"
+      }
+    },
+    "/sante": {
+      "get": {
+        "operationId": "sante",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseSante"
+                }
+              }
+            },
+            "description": "Le serveur est levé"
+          }
+        },
+        "summary": "Sonde publique — sans authentification, sans donnée"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ]
+}

@@ -32,11 +32,11 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | Aucune — le corpus documentaire vient d'être posé |
-| **Prochaine** | **Étape 0 — la constitution**, puis **T0a — Le socle serveur** |
-| **Code existant** | Aucun |
+| **Tranche en cours** | **T0a — Le socle serveur**, **implémentée** sur la branche **`001-socle-serveur`** — 95 tâches sur 95 ([tasks.md](../specs/001-socle-serveur/tasks.md)), `scripts/verifier.sh` vert. **Attend la relecture et la fusion dans `main` par l'utilisateur** |
+| **Prochaine** | **T0b — Le socle client**, après la fusion de T0a — son point de jonction est `contrat/client.d.ts` |
+| **Code existant** | Le socle serveur de T0a : `api/`, `modules/` (tenants, assistance, communication, finance, protection), `migrations/tenants/`, `scripts/` (sept portes et leurs tests négatifs), `tests/` (102 tests), `contrat/` — [01-stack.md § 2.1](01-stack.md) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
-| **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. La constitution est encore le gabarit vide |
+| **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
 | **Design** | Le système est arrêté sur la couleur, la typographie et les composants. Douze écrans maquettés dans `design/ecrans/`, plus la planche du système. **Leurs jeux de données sont du secondaire** : ils se reprennent écran par écran aux revues visuelles, pas en une passe ([05-design.md § 6](05-design.md)) |
 
 ---
@@ -94,6 +94,124 @@ l'architecture** (marquées ⚠).
 
 ## Journal
 
+## 2026-09-15 — T0a : le socle serveur est implémenté, sept portes sur sept tiennent
+
+**Fait** : `/speckit-implement` — les **95 tâches** de T0a, en douze commits sur `001-socle-serveur`.
+Le module doré répond (`GET /parametres`, `PUT /parametres/{cle}`, `/sante`), l'isolation par RLS
+forcée est prouvée sur chaque table et sur une connexion réutilisée, le rejeu est mémorisé dans
+Valkey et le travailleur consomme l'outbox dans l'ordre par tenant, les trois dépendances externes
+sont simulées à cinq modes, l'assistance connaît ses six capacités et aucune n'est livrée.
+**Mesures** : `scripts/verifier.sh` **18 s** (SC-010, cible 3 min) ; `scripts/tests-negatifs.sh`
+**49 s**, 7 portes cassées, 7 échecs, dépôt intact (SC-003) ; P-12 inspecte **14 fonctions
+d'accès**, P-04 **35 modules** ; reparcours sous suspension : **25 tests**, résultat identique
+(SC-008) ; clone frais → première réponse du module doré en **14 s** (SC-001) ; 102 tests.
+
+**Décidé** — dix écarts d'implémentation, chacun écrit là où il vit, aucun ne touche le contrat :
+
+- **L'expression de tenant est `NULLIF(current_setting('app.current_tenant', true), '')::uuid`** :
+  sur une connexion réutilisée, la variable revient à la chaîne vide et non à `NULL` — sans le
+  `NULLIF`, une transaction sans tenant lèverait au lieu de ne rien voir.
+- **Le `downgrade` garde le schéma `tenants`** : il porte `tenants.alembic_version`, qu'Alembic doit
+  pouvoir mettre à jour (R-08) ; tout le reste est retiré, et P-01 l'exerce.
+- **Un second point d'ouverture, `bd.sans_tenant()`**, sert aux deux seules fonctions
+  `SECURITY DEFINER` ; sous la RLS forcée il ne voit rien. Le propriétaire des schémas contourne
+  la RLS (superutilisateur en développement) — sinon ces fonctions ne rendraient rien.
+- **Trois épinglages de plus** : `greenlet` (SQLAlchemy asynchrone l'exige sous 3.14), `pyyaml`
+  (le test du contrat attendu), `fastapi-cli` (la commande `uv run fastapi dev` du corpus). P-07
+  les accepte.
+- **Les règles 2 et 3 du modèle rendent les deux détails** `portee_la_plus_basse` et
+  `portees_disponibles` : aucune clé du catalogue n'a de portée plus fine qu'`ÉTABLISSEMENT`, la
+  règle 3 seule n'aurait jamais été atteinte.
+- **Le travailleur prend les événements un par un et arrête le lot au premier échec** : sinon le
+  suivant passerait devant celui qui a échoué, et l'ordre par tenant ne tiendrait plus. **La prise
+  est une CTE `MATERIALIZED`** : dans un `IN (SELECT … LIMIT n FOR UPDATE SKIP LOCKED)`, PostgreSQL
+  a réévalué la sous-requête sur la base de test chargée et passé à `pris` des événements jamais
+  rendus — un test intermittent l'a révélé, un test déterministe le garde.
+- **Les ports de la composition se surchargent par `.env`** ; P-01 recrée `nelo_verification`, les
+  tests `nelo_test` — la base de développement n'est jamais effacée par la vérification.
+- Le test négatif de P-03 **indexe** sa retouche : la régénération écrase la copie de travail, seul
+  l'index garde la trace d'une modification à la main. `ruff` ignore `E501` : `ruff format` tient
+  la longueur du code. Le journal applicatif `nelo.*` est au niveau INFO.
+
+**Définition de terminé** (01-stack § 8.3), relue point par point : **1** ✓ critères couverts, dont
+les transitions de l'outbox · **2** ✓ schémas Pydantic, client régénéré sans retouche (P-03) · **3** ✓
+migration dans `migrations/tenants/`, réversible, sur base vierge, toute requête exercée (P-12) ·
+**4** ✓ RLS activée et forcée, isolation entre deux tenants · **5** ✓ `tenants.parametre.pose` dans
+la transaction · **6, 7, 8, 10** sans objet — aucun écran, aucun document · **9** ✓ la suspension de
+l'assistance est une clé du catalogue · **11** ✓ `X-Nelo-Requete` exigée, rejeu testé · **12** ✓
+aucune provision touchée · **13** ✓ `scripts/verifier.sh` passe en une commande.
+
+**Bloqué / à faire ensuite** : **la relecture de la branche et sa fusion dans `main`** — le geste
+de l'utilisateur. Puis **T0b**, dont le prompt est dans [04-roadmap.md](04-roadmap.md).
+
+---
+
+## 2026-09-15 — T0a : les tâches sont écrites
+
+**Fait** : `/speckit-tasks` — `specs/001-socle-serveur/tasks.md`, **95 tâches** en dix phases :
+mise en place (10), fondations (18), puis une phase par user story dans l'ordre de la spec — US1 le
+module doré (17), US2 l'isolation (7), US3 rejeu et événements (8), US4 les frontières (8), US5 la
+commande de vérification et les tests négatifs (7), US6 les simulations (9), US7 l'assistance (6) —
+et la finition (5). Les tests sont des tâches à part entière, écrites avant l'implémentation de
+chaque story, parce que la spec les exige. Chaque porte se construit avec la matière qu'elle
+vérifie et entre dans `scripts/verifier.sh` dès qu'elle passe ; son test négatif s'écrit avec elle.
+
+**Décidé** : une correction du modèle — un `portee_id` d'établissement invisible depuis le tenant
+courant répond **`404 TEN_RESSOURCE_INTROUVABLE`**, pas `TEN_PORTEE_INVALIDE` : sous RLS,
+l'établissement d'un autre tenant et l'établissement inexistant sont indistinguables, et FR-019
+l'exige. L'ordre recommandé pour un développeur seul met la chaîne complète en place tôt : Phase 1,
+Phase 2, US1, US2, US4, US5, puis US3, US6, US7, finition.
+
+**Bloqué / à faire ensuite** : rien. **`/speckit-implement`** — ou `/speckit-analyze` d'abord,
+pour la relecture croisée spec / plan / tâches que 01-stack § 8.1 propose sur une tranche lourde.
+
+---
+
+## 2026-09-14 — T0a : les sept diffs sont tranchés, la tranche a sa branche
+
+**Fait** : les sept diffs proposés par le plan sont **appliqués** aux documents projet, tels que
+proposés — `assistance.suspendue` \| ÉTABLISSEMENT \| `false` confirmé (**Q28 close**) ;
+`contrat/` et les quatre fichiers d'espace de travail dans la cible de `01-stack.md § 2.3` ; la
+commande de lancement depuis la racine (§ 3) ; l'outbox comme table **du schéma de chaque module**
+(§ 2.5) ; `API_DEPENDANCE_INDISPONIBLE` sur le `503` (`03-api.md § 1.8`) ; `TEN_VALEUR_INVALIDE`
+(§ 2.3) ; `evenement_outbox` dans le schéma `tenants` (`02-domaine.md § 1.2`). Le plan, la
+recherche, le modèle et le guide de démarrage disent « appliqué » là où ils disaient « proposé ».
+
+**Décidé** : **une branche par tranche.** `001-socle-serveur` est créée depuis `main` ; la
+constitution ratifiée, les amendements du corpus, la spec, la planche et le plan y sont commités.
+`main` ne reçoit la tranche qu'à sa fusion, après `scripts/verifier.sh`.
+
+**Bloqué / à faire ensuite** : rien. **`/speckit-tasks`** sur T0a.
+
+---
+
+## 2026-09-10 — T0a : le plan est écrit, sept diffs attendent
+
+**Fait** : `/speckit-plan` sur T0a — `plan.md`, `research.md` (vingt-deux décisions),
+`data-model.md` (le schéma `tenants` : cinq tables, deux fonctions, le catalogue seedé depuis § 17),
+`contracts/openapi-attendu.yaml` et `contracts/interfaces-python.md`, `quickstart.md`. Le contrôle de
+constitution passe sur les quinze principes ; trois choix de complexité sont justifiés (deux
+fonctions `SECURITY DEFINER`, deux paquets créés pour une abstraction chacun, un espace de travail
+`pnpm` à la racine avant `web/`). La disposition de l'espace de travail `uv` a été **vérifiée dans un
+bac à sable** : racine installable, paquets d'espace de noms aux chemins littéraux du corpus,
+`pyproject.toml` déclaratif par paquet — c'est ce qui donne au premier verrou de P-11 quelque chose
+à inspecter.
+
+**Décidé** : **Q28 appliquée à titre provisoire** — `assistance.suspendue`, `ÉTABLISSEMENT`,
+`false`, telle que la spec la proposait — parce que le plan devait dériver d'un catalogue qui porte la
+clé. L'idempotence vit dans Valkey (conforme au R11 et au § 1.3 amendés depuis la spec) ; l'outbox
+est une table **du schéma de chaque module** ; le client typé vit dans `contrat/` à la racine ;
+l'ordre des portes est fixé : ruff, P-02, P-07, P-04, P-11, P-01, P-12, P-03, reparcours sous
+suspension.
+
+**Bloqué / à faire ensuite** : **sept diffs** sur les documents projet attendent un arbitrage avant
+`/speckit-tasks` — la table est en fin de `plan.md` (Q28 à confirmer, `contrat/` dans 01-stack § 2.3,
+la commande de lancement, l'outbox par module, `API_DEPENDANCE_INDISPONIBLE`, `TEN_VALEUR_INVALIDE`,
+`evenement_outbox` dans § 1.2). Et une question de méthode : `specs/` n'est pas suivi par git et
+aucune branche `001-socle-serveur` n'existe — T0a se construit-elle sur `main` ?
+
+---
+
 ## 2026-09-05 — La PWA est la cible, Tauri et Capacitor l'empaqueteront
 
 **Fait** : trois ajustements arbitrés sur le projet frère Kaya ont été confrontés au corpus. Deux
@@ -115,6 +233,65 @@ fait pas), `01-stack.md § 10`, le prompt de **T0b** dans `04-roadmap.md` — la
 l'interface de plateforme y sont livrées, et l'ADR 002 entre dans son contexte de lecture.
 
 **Bloqué / à faire ensuite** : rien de nouveau — **Q28** précède toujours `/speckit-plan` sur T0a.
+
+---
+
+## 2026-09-03 — T0a : la planche de diagrammes est posée
+
+**Fait** : `specs/001-socle-serveur/design/diagrammes.md` — la revue visuelle de forme B, cinq
+blocs Mermaid, chacun rendu sans erreur par `mermaid-cli` : la hiérarchie des paquets et ses deux
+arêtes interdites (US4), une écriture sur le module doré jusqu'au rejeu divergent (US1–US3), le
+cycle de vie d'un événement (US3), la chaîne `scripts/verifier.sh` avec le test négatif de chaque
+porte (US5), les trois dépendances simulées et l'assistance dans le socle (US6, US7).
+
+**Décidé** : rien de neuf. Deux points laissés ouverts au `plan`, et dits dans les phrases
+d'introduction : l'ordre d'enchaînement des sept portes n'est pas fixé par le corpus, le diagramme en
+propose un du moins coûteux au plus coûteux ; le support de la mémoire des réponses n'est pas nommé
+par le corpus, le diagramme le tient hors de la transaction PostgreSQL sans le placer.
+
+**Bloqué / à faire ensuite** : **Q28** reste l'arbitrage qui précède `/speckit-plan`.
+
+---
+
+## 2026-09-03 — T0a : le socle serveur est spécifié
+
+**Fait** : `specs/001-socle-serveur/` existe — le premier dossier de `specs/`. Le `spec.md` porte
+sept user stories, trente-huit scénarios d'acceptation, douze cas limites, quarante-neuf exigences,
+dix critères mesurables, et la section « Hors périmètre ». La liste de contrôle qualité passe
+entièrement, sans marqueur de clarification. Le prompt de revue visuelle est écrit en **forme B**
+— une planche de cinq diagrammes Mermaid, pas de `/design` — dans `design/prompt-diagrammes.md`.
+
+**Décidé** : trois défauts raisonnés, exposés dans les hypothèses du spec et révisables. **Le module
+doré est le catalogue de paramètres** du paquet `tenants` — il existe au contrat, il porte le
+réglage de suspension de l'assistance exigé par la même tranche, et il montre lecture, écriture,
+refus de schéma et refus métier. **Les sept portes serveur** sont P-01, P-02, P-03, P-04, P-07,
+P-11, P-12 ; P-08 et P-09 attendent T2a et T6a. **Le tenant est résolu provisoirement** depuis
+l'en-tête d'établissement jusqu'à T1a, la capacité étant un point d'insertion que T1b remplit.
+
+**Bloqué / à faire ensuite** : **Q28** — la clé du catalogue qui suspend l'assistance n'existe pas
+dans `02-domaine.md § 17` ; le diff est proposé, l'arbitrage précède le `plan`. Puis la planche de
+diagrammes en session dédiée, puis `/speckit-plan`.
+
+---
+
+## 2026-09-03 — Étape 0 : la constitution est ratifiée
+
+**Fait** : `.specify/memory/constitution.md` passe du gabarit vide à la **version 1.0.0**. Quinze
+principes, I à XV, chacun avec sa règle opposable, son motif tiré des ADR et la manière dont un plan
+est jugé non conforme ; une table principe → porte de `verifier.sh` ; la méthode et la définition de
+terminé ; une gouvernance qui renvoie vers `02-domaine.md`, `03-api.md`, `progress.md` et `adr/`.
+
+**Décidé** : rien de neuf — deux tensions du corpus ont été conciliées sans ADR, parce que la
+hiérarchie d'imports les tranchait déjà. Le principe V dit « aucune ligne ne connaît le segment »
+alors que `modules/segments/primaire/` existe : la constitution précise que **le socle et `metier/`
+n'importent jamais `segments/`**. Le principe XII dit « 404, jamais 403 » alors que `03-api.md`
+répond `403 ETB_NON_AUTORISE` à un en-tête d'établissement non affilié : le principe vise **la
+ressource, pas l'en-tête**. Un principe se modifie désormais **par un ADR, pas par un commit**, et
+les questions ouvertes de ce journal ne sont pas des principes.
+
+**Bloqué / à faire ensuite** : les deux vérifications d'après ratification que la roadmap demande —
+relire la constitution contre chaque ADR, et contre « Ce qui attend une réponse » — puis **T0a — Le
+socle serveur**, avec son prompt `/speckit-specify` dans [04-roadmap.md](04-roadmap.md).
 
 ---
 

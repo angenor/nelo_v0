@@ -44,9 +44,26 @@ légaux n'en ont pas.
 - **La révocation est immédiate** : une liste consultée à chaque requête, pas l'expiration du jeton.
   Le départ d'un enseignant en cours d'année coupe l'accès le jour même.
 - `X-Nelo-Etablissement` est vérifié contre les affectations du compte. Un établissement non affecté
-  répond `403 ETB_NON_AUTORISE`, jamais `404` — ne pas publier l'existence d'un établissement tiers.
-- **Omettre `X-Nelo-Annee` sur une route pédagogique est une erreur `400`**, jamais un repli
-  silencieux sur l'année active. Un repli implicite écrit une note dans la mauvaise année.
+  répond `403 TEN_ETABLISSEMENT_NON_AUTORISE`, jamais `404` — ne pas publier l'existence d'un établissement tiers.
+- **Omettre `X-Nelo-Annee` sur une route pédagogique est une erreur `400 ANN_ANNEE_REQUISE`**, jamais
+  un repli silencieux sur l'année active. Un repli implicite écrit une note dans la mauvaise année.
+
+**Ce que vaut un en-tête absent ou refusé.** La table est opposable : c'est elle qui fixe le statut,
+pas l'endroit du code où le refus a été écrit.
+
+| En-tête | Absent | Présent, mais refusé |
+|---|---|---|
+| `Authorization` | `401 AUT_JETON_MANQUANT` | `401 AUT_JETON_INVALIDE`, `401 AUT_SESSION_REVOQUEE` |
+| `X-Nelo-Etablissement` | `400 TEN_ETABLISSEMENT_REQUIS` | `403 TEN_ETABLISSEMENT_NON_AUTORISE` — le compte n'y est pas affecté |
+| `X-Nelo-Annee` | `400 ANN_ANNEE_REQUISE` sur une route pédagogique | `400 ANN_ANNEE_REQUISE` si ce n'est pas un UUID, `404 TEN_RESSOURCE_INTROUVABLE` si l'année est hors du tenant |
+| `X-Nelo-Requete` | `400 REQUETE_CLE_MANQUANTE` | `400 REQUETE_CLE_INVALIDE` — pas un UUID v7 ([§ 1.3](#13-idempotence)) |
+
+> ⚠️ **Ces quatre en-têtes sont lus par un middleware, chacun le sien, avant que FastAPI n'ait validé
+> quoi que ce soit.** C'est exactement ce qui rend ces `400` vrais : le refus a lieu hors du chemin de
+> Pydantic. **Déclarer l'un d'eux en dépendance `Header(...)` rendrait cette table fausse** — le refus
+> sortirait en `422 VAL_SCHEMA_INVALIDE`, et le client testerait un code qui n'arrive jamais
+> ([§ 1.8](#18-codes-http)). Le `401` du jeton est la seule exception au `400` : une identité absente
+> n'est pas une requête illisible, et l'interface n'en fait qu'une chose — rouvrir une session.
 
 ### 1.3 Idempotence
 
@@ -57,6 +74,23 @@ réponse associée pendant 24 h.
 - Réutiliser le même UUID avec un corps différent renvoie `409 REQUETE_REJOUEE_DIFFEREMMENT`.
 - **C'est ce qui rend inoffensif un renvoi sur réseau lent** — la situation normale du produit, pas
   l'exception. Sans lui, un appel de séance rejoué crée quarante présences en double.
+
+| Code | Statut | Cas |
+|---|---|---|
+| `REQUETE_CLE_MANQUANTE` | `400` | En-tête `X-Nelo-Requete` absent sur une écriture |
+| `REQUETE_CLE_INVALIDE` | `400` | Présent, mais pas un UUID v7 |
+| `REQUETE_REJOUEE_DIFFEREMMENT` | `409` | Même clé, corps différent |
+| `REQUETE_EN_COURS` | `409` | Même clé reçue avant la fin de la première exécution |
+
+> ⚠️ **L'idempotence est un middleware, et il lit son en-tête lui-même.** C'est ce qui justifie le
+> `400` des deux premiers : ils sont refusés **avant** que FastAPI n'ait validé quoi que ce soit.
+> **Déclarer `X-Nelo-Requete` en dépendance `Header(...)` rendrait ces deux codes faux** — le refus
+> passerait par le chemin de Pydantic et sortirait en `422 VAL_SCHEMA_INVALIDE`.
+
+> **La mémorisation vit dans Valkey, jamais en base**, et elle est bornée au tenant
+> ([ADR 007](adr/007-valkey-pour-l-ephemere.md)). La perdre dégrade un rejeu en réexécution, jamais en
+> corruption : la colonne `cle_idempotence` des tables de faits porte la contrainte d'unicité qui
+> prend le relais.
 
 ### 1.4 Formats
 
@@ -119,6 +153,7 @@ GET /api/v1/eleves?curseur=…&taille=50&tri=nom&classe_id=…&statut=ACTIF
 | `AUT_` | Authentification, session, OTP |
 | `HAB_` | Capacités, périmètre, cloisonnement |
 | `TEN_` | Tenant, établissement, country pack |
+| `PER_` | Personnes, foyers, liens de responsabilité |
 | `ANN_` | Année scolaire, période, bascule |
 | `STR_` | Structure pédagogique |
 | `SCO_` | Scolarité, inscription, dossier |
@@ -130,6 +165,12 @@ GET /api/v1/eleves?curseur=…&taille=50&tri=nom&classe_id=…&statut=ACTIF
 | `PRO_` | Protection de l'enfance, santé — **cloisonnés** |
 | `IMP_` | Import et migration |
 | `VAL_` | **Validation de schéma** — le refus de Pydantic, avant toute règle métier |
+| `REQUETE_` | **Idempotence** — clé de requête, rejeu, mémorisation ([§ 1.3](#13-idempotence)) |
+| `API_` | **Ce qui n'appartient à aucun module** — défaillance serveur, limitation de débit |
+
+> **Trois de ces préfixes ne sont pas des modules**, et c'est pourquoi la colonne dit « domaine » :
+> `VAL_` est une couche que toute écriture traverse, `REQUETE_` un middleware placé devant toutes les
+> écritures, `API_` le serveur lui-même. Aucun paquet de `modules/metier/` ne les porte.
 
 ### 1.8 Codes HTTP
 
@@ -138,20 +179,30 @@ GET /api/v1/eleves?curseur=…&taille=50&tri=nom&classe_id=…&statut=ACTIF
 | `200` | Lecture, ou écriture qui ne crée rien |
 | `201` | Création — `Location` porte l'URL de la ressource |
 | `204` | Action sans corps de réponse |
-| `400` | En-tête manquant ou malformé, paramètre de route ou de requête invalide — ce que le schéma de corps ne couvre pas |
+| `400` | **Ce qui n'a pas pu être lu du tout** : corps illisible, en-tête obligatoire absent ou malformé quand un middleware le lit ([§ 1.2](#12-authentification)), filtre de requête inconnu |
 | `401` | Jeton absent, expiré ou révoqué |
 | `403` | Authentifié, mais capacité ou périmètre insuffisant |
 | `404` | Ressource inexistante **dans le périmètre du tenant** |
 | `409` | Conflit d'état : année clôturée, note verrouillée, rejeu divergent |
-| `422` | **La sortie standard de Pydantic** : corps invalide au regard du schéma, `details` portant le chemin de chaque champ fautif. **Et** la règle métier violée sur un corps par ailleurs valide |
+| `422` | **Deux natures, un seul statut** : corps, paramètre de route ou de requête, ou en-tête déclaré en dépendance, invalide au regard du schéma — code préfixé `VAL_`, la sortie standard de Pydantic, `details` portant le chemin de chaque champ fautif — **ou** règle métier violée sur un corps par ailleurs valide, avec son code de domaine |
 | `429` | Limitation de débit — `Retry-After` obligatoire |
-| `503` | Dépendance externe indisponible (agrégateur de paiement, passerelle SMS, service d'inférence) |
+| `500` | **Défaillance non prévue** — `API_ERREUR_INTERNE`, **aucun détail technique dans `message`** : ni trace d'exécution, ni requête SQL, ni nom de table ; `requete_id` suffit à retrouver la trace côté serveur |
+| `503` | Dépendance externe indisponible — `API_DEPENDANCE_INDISPONIBLE`, `details.dependance` nomme l'abstraction (agrégateur de paiement, passerelle SMS, service d'inférence) |
 
 > **Le `422` porte deux natures, et c'est délibéré.** Pydantic refuse le corps avant que la moindre
 > règle métier s'exécute ; le service refuse ensuite une opération sur un corps valide. **C'est le
 > `code` de l'enveloppe qui les distingue**, jamais le statut seul — `VAL_SCHEMA_INVALIDE` pour la
 > première, un code de domaine préfixé pour la seconde. Un client qui teste le statut se trompera un
-> jour ; c'est pourquoi la règle est écrite ici.
+> jour ; c'est pourquoi la règle est écrite ici. Deux conséquences opposables : **le gestionnaire de
+> validation de FastAPI est remplacé**, pour qu'un refus de schéma porte l'enveloppe de
+> [§ 1.6](#16-enveloppe-derreur) avec son `code` et son `champ` renseignés ; et **`400` se réserve à
+> ce qui n'a pas pu être lu du tout**.
+
+**La ligne qui tranche, et elle vaut pour tous les cas à venir :**
+
+> **`400`** — refusé **par un middleware**, avant que FastAPI n'ait validé quoi que ce soit.
+> **`422`** — refusé **par la validation FastAPI**, corps **ou en-tête** (code préfixé `VAL_`), ou par
+> une **règle métier** sur un corps valide (code de domaine).
 
 > **`403` ne dit jamais ce qui manque en clair.** Il renvoie le code de capacité attendu dans
 > `details.capacite_requise`, ce qui permet à l'interface d'orienter vers l'administrateur de
@@ -242,7 +293,11 @@ Légende de la colonne **Cap.** : la capacité requise. `—` = authentifié suf
 | `POST` | `/auth/invitation/{jeton}` | Activer un compte depuis un lien à usage unique | — |
 
 `AUT_OTP_EXPIRE`, `AUT_OTP_TENTATIVES_EPUISEES`, `AUT_NUMERO_INCONNU`, `AUT_COMPTE_SUSPENDU`,
-`AUT_SESSION_REVOQUEE`.
+`AUT_SESSION_REVOQUEE`, `AUT_JETON_MANQUANT` (`401`), `AUT_JETON_INVALIDE` (`401`).
+
+> **Les deux derniers ne sont jamais un refus de schéma.** Un `Authorization` absent, illisible,
+> expiré ou révoqué est un `401` sur **toute** route protégée, jamais un `400` ni un `422` : le
+> middleware de session tranche avant d'atteindre le routeur ([§ 1.2](#12-authentification)).
 
 > `AUT_NUMERO_INCONNU` **n'est jamais renvoyé sur `/auth/otp`** : la route répond `204` quel que soit
 > le numéro, et l'OTP ne part que si le compte existe. Publier l'existence d'un compte à partir d'un
@@ -271,7 +326,26 @@ Légende de la colonne **Cap.** : la capacité requise. `—` = authentifié suf
 | `GET` | `/parametres` | Paramètres effectifs, portée résolue | — |
 | `PUT` | `/parametres/{cle}` | Poser une valeur à une portée | `tenant.parametre.definir` |
 
-`TEN_PARAMETRE_INCONNU`, `TEN_PORTEE_INVALIDE`, `TEN_COUNTRY_PACK_FIGE`.
+`TEN_PARAMETRE_INCONNU` (`422`), `TEN_PORTEE_INVALIDE` (`422`), `TEN_VALEUR_INVALIDE` (`422`,
+`details.type_attendu` — clé connue, valeur d'un autre type que celui du catalogue),
+`TEN_COUNTRY_PACK_FIGE` (`409`), `TEN_ETABLISSEMENT_REQUIS` (`400`), `TEN_RESSOURCE_INTROUVABLE` (`404`),
+`TEN_RESSOURCE_DEJA_EXISTANTE` (`409`).
+
+> **Une clé hors catalogue et une portée invalide sont des règles métier, pas des refus de schéma** :
+> le corps est valide, `422` avec un code de domaine — c'est le `code`, jamais le statut seul, qui les
+> distingue de `VAL_SCHEMA_INVALIDE` ([§ 1.8](#18-codes-http)).
+>
+> **`TEN_RESSOURCE_INTROUVABLE` est le refus par défaut de tout le socle** : une ressource hors du
+> périmètre du tenant répond `404`, jamais `403` — un statut ne dit pas si la ligne d'un autre
+> établissement existe. **L'unique exception est l'en-tête `X-Nelo-Etablissement`**, où le refus porte
+> sur l'affectation du compte et non sur l'existence d'une ressource : `403 TEN_ETABLISSEMENT_NON_AUTORISE`
+> ([§ 1.2](#12-authentification)).
+>
+> **`TEN_RESSOURCE_DEJA_EXISTANTE`** — le même identifiant fourni par le client, présenté avec une
+> **autre** clé de requête. Un rejeu porte la même clé et renvoie la même réponse
+> ([§ 1.3](#13-idempotence)) ; deux créations distinctes du même identifiant sont une erreur de
+> client, et le contrat la nomme plutôt que de l'écraser. Un module qui a mieux à dire le dit sous son
+> propre préfixe — `SCO_MATRICULE_DEJA_PRIS` en est le cas nommé.
 
 ### 2.4 Personnes, foyers, responsabilités
 
@@ -350,7 +424,7 @@ ouvertes).
 | `PUT` | `/edt/seances` | Saisie manuelle au MVP | `pedagogie.edt.publier` |
 
 `STR_ELEVE_DEUX_CLASSES`, `STR_EFFECTIF_DEPASSE` (**avertissement, `200` avec `alertes[]`**, pas un
-refus), `STR_STRUCTURE_FIGEE_NOTES_SAISIES`, `STR_COEFFICIENT_SUR_MATIERE_REFUSE`.
+refus), `STR_STRUCTURE_FIGEE_NOTES_SAISIES` (`409`), `STR_COEFFICIENT_SUR_MATIERE_REFUSE`.
 
 > **Au primaire — le segment du MVP** : `/series` répond une collection vide, `serie_code` est absent
 > partout, et le même enseignant porte autant de `services-enseignants` qu'il enseigne de matières sur
@@ -411,7 +485,7 @@ X-Nelo-Requete: 01936b7e-…
   ligne** — jamais un état global ambigu.
 - Un rejeu du même lot ne crée rien et renvoie la même réponse.
 
-`EVA_NOTE_HORS_BORNES`, `EVA_NOTE_VERROUILLEE`, `EVA_ABSENT_AVEC_VALEUR`, `EVA_REFERENTIEL_FIGE`,
+`EVA_NOTE_HORS_BORNES`, `EVA_NOTE_VERROUILLEE`, `EVA_ABSENT_AVEC_VALEUR`, `EVA_REFERENTIEL_FIGE` (`409`),
 `EVA_FORMULE_INVALIDE`, `EVA_BULLETIN_DEJA_PUBLIE`, `EVA_PERIODE_CLOTUREE`.
 
 > **`EVA_ABSENT_AVEC_VALEUR`** : une absence n'est pas un zéro. Envoyer `absent: true` **et** une
@@ -528,7 +602,7 @@ X-Nelo-Requete: 01936b7e-…
 | `GET` | `/classes/{id}/fiches-urgence.pdf` | **Imprimable par classe** | `vie_scolaire.appel.faire` |
 | `POST` | `/passages-infirmerie` | | ▣ `sante.infirmerie.saisir` |
 
-`PRO_ACCES_NOMINATIF_REQUIS`, `PRO_MOTIF_OBLIGATOIRE`, `PRO_REFERENT_NON_DESIGNE`,
+`HAB_ACCES_NOMINATIF_REQUIS`, `PRO_MOTIF_OBLIGATOIRE`, `PRO_REFERENT_NON_DESIGNE`,
 `PRO_ETAPE_NON_MODIFIABLE`.
 
 > **Toute route de ce bloc écrit dans `journal_acces`, y compris en lecture, y compris en cas de

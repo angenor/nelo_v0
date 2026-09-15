@@ -18,4 +18,23 @@ désactivable par réglage · PostgreSQL · Valkey · Garage.
 | Construire une tranche | [docs/04-roadmap.md](docs/04-roadmap.md) |
 | Le modèle et le contrat, qui font foi | [docs/02-domaine.md](docs/02-domaine.md) · [docs/03-api.md](docs/03-api.md) |
 
+## Démarrer
+
+```bash
+cp .env.exemple .env                       # changer les NELO_PORT_* si un autre projet occupe les ports
+docker compose up -d                       # postgres, valkey, garage
+uv sync && pnpm install --frozen-lockfile  # Python 3.14 et openapi-typescript, épinglés
+scripts/bd-vierge.sh --avec-jeu-d-essai    # la base, ses deux rôles, les migrations, deux tenants de test
+uv run fastapi dev api/main.py             # l'API sur :8000 — /api/v1/sante, /api/v1/parametres
+```
+
+## Vérifier
+
+```bash
+scripts/verifier.sh          # ruff et les sept portes, puis le reparcours sous suspension de l'assistance
+scripts/tests-negatifs.sh    # chaque porte cassée dans une copie git, et chacune doit échouer
+```
+
+Le guide pas à pas est [specs/001-socle-serveur/quickstart.md](specs/001-socle-serveur/quickstart.md).
+
 Les instructions destinées aux agents sont dans [CLAUDE.md](CLAUDE.md), lu automatiquement.

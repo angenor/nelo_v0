@@ -68,22 +68,38 @@ rendre où**, et le critère est le poids et le temps de premier affichage :
 
 ### 2.1 Ce qui existe aujourd'hui
 
+Le socle serveur de **T0a** ([specs/001-socle-serveur/](../specs/001-socle-serveur/)) :
+
 ```
 nelo_v0/
-├── .gitignore
-├── README.md
-├── CLAUDE.md                 # lu automatiquement, pointe vers docs/
-├── .specify/                 # Spec Kit — voir 2.2
-├── .claude/skills/           # les dix skills speckit-*
+├── CLAUDE.md · README.md · .gitignore · .env.exemple
+├── pyproject.toml · uv.lock · .python-version       # espace de travail uv : racine installable, huit membres déclaratifs
+├── package.json · pnpm-lock.yaml · pnpm-workspace.yaml   # openapi-typescript épinglé ; web/ viendra avec T0b
+├── compose.yml · garage.toml # postgres, valkey, garage — trois services
+├── contrat/                  # openapi.json et client.d.ts, régénérés par P-03
+├── api/                      # composition : main, middlewares (établissement provisoire, idempotence),
+│                             #   erreurs, capacités (point d'insertion), travailleur, contrat, routes/
+├── modules/
+│   ├── domaine/              # vide — la base de la hiérarchie
+│   ├── shared/               # transaction(tenant_id), erreurs, modes de simulation, événement
+│   ├── socle/
+│   │   ├── tenants/          # LE MODULE DORÉ — catalogue de paramètres, outbox du schéma
+│   │   ├── assistance/       # six capacités, aucune livrée ; service d'inférence simulé
+│   │   └── communication/    # passerelle SMS simulée
+│   ├── metier/
+│   │   ├── finance/          # agrégateur de paiement simulé
+│   │   └── protection/       # CLOISONNÉ — l'interface de service, rien d'autre
+│   └── segments/             # vide
+├── migrations/tenants/       # Alembic : le schéma tenants, réversible
+├── scripts/                  # verifier.sh, tests-negatifs.sh, bd-vierge.sh, portes/
+├── tests/                    # module doré, isolation, idempotence, outbox, frontières, simulations, assistance
+├── .specify/ · .claude/skills/   # Spec Kit — voir 2.2
+├── specs/                    # une spécification par tranche
 └── docs/                     # ce corpus
-    ├── 00-brief.md … 06-apres-mvp.md
-    ├── progress.md
-    ├── adr/
-    └── design/               # theme.css, tokens.json, 13 maquettes, lexique
 ```
 
-**Rien d'autre.** Aucun code, aucune configuration d'exécution : l'outil de spécification est posé,
-le produit ne l'est pas encore.
+**Aucune interface, aucune règle métier pédagogique.** Sept portes serveur tiennent — P-01, P-02,
+P-03, P-04, P-07, P-11, P-12 — et chacune a son test négatif (`scripts/tests-negatifs.sh`).
 
 ### 2.2 Spec Kit — ce qui est posé
 
@@ -141,6 +157,8 @@ les gabarits, eux, se commitent — c'est la méthode partagée.
 ```
 nelo_v0/
 ├── CLAUDE.md · compose.yml · docs/ · .specify/ · specs/ · scripts/
+├── pyproject.toml · uv.lock · package.json · pnpm-lock.yaml   # les espaces de travail, à la racine
+├── contrat/                  # openapi.json écrit par le serveur, client.d.ts dérivé — commités, régénérés par P-03
 ├── web/                      # Nuxt 4 — app/ : components/ composables/ core/ pages/ assets/
 ├── api/                      # FastAPI — composition des modules, routes fines
 ├── modules/
@@ -211,7 +229,9 @@ Il connaît `annee_scolaire`, `perimetre`, `capacite` et `envoi`. Les notions p�
    **aucune clé étrangère ne traverse un schéma de module** (porte P-01). Les lectures inter-modules
    passent par l'interface publique du module propriétaire : `finance` ne fait pas de `SELECT` dans
    `scolarite.eleve`, il appelle l'interface du module `scolarite`.
-2. **Toute transition d'état métier écrit un événement outbox dans la même transaction SQL.**
+2. **Toute transition d'état métier écrit un événement outbox dans la même transaction SQL** —
+   dans la table `evenement_outbox` **du schéma du module**, puisqu'aucune transaction ne traverse
+   deux modules ; le travailleur consomme chaque table, par tenant, dans l'ordre d'écriture.
 3. **Aucune transaction SQL ne couvre deux modules.** Les opérations inter-modules sont des séquences
    avec compensation explicite.
 4. **Chaque paquet expose son interface de service dans son `__init__.py`**, et rien d'autre n'en
@@ -234,7 +254,7 @@ ne peut pas dépendre du réseau.
 
 ```
 docker compose up -d          # postgres + valkey + garage
-cd api && uv run fastapi dev  # l'API sur :8000, OpenAPI sur /openapi.json
+uv run fastapi dev api/main.py  # depuis la racine — l'API sur :8000, OpenAPI sur /openapi.json
 cd web && pnpm dev            # l'application sur :3000
 ```
 

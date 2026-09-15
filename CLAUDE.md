@@ -51,9 +51,16 @@ Toute phase de planification **doit** :
   composant : on ouvre `docs/design/theme.css` et `docs/design/ecrans/` **avant** de dessiner, et on
   n'invente **aucune** valeur de couleur, d'espacement, de rayon ou de durée. `theme.css` est la seule
   source ; la répéter ailleurs — ici compris — créerait une seconde vérité qui divergerait.
-- **Après chaque `specify` conclu, produis le prompt de revue visuelle** : un bloc `/design` prêt à
-  coller, **un artboard par user story**, à lancer en **session dédiée** après `specify` et avant
-  `plan` — jamais pendant `implement`. Le gabarit est en fin de [docs/05-design.md](docs/05-design.md).
+- **Après chaque `specify` conclu, produis le prompt de revue visuelle** — mais **choisis sa forme
+  avant de l'écrire**, en te posant une seule question : *cette tranche produit-elle un écran qu'une
+  personne regarde ?*
+  - **Oui** → un bloc `/design`, **un artboard par user story**.
+  - **Non** — socle, moteur, contrat, vérification → **une planche de diagrammes Mermaid**, un seul
+    fichier `diagrammes.md`, trois à cinq diagrammes. **On ne lance pas `/design`** : un artboard qui
+    représente une migration ou un test est du texte mis en page.
+
+  Dans les deux cas, en **session dédiée** après `specify` et avant `plan` — jamais pendant `implement`. Les deux gabarits
+  sont en fin de [docs/05-design.md](docs/05-design.md).
 - **Quand l'utilisateur valide une maquette** — « c'est bon », « validé », « on garde » — applique la
   procédure de rangement **sans qu'il ait à la demander** : sources au bon endroit, adresse du canvas
   reportée dans le `spec.md`, une ligne pour dire ce qui a été rangé. Elle est en fin de

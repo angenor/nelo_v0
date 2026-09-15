@@ -22,7 +22,7 @@
 | **R8** | **Aucune logique métier ne dépend du pays autrement que par le country pack.** Aucun `if pays == "CI"` | Que chaque nouveau pays devienne un déploiement au lieu d'une donnée |
 | **R9** | **Le serveur est la seule autorité.** L'interface masque, l'API refuse — chaque appel revérifie la capacité **et** le périmètre | Qu'un élément d'interface masqué soit pris pour une protection |
 | **R10** | **Une action non autorisée est absente de l'écran, jamais grisée** | Le bruit, et l'invitation à réclamer des droits |
-| **R11** | **Toute écriture porte une clé d'idempotence**, et sa réponse est mémorisée | Qu'une coupure au mauvais moment crée un doublon d'appel, de note ou de paiement |
+| **R11** | **Toute écriture porte une clé d'idempotence**, et sa réponse est mémorisée 24 h **dans Valkey, jamais en base** ([ADR 007](adr/007-valkey-pour-l-ephemere.md)) ; la colonne `cle_idempotence` des tables de faits est la contrainte d'unicité qui prend le relais si la mémorisation est perdue | Qu'une coupure au mauvais moment crée un doublon d'appel, de note ou de paiement |
 | **R12** | **Tout changement d'état métier écrit un événement outbox dans la même transaction** | Qu'un SMS parte sans que l'événement soit enregistré, ou l'inverse |
 | **R13** | **Un rattachement inter-modules est un IDENTIFIANT, jamais une clé étrangère.** L'intégrité référentielle est portée par l'application et testée, pas par la base | Qu'une contrainte inter-schémas rende l'extraction d'un module impossible — *une clé étrangère ne survit pas à la séparation en deux bases* |
 
@@ -69,6 +69,7 @@ d'un lycée dans ces tables.
 | **`country_pack`** | `pays_code`, `version`, `contenu` (JSONB), `publie_le`. **Versionné, jamais modifié en place** |
 | **`parametre_catalogue`** | `cle`, `portee_la_plus_basse`, `type`, `valeur_defaut`, `description_cle` |
 | **`parametre_valeur`** | `cle`, `portee` (`TENANT` \| `ETABLISSEMENT` \| `SITE` \| `CYCLE`), `portee_id`, `valeur` |
+| **`evenement_outbox`** | `type`, `charge`, `ecrit_le`, `etat` (`en_attente` \| `pris` \| `traite` \| `en_echec`), `tentatives` — l'outbox du module, consommée par tenant dans l'ordre d'écriture ; chaque schéma de module porte la sienne |
 
 ### 1.3 Ce que porte un country pack
 
@@ -876,6 +877,7 @@ métier n'est écrite dans le code.
 | `inscription.derogation_dossier_incomplet` | ÉTABLISSEMENT | `false` |
 | `securite.duree_session_minutes` | TENANT | `480` |
 | `securite.expiration_delegation_max_jours` | TENANT | `90` |
+| `assistance.suspendue` | ÉTABLISSEMENT | `false` |
 | `conservation.dossier_eleve_annees` | *country pack* | — |
 | `conservation.signalement_annees` | *country pack* | — |
 

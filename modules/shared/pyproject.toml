@@ -1,0 +1,10 @@
+# Membre déclaratif de l'espace de travail : non installé, il déclare ses dépendances internes.
+[project]
+name = "nelo-shared"
+version = "0.1.0"
+description = "Ce que tout le monde partage — transaction, erreurs, simulation, événement"
+requires-python = "==3.14.*"
+dependencies = []
+
+[tool.uv]
+package = false

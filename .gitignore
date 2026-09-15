@@ -26,17 +26,18 @@ docs/design/canvas/*.html
 specs/**/design/*.html
 !specs/**/design/*.dc.html
 
-# Rust
-/target/
-**/target/
-
 # Node
 node_modules/
 .nuxt/
 .output/
 dist/
 
-# Python (sidecar IA)
+# Python
 __pycache__/
 *.pyc
 .venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.json
