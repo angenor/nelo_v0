@@ -30,6 +30,7 @@ porte() { # P-XX
 
 etape "ruff check" uv run ruff check .
 etape "ruff format" uv run ruff format --check .
+porte P-01
 porte P-03
 
 duree=$(( $(date +%s) - debut ))
