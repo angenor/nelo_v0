@@ -1,0 +1,15 @@
+# Membre déclaratif de l'espace de travail : non installé, il déclare ses dépendances internes.
+[project]
+name = "nelo-socle-communication"
+version = "0.1.0"
+description = "La communication — passerelle SMS"
+requires-python = "==3.14.*"
+dependencies = [
+    "nelo-shared",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+nelo-shared = { workspace = true }

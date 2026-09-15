@@ -1,0 +1,19 @@
+# Membre déclaratif de l'espace de travail : non installé, il déclare ses dépendances internes.
+[project]
+name = "nelo-api"
+version = "0.1.0"
+description = "La composition des modules — routes fines, aucune règle métier"
+requires-python = "==3.14.*"
+dependencies = [
+    "nelo-socle-tenants",
+    "nelo-socle-assistance",
+    "nelo-shared",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+nelo-socle-tenants = { workspace = true }
+nelo-socle-assistance = { workspace = true }
+nelo-shared = { workspace = true }

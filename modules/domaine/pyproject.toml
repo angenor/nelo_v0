@@ -1,0 +1,10 @@
+# Membre déclaratif de l'espace de travail : non installé, il déclare ses dépendances internes.
+[project]
+name = "nelo-domaine"
+version = "0.1.0"
+description = "Types métier — aucune E/S, aucun pays"
+requires-python = "==3.14.*"
+dependencies = []
+
+[tool.uv]
+package = false

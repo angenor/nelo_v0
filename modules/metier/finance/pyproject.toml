@@ -1,0 +1,15 @@
+# Membre déclaratif de l'espace de travail : non installé, il déclare ses dépendances internes.
+[project]
+name = "nelo-metier-finance"
+version = "0.1.0"
+description = "La finance — agrégateur de paiement"
+requires-python = "==3.14.*"
+dependencies = [
+    "nelo-shared",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+nelo-shared = { workspace = true }
