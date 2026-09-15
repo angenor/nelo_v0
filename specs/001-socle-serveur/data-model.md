@@ -116,8 +116,11 @@ expression de tenant standard.
    `details.portee_la_plus_basse`.
 3. `portee` ∈ {`SITE`, `CYCLE`} → `TEN_PORTEE_INVALIDE`, `details.portees_disponibles =
    ["TENANT", "ETABLISSEMENT"]` (R-17).
-4. `portee = TENANT` et `portee_id ≠ tenant courant`, ou `portee = ETABLISSEMENT` et `portee_id`
-   n'est pas un établissement du tenant → `TEN_PORTEE_INVALIDE`, `details.motif = "HORS_TENANT"`.
+4. `portee = TENANT` et `portee_id ≠ tenant courant` → `TEN_PORTEE_INVALIDE`,
+   `details.motif = "HORS_TENANT"` (le tenant courant est connu, rien n'est publié).
+   `portee = ETABLISSEMENT` et `portee_id` n'est pas un établissement **visible** du tenant →
+   `404 TEN_RESSOURCE_INTROUVABLE` : sous RLS, l'établissement d'un autre tenant et l'établissement
+   inexistant sont indistinguables, et c'est voulu — `404`, jamais `403` (FR-019, US2-1).
 5. `valeur` incompatible avec `type` → **`TEN_VALEUR_INVALIDE`**, `champ = "valeur"`,
    `details.type_attendu`. C'est une valeur fautive sur une clé connue : ni `TEN_PARAMETRE_INCONNU`
    (la clé existe), ni `VAL_SCHEMA_INVALIDE` (le schéma a accepté un JSON valide). Le code est entré

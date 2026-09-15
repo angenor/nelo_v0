@@ -32,8 +32,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T0a — Le socle serveur**, sur la branche **`001-socle-serveur`** — `specify` et `plan` conclus : [spec.md](../specs/001-socle-serveur/spec.md), [plan.md](../specs/001-socle-serveur/plan.md), [research.md](../specs/001-socle-serveur/research.md), [data-model.md](../specs/001-socle-serveur/data-model.md), [contracts/](../specs/001-socle-serveur/contracts/), [quickstart.md](../specs/001-socle-serveur/quickstart.md). Les sept diffs du plan sont appliqués aux documents projet |
-| **Prochaine** | `/speckit-tasks` sur T0a, sur la branche `001-socle-serveur` |
+| **Tranche en cours** | **T0a — Le socle serveur**, sur la branche **`001-socle-serveur`** — `specify`, `plan` et `tasks` conclus : [spec.md](../specs/001-socle-serveur/spec.md), [plan.md](../specs/001-socle-serveur/plan.md), [research.md](../specs/001-socle-serveur/research.md), [data-model.md](../specs/001-socle-serveur/data-model.md), [contracts/](../specs/001-socle-serveur/contracts/), [quickstart.md](../specs/001-socle-serveur/quickstart.md), [tasks.md](../specs/001-socle-serveur/tasks.md) — **95 tâches en dix phases** |
+| **Prochaine** | `/speckit-implement` sur T0a, sur la branche `001-socle-serveur` — ou `/speckit-analyze` avant, pour une relecture croisée spec / plan / tâches |
 | **Code existant** | Aucun |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -93,6 +93,27 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-15 — T0a : les tâches sont écrites
+
+**Fait** : `/speckit-tasks` — `specs/001-socle-serveur/tasks.md`, **95 tâches** en dix phases :
+mise en place (10), fondations (18), puis une phase par user story dans l'ordre de la spec — US1 le
+module doré (17), US2 l'isolation (7), US3 rejeu et événements (8), US4 les frontières (8), US5 la
+commande de vérification et les tests négatifs (7), US6 les simulations (9), US7 l'assistance (6) —
+et la finition (5). Les tests sont des tâches à part entière, écrites avant l'implémentation de
+chaque story, parce que la spec les exige. Chaque porte se construit avec la matière qu'elle
+vérifie et entre dans `scripts/verifier.sh` dès qu'elle passe ; son test négatif s'écrit avec elle.
+
+**Décidé** : une correction du modèle — un `portee_id` d'établissement invisible depuis le tenant
+courant répond **`404 TEN_RESSOURCE_INTROUVABLE`**, pas `TEN_PORTEE_INVALIDE` : sous RLS,
+l'établissement d'un autre tenant et l'établissement inexistant sont indistinguables, et FR-019
+l'exige. L'ordre recommandé pour un développeur seul met la chaîne complète en place tôt : Phase 1,
+Phase 2, US1, US2, US4, US5, puis US3, US6, US7, finition.
+
+**Bloqué / à faire ensuite** : rien. **`/speckit-implement`** — ou `/speckit-analyze` d'abord,
+pour la relecture croisée spec / plan / tâches que 01-stack § 8.1 propose sur une tranche lourde.
+
+---
 
 ## 2026-09-14 — T0a : les sept diffs sont tranchés, la tranche a sa branche
 
