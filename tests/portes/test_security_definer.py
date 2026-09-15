@@ -24,3 +24,12 @@ async def test_deux_fonctions_et_pas_une_de_plus(tenants_ab):
     for nom, (proprietaire, public_execute) in fonctions.items():
         assert proprietaire == "nelo_proprietaire", nom
         assert public_execute is False, f"PUBLIC peut exécuter {nom}"
+
+
+async def test_elles_ne_rendent_que_des_identifiants(tenants_ab):
+    from modules.socle import tenants
+
+    assert await tenants.tenant_de_etablissement(tenants_ab.etab_a) == tenants_ab.tenant_a
+    assert await tenants.tenant_de_etablissement(tenants_ab.tenant_a) is None
+    parcourus = await tenants.tenants_pour_travailleur()
+    assert {tenants_ab.tenant_a, tenants_ab.tenant_b} <= set(parcourus)
