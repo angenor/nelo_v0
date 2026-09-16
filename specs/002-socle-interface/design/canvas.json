@@ -1,0 +1,80 @@
+{
+  "artboards": [
+    {
+      "file": "US1.dc.html",
+      "title": "US1 · Planche de style",
+      "x": 0,
+      "y": 0,
+      "w": 1760,
+      "h": 7800
+    },
+    {
+      "file": "US2.dc.html",
+      "title": "US2 · Le ruban d’état",
+      "x": 1880,
+      "y": 0,
+      "w": 1346,
+      "h": 2450
+    },
+    {
+      "file": "US3.dc.html",
+      "title": "US3 · La coquille composée",
+      "x": 1880,
+      "y": 2600,
+      "w": 2160,
+      "h": 4560
+    },
+    {
+      "file": "US4.dc.html",
+      "title": "US4 · Installation et plateforme",
+      "x": 4160,
+      "y": 0,
+      "w": 1560,
+      "h": 1650
+    },
+    {
+      "file": "US5.dc.html",
+      "title": "US5 · Clés et pack de pays",
+      "x": 4160,
+      "y": 1800,
+      "w": 1346,
+      "h": 1420
+    },
+    {
+      "file": "US6.dc.html",
+      "title": "US6 · Le poids mesuré",
+      "x": 4160,
+      "y": 3370,
+      "w": 1560,
+      "h": 1200
+    },
+    {
+      "file": "US7.dc.html",
+      "title": "US7 · La chaîne de vérification",
+      "x": 4160,
+      "y": 4720,
+      "w": 1560,
+      "h": 1250
+    },
+    {
+      "file": "US8.dc.html",
+      "title": "US8 · 390 px d’abord",
+      "x": 4160,
+      "y": 6120,
+      "w": 1760,
+      "h": 2100
+    }
+  ],
+  "annotations": [
+    {
+      "id": "lecture",
+      "x": 0,
+      "y": -170,
+      "w": 720,
+      "text": "T0b, le socle d’interface : huit artboards, un par user story.\nUS1 est la planche de style transverse (docs/design/canvas/), les sept autres documentent la tranche (specs/002-socle-interface/design/).\nLe but : rendre visible une dérive : un composant, un état ou un mot qui n’existe pas dans le système de design ou dans le domaine doit sauter aux yeux. Les écarts repérés sont encadrés en pointillé ocre."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

@@ -33,7 +33,7 @@ Trois règles :
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
 | **Tranche en cours** | **T0b — Le socle d'interface**, sur la branche `002-socle-interface` créée depuis `main` — **`specify` conclu** le 2026-09-15 ([spec.md](../specs/002-socle-interface/spec.md), huit user stories, checklist verte). T0a est fusionnée dans `main` depuis le 2026-09-15 |
-| **Prochaine** | **La revue visuelle de T0b** en session dédiée — forme A, `/design`, huit artboards ([prompt-design.md](../specs/002-socle-interface/design/prompt-design.md)) — puis `/speckit-plan` |
+| **Prochaine** | **`/speckit-plan` sur T0b.** La revue visuelle est validée le 2026-09-16 ; trois écarts planche/spec restent à trancher dans `composants.md` et `lexique.md` ([spec.md § Revue visuelle](../specs/002-socle-interface/spec.md#revue-visuelle)) |
 | **Code existant** | Le socle serveur de T0a : `api/`, `modules/` (tenants, assistance, communication, finance, protection), `migrations/tenants/`, `scripts/` (sept portes et leurs tests négatifs), `tests/` (102 tests), `contrat/` — [01-stack.md § 2.1](01-stack.md) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -93,6 +93,36 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-15 : T0b, la revue visuelle est dessinée et validée
+
+**Fait** : `/design` en session dédiée, forme A. Huit artboards, un par user story, publiés sur
+<https://claude.ai/artifact/EP7qAMEyWcvgGJ9QvC9tU8> et reportés dans
+[spec.md § Revue visuelle](../specs/002-socle-interface/spec.md#revue-visuelle). Les sources sont
+versionnables : `docs/design/canvas/US1.dc.html` (la planche de style transverse, quatorze composants,
+chaque état deux fois, clair et sombre côte à côte) et `specs/002-socle-interface/design/US2..US8.dc.html`
++ `canvas.json`. Le fichier assemblé reste hors dépôt. Toute couleur vient de `theme.css` recopié
+tel quel : un contrôle compte seize lignes de valeurs par artboard, celles du thème, aucune autre.
+Données du primaire partout : CM2 A, maître titulaire, conseil des maîtres.
+**Décidé**, dérivé du corpus et tracé sur les artboards :
+- La navigation à 390 px suit la maquette d'appel (barre basse) jusqu'à cinq domaines ; à sept, la
+  même barre latérale s'ouvre en tiroir depuis un bouton menu, sans composant neuf.
+- La coquille ne montre ni bouton de déconnexion ni cloche : la session est T1a, les alertes passent
+  par le composant alerte (FR-027, FR-028).
+- Le nom « Nelo » et la version figurent sur « à propos » à titre provisoire (Q2) ; l'attribution des
+  icônes y est un blanc marqué à renseigner par le plan.
+- Les montants portent l'espace fine insécable (U+202F) partout, chiffres clés en Archivo compris ;
+  elle y mesure 0,1 em, fine comme la règle le dit. Les sous-ensembles de glyphes du plan (Q1)
+  doivent la conserver.
+**Trois écarts planche / spec, encadrés en pointillé ocre sur US1, à trancher dans `composants.md`
+et `lexique.md`** : « Validé » en vert profond sur la planche 13 alors que FR-005 dit qu'il ne porte
+aucun état ; le canal nommé « Web » sur la planche, « en ligne » dans FR-003 ; le champ en erreur
+bordé de rouge sur la planche alors que FR-005 réserve le rouge à l'impayé et à l'absence non
+justifiée ; quelle voix porte une erreur de saisie reste à dire.
+**Validé le 2026-09-16** par l'utilisateur (« c'est parfait ») ; rangement appliqué : sources en
+place, adresse dans le `spec.md`. La règle « jamais de tiret cadratin » entre dans `CLAUDE.md` le
+même jour : les textes antérieurs en portent encore, ils se reprennent au fil des tranches.
+**Bloqué / à faire ensuite** : `/speckit-plan` sur T0b.
 
 ## 2026-09-15 — T0b : la spécification du socle d'interface est écrite
 

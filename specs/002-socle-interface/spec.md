@@ -821,5 +821,13 @@ Cette tranche produit des écrans qu'une personne regarde : la revue prend la **
 **un artboard par user story**, en session dédiée après cette spécification et avant le plan. Le
 prompt prêt à coller est dans [design/prompt-design.md](design/prompt-design.md). L'artboard de la
 page de style (US1) est la **planche de style transverse** : ses sources vont dans
-`docs/design/canvas/` ; les sept autres dans `specs/002-socle-interface/design/`. L'adresse du
-canvas publié sera reportée ici à la validation.
+`docs/design/canvas/` ; les sept autres dans `specs/002-socle-interface/design/`.
+
+**Canvas publié** le 2026-09-15, **validé** le 2026-09-16 :
+<https://claude.ai/artifact/EP7qAMEyWcvgGJ9QvC9tU8>. Huit artboards `US1` à `US8`, sources
+`docs/design/canvas/US1.dc.html` et `specs/002-socle-interface/design/US2..US8.dc.html` +
+`canvas.json`. Trois écarts entre la planche 13 et cette spécification y sont encadrés en pointillé
+ocre : « Validé » en vert profond (FR-005 dit qu'il ne porte aucun état), le canal « Web » (FR-003
+dit « en ligne »), et le champ en erreur bordé de rouge (FR-005 réserve le rouge à l'impayé et à
+l'absence non justifiée ; quelle voix porte une erreur de saisie ?). À trancher dans `composants.md`
+et `lexique.md`.
