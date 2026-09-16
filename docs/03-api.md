@@ -236,7 +236,8 @@ dont l'interface a besoin pour **ne rendre que ce qui existe** :
   ],
   "acces_nominatifs": [{ "code": "protection.signalement.consulter", "fin": "2027-06-30" }],
   "country_pack": { "pays": "CI", "version": 4, "devise": { "code": "XOF", "exposant": 0 },
-                    "langues": ["fr", "en"], "decoupage": "TRIMESTRES" },
+                    "langues": ["fr", "en"], "decoupage": "TRIMESTRES",
+                    "vocabulaire": { "CLASSE": { "fr": "Classe", "en": "Class" }, "…": { } } },
   "parametres_effectifs": { "absence.delai_notification_minutes": 15, "note.taille_lot_enregistrement": 5 },
   "alertes": [{ "type": "BUDGET_SMS_BAS", "gravite": "ALERTE", "details": { "restant": 1240 } }]
 }
@@ -254,6 +255,10 @@ dont l'interface a besoin pour **ne rendre que ce qui existe** :
 > jamais une page vide ([02-domaine.md § 3.4](02-domaine.md#34-composition-de-linterface--les-règles)).
 > Le téléphone est celui d'un membre du personnel, montré dans le détail du contexte de la personne,
 > jamais dans une liste (R5, [§ 3](#3-règles-de-conception-opposables)). *Ajouté par T0b.*
+>
+> **Le pack porte son `vocabulaire`** : les codes neutres de [02-domaine.md § 15](02-domaine.md#15-glossaire-des-concepts-neutres)
+> avec leurs libellés `fr` et `en`. C'est ce qui permet au client de résoudre un libellé métier
+> ([§ 1.4](#14-formats)) **sans seconde requête** au démarrage. *Ajouté par T0b.*
 
 ### 1.10 Les documents sont rendus par le serveur
 

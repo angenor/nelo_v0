@@ -55,12 +55,12 @@ rendre où**, et le critère est le poids et le temps de premier affichage :
 |---|---|---|
 | **Site public** | Statique | Référencement, poids minimal, aucune donnée |
 | **Portail parent, portail élève** | **Rendu serveur** | Premier affichage rapide sur connexion lente et appareil d'entrée de gamme. C'est la surface la plus exposée à la contrainte réseau |
-| **Back-office** | **Rendu client** | Session longue, navigation dense, aucun besoin de référencement |
+| **Back-office** | **Rendu serveur par défaut** ; rendu client écran par écran, par règle de route, quand la mesure P-10 le permet | La coquille et les écrans de saisie en classe portent le budget le plus serré : à 400 kbit/s, 120 Ko font 2,4 s de transfert, et un rendu client ne peint rien avant de les avoir reçus. Un écran de poste à session longue peut passer en rendu client, écran par écran, sur mesure ([T0b, research R-06](../specs/002-socle-interface/research.md)) |
 
-> ⚠️ **C'est une hypothèse de travail, pas une décision figée.** Elle est notée dans
-> [progress.md](progress.md) comme une des quatre décisions à trancher avant la première ligne de
-> code. Elle est retenue par défaut parce qu'elle découle du critère de poids ; elle se réexamine si
-> la mesure la contredit.
+> **Tranchée le 2026-09-17 par le plan de T0b** (Q4 du journal). L'hypothèse d'origine classait le
+> back-office en rendu client ; la mesure l'a contredite pour la coquille et l'écran d'appel, qui
+> sont du back-office et portent le plafond le plus serré. Le critère reste le poids et le premier
+> affichage : chaque écran peut changer de mode par règle de route, sur mesure, jamais par principe.
 
 ---
 
@@ -255,7 +255,8 @@ ne peut pas dépendre du réseau.
 ```
 docker compose up -d          # postgres + valkey + garage
 uv run fastapi dev api/main.py  # depuis la racine — l'API sur :8000, OpenAPI sur /openapi.json
-cd web && pnpm dev            # l'application sur :3000
+pnpm --filter web dev         # l'application sur :3000, la page de style sur /style (développement seulement)
+pnpm exec playwright install chromium webkit   # une fois, avec réseau : les deux moteurs de P-05 et P-10
 ```
 
 | Service | Rôle en développement | En production |
@@ -375,7 +376,7 @@ Pas dix scripts qu'on lance de mémoire.
 | **P-03** | Le client TypeScript régénéré depuis OpenAPI ne produit aucun diff |
 | **P-04** | **Aucun paquet de `socle/` n'importe un paquet de `metier/`** — test de graphe d'imports |
 | **P-05** | L'application démarre et **chaque écran s'atteint**, en clair et en sombre, sur Chromium et sur WebKit |
-| **P-06** | Aucune chaîne d'interface en dur : les clés `fr` et `en` existent toutes les deux |
+| **P-06** | **Aucune littérale d'interface en dur** : chaîne visible, valeur de couleur hors du thème, appel direct d'une API de plateforme hors de l'interface unique, rôle ; et les clés `fr` et `en` existent toutes les deux. Cinq règles, un script, chaque échec nomme le fichier |
 | **P-07** | Aucune dépendance sous licence copyleft fort (voir § 9) |
 | **P-08** | **Les provisions d'extension tiennent** (voir § 7.1) |
 | **P-09** | **Le pays ne fuit pas hors du country pack** (voir § 7.2) |

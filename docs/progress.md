@@ -32,8 +32,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T0b — Le socle d'interface**, sur la branche `002-socle-interface` créée depuis `main` — **`specify` conclu** le 2026-09-15 ([spec.md](../specs/002-socle-interface/spec.md), huit user stories, checklist verte). T0a est fusionnée dans `main` depuis le 2026-09-15 |
-| **Prochaine** | **`/speckit-plan` sur T0b.** La revue visuelle est validée le 2026-09-16 ; trois écarts planche/spec restent à trancher dans `composants.md` et `lexique.md` ([spec.md § Revue visuelle](../specs/002-socle-interface/spec.md#revue-visuelle)) |
+| **Tranche en cours** | **T0b — Le socle d'interface**, branche `002-socle-interface` : `specify` conclu le 2026-09-15, revue visuelle validée le 2026-09-16, **`plan` conclu le 2026-09-17** ([plan.md](../specs/002-socle-interface/plan.md)). T0a est fusionnée dans `main` depuis le 2026-09-15 |
+| **Prochaine** | **`/speckit-tasks` sur T0b.** Une question attend l'utilisateur sans bloquer : **Q29**, le plafond de 120 Ko contient-il les polices ? Le plan applique l'issue B à titre provisoire |
 | **Code existant** | Le socle serveur de T0a : `api/`, `modules/` (tenants, assistance, communication, finance, protection), `migrations/tenants/`, `scripts/` (sept portes et leurs tests négatifs), `tests/` (102 tests), `contrat/` — [01-stack.md § 2.1](01-stack.md) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -49,12 +49,13 @@ Rien ici ne bloque le démarrage. Chaque ligne dit ce qu'elle bloquera, et quand
 
 | # | Question | Ce que ça bloque |
 |---|---|---|
-| **Q1** | **Les trois polices sont chargées depuis un service distant.** Elles doivent être servies localement : quelle version, quels sous-ensembles de glyphes, sous quelle licence redistribuable ? | **T0b.** Une dépendance réseau sur le chemin du premier affichage contredit le budget de poids, et le pilote est en Côte d'Ivoire |
-| **Q2** | **Le produit n'a pas de marque** — ni logo, ni nom affiché, ni favicon. « Nelo » vient du nom du dépôt : est-ce le nom du produit ? | Rien. Un renommage global est trivial tant qu'aucune marque n'est déposée |
+| **Q1** | ~~Les trois polices sont chargées depuis un service distant.~~ **Tranchée le 2026-09-17** ([T0b, research R-07](../specs/002-socle-interface/research.md)) : servies par l'application depuis les paquets Fontsource 5.3.0, sous-ensemble latin, OFL 1.1 avec attribution sur « à propos » ; graisses fixes du premier affichage seulement (Public Sans 400 et 500, Archivo 700), le reste à la demande | Rien |
+| **Q2** | **Le produit n'a pas de marque** — ni logo, ni nom affiché, ni favicon. « Nelo » vient du nom du dépôt : est-ce le nom du produit ? *T0b emploie « Nelo » et une icône typographique générée depuis les jetons, à titre provisoire, portés en un seul endroit (`web/app/core/produit.ts`)* | Rien. Un renommage global touche une ligne |
 | **Q3** | **Le mode sombre est-il proposé au portail parent ?** Il est défini dans les jetons. Sur ce portail, il double la surface de test pour un gain incertain — l'usage est court et diurne | **T0b**, marginalement |
-| **Q4** | **La stratégie de rendu par surface** — statique pour le public, serveur pour les portails, client pour le back-office. Retenue par défaut parce qu'elle découle du critère de poids ([01-stack.md § 1.2](01-stack.md)) | **T0b.** Se réexamine si la mesure la contredit |
+| **Q4** | ~~La stratégie de rendu par surface.~~ **Tranchée le 2026-09-17** ([T0b, research R-06](../specs/002-socle-interface/research.md)) : la mesure a contredit « back-office en rendu client » ; rendu serveur par défaut, rendu client écran par écran par règle de route quand P-10 le permet ([01-stack.md § 1.2](01-stack.md)) | Rien |
 | **Q5** | **La granularité des capacités** : cinq à douze par service est l'ordre de grandeur visé. Trop fines, l'administration devient illisible pour un censeur ; trop grossières, la séparation scolarité / pédagogie devient impossible | **T1b.** *Après, c'est une reprise de toutes les affectations* |
 | **Q6** | **Un agrégateur de paiement ou deux dès le départ ?** L'abstraction est posée quoi qu'il arrive ([ADR 009](adr/009-agregateur-de-paiement-derriere-une-interface.md)) | Les **valeurs par défaut** de T8b, pas son modèle |
+| **Q29** | **Le plafond de 120 Ko de l'accueil et de l'appel contient-il les polices ?** Mesuré en bac à sable ([T0b, research R-16](../specs/002-socle-interface/research.md)) : le socle Nuxt pèse 76 Ko compressés, les polices du premier affichage 44 Ko ; environ 100 Ko sans polices, 140 à 150 avec. Trois issues : **A** polices système sur les écrans budgétés ; **B** 120 Ko pour l'application et 45 Ko à part pour les polices, immuables et précachées (recommandée, appliquée à titre provisoire) ; **C** relever à 170 Ko. Le principe XV nomme le chiffre : la réponse entre dans un ADR | Rien : `implement` mesure les deux nombres. Changer d'issue touche une ligne de `web/ecrans.json` et une règle de P-10 |
 
 ### Ce qui exige un conseil juridique local — avant tout engagement contractuel
 
@@ -93,6 +94,34 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-17 : T0b, le plan est écrit, le bac à sable a mesuré le socle
+
+**Fait** : `/speckit-plan` sur `002-socle-interface`. [plan.md](../specs/002-socle-interface/plan.md),
+[research.md](../specs/002-socle-interface/research.md) (R-01 à R-22), [data-model.md](../specs/002-socle-interface/data-model.md),
+[contracts/interfaces-client.md](../specs/002-socle-interface/contracts/interfaces-client.md),
+[quickstart.md](../specs/002-socle-interface/quickstart.md). Contrôle de constitution : passe, quinze
+principes cités. Un bac à sable hors dépôt a construit Nuxt 4.5.2 + Tailwind 4.3.3 + TypeScript 6.0.3
++ `@vite-pwa/nuxt` 1.1.1 et mesuré : **socle Nuxt 76 Ko compressés** (Vue seul 41), HTML minimal
+0,7 Ko, service worker 5,6 Ko, polices du premier affichage **44 Ko** en graisses fixes (77 en
+variables, un sous-ensemble ne gagne que 12 %).
+**Décidé**, dérivé du corpus et tracé dans research.md, appliqué selon l'arbitrage délégué :
+- **Q4 tranchée** : rendu serveur par défaut, rendu client écran par écran sur mesure (R-06,
+  [01-stack.md § 1.2](01-stack.md)). À 400 kbit/s, 120 Ko font 2,4 s : un rendu client ne peint rien
+  avant.
+- **Q1 tranchée** : Fontsource 5.3.0, latin, OFL 1.1, graisses fixes du premier affichage (R-07).
+- **P-06 devient « aucune littérale d'interface »** en cinq règles : chaînes, clés `fr`/`en`,
+  couleurs, appels de plateforme, rôles (R-11, [01-stack.md § 7](01-stack.md)).
+- **Le type du contexte vient du contrat** : schéma Pydantic `ContexteCapacites` dans
+  `modules/shared/contexte.py`, enregistré dans l'OpenAPI sans route ; T1a y branche sa route (R-05).
+  Le contexte porte `country_pack.vocabulaire` ([03-api.md § 1.9](03-api.md)).
+- **`docs/design/mesures.css`** : les mesures non colorées, copié tel quel comme `theme.css`
+  (R-17) ; [05-design.md](05-design.md) : quatre niveaux d'alerte, 36 px dessinés et 44 px
+  interactifs (R-19). Les trois écarts de la revue : « Validé » en voix de réussite, canal
+  « En ligne », champ en erreur en voix danger.
+- **Q29 posée, issue B appliquée à titre provisoire** : le plafond de 120 Ko ne peut pas contenir
+  les polices, mesure faite ; P-10 rapportera deux nombres. La réponse est un ADR (principe XV).
+**Bloqué / à faire ensuite** : `/speckit-tasks`. Q29 attend l'utilisateur sans bloquer.
 
 ## 2026-09-15 : T0b, la revue visuelle est dessinée et validée
 
