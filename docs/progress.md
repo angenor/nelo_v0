@@ -32,8 +32,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T0b — Le socle d'interface**, branche `002-socle-interface` : `specify` conclu le 2026-09-15, revue visuelle validée le 2026-09-16, **`plan` conclu le 2026-09-17** ([plan.md](../specs/002-socle-interface/plan.md)). T0a est fusionnée dans `main` depuis le 2026-09-15 |
-| **Prochaine** | **`/speckit-tasks` sur T0b.** Une question attend l'utilisateur sans bloquer : **Q29**, le plafond de 120 Ko contient-il les polices ? Le plan applique l'issue B à titre provisoire |
+| **Tranche en cours** | **T0b — Le socle d'interface**, branche `002-socle-interface` : `specify` le 2026-09-15, revue visuelle validée le 2026-09-16, `plan` et **`tasks` conclus le 2026-09-17** ([tasks.md](../specs/002-socle-interface/tasks.md), 83 tâches, 0 faite). T0a est fusionnée dans `main` depuis le 2026-09-15 |
+| **Prochaine** | **`/speckit-implement` sur T0b.** Q29 (le plafond de 120 Ko et les polices) attend l'utilisateur sans bloquer : l'issue B est appliquée à titre provisoire, T008 et T064 changent si l'arbitrage diffère |
 | **Code existant** | Le socle serveur de T0a : `api/`, `modules/` (tenants, assistance, communication, finance, protection), `migrations/tenants/`, `scripts/` (sept portes et leurs tests négatifs), `tests/` (102 tests), `contrat/` — [01-stack.md § 2.1](01-stack.md) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -121,7 +121,10 @@ variables, un sous-ensemble ne gagne que 12 %).
   « En ligne », champ en erreur en voix danger.
 - **Q29 posée, issue B appliquée à titre provisoire** : le plafond de 120 Ko ne peut pas contenir
   les polices, mesure faite ; P-10 rapportera deux nombres. La réponse est un ADR (principe XV).
-**Bloqué / à faire ensuite** : `/speckit-tasks`. Q29 attend l'utilisateur sans bloquer.
+**Puis, même jour** : `/speckit-tasks` : [tasks.md](../specs/002-socle-interface/tasks.md), 83 tâches en
+onze phases (mise en place, fondations, huit stories, finition), 48 parallélisables, tests avant
+implémentation, portes construites avec ce qu'elles vérifient.
+**Bloqué / à faire ensuite** : `/speckit-implement`. Q29 attend l'utilisateur sans bloquer.
 
 ## 2026-09-15 : T0b, la revue visuelle est dessinée et validée
 
