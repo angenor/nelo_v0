@@ -59,6 +59,118 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AccesNominatif */
+        AccesNominatif: {
+            /** Code */
+            code: string;
+            /**
+             * Fin
+             * Format: date
+             * @description Date scolaire de fin, incluse
+             */
+            fin: string;
+        };
+        /**
+         * Administrateur
+         * @description Qui peut attribuer ses domaines à une personne sans capacité : l'écran le nomme.
+         */
+        Administrateur: {
+            /** Nom */
+            nom: string;
+            /** Prenoms */
+            prenoms: string;
+            /**
+             * Telephone
+             * @description Au format du pack, jamais vide
+             */
+            telephone: string;
+        };
+        /** AlerteContexte */
+        AlerteContexte: {
+            /** Details */
+            details: {
+                [key: string]: unknown;
+            };
+            gravite: components["schemas"]["Gravite"];
+            type: components["schemas"]["CodeNeutre_A-Z__A-Z0-9______"];
+        };
+        /** AnneeContexte */
+        AnneeContexte: {
+            etat: components["schemas"]["EtatAnnee"];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Libelle */
+            libelle: string;
+        };
+        /** CapaciteContexte */
+        CapaciteContexte: {
+            /**
+             * Code
+             * @description domaine.objet.verbe
+             */
+            code: string;
+            /**
+             * Perimetre
+             * @description Listes d'identifiants nommées `*_ids`
+             */
+            perimetre: {
+                [key: string]: string[];
+            };
+        };
+        CodeNeutre: string;
+        "CodeNeutre_A-Z__A-Z0-9______": string;
+        /** Compte */
+        Compte: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Langue
+             * @description Code de langue à deux lettres
+             */
+            langue: string;
+            /** Nom */
+            nom: string;
+            /** Prenoms */
+            prenoms: string;
+        };
+        /**
+         * ContexteCapacites
+         * @description Une seule requête au démarrage : tout ce qu'il faut pour ne rendre que ce qui existe.
+         */
+        ContexteCapacites: {
+            /** Acces Nominatifs */
+            acces_nominatifs: components["schemas"]["AccesNominatif"][];
+            /** Alertes */
+            alertes: components["schemas"]["AlerteContexte"][];
+            /**
+             * Annee Active
+             * Format: uuid
+             */
+            annee_active: string;
+            /** Annees */
+            annees: components["schemas"]["AnneeContexte"][];
+            /** Capacites */
+            capacites: components["schemas"]["CapaciteContexte"][];
+            compte: components["schemas"]["Compte"];
+            country_pack: components["schemas"]["CountryPackContexte"];
+            /**
+             * Etablissement Actif
+             * Format: uuid
+             */
+            etablissement_actif: string;
+            /** Etablissements */
+            etablissements: components["schemas"]["EtablissementContexte"][];
+            /** Parametres Effectifs */
+            parametres_effectifs: {
+                [key: string]: unknown;
+            };
+        };
         /** CorpsPoserParametre */
         CorpsPoserParametre: {
             portee: components["schemas"]["Portee"];
@@ -68,6 +180,41 @@ export interface components {
              */
             portee_id: string;
             valeur: components["schemas"]["ValeurParametre"];
+        };
+        /** CountryPackContexte */
+        CountryPackContexte: {
+            decoupage: components["schemas"]["CodeNeutre_A-Z__A-Z0-9______"];
+            devise: components["schemas"]["Devise"];
+            /** Langues */
+            langues: string[];
+            /** Pays */
+            pays: string;
+            /** Version */
+            version: number;
+            /**
+             * Vocabulaire
+             * @description Codes neutres de docs/02-domaine.md § 15, un libellé par langue du pack
+             */
+            vocabulaire: {
+                [key: string]: {
+                    [key: string]: string;
+                };
+            };
+        };
+        /** Devise */
+        Devise: {
+            /** Code */
+            code: string;
+            /**
+             * Exposant
+             * @description Nombre de chiffres de l'unité mineure
+             */
+            exposant: number;
+            /**
+             * Symbole
+             * @description Ce que l'interface écrit après un montant
+             */
+            symbole: string;
         };
         /**
          * EnveloppeErreur
@@ -99,6 +246,27 @@ export interface components {
              */
             requete_id: string | null;
         };
+        /** EtablissementContexte */
+        EtablissementContexte: {
+            administrateur: components["schemas"]["Administrateur"];
+            /** Cycles Actifs */
+            cycles_actifs: components["schemas"]["CodeNeutre"][];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Modules Actifs */
+            modules_actifs: components["schemas"]["CodeNeutre"][];
+            /** Nom */
+            nom: string;
+            /** Sites */
+            sites: components["schemas"]["Site"][];
+        };
+        /** @enum {string} */
+        EtatAnnee: "PREPARATION" | "ACTIVE" | "CLOTUREE" | "ARCHIVEE";
+        /** @enum {string} */
+        Gravite: "INFO" | "ALERTE" | "CRITIQUE";
         /** ParametreEffectif */
         ParametreEffectif: {
             /** Cle */
@@ -155,6 +323,16 @@ export interface components {
              * @constant
              */
             etat: "OK";
+        };
+        /** Site */
+        Site: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Nom */
+            nom: string;
         };
         /**
          * TypeParametre

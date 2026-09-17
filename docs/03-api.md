@@ -235,7 +235,7 @@ dont l'interface a besoin pour **ne rendre que ce qui existe** :
     { "code": "finance.encaissement.saisir","perimetre": { "site_ids": ["…"] } }
   ],
   "acces_nominatifs": [{ "code": "protection.signalement.consulter", "fin": "2027-06-30" }],
-  "country_pack": { "pays": "CI", "version": 4, "devise": { "code": "XOF", "exposant": 0 },
+  "country_pack": { "pays": "CI", "version": 4, "devise": { "code": "XOF", "exposant": 0, "symbole": "F" },
                     "langues": ["fr", "en"], "decoupage": "TRIMESTRES",
                     "vocabulaire": { "CLASSE": { "fr": "Classe", "en": "Class" }, "…": { } } },
   "parametres_effectifs": { "absence.delai_notification_minutes": 15, "note.taille_lot_enregistrement": 5 },
@@ -259,6 +259,9 @@ dont l'interface a besoin pour **ne rendre que ce qui existe** :
 > **Le pack porte son `vocabulaire`** : les codes neutres de [02-domaine.md § 15](02-domaine.md#15-glossaire-des-concepts-neutres)
 > avec leurs libellés `fr` et `en`. C'est ce qui permet au client de résoudre un libellé métier
 > ([§ 1.4](#14-formats)) **sans seconde requête** au démarrage. *Ajouté par T0b.*
+>
+> **La devise porte son `symbole`**, ce que l'interface écrit après un montant : le code ISO ne
+> se lit pas, et l'écrire côté client serait une littérale de pays. *Ajouté par T0b.*
 
 ### 1.10 Les documents sont rendus par le serveur
 

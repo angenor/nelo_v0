@@ -1,0 +1,84 @@
+{
+  "pays": "ZY",
+  "version": 1,
+  "devise": {
+    "code": "XFT",
+    "exposant": 2,
+    "symbole": "¤"
+  },
+  "langues": [
+    "fr",
+    "en"
+  ],
+  "decoupage": "SEMESTRES",
+  "vocabulaire": {
+    "ANNEE": {
+      "fr": "Année scolaire",
+      "en": "School year"
+    },
+    "PERIODE": {
+      "fr": "Semestre",
+      "en": "Semester"
+    },
+    "CLASSE": {
+      "fr": "Form",
+      "en": "Stream"
+    },
+    "PROFESSEUR_PRINCIPAL": {
+      "fr": "Maître titulaire",
+      "en": "Class teacher"
+    },
+    "BULLETIN": {
+      "fr": "Bulletin",
+      "en": "Report card"
+    },
+    "NOTE": {
+      "fr": "Note",
+      "en": "Mark"
+    },
+    "MENTION": {
+      "fr": "Mention",
+      "en": "Grade"
+    },
+    "RANG": {
+      "fr": "Rang",
+      "en": "Position in class"
+    },
+    "RESPONSABLE": {
+      "fr": "Responsable légal",
+      "en": "Guardian"
+    },
+    "CHEF_ETABLISSEMENT": {
+      "fr": "Directeur",
+      "en": "Head teacher"
+    },
+    "CENSEUR": {
+      "fr": "Éducateur",
+      "en": "Assistant head"
+    },
+    "ECONOME": {
+      "fr": "Économe",
+      "en": "Bursar"
+    },
+    "INSTANCE_PARENTS": {
+      "fr": "Association des parents",
+      "en": "Parent association"
+    },
+    "FRAIS_SCOLARITE": {
+      "fr": "Frais de scolarité",
+      "en": "School fees"
+    },
+    "EXAMEN_NATIONAL": {
+      "fr": "Examen national",
+      "en": "National examination"
+    },
+    "CONSEIL_ELEVES": {
+      "fr": "Conseil des élèves",
+      "en": "Pupil council"
+    },
+    "CONSEIL_CLASSE": {
+      "fr": "Conseil des maîtres",
+      "en": "Class committee"
+    }
+  }
+}
