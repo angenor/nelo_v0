@@ -33,16 +33,19 @@
 > et le vocabulaire** — pas la disposition sur un téléphone. Celle-ci se conçoit à chaque écran, avec
 > les règles de la [§ 9](#9-coder-un-écran).
 
-### 0.1 Ce qui manque encore
+### 0.1 Les documents du système
 
-Le système est arrêté sur la couleur, la typographie et les composants. Trois fichiers de Kaya n'ont
-pas d'équivalent ici et se produiront quand la première tranche d'interface les exigera :
+Le système est arrêté sur la couleur, la typographie et les composants. Trois documents le
+précisent depuis T0b, écrits avec le code qu'ils décrivent :
 
-| Fichier | Ce qu'il porterait | Quand |
-|---|---|---|
-| `design/lexique.md` | Le vocabulaire visible, **opposable, primant sur les clés i18n** | **Avant le premier écran** — voir [§ 8](#8-la-langue) |
-| `design/composants.md` | Les quatorze composants, tous états, en spécification | Avec la tranche de la coquille |
-| `design/mouvement.md` | Durées, courbes, patrons d'animation | Avec la tranche de la coquille |
+| Fichier | Ce qu'il porte |
+|---|---|
+| [`design/lexique.md`](design/lexique.md) | Le vocabulaire visible, **opposable, primant sur les clés i18n** ; un test le compare aux clés |
+| [`design/composants.md`](design/composants.md) | Les quatorze composants, leurs états, leurs formes, leurs voix, leurs mots ; les écarts de la revue tranchés ; un test le compare au code |
+| [`design/mouvement.md`](design/mouvement.md) | La seule animation, et la règle qui en empêche une seconde |
+
+Ce qui manque encore : **les jeux de données des douze écrans maquettés sont du secondaire**, et se
+reprennent écran par écran aux revues visuelles.
 
 ---
 

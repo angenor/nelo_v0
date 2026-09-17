@@ -68,20 +68,22 @@ rendre où**, et le critère est le poids et le temps de premier affichage :
 
 ### 2.1 Ce qui existe aujourd'hui
 
-Le socle serveur de **T0a** ([specs/001-socle-serveur/](../specs/001-socle-serveur/)) :
+Le socle serveur de **T0a** ([specs/001-socle-serveur/](../specs/001-socle-serveur/)) et le socle
+d'interface de **T0b** ([specs/002-socle-interface/](../specs/002-socle-interface/)) :
 
 ```
 nelo_v0/
 ├── CLAUDE.md · README.md · .gitignore · .env.exemple
 ├── pyproject.toml · uv.lock · .python-version       # espace de travail uv : racine installable, huit membres déclaratifs
-├── package.json · pnpm-lock.yaml · pnpm-workspace.yaml   # openapi-typescript épinglé ; web/ viendra avec T0b
+├── package.json · pnpm-lock.yaml · pnpm-workspace.yaml   # openapi-typescript épinglé ; lockfile unique, membre web/
 ├── compose.yml · garage.toml # postgres, valkey, garage — trois services
-├── contrat/                  # openapi.json et client.d.ts, régénérés par P-03
+├── contrat/                  # openapi.json et client.d.ts, régénérés par P-03 ; ContexteCapacites sans route
 ├── api/                      # composition : main, middlewares (établissement provisoire, idempotence),
 │                             #   erreurs, capacités (point d'insertion), travailleur, contrat, routes/
 ├── modules/
 │   ├── domaine/              # vide — la base de la hiérarchie
-│   ├── shared/               # transaction(tenant_id), erreurs, modes de simulation, événement
+│   ├── shared/               # transaction(tenant_id), erreurs, modes de simulation, événement,
+│   │                         #   contexte.py : le contexte qui compose l'interface (03-api § 1.9)
 │   ├── socle/
 │   │   ├── tenants/          # LE MODULE DORÉ — catalogue de paramètres, outbox du schéma
 │   │   ├── assistance/       # six capacités, aucune livrée ; service d'inférence simulé
@@ -91,15 +93,32 @@ nelo_v0/
 │   │   └── protection/       # CLOISONNÉ — l'interface de service, rien d'autre
 │   └── segments/             # vide
 ├── migrations/tenants/       # Alembic : le schéma tenants, réversible
-├── scripts/                  # verifier.sh, tests-negatifs.sh, bd-vierge.sh, portes/
+├── web/                      # l'application Nuxt 4, rendue par le serveur, installable
+│   ├── ecrans.json           # LE SEUL ENDROIT : écrans, personas, budgets (application, polices)
+│   ├── app/
+│   │   ├── assets/css/       # theme.css et mesures.css copiés tel quel ; jetons.css (Tailwind) ; polices.css
+│   │   ├── components/canon/ # les quatorze composants et les sous-composants de la coquille
+│   │   ├── composables/      # libellés, pack, plateforme, réseau, thème, contexte, saisie, mise à jour
+│   │   ├── core/             # la logique pure : composition, état du ruban, pack, libellés fr/en,
+│   │   │                     #   plateforme (interface et unique implémentation web), démonstration
+│   │   ├── pages/            # accueil composé, d/[domaine], à propos, style (développement seulement)
+│   │   ├── plugins/          # plateforme, réseau, contexte
+│   │   └── sw/sw.ts          # le service worker mince
+│   ├── server/plugins/       # compression des pages rendues
+│   ├── scripts/icones.mjs    # les icônes, dessinées depuis la lettre d'Archivo et les jetons
+│   └── tests/                # unit/ (Vitest), e2e/ et portes/ (Playwright, Chromium et WebKit)
+├── scripts/                  # verifier.sh, tests-negatifs.sh, avec-serveur-dev.sh, bd-vierge.sh, portes/
 ├── tests/                    # module doré, isolation, idempotence, outbox, frontières, simulations, assistance
 ├── .specify/ · .claude/skills/   # Spec Kit — voir 2.2
 ├── specs/                    # une spécification par tranche
 └── docs/                     # ce corpus
 ```
 
-**Aucune interface, aucune règle métier pédagogique.** Sept portes serveur tiennent — P-01, P-02,
-P-03, P-04, P-07, P-11, P-12 — et chacune a son test négatif (`scripts/tests-negatifs.sh`).
+**Aucune règle métier pédagogique.** L'interface existe en socle : une coquille composée depuis le
+contexte, quatorze composants, une page de style, un écran d'appel de démonstration, sur des
+données du primaire. **Dix portes tiennent**, P-01 à P-07, P-10, P-11 et P-12, et chacune a son test
+négatif (`scripts/tests-negatifs.sh`). P-08 et P-09 viendront avec les tranches qui leur donnent
+quelque chose à vérifier.
 
 ### 2.2 Spec Kit — ce qui est posé
 
@@ -255,8 +274,8 @@ ne peut pas dépendre du réseau.
 ```
 docker compose up -d          # postgres + valkey + garage
 uv run fastapi dev api/main.py  # depuis la racine — l'API sur :8000, OpenAPI sur /openapi.json
-pnpm --filter web dev         # l'application sur :3000, la page de style sur /style (développement seulement)
-pnpm exec playwright install chromium webkit   # une fois, avec réseau : les deux moteurs de P-05 et P-10
+pnpm --filter nelo-web dev    # l'application sur :3000 (ou le port libre suivant), la page de style sur /style
+pnpm --filter nelo-web exec playwright install chromium webkit   # une fois, avec réseau : les moteurs de P-05 et P-10
 ```
 
 | Service | Rôle en développement | En production |

@@ -1,9 +1,10 @@
 // PORTE P-05 : chaque écran déclaré s'atteint dans un vrai navigateur, sur deux moteurs et deux
 // thèmes, sans erreur de page ni de console (research.md R-12). Monter un composant dans un test
 // ne prouve pas qu'une page s'atteint.
-import { readdirSync, readFileSync } from 'node:fs'
+import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { join, relative } from 'node:path'
-import { expect, test } from '@playwright/test'
+import { chromium, expect, test } from '@playwright/test'
 import { ECRANS, THEMES, scriptTheme, visites } from './outils'
 
 const PAGES = join(import.meta.dirname, '../../app/pages')
@@ -94,5 +95,24 @@ test.describe('P-05 : installabilité', () => {
     await page.reload()
     const controle = await page.evaluate(() => navigator.serviceWorker.controller !== null)
     expect(controle, 'PORTE P-05 ÉCHOUÉE : installabilité, le service worker ne contrôle pas la page').toBe(true)
+  })
+
+  test('Chromium juge l’application installable, sans une erreur', async ({ browserName, baseURL }) => {
+    test.skip(browserName !== 'chromium', 'le protocole d’installabilité est propre à Chromium')
+    // Un profil persistant : un contexte éphémère est une navigation privée, où rien ne s'installe.
+    const profil = mkdtempSync(join(tmpdir(), 'nelo-p05-'))
+    const contexte = await chromium.launchPersistentContext(profil, { channel: 'chromium' })
+    try {
+      const page = await contexte.newPage()
+      await page.goto(baseURL!, { waitUntil: 'networkidle' })
+      await page.evaluate(() => navigator.serviceWorker.ready.then(() => true))
+      const cdp = await contexte.newCDPSession(page)
+      const { installabilityErrors } = await cdp.send('Page.getInstallabilityErrors')
+      const motifs = installabilityErrors.map((e) => e.errorId)
+      expect(motifs, `PORTE P-05 ÉCHOUÉE : installabilité, Chromium refuse : ${motifs.join(', ')}`).toEqual([])
+    } finally {
+      await contexte.close()
+      rmSync(profil, { recursive: true, force: true })
+    }
   })
 })

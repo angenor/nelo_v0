@@ -31,11 +31,19 @@ divergent.*
   (`--cible-*`), les rayons (`--rayon-*`), le filet et la pulsation en viennent.
 - **Aucun composant ne touche le navigateur** : le réseau, le stockage et l'apparence passent par
   `usePlateforme()`.
+- **Quatre fichiers de police, trois graisses d'interface** : Public Sans 400 et 500, Archivo 700,
+  et IBM Plex Mono 500 pour les données seules (matricule, montant, reçu, heure d'enregistrement).
+  La planche dessinait aussi des graisses 600 ; le budget de poids du premier affichage les a
+  retirées (research.md, écart E-23). Une graisse absente n'est jamais simulée.
+- **Un mot ocre s'écrit en couleur de texte** : l'ocre sur son fond doux n'atteint pas le contraste
+  AA. La voix ocre se lit par le fond, le point, le filet ou l'icône (écart E-27).
 
 ## Le contexte tactile
 
-L'écran déclare son contexte par `provide('contexte-tactile', …)` ; les composants interactifs
-lisent `--cible` pour leur hauteur minimale.
+L'écran déclare son contexte par `definePageMeta({ contexteTactile })` ; la coquille le fournit
+(`fournirContexteTactile`) et pose `--cible` sur toute l'application, en-tête et navigation compris ;
+les composants interactifs le lisent pour leur hauteur minimale, et `useContexteTactile()` le rend à
+qui en a besoin.
 
 | Contexte | `--cible` | Où |
 |---|---|---|
@@ -62,7 +70,8 @@ Fichier : `Bouton.vue`
 - **Secondaire** : surface, filet `--border-strong`. **Discret** : sans fond ni filet, texte atténué.
 - **Danger** : fond `--danger`. Réservé à une action destructrice (supprimer une inscription) ; ce
   n'est pas un état métier, c'est une action.
-- **Focus** : filet marque et halo `--primary-soft` de 3 px, visible au clavier.
+- **Focus** : contour marque de 2 px décalé de 2 px, et halo `--primary-soft` de 3 px, visible au
+  clavier. Le halo seul de la planche disparaissait sur le bouton principal.
 - **Pressé** : la teinte de survol de la variante (`--primary-hover` pour le principal).
 - **Inactif** : fond `--surface-sunken`, texte atténué, **et sa raison dite sous le bouton**, avec
   son versant positif (« Sélectionnez au moins un élève pour enregistrer »). Un bouton inactif sans
@@ -83,6 +92,7 @@ Fichier : `Champ.vue`
 | `COMPLEMENTS` | `aide`, `unite` |
 
 - L'étiquette est **toujours visible, au-dessus** du champ ; jamais un texte indicatif à la place.
+- Le filet est une ombre intérieure : le champ occupe toute la hauteur de la cible (52 px en classe).
 - **Nombre** : clavier numérique (`inputmode`), chiffres en IBM Plex Mono tabulaire.
 - **Choix** : une liste native, chevron dessiné. **Case** : case de 16 px dessinée, zone
   interactive à la hauteur de cible.
@@ -117,8 +127,9 @@ Fichier : `PastilleEtat.vue`
   registre `ETATS_METIER`. **Seuls `IMPAYE` et `NON_JUSTIFIE` parlent en rouge** ; un appelant ne
   peut pas fabriquer un rouge.
 - **Capsule** : fond doux de la voix, point de 6 px, mot. **Rond** : le point et le mot, sans fond.
-- **Contour** : filet pointillé ocre et point ouvert, pour « Proposé, non validé » : rien n'est
-  encore inscrit au registre.
+- **Ocre** : fond doux et point ocres, mot en couleur de texte.
+- **Contour** : filet pointillé ocre et point ouvert ocre, mot atténué, pour « Proposé, non
+  validé » : rien n'est encore inscrit au registre.
 - **Neutre** : « Présent », « Brouillon » ; fond `--surface-sunken`, texte atténué.
 - Le code `IMPAYE` s'affiche **« En retard »** : « impayé » est un mot que le lexique refuse
   ([lexique.md § 1](lexique.md)).
@@ -205,7 +216,8 @@ Fichier : `CarteIndicateur.vue`
 | `SENS` | `positive`, `negative`, `neutre` |
 | `VALEURS` | `ordinaire`, `reservee` |
 
-Un chiffre clé en Archivo 600 tabulaire, son libellé, sa variation. **Chaque sens a sa flèche et
+Un chiffre clé en Archivo 700 tabulaire, son libellé, sa variation ou une précision sans flèche
+(« 61 familles concernées »). Avec une route, toute la carte est un lien. **Chaque sens a sa flèche et
 son mot** (« + 2 sur hier », « stable depuis la rentrée »), jamais la couleur seule. La variation
 positive parle en réussite, la négative en texte atténué : une baisse n'est pas une faute.
 **Valeur réservée** : le chiffre en rouge, seulement pour un impayé.
@@ -265,7 +277,7 @@ saisies en attente, la qualité du lien. **Il ne bloque jamais la saisie.**
 |---|---|---|---|---|
 | `enregistre` | rien en attente, lien présent | réussite | coche | « Tout est enregistré », « Aucune saisie en attente » |
 | `envoi` | des saisies en attente, lien présent | marque | point qui pulse | « Envoi de 2 saisies », « Vous pouvez continuer à saisir » |
-| `hors_ligne` | aucun lien | ocre | lien barré | « Hors ligne », « 4 saisies conservées, envoi à la reconnexion », « Continuez, rien ne sera perdu » |
+| `hors_ligne` | aucun lien | ocre (fond, filet, lien barré ; mot en couleur de texte) | lien barré | « Hors ligne », « 4 saisies conservées, envoi à la reconnexion », « Continuez, rien ne sera perdu » |
 
 - **Jamais rouge** : une coupure n'est pas une faute. Le type l'interdit.
 - La qualité du lien s'écrit avec trois barres et un mot : « Lien bon », « Lien faible »,
@@ -287,9 +299,10 @@ Elle **se compose depuis le contexte, jamais depuis un rôle** (`composer(contex
 [ADR 015](../adr/015-l-interface-se-compose-a-partir-des-capacites.md)). Sous-composants :
 `CoquilleEntete.vue`, `CoquilleNavigation.vue`, `CoquilleSansCapacite.vue`.
 
-- **En-tête** : établissement et site, année de travail, sélecteur de langue, sélecteur de thème,
-  lien « à propos », avatar. Ni cloche ni déconnexion : la session arrive avec T1a, les alertes
-  passent par le composant alerte.
+- **En-tête** : établissement et site (un lien vers l'accueil), année de travail, sélecteur de
+  langue, sélecteur de thème (appareil, clair, sombre), lien « à propos », avatar, et un bouton
+  retour hors de l'accueil. Ni cloche ni déconnexion : la session arrive avec T1a, les alertes
+  passent par le composant alerte. Quand la largeur manque, les outils passent à la ligne.
 - **Navigation** : les domaines dont la personne détient au moins une capacité, **et eux seuls**.
   **À plat jusqu'à cinq domaines inclus ; regroupée par famille dès six** : le domaine
   ([02-domaine.md § 3.4](../02-domaine.md)) l'emporte sur la planche, qui écrivait « en dessous de

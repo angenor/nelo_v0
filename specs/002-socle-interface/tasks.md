@@ -274,9 +274,9 @@ critère de fin de la roadmap.
 **But** : le dépôt dit ce qu'il contient, le journal dit ce qui a été mesuré, et le quickstart se
 déroule sur un clone frais.
 
-- [ ] T079 [P] Mettre à jour `docs/01-stack.md § 2.1` « Ce qui existe aujourd'hui » : `web/` et sa structure, dix portes, `contrat/` avec `ContexteCapacites` ; et `README.md` : les commandes de l'interface
-- [ ] T080 [P] Mettre à jour `docs/05-design.md § 0.1` : `composants.md`, `mouvement.md`, `lexique.md` existent ; retirer le tableau « ce qui manque encore » ou le réduire à ce qui manque vraiment
-- [ ] T081 [P] Relire `docs/design/composants.md`, `mouvement.md`, `lexique.md` contre la page de style et les artboards validés ; aucun tiret cadratin dans les trois
+- [X] T079 [P] Mettre à jour `docs/01-stack.md § 2.1` « Ce qui existe aujourd'hui » : `web/` et sa structure, dix portes, `contrat/` avec `ContexteCapacites` ; et `README.md` : les commandes de l'interface
+- [X] T080 [P] Mettre à jour `docs/05-design.md § 0.1` : `composants.md`, `mouvement.md`, `lexique.md` existent ; retirer le tableau « ce qui manque encore » ou le réduire à ce qui manque vraiment
+- [X] T081 [P] Relire `docs/design/composants.md`, `mouvement.md`, `lexique.md` contre la page de style et les artboards validés ; aucun tiret cadratin dans les trois
 - [ ] T082 Dérouler [quickstart.md](quickstart.md) sur un clone frais du dépôt (`git clone` dans le scratchpad, `pnpm install --frozen-lockfile`, navigateurs déjà présents), chronométrer jusqu'à `/style` ouverte et jusqu'à `scripts/verifier.sh` vert ; corriger ce qui manque
 - [ ] T083 Écrire l'entrée de journal de fin d'implémentation dans `docs/progress.md` : les mesures (poids par écran, polices, premier affichage, durée de `verifier.sh` et de `tests-negatifs.sh`), les écarts d'implémentation par rapport au plan, la définition de terminé de [01-stack.md § 8.3](../../docs/01-stack.md) relue point par point, l'état de Q29 ; mettre l'état courant à « T0b implémentée, en attente de fusion »
 
