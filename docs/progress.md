@@ -32,9 +32,9 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T0b — Le socle d'interface**, branche `002-socle-interface` : `specify` le 2026-09-15, revue visuelle validée le 2026-09-16, `plan` et **`tasks` conclus le 2026-09-17** ([tasks.md](../specs/002-socle-interface/tasks.md), 83 tâches, 0 faite). T0a est fusionnée dans `main` depuis le 2026-09-15 |
-| **Prochaine** | **`/speckit-implement` sur T0b.** Q29 (le plafond de 120 Ko et les polices) attend l'utilisateur sans bloquer : l'issue B est appliquée à titre provisoire, T008 et T064 changent si l'arbitrage diffère |
-| **Code existant** | Le socle serveur de T0a : `api/`, `modules/` (tenants, assistance, communication, finance, protection), `migrations/tenants/`, `scripts/` (sept portes et leurs tests négatifs), `tests/` (102 tests), `contrat/` — [01-stack.md § 2.1](01-stack.md) |
+| **Tranche en cours** | **T0b, le socle d'interface : implémentée le 2026-09-17, en attente de fusion.** Branche `002-socle-interface`, 82 tâches sur 83 cochées ([tasks.md](../specs/002-socle-interface/tasks.md)) ; la 83e, T058, est le parcours d'installation à la main sur Chrome et Safari, qui revient à l'utilisateur. T0a est fusionnée dans `main` depuis le 2026-09-15 |
+| **Prochaine** | **Relire et fusionner T0b** (le parcours T058 d'abord), puis trancher **Q29** dans un ADR. Ensuite la tranche suivante au rang de la [roadmap](04-roadmap.md) |
+| **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
 | **Design** | Le système est arrêté sur la couleur, la typographie et les composants. Douze écrans maquettés dans `design/ecrans/`, plus la planche du système. **Leurs jeux de données sont du secondaire** : ils se reprennent écran par écran aux revues visuelles, pas en une passe ([05-design.md § 6](05-design.md)) |
@@ -49,13 +49,13 @@ Rien ici ne bloque le démarrage. Chaque ligne dit ce qu'elle bloquera, et quand
 
 | # | Question | Ce que ça bloque |
 |---|---|---|
-| **Q1** | ~~Les trois polices sont chargées depuis un service distant.~~ **Tranchée le 2026-09-17** ([T0b, research R-07](../specs/002-socle-interface/research.md)) : servies par l'application depuis les paquets Fontsource 5.3.0, sous-ensemble latin, OFL 1.1 avec attribution sur « à propos » ; graisses fixes du premier affichage seulement (Public Sans 400 et 500, Archivo 700), le reste à la demande | Rien |
+| **Q1** | ~~Les trois polices sont chargées depuis un service distant.~~ **Tranchée le 2026-09-17** ([T0b, research R-07](../specs/002-socle-interface/research.md)) : servies par l'application depuis les paquets Fontsource 5.3.0, sous-ensemble latin, OFL 1.1 avec attribution sur « à propos » ; graisses fixes du premier affichage seulement (Public Sans 400 et 500, Archivo 700), IBM Plex Mono 500 à la demande ; Public Sans 600, Archivo 500 et 600 retirées par la mesure de P-10 (écart E-23) | Rien |
 | **Q2** | **Le produit n'a pas de marque** — ni logo, ni nom affiché, ni favicon. « Nelo » vient du nom du dépôt : est-ce le nom du produit ? *T0b emploie « Nelo » et une icône typographique générée depuis les jetons, à titre provisoire, portés en un seul endroit (`web/app/core/produit.ts`)* | Rien. Un renommage global touche une ligne |
 | **Q3** | **Le mode sombre est-il proposé au portail parent ?** Il est défini dans les jetons. Sur ce portail, il double la surface de test pour un gain incertain — l'usage est court et diurne | **T0b**, marginalement |
 | **Q4** | ~~La stratégie de rendu par surface.~~ **Tranchée le 2026-09-17** ([T0b, research R-06](../specs/002-socle-interface/research.md)) : la mesure a contredit « back-office en rendu client » ; rendu serveur par défaut, rendu client écran par écran par règle de route quand P-10 le permet ([01-stack.md § 1.2](01-stack.md)) | Rien |
 | **Q5** | **La granularité des capacités** : cinq à douze par service est l'ordre de grandeur visé. Trop fines, l'administration devient illisible pour un censeur ; trop grossières, la séparation scolarité / pédagogie devient impossible | **T1b.** *Après, c'est une reprise de toutes les affectations* |
 | **Q6** | **Un agrégateur de paiement ou deux dès le départ ?** L'abstraction est posée quoi qu'il arrive ([ADR 009](adr/009-agregateur-de-paiement-derriere-une-interface.md)) | Les **valeurs par défaut** de T8b, pas son modèle |
-| **Q29** | **Le plafond de 120 Ko de l'accueil et de l'appel contient-il les polices ?** Mesuré en bac à sable ([T0b, research R-16](../specs/002-socle-interface/research.md)) : le socle Nuxt pèse 76 Ko compressés, les polices du premier affichage 44 Ko ; environ 100 Ko sans polices, 140 à 150 avec. Trois issues : **A** polices système sur les écrans budgétés ; **B** 120 Ko pour l'application et 45 Ko à part pour les polices, immuables et précachées (recommandée, appliquée à titre provisoire) ; **C** relever à 170 Ko. Le principe XV nomme le chiffre : la réponse entre dans un ADR | Rien : `implement` mesure les deux nombres. Changer d'issue touche une ligne de `web/ecrans.json` et une règle de P-10 |
+| **Q29** | **Le plafond de 120 Ko de l'accueil et de l'appel contient-il les polices ?** Mesuré en bac à sable ([T0b, research R-16](../specs/002-socle-interface/research.md)), puis **par P-10 sur l'application réelle le 2026-09-17** : accueil **103 à 109 Ko** d'application, polices **43,6 Ko**, total **147 à 153 Ko**. Trois issues : **A** polices système sur les écrans budgétés ; **B** 120 Ko pour l'application et 45 Ko à part pour les polices, immuables et précachées (recommandée, **appliquée**) ; **C** relever à 170 Ko. Tenir B a demandé de ramener le premier affichage à trois fichiers de police (écart E-23 : plus de graisse 600). Le principe XV nomme le chiffre : la réponse entre dans un ADR | La fusion de T0b, qui l'applique. Changer d'issue touche une ligne de `web/ecrans.json` et une règle de P-10 |
 
 ### Ce qui exige un conseil juridique local — avant tout engagement contractuel
 
@@ -94,6 +94,67 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-17 : T0b, le socle d'interface est implémenté, dix portes sur dix tiennent
+
+**Fait** : `/speckit-implement`, 82 tâches sur 83, en dix-sept commits sur `002-socle-interface`.
+`web/` existe : Nuxt 4.5.2 rendu par le serveur, le thème et les mesures copiés tel quel, quatorze
+composants dans tous leurs états et une page de style de développement qui les montre en clair et
+en sombre ; le ruban dérivé du réseau de la plateforme, qui ne bloque jamais la saisie ; une
+coquille composée par `composer(contexte)` depuis quatre personas du primaire, sans aucun rôle ;
+le contexte typé par le contrat (`ContexteCapacites`, schéma Pydantic sans route) ; une PWA
+installable au service worker de quinze lignes ; deux langues et un pack fictif ; `composants.md`,
+`mouvement.md`, `lexique.md`. Trois portes nouvelles, P-05, P-06, P-10, chacune avec sa mutation.
+
+**Mesures** :
+
+| Quoi | Mesure |
+|---|---|
+| `scripts/verifier.sh`, dix portes et e2e | **1 min 3 s à 1 min 21 s** sur le poste ; **2 min 19 s sur un clone frais** (caches froids) ; cible 3 min (SC-011) |
+| `scripts/tests-negatifs.sh` | **2 min 14 s**, **dix portes cassées, dix échecs, dépôt intact** (SC-003) |
+| P-10, accueil (quatre personas) | **102,9 à 109,0 Ko** pour 120 ; polices **43,6 Ko** pour 45 ; total 146,5 à 152,7 Ko |
+| P-10, domaine (l'appel) | **108,8 Ko** pour 120 ; polices 43,6 Ko |
+| P-10, à propos | **101,7 Ko** pour 150 ; polices 43,6 Ko |
+| Premier affichage utile, 3G lente simulée (400 kbit/s, 400 ms) | **622 à 643 ms**, ruban visible, pour 2 000 (SC-006) |
+| P-05 | 4 écrans, 7 visites × Chromium et WebKit × clair et sombre, installabilité, et `Page.getInstallabilityErrors` de Chromium **vide** |
+| Tests | 181 Vitest, 64 scénarios e2e, 111 tests Python ; clone frais : dépendances en 5 s, `/style` ouverte en 18 s |
+
+**Décidé**, trente écarts d'implémentation tracés en fin de
+[research.md](../specs/002-socle-interface/research.md) (E-01 à E-30), aucun ne touche le contrat
+hors deux diffs appliqués. Les plus lourds :
+
+- **Diff sur [03-api.md § 1.9](03-api.md)** : la devise du contexte porte son `symbole` (E-10).
+- **P-07 admet BlueOak-1.0.0 et CC0-1.0, et CC-BY-4.0 pour `caniuse-lite` seul**, toutes
+  permissives et arrivées avec Nuxt ; [01-stack.md § 9](01-stack.md) le dit (E-02). `sharp` est
+  écarté (libvips est LGPL) : les icônes sont dessinées depuis la lettre d'Archivo (E-01).
+- **Premier affichage à trois fichiers de police** : P-10 mesurait 86,8 Ko de polices ; les
+  graisses 600 disparaissent, la mono reste aux données (E-23). **La hiérarchie typographique perd
+  un cran** : à regarder à la prochaine revue visuelle.
+- **Le mot d'une pastille ocre s'écrit en couleur de texte** : l'ocre sur son fond doux fait 3,2:1,
+  sous l'AA que FR-085 exige ; la voix reste portée par le fond, le point, le filet (E-27).
+- **« Impayé » ne s'affiche plus**, le lexique le refuse : la pastille `IMPAYE` dit « En retard »
+  (E-19). **« Validé » parle en réussite**, le canal se dit « En ligne », un champ en erreur parle
+  en rouge (R-19, dans `composants.md`).
+- Le HTML rendu part compressé, et plus jamais une page d'erreur à moitié : le test négatif de
+  P-05 l'a montré (E-24).
+
+**Définition de terminé ([01-stack.md § 8.3](01-stack.md)), relue point par point** :
+1 tenu (les états du ruban, les quatre situations, le thème, en unitaire et en navigateur) ;
+2 tenu (P-03, `client.d.ts` régénéré) ; 3, 4 et 5 sans objet (aucune table, aucun changement
+d'état métier) ; 6 tenu (P-06 à zéro sur 208 clés, le lexique testé ; la page de style montre les
+noms techniques des états en légende) ; 7 tenu (P-05, deux moteurs, deux thèmes) ; 8 tenu (P-10,
+issue B de Q29) ; 9 sans objet (aucun paramètre ; les délais de la source de démonstration sont
+une simulation) ; 10 et 11 sans objet (aucun document, aucune écriture) ; 12 sans objet (P-08
+n'existe pas encore et la tranche ne touche aucune provision) ; 13 tenu.
+
+**Non fait** : **T058, le parcours d'installation à la main** (Chrome, Safari, mise à jour qui
+s'applique d'elle-même). Ce qui s'automatise est dans P-05 ; cliquer « Installer » ne l'est pas, et
+personne ne l'a fait. **Observé** : un test de T0a, `test_arrete_accumule_relance_consomme`, a
+échoué une fois sur une dizaine de vérifications complètes, jamais seul (quinze passages verts) ;
+à surveiller, T0b ne touche pas le travailleur.
+
+**Bloqué / à faire ensuite** : T058 à la main, relecture, fusion par l'utilisateur ; Q29 dans un
+ADR.
 
 ## 2026-09-17 : T0b, le plan est écrit, le bac à sable a mesuré le socle
 
