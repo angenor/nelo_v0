@@ -10,7 +10,7 @@ echec() { echo "PORTE P-10 ÉCHOUÉE : $1" >&2; exit 1; }
 export NELO_WEB_PORT="${NELO_WEB_PORT:-4310}"
 
 if ! sortie=$(pnpm --filter nelo-web portes:p10 2>&1); then
-  motifs=$(grep -o "PORTE P-10 ÉCHOUÉE : [^\"]*" <<<"$sortie" | sort -u || true)
+  motifs=$(grep -o "Error: PORTE P-10 ÉCHOUÉE : .*" <<<"$sortie" | sed 's/^Error: //' | sort -u || true)
   if [ -n "$motifs" ]; then
     echo "$motifs" >&2
     exit 1

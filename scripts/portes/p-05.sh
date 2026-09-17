@@ -24,7 +24,7 @@ if [ "$dev" = 1 ]; then
 fi
 
 if ! sortie=$(lancer); then
-  motifs=$(grep -o "PORTE P-05 ÉCHOUÉE : [^\"]*" <<<"$sortie" | sort -u || true)
+  motifs=$(grep -o "Error: PORTE P-05 ÉCHOUÉE : .*" <<<"$sortie" | sed 's/^Error: //' | sort -u || true)
   if [ -n "$motifs" ]; then
     echo "$motifs" >&2
     exit 1

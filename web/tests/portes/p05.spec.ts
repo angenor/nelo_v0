@@ -42,7 +42,9 @@ for (const visite of visites()) {
         `PORTE P-05 ÉCHOUÉE : écran ${visite.nom}, moteur ${browserName}, thème ${theme} : ${motif}`
 
       await page.addInitScript(scriptTheme(theme))
-      const reponse = await page.goto(visite.adresse, { timeout: 60_000 })
+      const reponse = await page.goto(visite.adresse, { timeout: 60_000 }).catch((e: Error) => {
+        throw new Error(echec(`navigation impossible (${e.message.split('\n')[0]})`))
+      })
       expect(reponse?.status(), echec(`statut ${reponse?.status()}`)).toBeLessThan(400)
       await expect(page.locator('main#principal'), echec('repère main#principal absent')).toBeVisible()
       await expect(page.locator('html'), echec('thème non appliqué')).toHaveAttribute('data-theme', theme)

@@ -5,7 +5,10 @@ import { brotliCompressSync, constants, gzipSync } from 'node:zlib'
 
 export default defineNitroPlugin((nitro) => {
   nitro.hooks.hook('render:response', (reponse, { event }) => {
-    if (typeof reponse.body !== 'string' || !reponse.headers?.['content-type']?.startsWith('text/html')) return
+    // Seules les pages rendues avec succès : une page d'erreur est recopiée par le gestionnaire
+    // d'erreur, qui garderait l'en-tête et perdrait la compression.
+    if (typeof reponse.body !== 'string' || (reponse.statusCode ?? 200) !== 200) return
+    if (!reponse.headers?.['content-type']?.startsWith('text/html') || event.path.startsWith('/__nuxt_error')) return
     const acceptees = getRequestHeader(event, 'accept-encoding') ?? ''
     const corps = Buffer.from(reponse.body)
     let compresse: Buffer | null = null
