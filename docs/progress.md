@@ -32,8 +32,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | Aucune. **T0b, le socle d'interface, est fusionnée dans `main` le 2026-09-17** (83 tâches sur 83, [tasks.md](../specs/002-socle-interface/tasks.md)), `scripts/verifier.sh` vert avant fusion ; T058 passé sur Chrome, Safari différé par l'utilisateur. T0a est fusionnée depuis le 2026-09-15 |
-| **Prochaine** | Trancher **Q29** dans un ADR. Ensuite la tranche suivante au rang de la [roadmap](04-roadmap.md) |
+| **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **spécifiée le 2026-09-17** sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md)). T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
+| **Prochaine** | La **revue visuelle de T1a** en session dédiée, forme A ([prompt-design.md](../specs/003-connexion-contexte/design/prompt-design.md)), puis `/speckit-plan`. **Q29** attend toujours son ADR, sans bloquer ; **Q30** (les valeurs par défaut de l'authentification) se confirme avant `implement` |
 | **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -56,6 +56,7 @@ Rien ici ne bloque le démarrage. Chaque ligne dit ce qu'elle bloquera, et quand
 | **Q5** | **La granularité des capacités** : cinq à douze par service est l'ordre de grandeur visé. Trop fines, l'administration devient illisible pour un censeur ; trop grossières, la séparation scolarité / pédagogie devient impossible | **T1b.** *Après, c'est une reprise de toutes les affectations* |
 | **Q6** | **Un agrégateur de paiement ou deux dès le départ ?** L'abstraction est posée quoi qu'il arrive ([ADR 009](adr/009-agregateur-de-paiement-derriere-une-interface.md)) | Les **valeurs par défaut** de T8b, pas son modèle |
 | **Q29** | **Le plafond de 120 Ko de l'accueil et de l'appel contient-il les polices ?** Mesuré en bac à sable ([T0b, research R-16](../specs/002-socle-interface/research.md)), puis **par P-10 sur l'application réelle le 2026-09-17** : accueil **103 à 109 Ko** d'application, polices **43,6 Ko**, total **147 à 153 Ko**. Trois issues : **A** polices système sur les écrans budgétés ; **B** 120 Ko pour l'application et 45 Ko à part pour les polices, immuables et précachées (recommandée, **appliquée**) ; **C** relever à 170 Ko. Tenir B a demandé de ramener le premier affichage à trois fichiers de police (écart E-23 : plus de graisse 600). Le principe XV nomme le chiffre : la réponse entre dans un ADR | T0b, fusionnée, applique B. Changer d'issue touche une ligne de `web/ecrans.json` et une règle de P-10 |
+| **Q30** | **Les valeurs par défaut de l'authentification**, posées à titre provisoire par la spec de T1a ([Assumptions](../specs/003-connexion-contexte/spec.md#assumptions)) : code reçu à **six chiffres**, valable **dix minutes**, **cinq** tentatives, renvoi après **soixante secondes**, **cinq** demandes par heure et par numéro ; code personnel à **quatre chiffres**, **cinq** tentatives ; appareil connu **90 jours** ; invitation **7 jours**. La maquette A1 donne les trois premières ; les autres sont des pratiques courantes. Les seuils qui dépendent du tenant sont des clés du catalogue (`securite.*`, [02-domaine.md § 17](02-domaine.md)) ; ceux évalués avant qu'un compte soit connu sont des constantes du produit, en un seul endroit | **Rien avant `implement` de T1a.** Changer une valeur touche une clé ou une constante nommée, jamais un écran |
 
 ### Ce qui exige un conseil juridique local — avant tout engagement contractuel
 
@@ -94,6 +95,43 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-17 : T1a, se connecter et savoir où l'on est, est spécifiée
+
+**Fait** : `/speckit-specify` sur la branche `003-connexion-contexte`, créée depuis `main`.
+[spec.md](../specs/003-connexion-contexte/spec.md) : huit user stories, soixante scénarios, FR-001 à
+FR-062, SC-001 à SC-012, treize cas limites, checklist de qualité verte en une itération. Le prompt
+de revue visuelle est prêt en **forme A**
+([prompt-design.md](../specs/003-connexion-contexte/design/prompt-design.md)) : un artboard par
+story, la maquette A1 comme référence de facture, trois de ses éléments à encadrer parce que le
+corpus les contredit (l'écran « numéro inconnu », l'empreinte digitale, l'appel vocal).
+**Décidé**, dérivé du corpus, tracé, sans question bloquante, selon l'arbitrage délégué du 2026-09-14 :
+- **Sept diffs appliqués.** [02-domaine.md](02-domaine.md) : `etablissement.administrateur_compte_id?`
+  (le contexte de § 1.9 exigeait un administrateur nommé « que T1a sert ») ; les états du `compte`
+  en § 16 (`invite` → `actif` → `suspendu`) ; trois clés `securite.*` en § 17. [03-api.md](03-api.md) :
+  le `429` nommé `API_LIMITE_DEBIT` ; neuf codes `AUT_` et la règle « refus de preuve `401`, refus
+  de règle `422` » en § 2.1 ; `POST /moi/telephone` et sa vérification en § 2.2 (le changement de
+  numéro que le prompt impose et que le contrat ne portait pas) ; `POST /comptes`,
+  `/comptes/{id}/invitation`, `/comptes/{id}/telephone` sous `habilitations.compte.gerer` en § 2.5.
+- **La dépendance d'ordre est assumée, pas cachée** : T1a vérifie des en-têtes contre des
+  affectations (T1b) et des années (T2a), et compose un contexte avec une personne (T3a). La roadmap
+  l'accepte déjà (T1b « autorise l'accès à des ressources qui n'existent pas encore »). La spec exige
+  le comportement ; le plan pose le socle minimal, colonne pour colonne celles du domaine, que la
+  tranche propriétaire complète sans renommer ni retirer. C'est le point d'insertion de T0a, étendu.
+- **Une session est pour un seul compte d'un seul tenant** ; un numéro partagé (famille, ou deux
+  tenants) conduit à un choix après le code, tracé par l'événement d'ouverture. Le partage se
+  déclare explicitement à la création du second compte ; le refus d'un rattachement de personnel sur
+  un numéro partagé est laissé à T1b, le fait « partagé » lui est rendu lisible.
+- **L'envoi du code est un événement outbox, jamais sur le chemin de la réponse** : sinon une
+  passerelle indisponible publierait l'existence des comptes (503 pour les connus, 204 pour les
+  autres). Le rejeu d'une demande n'envoie pas un second message.
+- **Trois écarts maquette / corpus tranchés par le corpus** : aucun écran ne dit qu'un numéro est
+  inconnu (l'orientation vers le secrétariat passe sur l'écran du code) ; aucune biométrie ; l'appel
+  vocal est V3.
+- **Q30 ouverte** : les valeurs par défaut (durées, tentatives, longueurs) sont provisoires.
+**Bloqué / à faire ensuite** : la revue visuelle en session dédiée, puis `/speckit-plan`. Le plan
+doit dire comment il pose le socle minimal (compte, rattachement, année, personne, pack de pays que
+T0a n'a pas semé) et nommer les constantes de sécurité du produit en un seul endroit.
 
 ## 2026-09-17 : T0b est fusionnée dans `main`
 

@@ -61,7 +61,7 @@ d'un lycée dans ces tables.
 | Table | Champs porteurs de sens |
 |---|---|
 | **`tenant`** | `nom`, `raison_sociale`, `pays_code`, `country_pack_version`, `statut_abonnement`, `branding` |
-| **`etablissement`** | `tenant_id`, `nom`, `code_officiel`, `agrement`, `fuseau_horaire`, `telephone`, `direction_regionale` |
+| **`etablissement`** | `tenant_id`, `nom`, `code_officiel`, `agrement`, `fuseau_horaire`, `telephone`, `direction_regionale`, `administrateur_compte_id?` |
 | **`site`** | `etablissement_id`, `nom`, `adresse`, `commune`, `latitude`, `longitude` |
 | **`cycle_actif`** | `etablissement_id`, `cycle_code`, `actif_depuis` |
 | **`module`** | Référentiel : `code`, `libelle_cle`, `implemente` (booléen) |
@@ -70,6 +70,11 @@ d'un lycée dans ces tables.
 | **`parametre_catalogue`** | `cle`, `portee_la_plus_basse`, `type`, `valeur_defaut`, `description_cle` |
 | **`parametre_valeur`** | `cle`, `portee` (`TENANT` \| `ETABLISSEMENT` \| `SITE` \| `CYCLE`), `portee_id`, `valeur` |
 | **`evenement_outbox`** | `type`, `charge`, `ecrit_le`, `etat` (`en_attente` \| `pris` \| `traite` \| `en_echec`), `tentatives` — l'outbox du module, consommée par tenant dans l'ordre d'écriture ; chaque schéma de module porte la sienne |
+
+> **`administrateur_compte_id`** désigne le compte qui attribue ses domaines à une personne sans
+> capacité ; le contexte de [03-api.md § 1.9](03-api.md#19-le-contexte--ce-qui-compose-linterface)
+> en tire `administrateur`. Sans désignation, ou si ce compte est suspendu, le contexte porte le nom
+> et le téléphone de l'établissement, jamais un champ vide. *Ajouté par T1a.*
 
 ### 1.3 Ce que porte un country pack
 
@@ -840,6 +845,7 @@ Le modèle utilise des codes neutres et stables ; les libellés viennent du coun
 
 | Entité | États |
 |---|---|
+| `compte` | `invite` → `actif` → `suspendu` |
 | `annee_scolaire` | `preparation` → `active` → `cloturee` → `archivee` |
 | `inscription` | `candidature` → `dossier_incomplet` → `dossier_complet` → `validee` → `active` → (`transferee` \| `radiee` \| `terminee`) ; `refusee` |
 | `note` | `brouillon` → `enregistree` → `verrouillee` |
@@ -877,6 +883,9 @@ métier n'est écrite dans le code.
 | `inscription.derogation_dossier_incomplet` | ÉTABLISSEMENT | `false` |
 | `securite.duree_session_minutes` | TENANT | `480` |
 | `securite.expiration_delegation_max_jours` | TENANT | `90` |
+| `securite.pin_tentatives_max` | TENANT | `5` |
+| `securite.appareil_connu_jours` | TENANT | `90` |
+| `securite.invitation_validite_jours` | TENANT | `7` |
 | `assistance.suspendue` | ÉTABLISSEMENT | `false` |
 | `conservation.dossier_eleve_annees` | *country pack* | — |
 | `conservation.signalement_annees` | *country pack* | — |
