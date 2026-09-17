@@ -2,6 +2,7 @@
 //   chromium : les scénarios e2e et P-05 ;
 //   webkit   : P-05, le seul moteur d'iOS ;
 //   p10      : la mesure du poids, service worker bloqué pour compter une première visite.
+// Chromium tourne en version complète, sans tête (channel « chromium ») : le navigateur réel.
 import { defineConfig, devices } from '@playwright/test'
 
 const PORT = Number(process.env.NELO_WEB_PORT ?? 4310)
@@ -18,11 +19,11 @@ export default defineConfig({
     trace: 'off',
   },
   projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'chromium', use: { ...devices['Desktop Chrome'], channel: 'chromium' } },
     { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: ['portes/p05.spec.ts'] },
     {
       name: 'p10',
-      use: { ...devices['Desktop Chrome'], serviceWorkers: 'block' },
+      use: { ...devices['Desktop Chrome'], channel: 'chromium', serviceWorkers: 'block' },
       testMatch: ['portes/p10.spec.ts'],
     },
   ],

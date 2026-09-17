@@ -4,6 +4,7 @@ export const ETATS_COMPOSANT = COMPOSANTS.CarteIndicateur
 </script>
 
 <script setup lang="ts">
+import { NuxtLink } from '#components'
 import type { SensVariation } from '~/core/composants/etats'
 import { libelleDomaine } from '~/core/composition/libelle'
 import type { Libelle } from '~/core/composition/types'
@@ -37,7 +38,7 @@ const etat = computed(() => [props.variation?.sens ?? 'neutre', props.reservee ?
 </script>
 
 <template>
-  <component :is="vers ? resolveComponent('NuxtLink') : 'div'" :to="vers" class="carte" :class="{ lien: vers }" :data-etat="etat">
+  <component :is="vers ? NuxtLink : 'div'" :to="vers" class="carte" :class="{ lien: vers }" :data-etat="etat">
     <div class="libelle">{{ texteLibelle }}</div>
     <div class="valeur" :class="{ reservee }" :data-voix="reservee ? 'rouge' : undefined">{{ valeur }}</div>
     <div v-if="detail" class="variation">{{ detail }}</div>

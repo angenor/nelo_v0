@@ -24,6 +24,8 @@ function retour() {
   else navigateTo(accueil.value)
 }
 
+useMiseAJour()
+
 const hydrate = ref(false)
 let desabonner = () => {}
 onMounted(() => {
@@ -73,6 +75,7 @@ useHead({
     </div>
     <NuxtPage />
   </CanonCoquille>
+  <NuxtPwaManifest />
   <span v-if="hydrate" data-hydrate hidden />
 </template>
 

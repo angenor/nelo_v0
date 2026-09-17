@@ -40,7 +40,14 @@ export interface Clavier {
   surRaccourci(touche: string, rappel: () => void): () => void
 }
 
+/** L'application elle-même : se recharger, savoir si une saisie est en cours dans un champ. */
+export interface Application {
+  recharger(): void
+  saisieEnCours(): boolean
+}
+
 export interface Plateforme {
+  application: Application
   reseau: Reseau
   apparence: Apparence
   clavier: Clavier

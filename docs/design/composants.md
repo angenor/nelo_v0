@@ -120,6 +120,8 @@ Fichier : `PastilleEtat.vue`
 - **Contour** : filet pointillé ocre et point ouvert, pour « Proposé, non validé » : rien n'est
   encore inscrit au registre.
 - **Neutre** : « Présent », « Brouillon » ; fond `--surface-sunken`, texte atténué.
+- Le code `IMPAYE` s'affiche **« En retard »** : « impayé » est un mot que le lexique refuse
+  ([lexique.md § 1](lexique.md)).
 - Hauteur `--pastille` (24 px) : une pastille accompagne, elle ne commande pas.
 
 | Code | Voix | Mot (clé) |

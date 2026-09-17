@@ -39,6 +39,7 @@ function faireLAppel() {
   <div class="ecran-domaine">
     <div v-if="estAppel" class="contenu">
       <header class="entete-ecran">
+        <p class="mot-pack" data-mot-pack="CLASSE">{{ pack.libelle('CLASSE') }}</p>
         <h1 class="titre">{{ demo.CLASSE }}</h1>
         <p class="sous-titre">
           {{
@@ -128,6 +129,12 @@ function faireLAppel() {
   font-weight: 700;
   font-size: 20px;
   letter-spacing: -0.02em;
+}
+.mot-pack {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
 }
 .sous-titre,
 .mention {

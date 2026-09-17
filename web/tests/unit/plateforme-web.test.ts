@@ -12,6 +12,11 @@ describe('la plateforme web, là où le navigateur ne dit rien', () => {
     expect(() => desabonner()).not.toThrow()
   })
 
+  it('ne recharge rien et ne voit aucune saisie hors navigateur', () => {
+    expect(() => plateforme.application.recharger()).not.toThrow()
+    expect(plateforme.application.saisieEnCours()).toBe(false)
+  })
+
   it('se dit en apparence claire hors navigateur', () => {
     expect(plateforme.apparence.sombre).toBe(false)
     expect(() => plateforme.apparence.surChangement(() => {})()).not.toThrow()

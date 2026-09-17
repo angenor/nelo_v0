@@ -1,9 +1,10 @@
 // Ce que les specs Playwright partagent : les écrans déclarés, les adresses, la sonde de réseau.
-import brut from '../../ecrans.json'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import type { Ecran } from '../../app/core/ecrans'
-import { valider } from '../../app/core/ecrans'
+import { lireEcrans } from '../../app/core/ecrans'
 
-export const ECRANS: Ecran[] = valider(brut.ecrans)
+export const ECRANS: Ecran[] = lireEcrans(readFileSync(join(import.meta.dirname, '../../ecrans.json'), 'utf8'))
 export const PORT_DEV = Number(process.env.NELO_WEB_PORT_DEV ?? 4311)
 export const THEMES = ['light', 'dark'] as const
 

@@ -3,6 +3,7 @@
 import type { Plateforme } from './plateforme'
 
 export const PLATEFORME_INDISPONIBLE: Plateforme = {
+  application: { recharger: () => {}, saisieEnCours: () => false },
   reseau: { etat: 'bon', surChangement: () => () => {} },
   apparence: { sombre: false, surChangement: () => () => {} },
   clavier: { libelle: (touche) => `Ctrl ${touche.toUpperCase()}`, surRaccourci: () => () => {} },

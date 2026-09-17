@@ -69,7 +69,7 @@ watch(
       />
       <component :is="apercu ? 'div' : 'main'" :id="apercu ? undefined : 'principal'" class="ecran">
         <CanonCoquilleSansCapacite v-if="sansCapacite && surAccueil" :contexte="contexte" />
-        <slot v-else />
+        <slot />
       </component>
     </div>
     <CanonCoquilleNavigation

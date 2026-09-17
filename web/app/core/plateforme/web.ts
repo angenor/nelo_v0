@@ -1,7 +1,7 @@
 // L'unique implémentation de la plateforme : le navigateur (research.md R-09). C'est le seul
 // fichier de l'application, avec le service worker, qui touche navigator, window et document ;
 // P-06 (règle 4) refuse ces appels partout ailleurs.
-import type { Apparence, Clavier, EtatReseau, Plateforme, Reseau, Stockage } from './plateforme'
+import type { Apparence, Application, Clavier, EtatReseau, Plateforme, Reseau, Stockage } from './plateforme'
 
 const TYPES_FAIBLES = new Set(['slow-2g', '2g', '3g'])
 
@@ -67,6 +67,26 @@ function creerApparence(): Apparence {
       const signaler = (evenement: MediaQueryListEvent) => rappel(evenement.matches)
       requete.addEventListener('change', signaler)
       return () => requete.removeEventListener('change', signaler)
+    },
+  }
+}
+
+function creerApplication(): Application {
+  return {
+    recharger() {
+      try {
+        window.location.reload()
+      } catch {
+        // Hors navigateur : rien à recharger.
+      }
+    },
+    saisieEnCours() {
+      try {
+        const actif = document.activeElement
+        return actif instanceof HTMLInputElement || actif instanceof HTMLTextAreaElement || actif instanceof HTMLSelectElement
+      } catch {
+        return false
+      }
     },
   }
 }
@@ -176,6 +196,7 @@ export function creerPlateformeWeb(): Plateforme {
   }
   const notifications = notificationsDisponibles()
   return {
+    application: creerApplication(),
     reseau: creerReseau(),
     apparence: creerApparence(),
     clavier: creerClavier(),

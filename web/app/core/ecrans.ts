@@ -1,6 +1,6 @@
 // Le lecteur typé de web/ecrans.json, le seul endroit qui déclare les écrans et leurs budgets
-// (data-model.md § 5). P-05 ouvre chaque entrée, P-10 mesure chaque budget non nul.
-import brut from '../../ecrans.json'
+// (data-model.md § 5). P-05 ouvre chaque entrée, P-10 mesure chaque budget non nul. La lecture
+// du fichier appartient à l'appelant (Vitest, Playwright) : ce module ne fait que valider.
 
 export interface Ecran {
   nom: string
@@ -39,4 +39,7 @@ export function valider(entrees: unknown): Ecran[] {
   return entrees as Ecran[]
 }
 
-export const ECRANS: Ecran[] = valider(brut.ecrans)
+/** Le contenu de web/ecrans.json, validé. */
+export function lireEcrans(texte: string): Ecran[] {
+  return valider((JSON.parse(texte) as { ecrans: unknown }).ecrans)
+}

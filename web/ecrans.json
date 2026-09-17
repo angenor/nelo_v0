@@ -27,6 +27,12 @@
       ]
     },
     {
+      "nom": "a-propos",
+      "route": "/a-propos",
+      "budgetKo": 150,
+      "budgetPolicesKo": 45
+    },
+    {
       "nom": "style",
       "route": "/style",
       "budgetKo": null,

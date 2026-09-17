@@ -1,5 +1,9 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { ECRANS, valider } from '../../app/core/ecrans'
+import { lireEcrans, valider } from '../../app/core/ecrans'
+
+const ECRANS = lireEcrans(readFileSync(resolve(import.meta.dirname, '../../ecrans.json'), 'utf8'))
 
 describe('ecrans.json', () => {
   it('se lit et déclare l’accueil avec ses deux plafonds', () => {
