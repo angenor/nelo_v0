@@ -39,7 +39,7 @@ Trois règles :
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
 | **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **spécifiée et planifiée le 2026-09-17** sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md), [plan.md](../specs/003-connexion-contexte/plan.md)). **Revue visuelle publiée et validée le 2026-09-17** ([spec.md § Revue visuelle](../specs/003-connexion-contexte/spec.md#revue-visuelle)). T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
-| **Prochaine** | `/speckit-tasks` sur T1a. **Q29** attend toujours son ADR, sans bloquer ; **Q30** (les valeurs par défaut de l'authentification) se confirme avant `implement` |
+| **Prochaine** | `/speckit-implement` sur T1a ([tasks.md](../specs/003-connexion-contexte/tasks.md), 88 tâches). **Q30** (les valeurs par défaut de l'authentification) se confirme avant, ou reste provisoire (T003 et T010 seules changent). **Q29** attend toujours son ADR, sans bloquer |
 | **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -101,6 +101,21 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-17 : T1a, les tâches sont écrites
+
+**Fait** : `/speckit-tasks` : [tasks.md](../specs/003-connexion-contexte/tasks.md), **88 tâches**
+en onze phases : mise en place (6), fondations (18 : quatre schémas migrés sous RLS, noyaux,
+outbox générique, simulation qui garde ses messages, fixtures, relais Nitro, client, source,
+garde, serveur d'API sous les e2e), puis une phase par story (US1 19, US2 7, US3 5, US4 8, US5 7,
+US6 5, US7 4, US8 4), finition (4). Les tests précèdent l'implémentation dans chaque story ; les
+sept écarts de la revue ont chacun leur tâche.
+**Décidé** : la session (US1) est le socle de toutes les stories, puis les en-têtes (US2) ; le
+provisoire de T0a est supprimé en US2, pas avant ; les trois mutations négatives des règles de
+sécurité entrent dans `tests-negatifs.sh` sous P-12, celle du cookie sous P-05 ; un diff de plus
+attend `implement` (T060, T085) : `TEN_ETABLISSEMENT_REQUIS` porte les établissements rattachés
+du compte authentifié, pour que la source de contexte sache par où commencer.
+**Bloqué / à faire ensuite** : `/speckit-implement`. Q30 se confirme avant, ou reste provisoire.
 
 ## 2026-09-17 : T1a, les sept écarts de la planche sont tranchés
 
