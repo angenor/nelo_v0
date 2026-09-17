@@ -28,6 +28,7 @@ describe('montant', () => {
     expect(fr.montant(8150000)).toBe(`8${F}150${F}000${F}F`)
     expect(fr.montant(0)).toBe(`0${F}F`)
     expect(fr.montant(-2500)).toBe(`-2${F}500${F}F`)
+    expect(fr.montant(145000, { symbole: false })).toBe(`145${F}000`)
   })
 
   it('place la virgule selon l’exposant de la devise', () => {
@@ -72,5 +73,6 @@ describe('date', () => {
     expect(creerPack(demonstration, 'fr').date('2026-08-18')).toBe('Mardi 18 août')
     expect(creerPack(demonstration, 'en').date('2026-08-18')).toMatch(/^Tuesday/)
     expect(creerPack(demonstration, 'fr').date('pas-une-date')).toBe('')
+    expect(creerPack(demonstration, 'fr').jourMois('2026-08-12')).toBe('12 août')
   })
 })

@@ -5,6 +5,17 @@
     "Q29, issue B à titre provisoire : budgetKo compte l'application, budgetPolicesKo les polices à part"
   ],
   "ecrans": [
-    { "nom": "accueil", "route": "/", "budgetKo": 120, "budgetPolicesKo": 45 }
+    {
+      "nom": "accueil",
+      "route": "/",
+      "budgetKo": 120,
+      "budgetPolicesKo": 45
+    },
+    {
+      "nom": "style",
+      "route": "/style",
+      "budgetKo": null,
+      "developpement": true
+    }
   ]
 }

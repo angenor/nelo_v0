@@ -29,9 +29,10 @@ describe('le thème mémorisé sur l’appareil', () => {
     expect(s.valeurs.has('theme')).toBe(false)
   })
 
-  it('ne pose l’attribut que pour un thème forcé', () => {
-    expect(attributTheme('systeme')).toBeUndefined()
-    expect(attributTheme('light')).toBe('light')
-    expect(attributTheme('dark')).toBe('dark')
+  it('suit l’appareil en « systeme », et un thème forcé sinon', () => {
+    expect(attributTheme('systeme', false)).toBe('light')
+    expect(attributTheme('systeme', true)).toBe('dark')
+    expect(attributTheme('light', true)).toBe('light')
+    expect(attributTheme('dark', false)).toBe('dark')
   })
 })

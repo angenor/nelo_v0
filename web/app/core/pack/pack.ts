@@ -30,9 +30,11 @@ export interface Pack {
   langue: string
   devise: CountryPackContexte['devise']
   libelle(code: string): string
-  montant(entier: number): string
+  montant(entier: number, options?: { symbole: boolean }): string
+  decimal(valeur: string): string
   note(valeur: string, bareme: string): string
   date(iso: string): string
+  jourMois(iso: string): string
   heure(instant: Date): string
 }
 
@@ -54,7 +56,8 @@ export function creerPack(pack: CountryPackContexte, langueDemandee: string): Pa
       const libelles = pack.vocabulaire[code]
       return libelles?.[langue] ?? libelles?.[pack.langues[0]!] ?? ''
     },
-    montant(entier) {
+    decimal,
+    montant(entier, options = { symbole: true }) {
       if (!Number.isSafeInteger(entier)) return ''
       const exposant = pack.devise.exposant
       const chiffres = Math.abs(entier)
@@ -62,7 +65,8 @@ export function creerPack(pack: CountryPackContexte, langueDemandee: string): Pa
         .padStart(exposant + 1, '0')
       const coupure = chiffres.length - exposant
       const texte = exposant > 0 ? `${chiffres.slice(0, coupure)}.${chiffres.slice(coupure)}` : chiffres
-      return `${entier < 0 ? '-' : ''}${decimal(texte)}${ESPACE_FINE}${pack.devise.symbole}`
+      const nombre = `${entier < 0 ? '-' : ''}${decimal(texte)}`
+      return options.symbole ? `${nombre}${ESPACE_FINE}${pack.devise.symbole}` : nombre
     },
     note(valeur, bareme) {
       const v = decimal(valeur)
@@ -79,6 +83,11 @@ export function creerPack(pack: CountryPackContexte, langueDemandee: string): Pa
         timeZone: 'UTC',
       }).format(jour)
       return majusculeInitiale(texte)
+    },
+    jourMois(iso) {
+      const jour = new Date(`${iso}T00:00:00Z`)
+      if (Number.isNaN(jour.getTime())) return ''
+      return new Intl.DateTimeFormat(langue, { day: 'numeric', month: 'long', timeZone: 'UTC' }).format(jour)
     },
     heure(instant) {
       return new Intl.DateTimeFormat(langue, { hour: '2-digit', minute: '2-digit' }).format(instant)

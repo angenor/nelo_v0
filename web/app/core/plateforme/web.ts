@@ -1,7 +1,7 @@
 // L'unique implémentation de la plateforme : le navigateur (research.md R-09). C'est le seul
 // fichier de l'application, avec le service worker, qui touche navigator, window et document ;
 // P-06 (règle 4) refuse ces appels partout ailleurs.
-import type { EtatReseau, Plateforme, Reseau, Stockage } from './plateforme'
+import type { Apparence, Clavier, EtatReseau, Plateforme, Reseau, Stockage } from './plateforme'
 
 const TYPES_FAIBLES = new Set(['slow-2g', '2g', '3g'])
 
@@ -44,6 +44,56 @@ function creerReseau(): Reseau {
         window.removeEventListener('offline', signaler)
         lien?.removeEventListener('change', signaler)
       }
+    },
+  }
+}
+
+function preferenceSombre(): MediaQueryList | null {
+  try {
+    return window.matchMedia('(prefers-color-scheme: dark)')
+  } catch {
+    return null
+  }
+}
+
+function creerApparence(): Apparence {
+  return {
+    get sombre() {
+      return preferenceSombre()?.matches ?? false
+    },
+    surChangement(rappel) {
+      const requete = preferenceSombre()
+      if (!requete) return () => {}
+      const signaler = (evenement: MediaQueryListEvent) => rappel(evenement.matches)
+      requete.addEventListener('change', signaler)
+      return () => requete.removeEventListener('change', signaler)
+    },
+  }
+}
+
+function appareilApple(): boolean {
+  try {
+    return /Mac|iPhone|iPad/.test(navigator.userAgent)
+  } catch {
+    return false
+  }
+}
+
+function creerClavier(): Clavier {
+  return {
+    libelle(touche) {
+      return `${appareilApple() ? '⌘' : 'Ctrl'} ${touche.toUpperCase()}`
+    },
+    surRaccourci(touche, rappel) {
+      if (typeof window === 'undefined') return () => {}
+      const ecouter = (evenement: KeyboardEvent) => {
+        if ((evenement.ctrlKey || evenement.metaKey) && evenement.key.toLowerCase() === touche) {
+          evenement.preventDefault()
+          rappel()
+        }
+      }
+      window.addEventListener('keydown', ecouter)
+      return () => window.removeEventListener('keydown', ecouter)
     },
   }
 }
@@ -127,6 +177,8 @@ export function creerPlateformeWeb(): Plateforme {
   const notifications = notificationsDisponibles()
   return {
     reseau: creerReseau(),
+    apparence: creerApparence(),
+    clavier: creerClavier(),
     stockage: creerStockage(),
     camera: {
       disponible: cameraDisponible,

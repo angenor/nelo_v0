@@ -12,6 +12,16 @@ describe('la plateforme web, là où le navigateur ne dit rien', () => {
     expect(() => desabonner()).not.toThrow()
   })
 
+  it('se dit en apparence claire hors navigateur', () => {
+    expect(plateforme.apparence.sombre).toBe(false)
+    expect(() => plateforme.apparence.surChangement(() => {})()).not.toThrow()
+  })
+
+  it('nomme un raccourci et accepte un abonnement sans fenêtre', () => {
+    expect(plateforme.clavier.libelle('k')).toMatch(/^(Ctrl|⌘) K$/)
+    expect(() => plateforme.clavier.surRaccourci('k', () => {})()).not.toThrow()
+  })
+
   it('ne lève jamais sur le stockage', () => {
     expect(() => plateforme.stockage.ecrire('theme', 'dark')).not.toThrow()
     expect(() => plateforme.stockage.effacer('theme')).not.toThrow()

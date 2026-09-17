@@ -1,0 +1,208 @@
+{
+  "compte": {
+    "id": "0197a000-0000-7000-8000-000000000103",
+    "nom": "N’Guessan",
+    "prenoms": "Adjoua",
+    "langue": "fr"
+  },
+  "etablissements": [
+    {
+      "id": "0197a000-0000-7000-8000-000000000001",
+      "nom": "Groupe Scolaire Les Palmiers",
+      "sites": [
+        {
+          "id": "0197a000-0000-7000-8000-000000000002",
+          "nom": "Angré"
+        }
+      ],
+      "cycles_actifs": [
+        "PRIMAIRE"
+      ],
+      "modules_actifs": [
+        "SCOLARITE",
+        "EVALUATION",
+        "VIE_SCOLAIRE",
+        "FINANCE",
+        "COMMUNICATION"
+      ],
+      "administrateur": {
+        "nom": "Konan",
+        "prenoms": "Bertin",
+        "telephone": "01 02 03 04 05"
+      }
+    }
+  ],
+  "etablissement_actif": "0197a000-0000-7000-8000-000000000001",
+  "annees": [
+    {
+      "id": "0197a000-0000-7000-8000-000000000003",
+      "libelle": "2026-2027",
+      "etat": "ACTIVE"
+    },
+    {
+      "id": "0197a000-0000-7000-8000-000000000004",
+      "libelle": "2027-2028",
+      "etat": "PREPARATION"
+    }
+  ],
+  "annee_active": "0197a000-0000-7000-8000-000000000003",
+  "capacites": [
+    {
+      "code": "scolarite.inscription.valider",
+      "perimetre": {
+        "site_ids": [
+          "0197a000-0000-7000-8000-000000000002"
+        ]
+      }
+    },
+    {
+      "code": "pedagogie.edt.publier",
+      "perimetre": {
+        "site_ids": [
+          "0197a000-0000-7000-8000-000000000002"
+        ]
+      }
+    },
+    {
+      "code": "vie_scolaire.appel.faire",
+      "perimetre": {
+        "classe_ids": [
+          "0197a000-0000-7000-8000-000000000010"
+        ]
+      }
+    },
+    {
+      "code": "evaluation.note.saisir",
+      "perimetre": {
+        "matiere_ids": [
+          "0197a000-0000-7000-8000-000000000011"
+        ],
+        "classe_ids": [
+          "0197a000-0000-7000-8000-000000000010"
+        ]
+      }
+    },
+    {
+      "code": "communication.circulaire.envoyer",
+      "perimetre": {
+        "site_ids": [
+          "0197a000-0000-7000-8000-000000000002"
+        ]
+      }
+    },
+    {
+      "code": "conseil.decision.arreter",
+      "perimetre": {
+        "classe_ids": [
+          "0197a000-0000-7000-8000-000000000010"
+        ]
+      }
+    },
+    {
+      "code": "finance.encaissement.saisir",
+      "perimetre": {
+        "site_ids": [
+          "0197a000-0000-7000-8000-000000000002"
+        ]
+      }
+    }
+  ],
+  "acces_nominatifs": [],
+  "country_pack": {
+    "pays": "ZZ",
+    "version": 1,
+    "devise": {
+      "code": "XDM",
+      "exposant": 0,
+      "symbole": "F"
+    },
+    "langues": [
+      "fr",
+      "en"
+    ],
+    "decoupage": "TRIMESTRES",
+    "vocabulaire": {
+      "ANNEE": {
+        "fr": "Année scolaire",
+        "en": "School year"
+      },
+      "PERIODE": {
+        "fr": "Trimestre",
+        "en": "Term"
+      },
+      "CLASSE": {
+        "fr": "Classe",
+        "en": "Class"
+      },
+      "PROFESSEUR_PRINCIPAL": {
+        "fr": "Maître titulaire",
+        "en": "Class teacher"
+      },
+      "BULLETIN": {
+        "fr": "Bulletin",
+        "en": "Report card"
+      },
+      "NOTE": {
+        "fr": "Note",
+        "en": "Mark"
+      },
+      "MENTION": {
+        "fr": "Mention",
+        "en": "Grade"
+      },
+      "RANG": {
+        "fr": "Rang",
+        "en": "Position in class"
+      },
+      "RESPONSABLE": {
+        "fr": "Responsable légal",
+        "en": "Guardian"
+      },
+      "CHEF_ETABLISSEMENT": {
+        "fr": "Directeur",
+        "en": "Head teacher"
+      },
+      "CENSEUR": {
+        "fr": "Éducateur",
+        "en": "Assistant head"
+      },
+      "ECONOME": {
+        "fr": "Économe",
+        "en": "Bursar"
+      },
+      "INSTANCE_PARENTS": {
+        "fr": "Association des parents",
+        "en": "Parent association"
+      },
+      "FRAIS_SCOLARITE": {
+        "fr": "Frais de scolarité",
+        "en": "School fees"
+      },
+      "EXAMEN_NATIONAL": {
+        "fr": "Examen national",
+        "en": "National examination"
+      },
+      "CONSEIL_ELEVES": {
+        "fr": "Conseil des élèves",
+        "en": "Pupil council"
+      },
+      "CONSEIL_CLASSE": {
+        "fr": "Conseil des maîtres",
+        "en": "Class committee"
+      }
+    }
+  },
+  "parametres_effectifs": {
+    "absence.delai_notification_minutes": 15,
+    "note.taille_lot_enregistrement": 5
+  },
+  "alertes": [
+    {
+      "type": "BUDGET_SMS_BAS",
+      "gravite": "ALERTE",
+      "details": {
+        "restant": 1240
+      }
+    }
+  ]
+}

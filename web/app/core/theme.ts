@@ -1,5 +1,6 @@
-// Le thème choisi sur l'appareil (research.md R-21). « systeme » : aucun attribut, la préférence
-// de l'appareil décide ; sinon data-theme sur <html>. Seule valeur que le stockage porte.
+// Le thème choisi sur l'appareil (research.md R-21). « systeme » suit la préférence de
+// l'appareil ; theme.css ne lisant que [data-theme], l'attribut est toujours posé côté client
+// (écart E-13). Le rendu serveur n'en pose aucun. Seule valeur que le stockage porte.
 import type { Stockage } from './plateforme/plateforme'
 
 export const THEMES = ['systeme', 'light', 'dark'] as const
@@ -17,6 +18,7 @@ export function ecrireTheme(stockage: Stockage, theme: Theme): void {
   else stockage.ecrire(CLE, theme)
 }
 
-export function attributTheme(theme: Theme): 'light' | 'dark' | undefined {
-  return theme === 'systeme' ? undefined : theme
+export function attributTheme(theme: Theme, appareilSombre: boolean): 'light' | 'dark' {
+  if (theme !== 'systeme') return theme
+  return appareilSombre ? 'dark' : 'light'
 }

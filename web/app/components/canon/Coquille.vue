@@ -1,0 +1,162 @@
+<script lang="ts">
+import { COMPOSANTS } from '~/core/composants/etats'
+export const ETATS_COMPOSANT = COMPOSANTS.Coquille
+</script>
+
+<script setup lang="ts">
+import type { ContexteTactile } from '~/core/composants/etats'
+import type { Composition } from '~/core/composition/types'
+import type { ContexteCapacites } from '~/core/contexte/types'
+
+// En présentation seule : la composition est décidée par composer(contexte), jamais ici, et
+// jamais depuis un rôle. L'écran vient par le slot.
+const props = withDefaults(
+  defineProps<{
+    composition: Composition
+    contexte: ContexteCapacites
+    routeActive: string
+    contexteTactile?: ContexteTactile
+    montrerRetour?: boolean
+    /** Page de style : une coquille réduite, sans repère principal. */
+    apercu?: boolean
+  }>(),
+  { contexteTactile: 'standard', montrerRetour: false, apercu: false },
+)
+const emit = defineEmits<{ retour: [] }>()
+const tiroirOuvert = ref(false)
+const sansCapacite = computed(() => props.composition.situation === 'AUCUNE_CAPACITE')
+const enFamilles = computed(() => props.composition.situation === 'MULTI_FAMILLES')
+const CIBLES: Record<ContexteTactile, string> = {
+  classe: 'var(--cible-classe)',
+  standard: 'var(--cible-standard)',
+  poste: 'var(--controle-poste)',
+}
+watch(
+  () => props.routeActive,
+  () => {
+    tiroirOuvert.value = false
+  },
+)
+</script>
+
+<template>
+  <div
+    class="coquille"
+    :class="{ apercu, 'avec-barre-basse': !sansCapacite && !enFamilles }"
+    :style="{ '--cible': CIBLES[contexteTactile] }"
+    :data-situation="composition.situation"
+    :data-etat="composition.situation"
+    :data-contexte-tactile="contexteTactile"
+  >
+    <CanonCoquilleEntete
+      :contexte="contexte"
+      :accueil="composition.accueil.route"
+      :montrer-menu="enFamilles"
+      :montrer-retour="montrerRetour"
+      :menu-ouvert="tiroirOuvert"
+      @menu="tiroirOuvert = !tiroirOuvert"
+      @retour="emit('retour')"
+    />
+    <div class="corps">
+      <CanonCoquilleNavigation
+        v-if="!sansCapacite"
+        class="laterale"
+        :composition="composition"
+        :route-active="routeActive"
+        disposition="laterale"
+      />
+      <component :is="apercu ? 'div' : 'main'" :id="apercu ? undefined : 'principal'" class="ecran">
+        <CanonCoquilleSansCapacite v-if="sansCapacite" :contexte="contexte" />
+        <slot v-else />
+      </component>
+    </div>
+    <CanonCoquilleNavigation
+      v-if="!sansCapacite && !enFamilles"
+      class="basse"
+      :composition="composition"
+      :route-active="routeActive"
+      disposition="basse"
+    />
+    <div v-if="enFamilles && tiroirOuvert" class="tiroir">
+      <div class="voile" aria-hidden="true" @click="tiroirOuvert = false" />
+      <CanonCoquilleNavigation
+        class="panneau"
+        :composition="composition"
+        :route-active="routeActive"
+        disposition="tiroir"
+      />
+    </div>
+  </div>
+</template>
+
+<style scoped>
+@reference "../../assets/css/jetons.css";
+
+.coquille {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+}
+.coquille.apercu {
+  height: 520px;
+  overflow: hidden;
+  border: var(--filet) solid var(--border-strong);
+  border-radius: var(--rayon-carte);
+}
+.corps {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.ecran {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  overflow: auto;
+  background: var(--bg);
+}
+.laterale {
+  width: 208px;
+  flex: 0 0 auto;
+  overflow: auto;
+  border-right: var(--filet) solid var(--border);
+  background: var(--surface);
+  @variant max-md {
+    display: none;
+  }
+}
+.basse {
+  flex: 0 0 auto;
+  border-top: var(--filet) solid var(--border);
+  background: var(--surface);
+  @variant md {
+    display: none;
+  }
+}
+.tiroir {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  @variant md {
+    display: none;
+  }
+}
+.voile {
+  position: absolute;
+  inset: 0;
+  background: var(--text);
+  opacity: 0.4;
+}
+.panneau {
+  position: relative;
+  width: min(280px, 85%);
+  overflow: auto;
+  background: var(--surface);
+  box-shadow: 0 0 24px var(--border-strong);
+}
+</style>

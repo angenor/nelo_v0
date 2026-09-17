@@ -28,8 +28,22 @@ export interface Notifications {
   afficher(titre: string, corps: string): void
 }
 
+/** L'apparence demandée par l'appareil : theme.css ne la lit pas, le thème la suit par ici. */
+export interface Apparence {
+  readonly sombre: boolean
+  surChangement(rappel: (sombre: boolean) => void): () => void
+}
+
+/** Les raccourcis du poste : une touche avec Ctrl, ou Commande sur les appareils qui l'emploient. */
+export interface Clavier {
+  libelle(touche: string): string
+  surRaccourci(touche: string, rappel: () => void): () => void
+}
+
 export interface Plateforme {
   reseau: Reseau
+  apparence: Apparence
+  clavier: Clavier
   stockage: Stockage
   camera: Camera
   notifications: Notifications

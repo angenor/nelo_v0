@@ -5,7 +5,15 @@ import publicSans400 from '@fontsource/public-sans/files/public-sans-latin-400-n
 import publicSans500 from '@fontsource/public-sans/files/public-sans-latin-500-normal.woff2?url'
 import archivo700 from '@fontsource/archivo/files/archivo-latin-700-normal.woff2?url'
 
+const { attribut, installer } = useTheme()
+let desabonner = () => {}
+onMounted(() => {
+  desabonner = installer()
+})
+onBeforeUnmount(() => desabonner())
+
 useHead({
+  htmlAttrs: { 'data-theme': attribut },
   link: [publicSans400, publicSans500, archivo700].map((href) => ({
     rel: 'preload',
     as: 'font',
