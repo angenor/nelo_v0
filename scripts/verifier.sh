@@ -50,6 +50,7 @@ porte P-02
 porte P-07
 porte P-04
 porte P-11
+porte P-06
 porte P-01
 porte P-12
 porte P-03
