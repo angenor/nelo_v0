@@ -17,10 +17,12 @@ const props = withDefaults(
     routeActive: string
     contexteTactile?: ContexteTactile
     montrerRetour?: boolean
+    /** Sans capacité, l'écran qui nomme l'administrateur remplace l'accueil ; « à propos » reste atteignable. */
+    surAccueil?: boolean
     /** Page de style : une coquille réduite, sans repère principal. */
     apercu?: boolean
   }>(),
-  { contexteTactile: 'standard', montrerRetour: false, apercu: false },
+  { contexteTactile: 'standard', montrerRetour: false, surAccueil: true, apercu: false },
 )
 const emit = defineEmits<{ retour: [] }>()
 const tiroirOuvert = ref(false)
@@ -66,7 +68,7 @@ watch(
         disposition="laterale"
       />
       <component :is="apercu ? 'div' : 'main'" :id="apercu ? undefined : 'principal'" class="ecran">
-        <CanonCoquilleSansCapacite v-if="sansCapacite" :contexte="contexte" />
+        <CanonCoquilleSansCapacite v-if="sansCapacite && surAccueil" :contexte="contexte" />
         <slot v-else />
       </component>
     </div>

@@ -20,7 +20,7 @@ const appel = computed(() => `tel:${administrateur.value.telephone.replace(/[^\d
       <p class="contact" data-administrateur>
         {{
           t('coquille.aucune_capacite.contact', {
-            administrateur: `${administrateur.prenoms} ${administrateur.nom}`,
+            administrateur: `${administrateur.nom} ${administrateur.prenoms}`,
             etablissement: etablissement.nom,
           })
         }}

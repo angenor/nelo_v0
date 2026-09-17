@@ -15,7 +15,7 @@ import { composer } from '~/core/composition/composer'
 import * as demo from '~/core/demonstration/donnees'
 import { PERSONA_PAR_SITUATION, PERSONAS } from '~/core/demonstration/personas'
 
-definePageMeta({ contexteTactile: 'standard' })
+definePageMeta({ contexteTactile: 'standard', sansCoquille: true })
 
 const { t } = useLibelles()
 const pack = usePack()
@@ -316,13 +316,13 @@ const photo = '/icones/180.png'
       <div class="pile">
         <InterneEtatStyle v-for="r in rubans" :key="r.etat" :etats="r.etat">
           <div class="cadre-ruban">
-            <CanonRubanSaisie :etat="r.etat" :reseau="r.reseau" :dernier-enregistrement="r.dernier" :en-attente="r.attente" />
+            <CanonRubanSaisie :reseau="r.reseau" :dernier-enregistrement="r.dernier" :en-attente="r.attente" />
           </div>
         </InterneEtatStyle>
         <InterneEtatStyle v-for="r in rubansDeBord" :key="r.cle" :etats="r.etat">
           <p class="mention">{{ t(r.cle) }}</p>
           <div class="cadre-ruban">
-            <CanonRubanSaisie :etat="r.etat" :reseau="r.reseau" :dernier-enregistrement="r.dernier" :en-attente="r.attente" />
+            <CanonRubanSaisie :reseau="r.reseau" :dernier-enregistrement="r.dernier" :en-attente="r.attente" />
           </div>
         </InterneEtatStyle>
       </div>

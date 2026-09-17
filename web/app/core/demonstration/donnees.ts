@@ -93,3 +93,19 @@ export const ABSENCES = [
 export const NOTE_DICTEE = { valeur: '14.25', bareme: '20' }
 export const MONTANT_VERSE = 145000
 export const DERNIER_ENREGISTREMENT = '2026-08-18T10:42:00'
+
+/** Les blocs du tableau composé : ce que le serveur dira pour chaque domaine, ici figé. */
+export const BLOCS: Record<
+  string,
+  { nombre?: number; montant?: number; valeurCle?: string; cle: string; parametres?: Record<string, string | number>; reservee?: boolean }
+> = {
+  scolarite: { nombre: 12, cle: 'accueil.bloc.scolarite' },
+  vie_scolaire: { nombre: 4, cle: 'accueil.bloc.vie_scolaire' },
+  pedagogie: { nombre: 3, cle: 'accueil.bloc.pedagogie' },
+  evaluation: { nombre: 27, cle: 'accueil.bloc.evaluation' },
+  conseil: { valeurCle: 'accueil.bloc.conseil_valeur', cle: 'accueil.bloc.conseil', parametres: { classe: CLASSE } },
+  finance: { montant: 8150000, cle: 'accueil.bloc.finance', parametres: { n: 61 }, reservee: true },
+  personnel: { nombre: 2, cle: 'accueil.bloc.personnel' },
+  communication: { nombre: 18, cle: 'accueil.bloc.communication' },
+  tenant: { nombre: 5, cle: 'accueil.bloc.tenant' },
+}

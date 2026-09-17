@@ -9,7 +9,22 @@
       "nom": "accueil",
       "route": "/",
       "budgetKo": 120,
-      "budgetPolicesKo": 45
+      "budgetPolicesKo": 45,
+      "personas": [
+        "un-domaine",
+        "cinq-domaines",
+        "sept-domaines",
+        "aucune-capacite"
+      ]
+    },
+    {
+      "nom": "domaine",
+      "route": "/d/vie_scolaire",
+      "budgetKo": 120,
+      "budgetPolicesKo": 45,
+      "personas": [
+        "un-domaine"
+      ]
     },
     {
       "nom": "style",
