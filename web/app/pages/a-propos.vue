@@ -25,7 +25,7 @@ const POLICES = [
       <ul class="liste">
         <li v-for="police in POLICES" :key="police.nom" class="element">
           <p>{{ t('apropos.police', { nom: police.nom }) }}</p>
-          <a :href="police.licence" class="lien" :lang="'en'">{{ t('apropos.lire_licence', { nom: police.nom }) }}</a>
+          <a :href="police.licence" class="lien" hreflang="en">{{ t('apropos.lire_licence', { nom: police.nom }) }}</a>
         </li>
       </ul>
     </section>

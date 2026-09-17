@@ -32,8 +32,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T0b, le socle d'interface : implémentée le 2026-09-17, en attente de fusion.** Branche `002-socle-interface`, 82 tâches sur 83 cochées ([tasks.md](../specs/002-socle-interface/tasks.md)) ; la 83e, T058, est le parcours d'installation à la main sur Chrome et Safari, qui revient à l'utilisateur. T0a est fusionnée dans `main` depuis le 2026-09-15 |
-| **Prochaine** | **Relire et fusionner T0b** (le parcours T058 d'abord), puis trancher **Q29** dans un ADR. Ensuite la tranche suivante au rang de la [roadmap](04-roadmap.md) |
+| **Tranche en cours** | **T0b, le socle d'interface : implémentée le 2026-09-17, en attente de fusion.** Branche `002-socle-interface`, 83 tâches sur 83 cochées ([tasks.md](../specs/002-socle-interface/tasks.md)) ; T058, le parcours d'installation, est passé sur Chrome le 2026-09-17 (Safari différé par l'utilisateur). T0a est fusionnée dans `main` depuis le 2026-09-15 |
+| **Prochaine** | **Relire et fusionner T0b**, puis trancher **Q29** dans un ADR. Ensuite la tranche suivante au rang de la [roadmap](04-roadmap.md) |
 | **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -94,6 +94,31 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-17 : T058, le parcours d'installation passe sur Chrome, la tranche est complète
+
+**Fait** : le [quickstart § US4](../specs/002-socle-interface/quickstart.md) déroulé dans Google
+Chrome 153 (macOS, profil temporaire, piloté par `agent-browser --headed`), sur le build servi par
+`preview` au port 3100 (le 3000 était pris par un autre projet).
+
+| Étape | Résultat |
+|---|---|
+| Installabilité | `Page.getInstallabilityErrors` vide, manifeste sans erreur, `beforeinstallprompt` émis |
+| 1. Installer | boîte d'installation de Chrome acceptée **à la main par l'utilisateur** ; `Nelo.app` créée ; `display-mode: standalone` vrai, 38 px de cadre (barre de titre seule, pas de barre d'adresse) |
+| Parcours | accueil (`cinq-domaines`) → Vie scolaire → à propos → Retour → Retour, dans l'onglet puis dans la fenêtre d'application : un marqueur posé sur `window` survit, une seule entrée de navigation |
+| 3. Mise à jour | libellé `apropos.description` changé, build, `preview` relancée, application rouverte : la page se recharge d'elle-même en moins de 3 s (`navigation: reload`), aucun worker en attente, précache égal au nouveau build, aucun texte « recharger » ; libellé restauré ensuite |
+| Portes | P-05 : 4 écrans, 7 visites × 2 moteurs × 2 thèmes, 0 erreur ; T050, T051, T052 verts |
+
+Icônes 192, 512, 512 maskable et 180 servies ; les trois licences de `/a-propos` répondent.
+
+**Décidé (utilisateur)** : un navigateur suffit pour l'instant ; T058 est cochée. **L'étape 2,
+Safari, n'a pas été faite** (agent-browser ne pilote que Chromium, et le WebKit de Playwright
+n'est pas Safari) : P-05 couvre WebKit mécaniquement, pas l'ajout au Dock.
+
+**Corrigé** : « Lire la licence de Archivo » manquait l'élision ; le libellé dit « de la police
+{nom} ». « Compte de {nom} » aurait buté sur un prénom à voyelle : il dit « Compte : {nom} ». Le
+lien de licence portait `lang="en"` sur un texte français (un lecteur d'écran l'aurait lu en
+anglais) : il porte `hreflang="en"`. `scripts/verifier.sh` : 10 portes vertes en 1 min 16 s.
 
 ## 2026-09-17 : T0b, le socle d'interface est implémenté, dix portes sur dix tiennent
 

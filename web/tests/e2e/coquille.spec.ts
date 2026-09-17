@@ -57,7 +57,7 @@ for (const largeur of [390, 1200]) {
         await expect(entete).toContainText('Groupe Scolaire Les Palmiers')
         await expect(entete).toContainText('Angré')
         await expect(entete.getByRole('group', { name: 'Langue de l’interface' })).toBeVisible()
-        await expect(entete.getByRole('img', { name: /Compte de/ })).toBeVisible()
+        await expect(entete.getByRole('img', { name: /^Compte : / })).toBeVisible()
         if (largeur >= 768) await expect(entete).toContainText('2026-2027')
       }
     })
