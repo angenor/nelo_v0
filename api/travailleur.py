@@ -37,6 +37,7 @@ class Travailleur:
         self.configuration = configuration
         self.consommateur = consommateur
         self._tache: asyncio.Task | None = None
+        self._arret = asyncio.Event()
 
     async def un_tour(self) -> int:
         traites = 0
@@ -50,24 +51,39 @@ class Travailleur:
         return traites
 
     async def _boucle(self) -> None:
-        while True:
+        # L'arrêt est demandé par un signal, jamais par une annulation : un tour commencé se
+        # termine, pour qu'un événement passé au consommateur soit marqué avant que le processus
+        # ne s'éteigne. Annulé entre les deux, il resterait `pris` jusqu'au délai des orphelins.
+        while not self._arret.is_set():
             try:
                 await self.un_tour()
             except asyncio.CancelledError:
                 raise
             except Exception:
                 journal.exception("tour du travailleur d'événements en échec")
-            await asyncio.sleep(self.configuration.travailleur_intervalle.total_seconds())
+            with contextlib.suppress(TimeoutError):
+                await asyncio.wait_for(
+                    self._arret.wait(), self.configuration.travailleur_intervalle.total_seconds()
+                )
 
     async def demarrer(self) -> None:
         if self._tache is None:
+            self._arret.clear()
             self._tache = asyncio.create_task(self._boucle(), name="travailleur-evenements")
             journal.info("travailleur d'événements démarré")
 
     async def arreter(self) -> None:
+        """Signale l'arrêt et attend la fin du tour en cours ; n'annule qu'au-delà du délai d'arrêt."""
         if self._tache is not None:
-            self._tache.cancel()
-            with contextlib.suppress(asyncio.CancelledError):
-                await self._tache
+            self._arret.set()
+            try:
+                await asyncio.wait_for(
+                    self._tache, self.configuration.travailleur_delai_arret.total_seconds()
+                )
+            except TimeoutError:
+                journal.warning("travailleur d'événements : tour trop long à l'arrêt, annulé")
+                self._tache.cancel()
+                with contextlib.suppress(asyncio.CancelledError):
+                    await self._tache
             self._tache = None
             journal.info("travailleur d'événements arrêté")

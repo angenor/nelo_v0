@@ -25,6 +25,7 @@ class Configuration(BaseSettings):
     travailleur_intervalle_ms: int = 500
     travailleur_delai_orphelin_ms: int = 300_000
     travailleur_taille_lot: int = 50
+    travailleur_delai_arret_ms: int = 10_000
 
     simulation_sms_mode: ModeSimulation = ModeSimulation.SUCCES
     simulation_paiement_mode: ModeSimulation = ModeSimulation.SUCCES
@@ -42,6 +43,10 @@ class Configuration(BaseSettings):
     @property
     def travailleur_intervalle(self) -> timedelta:
         return timedelta(milliseconds=self.travailleur_intervalle_ms)
+
+    @property
+    def travailleur_delai_arret(self) -> timedelta:
+        return timedelta(milliseconds=self.travailleur_delai_arret_ms)
 
     @property
     def travailleur_delai_orphelin(self) -> timedelta:

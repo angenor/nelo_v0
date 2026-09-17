@@ -96,6 +96,22 @@ l'architecture** (marquées ⚠).
 
 ## Journal
 
+## 2026-09-17 : le travailleur s'arrête proprement, le test instable de T0a ne l'est plus
+
+**Fait** : `scripts/verifier.sh` rouge une troisième fois sur
+`tests/outbox/test_travailleur.py::test_arrete_accumule_relance_consomme` (P-12), sans qu'aucun
+code ait changé. Cause lue, pas devinée : `Travailleur.arreter()` **annulait** la tâche ; tombée
+entre l'appel du consommateur et le marquage `traite` (deux transactions), l'annulation laissait
+l'événement `pris`, orphelin jusqu'au délai de reprise. Le test observait exactement cela
+(`{'pris', 'traite'}`), trois échecs sur six passages. C'était un défaut du serveur, pas du test :
+un arrêt du processus aurait produit le même orphelin.
+**Décidé** : l'arrêt est un signal (`asyncio.Event`), le tour en cours se termine, et l'annulation
+n'intervient qu'au-delà de `NELO_TRAVAILLEUR_DELAI_ARRET_MS` (10 s, `.env.exemple`). Vingt
+exécutions vertes d'affilée ; `scripts/verifier.sh` : 10 portes vertes en 1 min 13 s. Corrigé sur
+`003-connexion-contexte`, comme écart d'implémentation de T0a repris par la première tranche qui
+le rencontre.
+**Bloqué / à faire ensuite** : rien de nouveau ; `/speckit-tasks` sur T1a.
+
 ## 2026-09-17 : T1a, le plan est écrit, la première frontière de sécurité est dessinée
 
 **Fait** : `/speckit-plan` sur `003-connexion-contexte`, lancé directement après `specify`, sans
