@@ -66,6 +66,10 @@ Toute phase de planification **doit** :
   reportée dans le `spec.md`, une ligne pour dire ce qui a été rangé. Elle est en fin de
   [docs/05-design.md](docs/05-design.md).
 - **`scripts/verifier.sh` passe en une commande**, sinon rien n'est terminé.
+- **Les sous-agents sont libres d'emploi.** Lance-en un ou plusieurs, en parallèle, dès que ça
+  sert : explorer le dépôt, vérifier une piste, revoir un diff, implémenter des tâches indépendantes
+  d'un même `tasks.md`. Tu n'as pas à demander la permission. Chaque sous-agent lit ce fichier et
+  les mêmes règles s'appliquent à lui ; toi seul rends compte à l'utilisateur.
 - **Le journal se met à jour en fin de session**, dans [docs/progress.md](docs/progress.md).
 
 ## Ce que le produit ne fait pas
