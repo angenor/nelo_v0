@@ -164,13 +164,13 @@ function themeSuivant() {
 .nom {
   overflow: hidden;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .annee {
   padding: 0 8px;
-  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-weight: 500;
   font-size: 12px;
   white-space: nowrap;
@@ -206,6 +206,6 @@ function themeSuivant() {
 .langue[aria-pressed='true'] {
   background: var(--primary);
   color: var(--primary-ink);
-  font-weight: 600;
+  font-weight: 500;
 }
 </style>

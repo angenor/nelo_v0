@@ -34,7 +34,7 @@ const source = computed(() => (props.photo && photoChargee.value ? 'photo' : 'in
   background: var(--primary-soft);
   color: var(--primary);
   font-family: var(--font-titres);
-  font-weight: 600;
+  font-weight: 700;
 }
 .taille-grande {
   width: 36px;

@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# La vérification — une seule commande (docs/01-stack.md § 7).
+# La vérification : une seule commande, dix portes (docs/01-stack.md § 7).
 #
-#   ruff → P-02 → P-07 → P-04 → P-11 → P-01 → P-12 → P-03 → reparcours sous suspension
+#   ruff → P-02 → P-07 → P-04 → P-11 → P-06 → P-01 → P-12 → P-03 → reparcours sous suspension
+#   → typecheck → vitest → construction → P-05 → P-10 → e2e
 #
-# Du moins coûteux au plus coûteux (research.md R-18). Sort au premier contrôle rouge, en nommant
-# la porte et le motif. Cible : moins de trois minutes (SC-010) — mesurée à 19 s sur le dépôt
-# conforme le 2026-09-15 (poste de développement, base PostgreSQL déjà levée).
+# Du moins coûteux au plus coûteux (T0a research.md R-18, T0b research.md R-15) : les contrôles
+# statiques d'abord, la base ensuite, puis l'interface, construite une seule fois et partagée par
+# les trois dernières étapes. Sort au premier contrôle rouge, en nommant la porte et le motif.
+# Cible : moins de trois minutes (SC-010, SC-011) ; la durée mesurée est au journal.
 set -euo pipefail
 
 RACINE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -58,6 +60,9 @@ etape "reparcours sous suspension" scripts/portes/reparcours-suspension.sh
 etape_muette "typecheck" pnpm --filter nelo-web typecheck
 etape_muette "vitest" pnpm --filter nelo-web test:unit
 etape_muette "construction" pnpm --filter nelo-web build
+porte P-05
+porte P-10
+etape_muette "e2e" scripts/avec-serveur-dev.sh pnpm --filter nelo-web test:e2e
 
 duree=$(( $(date +%s) - debut ))
 echo "VÉRIFICATION : $portes_vertes portes vertes en $((duree / 60)) min $((duree % 60)) s"

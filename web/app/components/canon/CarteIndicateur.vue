@@ -79,7 +79,7 @@ const etat = computed(() => [props.variation?.sens ?? 'neutre', props.reservee ?
 .valeur {
   margin: 6px 0 4px;
   font-family: var(--font-titres);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 26px;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;

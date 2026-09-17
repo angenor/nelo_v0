@@ -35,7 +35,7 @@ const THEMES = [
   gap: 12px;
   margin: 0 0 16px;
   font-family: var(--font-titres);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 26px;
   letter-spacing: -0.02em;
 }
@@ -59,6 +59,6 @@ const THEMES = [
 .nom-theme {
   margin: 0 0 16px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
 }
 </style>

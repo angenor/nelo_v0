@@ -41,7 +41,7 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'apple-touch-icon', href: '/icones/180.png' },
-        { rel: 'icon', type: 'image/png', href: '/icones/192.png' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/icones/32.png' },
       ],
     },
   },
@@ -75,6 +75,13 @@ export default defineNuxtConfig({
     pwaAssets: { disabled: true },
     client: { installPrompt: false, periodicSyncForUpdates: 0 },
     devOptions: { enabled: false },
+  },
+  // Une page voisine se précharge quand on s'apprête à la suivre, pas dès que son lien est visible :
+  // le premier affichage ne transfère que ce qu'il montre (P-10).
+  experimental: {
+    defaults: {
+      nuxtLink: { prefetchOn: { visibility: false, interaction: true } },
+    },
   },
   typescript: {
     strict: true,

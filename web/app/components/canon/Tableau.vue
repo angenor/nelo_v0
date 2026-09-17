@@ -96,7 +96,7 @@ th {
   background: var(--surface-sunken);
   color: var(--text-muted);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   text-align: left;
   white-space: nowrap;
 }

@@ -397,7 +397,7 @@ const photo = '/icones/180.png'
 .sous-titre {
   margin: 24px 0 8px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-muted);
 }
 .mention {

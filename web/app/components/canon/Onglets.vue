@@ -66,7 +66,7 @@ function deplacer(depuis: number, pas: number) {
 }
 .onglet[aria-selected='true'] {
   color: var(--text);
-  font-weight: 600;
+  font-weight: 500;
   box-shadow: inset 0 -2px 0 var(--primary);
 }
 .onglet:hover {

@@ -97,7 +97,7 @@ const heure = computed(() => (vue.value.moment.heure ? pack.value.heure(vue.valu
 }
 .voix-ocre .titre {
   color: var(--accent);
-  font-weight: 600;
+  font-weight: 500;
 }
 .point {
   width: 7px;

@@ -8,6 +8,7 @@
 //   192.png, 512.png         coins arrondis, lettre au format « any »
 //   512-maskable.png          fond plein, lettre dans la zone sûre (« maskable »)
 //   180.png                   apple-touch-icon, fond plein
+//   32.png                    favicon, la plus légère
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
@@ -195,6 +196,7 @@ const ICONES = [
   ['512.png', 512, { arrondi: true, proportion: 0.56 }],
   ['512-maskable.png', 512, { arrondi: false, proportion: 0.42 }],
   ['180.png', 180, { arrondi: false, proportion: 0.5 }],
+  ['32.png', 32, { arrondi: true, proportion: 0.62 }],
 ]
 for (const [nom, cote, options] of ICONES) writeFileSync(join(SORTIE, nom), icone(cote, options))
 console.log(`icones : ${ICONES.length} fichiers, lettre « ${lettre} », dans public/icones/`)

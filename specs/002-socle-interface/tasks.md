@@ -79,7 +79,7 @@ une page vide. Sans cela, aucune story ne peut être testée.
 ### P-06 et P-05 sur une page vide
 
 - [X] T020 Écrire `scripts/portes/p06_interface.mjs` selon [research.md R-11](research.md) : règle 1 chaînes en dur (nœuds texte avec une lettre et attributs `placeholder`, `title`, `alt`, `aria-label`, `aria-description`, `label` statiques dans les `.vue` de `web/app/`, via `@vue/compiler-sfc`), règle 2 clés `fr` = `en` et clés appelées par `t()` existantes, règle 3 couleurs littérales (`#hex`, `rgb(`, `hsl(`, `oklch(`, noms de couleur CSS) hors `assets/css/theme.css` et `mesures.css`, règle 4 appels de plateforme hors `core/plateforme/web*.ts`, `core/plateforme/test.ts` et `app/sw/`, règle 5 identifiants `role` hors attributs ARIA ; plus la comparaison octet à octet des deux copies de design ; sortie `PORTE P-06 : n fichiers, n clés, 0 littérale` ou `PORTE P-06 ÉCHOUÉE : <règle> <fichier>:<ligne>` ; écrire `scripts/portes/p-06.sh` ; écrire `web/tests/portes/regles-p06.test.ts` avec un cas positif et un cas négatif par règle sur des extraits en mémoire
-- [ ] T021 [P] Écrire `web/tests/portes/p05.spec.ts` : lit `web/ecrans.json`, pour chaque écran × persona × thème (`light`, `dark` par `data-theme` posé avant navigation) ouvre la route, attend `main#principal` visible, échoue sur `pageerror` ou `console.error` en nommant écran, moteur, thème ; les écrans `developpement: true` sont ouverts sur `nuxt dev` (port 3001, lancé par le script) ; écrire `scripts/portes/p-05.sh` (lance `pnpm --filter web portes:p05` sur `.output`, démarre et arrête `nuxt dev` pour la page de style, imprime `PORTE P-05 : n écrans × 2 moteurs × 2 thèmes`) ; ajouter `porte P-06` (avant P-01) et `porte P-05` (après la construction) dans `scripts/verifier.sh` ; vérifier que la commande passe avec la page vide
+- [X] T021 [P] Écrire `web/tests/portes/p05.spec.ts` : lit `web/ecrans.json`, pour chaque écran × persona × thème (`light`, `dark` par `data-theme` posé avant navigation) ouvre la route, attend `main#principal` visible, échoue sur `pageerror` ou `console.error` en nommant écran, moteur, thème ; les écrans `developpement: true` sont ouverts sur `nuxt dev` (port 3001, lancé par le script) ; écrire `scripts/portes/p-05.sh` (lance `pnpm --filter web portes:p05` sur `.output`, démarre et arrête `nuxt dev` pour la page de style, imprime `PORTE P-05 : n écrans × 2 moteurs × 2 thèmes`) ; ajouter `porte P-06` (avant P-01) et `porte P-05` (après la construction) dans `scripts/verifier.sh` ; vérifier que la commande passe avec la page vide
 
 **Point de contrôle** : `scripts/verifier.sh` passe, neuf portes, sur une application vide qui
 sert le thème.
@@ -175,7 +175,7 @@ de P-06 le garde.
 
 ### Tests pour la User Story 4
 
-- [ ] T050 [P] [US4] Étendre `web/tests/portes/p05.spec.ts` d'un bloc « installabilité » : `/manifest.webmanifest` répond, `display === 'standalone'`, `name` et `short_name` = `produit.ts`, icônes 192 et 512 (dont une `maskable`) atteignables, `<link rel="apple-touch-icon">` et `<meta name="apple-mobile-web-app-capable">` présents, `theme_color` et `background_color` égaux aux jetons de `docs/design/tokens.json` ; sur Chromium seulement : `navigator.serviceWorker.ready` et `controller` non nul après rechargement
+- [X] T050 [P] [US4] Étendre `web/tests/portes/p05.spec.ts` d'un bloc « installabilité » : `/manifest.webmanifest` répond, `display === 'standalone'`, `name` et `short_name` = `produit.ts`, icônes 192 et 512 (dont une `maskable`) atteignables, `<link rel="apple-touch-icon">` et `<meta name="apple-mobile-web-app-capable">` présents, `theme_color` et `background_color` égaux aux jetons de `docs/design/tokens.json` ; sur Chromium seulement : `navigator.serviceWorker.ready` et `controller` non nul après rechargement
 - [X] T051 [P] [US4] Écrire `web/tests/unit/sw.test.ts` : le source `web/app/sw/sw.ts` ne contient ni `fetch` handler, ni `caches.match`, ni `/api/`, ni `indexedDB` ; seulement `precacheAndRoute`, `cleanupOutdatedCaches`, `SKIP_WAITING`
 - [X] T052 [P] [US4] Écrire `web/tests/e2e/navigation.spec.ts` : accueil → domaine → `/a-propos` → retour par le bouton de la coquille, zéro navigation complète (`page.on('load')` compté une fois) ; un lien profond `/d/vie_scolaire` ouvert directement se rend dans la coquille
 
@@ -220,13 +220,13 @@ critère de fin de la roadmap.
 
 ### Tests pour la User Story 6
 
-- [ ] T064 [P] [US6] Écrire `web/tests/portes/p10.spec.ts` selon [research.md R-13](research.md) : projet `p10` (Chromium, `serviceWorkers: 'block'`), par écran budgété × persona : session CDP, `Network.enable`, somme des `encodedDataLength` jusqu'à `networkidle`, séparée entre polices (`.woff2`) et le reste ; compare à `budgetKo` et `budgetPolicesKo`, échoue en nommant écran, plafond, mesure ; liste les écrans `budgetKo: null` non `developpement` comme « non budgété » ; échoue sur toute requête hors `localhost` ; sous `Network.emulateNetworkConditions` (400 kbit/s, 400 ms) le ruban est visible en moins de 2 000 ms ; rapport `PORTE P-10 : <écran> plafond <n> Ko mesuré <m> Ko (polices <p> Ko, total <t> Ko)`
-- [ ] T065 [P] [US6] Écrire `scripts/portes/negatifs/p-10.sh` : génère une image PNG de 300 Ko (`sharp` ou `head -c` d'un bruit dans un PNG valide) dans `web/public/`, et l'ajoute en `<img>` dans `web/app/pages/index.vue`
+- [X] T064 [P] [US6] Écrire `web/tests/portes/p10.spec.ts` selon [research.md R-13](research.md) : projet `p10` (Chromium, `serviceWorkers: 'block'`), par écran budgété × persona : session CDP, `Network.enable`, somme des `encodedDataLength` jusqu'à `networkidle`, séparée entre polices (`.woff2`) et le reste ; compare à `budgetKo` et `budgetPolicesKo`, échoue en nommant écran, plafond, mesure ; liste les écrans `budgetKo: null` non `developpement` comme « non budgété » ; échoue sur toute requête hors `localhost` ; sous `Network.emulateNetworkConditions` (400 kbit/s, 400 ms) le ruban est visible en moins de 2 000 ms ; rapport `PORTE P-10 : <écran> plafond <n> Ko mesuré <m> Ko (polices <p> Ko, total <t> Ko)`
+- [X] T065 [P] [US6] Écrire `scripts/portes/negatifs/p-10.sh` : génère une image PNG de 300 Ko (`sharp` ou `head -c` d'un bruit dans un PNG valide) dans `web/public/`, et l'ajoute en `<img>` dans `web/app/pages/index.vue`
 
 ### Implémentation de la User Story 6
 
-- [ ] T066 [US6] Écrire `scripts/portes/p-10.sh` (construction déjà faite par `verifier.sh` ; lance `pnpm --filter web portes:p10`) ; ajouter `porte P-10` après P-05 dans `scripts/verifier.sh`
-- [ ] T067 [US6] Mesurer chaque écran budgété, reporter les nombres dans `docs/progress.md` ; si l'accueil dépasse 120 Ko hors polices, réduire (découpage de routes, `experimental.payloadExtraction`, imports différés) **avant** tout autre geste, jamais relever le plafond ; vérifier P-10 passe et le test négatif échoue
+- [X] T066 [US6] Écrire `scripts/portes/p-10.sh` (construction déjà faite par `verifier.sh` ; lance `pnpm --filter web portes:p10`) ; ajouter `porte P-10` après P-05 dans `scripts/verifier.sh`
+- [X] T067 [US6] Mesurer chaque écran budgété, reporter les nombres dans `docs/progress.md` ; si l'accueil dépasse 120 Ko hors polices, réduire (découpage de routes, `experimental.payloadExtraction`, imports différés) **avant** tout autre geste, jamais relever le plafond ; vérifier P-10 passe et le test négatif échoue
 
 ---
 
@@ -238,13 +238,13 @@ critère de fin de la roadmap.
 
 ### Tests pour la User Story 7
 
-- [ ] T068 [P] [US7] Écrire `scripts/portes/negatifs/p-05.sh` : insère `throw new Error('cassé')` dans `<script setup>` de `web/app/pages/a-propos.vue`
-- [ ] T069 [P] [US7] Écrire `scripts/portes/negatifs/p-06.sh` : insère une chaîne en dur `<p>Bonjour</p>` dans `web/app/components/canon/Coquille.vue`
+- [X] T068 [P] [US7] Écrire `scripts/portes/negatifs/p-05.sh` : insère `throw new Error('cassé')` dans `<script setup>` de `web/app/pages/a-propos.vue`
+- [X] T069 [P] [US7] Écrire `scripts/portes/negatifs/p-06.sh` : insère une chaîne en dur `<p>Bonjour</p>` dans `web/app/components/canon/Coquille.vue`
 
 ### Implémentation de la User Story 7
 
-- [ ] T070 [US7] Étendre `scripts/tests-negatifs.sh` : `PORTES` += `P-05 P-06 P-10` ; pour ces trois portes la copie de travail fait `pnpm install --frozen-lockfile --offline` et, pour P-05 et P-10, `pnpm --filter web icones && pnpm --filter web build` avant la porte ; l'échec attendu porte `PORTE P-XX ÉCHOUÉE` ; comparaison du `git status` avant et après inchangée
-- [ ] T071 [US7] Ordonner `scripts/verifier.sh` selon [research.md R-15](research.md) : `ruff` → P-02 → P-07 → P-04 → P-11 → P-06 → P-01 → P-12 → P-03 → reparcours → typecheck → vitest → construction → P-05 → P-10 → e2e (`pnpm --filter web test:e2e`) ; compteur à dix portes ; mettre à jour le commentaire d'en-tête avec l'ordre et le motif
+- [X] T070 [US7] Étendre `scripts/tests-negatifs.sh` : `PORTES` += `P-05 P-06 P-10` ; pour ces trois portes la copie de travail fait `pnpm install --frozen-lockfile --offline` et, pour P-05 et P-10, `pnpm --filter web icones && pnpm --filter web build` avant la porte ; l'échec attendu porte `PORTE P-XX ÉCHOUÉE` ; comparaison du `git status` avant et après inchangée
+- [X] T071 [US7] Ordonner `scripts/verifier.sh` selon [research.md R-15](research.md) : `ruff` → P-02 → P-07 → P-04 → P-11 → P-06 → P-01 → P-12 → P-03 → reparcours → typecheck → vitest → construction → P-05 → P-10 → e2e (`pnpm --filter web test:e2e`) ; compteur à dix portes ; mettre à jour le commentaire d'en-tête avec l'ordre et le motif
 - [ ] T072 [US7] Lancer `scripts/verifier.sh` et `scripts/tests-negatifs.sh`, noter les deux durées et « dix cassées, dix échecs, dépôt intact » dans `docs/progress.md` ; si la vérification dépasse trois minutes, le dire au journal avec le découpage proposé (SC-011), sans retirer une porte
 
 ---

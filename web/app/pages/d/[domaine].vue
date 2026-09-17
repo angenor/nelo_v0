@@ -134,7 +134,7 @@ function faireLAppel() {
   margin: 0;
   color: var(--text-muted);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .sous-titre,
 .mention {
@@ -157,7 +157,7 @@ function faireLAppel() {
 .titre-carte {
   margin: 0;
   font-family: var(--font-titres);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 16px;
 }
 .consigne {
@@ -185,7 +185,7 @@ function faireLAppel() {
   font-weight: 500;
 }
 .retard {
-  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   color: var(--text-muted);
 }

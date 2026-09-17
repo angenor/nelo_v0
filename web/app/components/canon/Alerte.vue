@@ -92,7 +92,7 @@ const etat = computed(() => `${props.niveau} ${props.action ? 'avec_action' : 's
 .titre {
   margin: 0;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .corps {
   margin: 2px 0 0;

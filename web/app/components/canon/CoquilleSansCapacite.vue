@@ -62,7 +62,7 @@ p {
   color: var(--text);
 }
 .telephone {
-  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-weight: 500;
   white-space: nowrap;
 }

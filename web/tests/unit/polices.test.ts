@@ -29,8 +29,8 @@ function fonttools(chemins: string[]): Record<string, boolean> | null {
 }
 
 describe('polices.css', () => {
-  it('référence sept fichiers woff2 du sous-ensemble latin, tous présents', () => {
-    expect(references).toHaveLength(7)
+  it('référence quatre fichiers woff2 du sous-ensemble latin, tous présents', () => {
+    expect(references).toHaveLength(4)
     for (const [i, f] of fichiers.entries()) {
       expect(references[i]).toMatch(/-latin-[0-9]{3}-normal\.woff2$/)
       expect(existsSync(f)).toBe(true)
@@ -38,8 +38,8 @@ describe('polices.css', () => {
   })
 
   it('déclare chaque police en font-display: swap', () => {
-    expect(css.match(/@font-face/g)).toHaveLength(7)
-    expect(css.match(/font-display: swap/g)).toHaveLength(7)
+    expect(css.match(/@font-face/g)).toHaveLength(4)
+    expect(css.match(/font-display: swap/g)).toHaveLength(4)
   })
 
   it('dit quels fichiers portent U+202F, et laisse la police de repli le rendre sinon', () => {
@@ -60,6 +60,6 @@ describe('polices.css', () => {
         `AVERTISSEMENT polices : U+202F absent de ${sans.length} fichier(s), rendu par la police de repli (E-06) : ${sans.join(', ')}`,
       )
     }
-    expect(Object.keys(glyphes)).toHaveLength(7)
+    expect(Object.keys(glyphes)).toHaveLength(4)
   })
 })

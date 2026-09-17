@@ -75,7 +75,7 @@ td.mono {
   background: var(--surface-sunken);
   color: var(--text-muted);
   font-family: var(--font-titres);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12px;
 }
 .reservee .initiales {

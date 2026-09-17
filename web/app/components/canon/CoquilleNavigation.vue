@@ -84,7 +84,7 @@ ul {
   padding: 12px 10px 4px;
   color: var(--text-muted);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.04em;
 }
 .lien {
@@ -110,7 +110,7 @@ ul {
 .lien[aria-current='page'] {
   background: var(--primary-soft);
   color: var(--primary);
-  font-weight: 600;
+  font-weight: 500;
 }
 .mot {
   min-width: 0;

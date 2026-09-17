@@ -56,14 +56,14 @@ const POLICES = [
 }
 .version {
   margin: 4px 0 12px;
-  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-weight: 500;
   color: var(--text-muted);
 }
 .sous-titre {
   margin: 0 0 8px;
   font-family: var(--font-titres);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 18px;
 }
 p {
