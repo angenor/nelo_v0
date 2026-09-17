@@ -306,6 +306,7 @@ Légende de la colonne **Cap.** : la capacité requise. `—` = authentifié suf
 | `POST` | `/auth/rafraichissement` | Rotation du refresh | — |
 | `DELETE` | `/auth/session` | Fermer la session courante | — |
 | `POST` | `/auth/invitation/{jeton}` | Activer un compte depuis un lien à usage unique | — |
+| `GET` | `/auth/appareil` | Les comptes connus de cet appareil (nom, prénoms, code personnel défini), pour l'écran du code personnel ; jamais un numéro | — |
 
 `AUT_OTP_EXPIRE`, `AUT_OTP_INVALIDE`, `AUT_OTP_TENTATIVES_EPUISEES`, `AUT_NUMERO_INCONNU`,
 `AUT_NUMERO_INVALIDE` (`422`), `AUT_COMPTE_SUSPENDU`, `AUT_COMPTE_DEJA_ACTIF` (`422`),

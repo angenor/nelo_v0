@@ -1,0 +1,476 @@
+# Contrat attendu : T1a, se connecter et savoir où l'on est
+#
+# Ce fichier n'est PAS la spécification servie : celle-ci est générée par FastAPI depuis les schémas
+# Pydantic et écrite dans contrat/openapi.json (porte P-03). Il dit ce que la génération DOIT
+# produire pour les routes de la tranche, telles que docs/03-api.md § 1.2, § 1.9, § 2.1, § 2.2 et
+# § 2.5 les réservent. Le test de T0a qui compare chemins, méthodes, codes de réponse et noms de
+# schémas de contrat/openapi.json à ce fichier s'étend à ces routes.
+#
+# Deux règles héritées de T0a et opposables ici :
+#   - Authorization, X-Nelo-Etablissement, X-Nelo-Annee et X-Nelo-Requete sont lus par des
+#     middlewares ; ils apparaissent dans le contrat comme paramètres documentaires ajoutés par
+#     api/contrat.py, jamais comme dépendances Header(...) des routes.
+#   - Sur /auth/*, un refus de preuve est un 401 avec son code AUT_ ; un refus de règle sur un corps
+#     valide est un 422 avec son code AUT_ ; un refus de schéma est un 422 VAL_SCHEMA_INVALIDE.
+openapi: 3.1.0
+info:
+  title: Nelo, API
+  version: "1"
+servers:
+  - url: /api/v1
+
+paths:
+  /auth/otp:
+    post:
+      operationId: demander_code
+      summary: Demander un code par message court. Répond 204 quel que soit le numéro bien formé ; le code ne part que si un compte actif ou invité le porte, par l'outbox.
+      parameters:
+        - $ref: "#/components/parameters/XNeloRequete"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsDemandeCode"
+      responses:
+        "204":
+          description: Accusé sans contenu, identique pour tout numéro bien formé
+        "422":
+          description: AUT_NUMERO_INVALIDE (règle), ou VAL_SCHEMA_INVALIDE (schéma)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+        "429":
+          $ref: "#/components/responses/LimiteDebit"
+
+  /auth/otp/verification:
+    post:
+      operationId: verifier_code
+      summary: Échanger le code contre une session ; si le numéro porte plusieurs comptes, renvoie le choix à faire.
+      parameters:
+        - $ref: "#/components/parameters/XNeloRequete"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsVerificationCode"
+      responses:
+        "200":
+          description: SessionOuverte (jeton d'accès dans le corps, refresh et appareil en cookies) ou ChoixRequis
+          headers:
+            Set-Cookie:
+              description: nelo_refresh et nelo_appareils, HttpOnly, Secure, SameSite=Strict
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReponseVerificationCode"
+        "401":
+          description: AUT_OTP_INVALIDE (details.tentatives_restantes), AUT_OTP_EXPIRE, AUT_OTP_TENTATIVES_EPUISEES, AUT_COMPTE_SUSPENDU
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+
+  /auth/pin:
+    post:
+      operationId: ouvrir_par_pin
+      summary: Ouvrir une session par code personnel sur un appareil connu du compte (cookie nelo_appareils).
+      parameters:
+        - $ref: "#/components/parameters/XNeloRequete"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsOuverturePin"
+      responses:
+        "200":
+          description: SessionOuverte
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionOuverte"
+        "401":
+          description: AUT_APPAREIL_INCONNU, AUT_PIN_ABSENT, AUT_PIN_INVALIDE (details.tentatives_restantes), AUT_PIN_TENTATIVES_EPUISEES, AUT_COMPTE_SUSPENDU (et l'appareil oublie le compte)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+
+  /auth/pin/definition:
+    post:
+      operationId: definir_pin
+      summary: Définir ou changer son code personnel. Le code courant est exigé s'il existe, sauf dans les dix minutes suivant une ouverture par code reçu ou par lien.
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloRequete"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsDefinitionPin"
+      responses:
+        "204":
+          description: Code personnel défini ; rien n'est renvoyé
+        "401":
+          $ref: "#/components/responses/Session"
+        "422":
+          description: AUT_PIN_INVALIDE (pin_courant faux), VAL_SCHEMA_INVALIDE (pas quatre chiffres)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+
+  /auth/appareil:
+    get:
+      operationId: comptes_de_l_appareil
+      summary: Les comptes connus de cet appareil (nom, prénoms, code personnel défini ou non), pour l'écran du code personnel. Jamais un numéro.
+      responses:
+        "200":
+          description: Vide si l'appareil n'est connu d'aucun compte
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReponseAppareil"
+
+  /auth/rafraichissement:
+    post:
+      operationId: rafraichir
+      summary: Rotation du refresh (cookie nelo_refresh) ; un jeton d'accès neuf dans le corps, un refresh neuf dans le cookie.
+      parameters:
+        - $ref: "#/components/parameters/XNeloRequete"
+      responses:
+        "200":
+          description: SessionOuverte
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionOuverte"
+        "401":
+          description: AUT_JETON_MANQUANT (pas de cookie), AUT_JETON_INVALIDE (inconnu, ou réutilisé hors fenêtre, ce qui révoque la session), AUT_SESSION_REVOQUEE (session révoquée ou durée maximale atteinte)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+
+  /auth/session:
+    delete:
+      operationId: fermer_session
+      summary: Fermer la session courante ; révoque le jeton d'accès et le refresh, efface nelo_refresh, laisse l'appareil connu.
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloRequete"
+      responses:
+        "204":
+          description: Session fermée
+        "401":
+          $ref: "#/components/responses/Session"
+
+  /auth/invitation/{jeton}:
+    post:
+      operationId: activer_par_invitation
+      summary: Activer un compte depuis un lien à usage unique ; ouvre une session, rend l'appareil connu.
+      parameters:
+        - $ref: "#/components/parameters/XNeloRequete"
+        - name: jeton
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: SessionOuverte
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionOuverte"
+        "401":
+          description: AUT_INVITATION_INVALIDE (consommé, expiré, remplacé, inconnu), AUT_COMPTE_SUSPENDU
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+
+  /moi/capacites:
+    get:
+      operationId: lire_contexte
+      summary: Le contexte qui compose l'interface (03-api § 1.9) ; capacites et acces_nominatifs vides jusqu'à T1b.
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloEtablissement"
+      responses:
+        "200":
+          description: ContexteCapacites, le schéma enregistré par T0b, désormais servi
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContexteCapacites"
+        "400":
+          $ref: "#/components/responses/EnTeteEtablissement"
+        "401":
+          $ref: "#/components/responses/Session"
+        "403":
+          $ref: "#/components/responses/EtablissementNonAutorise"
+
+  /moi/telephone:
+    post:
+      operationId: demander_changement_telephone
+      summary: Demander le changement de son numéro ; un code part vers le nouveau numéro, l'identifiant ne change pas encore.
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloRequete"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsChangementTelephone"
+      responses:
+        "204":
+          description: Code envoyé vers le nouveau numéro
+        "401":
+          $ref: "#/components/responses/Session"
+        "422":
+          description: AUT_NUMERO_INVALIDE, AUT_IDENTIFIANT_DEJA_UTILISE
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+        "429":
+          $ref: "#/components/responses/LimiteDebit"
+
+  /moi/telephone/verification:
+    post:
+      operationId: verifier_changement_telephone
+      summary: Vérifier le code reçu sur le nouveau numéro ; l'identifiant change, l'ancien numéro est informé, la session survit.
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloRequete"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsVerificationChangement"
+      responses:
+        "204":
+          description: Identifiant changé
+        "401":
+          description: AUT_OTP_INVALIDE, AUT_OTP_EXPIRE, AUT_OTP_TENTATIVES_EPUISEES, ou la session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+
+  /comptes:
+    post:
+      operationId: creer_compte
+      summary: Créer le compte d'une personne et envoyer son lien d'activation. Capacité habilitations.compte.gerer (point d'insertion jusqu'à T1b).
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloEtablissement"
+        - $ref: "#/components/parameters/XNeloRequete"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsCreationCompte"
+      responses:
+        "201":
+          description: CompteCree ; Location porte /comptes/{id} ; jamais le jeton
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompteCree"
+        "401":
+          $ref: "#/components/responses/Session"
+        "403":
+          $ref: "#/components/responses/EtablissementNonAutorise"
+        "404":
+          description: TEN_RESSOURCE_INTROUVABLE, la personne n'est pas visible dans le tenant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+        "422":
+          description: AUT_NUMERO_INVALIDE, AUT_IDENTIFIANT_DEJA_UTILISE (details.partage_familial_requis = true)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+        "409":
+          description: TEN_RESSOURCE_DEJA_EXISTANTE, la personne a déjà un compte
+
+  /comptes/{id}/invitation:
+    post:
+      operationId: renvoyer_invitation
+      summary: Renvoyer un lien d'activation ; le précédent est invalidé. Capacité habilitations.compte.gerer.
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloEtablissement"
+        - $ref: "#/components/parameters/XNeloRequete"
+        - $ref: "#/components/parameters/CompteId"
+      responses:
+        "200":
+          description: CompteCree (statut, invite_le)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompteCree"
+        "401":
+          $ref: "#/components/responses/Session"
+        "403":
+          $ref: "#/components/responses/EtablissementNonAutorise"
+        "404":
+          $ref: "#/components/responses/Introuvable"
+        "422":
+          description: AUT_COMPTE_DEJA_ACTIF, AUT_COMPTE_SUSPENDU
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+
+  /comptes/{id}/telephone:
+    post:
+      operationId: changer_telephone_administratif
+      summary: Changer le numéro d'une personne qui n'a plus l'ancien ; révoque ses sessions, oublie ses appareils, informe l'ancien numéro. Capacité habilitations.compte.gerer.
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloEtablissement"
+        - $ref: "#/components/parameters/XNeloRequete"
+        - $ref: "#/components/parameters/CompteId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsChangementAdministratif"
+      responses:
+        "204":
+          description: Identifiant changé
+        "401":
+          $ref: "#/components/responses/Session"
+        "403":
+          $ref: "#/components/responses/EtablissementNonAutorise"
+        "404":
+          $ref: "#/components/responses/Introuvable"
+        "422":
+          description: AUT_NUMERO_INVALIDE, AUT_IDENTIFIANT_DEJA_UTILISE (sans déclaration de partage)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EnveloppeErreur"
+
+  /comptes/{id}/suspension:
+    post:
+      operationId: suspendre_compte
+      summary: Suspension immédiate ; révoque les sessions, oublie les appareils. Capacité habilitations.compte.suspendre (point d'insertion jusqu'à T1b).
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloEtablissement"
+        - $ref: "#/components/parameters/XNeloRequete"
+        - $ref: "#/components/parameters/CompteId"
+      responses:
+        "204":
+          description: Compte suspendu
+        "401":
+          $ref: "#/components/responses/Session"
+        "403":
+          $ref: "#/components/responses/EtablissementNonAutorise"
+        "404":
+          $ref: "#/components/responses/Introuvable"
+
+components:
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      description: Bearer {jwt}, lu par le middleware de session ; absent 401 AUT_JETON_MANQUANT
+      schema:
+        type: string
+    XNeloEtablissement:
+      name: X-Nelo-Etablissement
+      in: header
+      required: true
+      description: UUID de l'établissement actif, vérifié contre les affectations du compte
+      schema:
+        type: string
+        format: uuid
+    XNeloRequete:
+      name: X-Nelo-Requete
+      in: header
+      required: true
+      description: UUID v7 généré par le client ; sur /auth/otp, le rejeu ne renvoie pas un second message
+      schema:
+        type: string
+        format: uuid
+    CompteId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    Session:
+      description: AUT_JETON_MANQUANT, AUT_JETON_INVALIDE, AUT_SESSION_REVOQUEE
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnveloppeErreur"
+    EnTeteEtablissement:
+      description: TEN_ETABLISSEMENT_REQUIS, en-tête absent ou malformé
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnveloppeErreur"
+    EtablissementNonAutorise:
+      description: TEN_ETABLISSEMENT_NON_AUTORISE, le compte n'y est pas affecté (même réponse qu'un établissement d'un autre tenant ou inexistant)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnveloppeErreur"
+    Introuvable:
+      description: TEN_RESSOURCE_INTROUVABLE
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnveloppeErreur"
+    LimiteDebit:
+      description: API_LIMITE_DEBIT ; Retry-After obligatoire
+      headers:
+        Retry-After:
+          required: true
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnveloppeErreur"
+  schemas:
+    EnveloppeErreur: {}
+    ContexteCapacites: {}
+    CorpsDemandeCode: {}
+    CorpsVerificationCode: {}
+    ReponseVerificationCode: {}
+    SessionOuverte: {}
+    ChoixCompte: {}
+    CorpsOuverturePin: {}
+    CorpsDefinitionPin: {}
+    ReponseAppareil: {}
+    CorpsCreationCompte: {}
+    CompteCree: {}
+    CorpsChangementTelephone: {}
+    CorpsVerificationChangement: {}
+    CorpsChangementAdministratif: {}

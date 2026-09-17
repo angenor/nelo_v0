@@ -32,8 +32,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **spécifiée le 2026-09-17** sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md)). T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
-| **Prochaine** | La **revue visuelle de T1a** en session dédiée, forme A ([prompt-design.md](../specs/003-connexion-contexte/design/prompt-design.md)), puis `/speckit-plan`. **Q29** attend toujours son ADR, sans bloquer ; **Q30** (les valeurs par défaut de l'authentification) se confirme avant `implement` |
+| **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **spécifiée et planifiée le 2026-09-17** sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md), [plan.md](../specs/003-connexion-contexte/plan.md)). La revue visuelle n'a pas eu lieu. T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
+| **Prochaine** | `/speckit-tasks` sur T1a. La **revue visuelle** (forme A, [prompt-design.md](../specs/003-connexion-contexte/design/prompt-design.md)) peut encore se tenir avant `implement`. **Q29** attend toujours son ADR, sans bloquer ; **Q30** (les valeurs par défaut de l'authentification) se confirme avant `implement` |
 | **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -95,6 +95,44 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-17 : T1a, le plan est écrit, la première frontière de sécurité est dessinée
+
+**Fait** : `/speckit-plan` sur `003-connexion-contexte`, lancé directement après `specify`, sans
+revue visuelle (choix de l'utilisateur ; le prompt reste prêt). [plan.md](../specs/003-connexion-contexte/plan.md)
+avec son contrôle des quinze principes (passe, deux écarts nommés), [research.md](../specs/003-connexion-contexte/research.md)
+(R-01 à R-22), [data-model.md](../specs/003-connexion-contexte/data-model.md) (quatre schémas,
+Valkey, jeton, cookies), [contracts/openapi-attendu.yaml](../specs/003-connexion-contexte/contracts/openapi-attendu.yaml)
+(quinze routes), [contracts/interfaces-python.md](../specs/003-connexion-contexte/contracts/interfaces-python.md),
+[quickstart.md](../specs/003-connexion-contexte/quickstart.md). Deux explorations du dépôt ont
+précédé, par sous-agents, sur le socle serveur et le socle d'interface.
+**Décidé**, dérivé du corpus, tracé, selon l'arbitrage délégué du 2026-09-14 :
+- **Trois paquets neufs dans `socle/`** : `habilitations` (le module de la tranche), et les noyaux
+  `personnes` et `annees`, chacun avec son schéma, sa migration, son outbox ; T3a et T2a complètent
+  sans renommer ni retirer. La table `country_pack` naît dans `tenants` avec deux packs semés, dont
+  le fictif.
+- **Quatre middlewares ASGI** (session, établissement, année, idempotence) remplacent le tenant
+  provisoire de T0a, supprimé ; la fonction `SECURITY DEFINER` provisoire est retirée par une
+  migration, trois nouvelles sont nommées. La liste de révocation est l'absence de la session en
+  Valkey, lue à chaque requête.
+- **Le code à usage unique part par l'outbox du tenant du premier compte trouvé**, son texte en
+  clair ne transite que par Valkey, jamais par une table conservée ; le travailleur gagne un
+  aiguillage par type d'événement et reçoit la passerelle par fermeture.
+- **Un relais Nitro met l'API sous l'origine de Nuxt** et range le jeton d'accès dans un cookie
+  non lisible par script : aucun jeton n'est jamais visible d'un script, ni en stockage ni en
+  mémoire ; le rendu serveur de la coquille garde ses cookies.
+- **La source de démonstration ne vit que dans les constructions d'essai** ; les portes ouvrent
+  une session semée par un `globalSetup` qui lit le code dans le journal des messages simulés.
+- **Deux diffs de plus** : `affectation.etablissement_id` ([02-domaine.md § 3.2](02-domaine.md)),
+  copié de l'année pour vérifier l'en-tête sans traverser un module ; `GET /auth/appareil`
+  ([03-api.md § 2.1](03-api.md)), sans lequel l'écran du code personnel ne peut nommer personne.
+- **Deux écarts nommés** au contrôle de constitution : les effets éphémères d'une suspension
+  (révocation, oubli des appareils) s'exécutent après le `COMMIT`, couverts par la vérification du
+  statut à la requête suivante ; la vivacité d'une affectation est calculée en UTC, le fuseau
+  attend T1b.
+- **Trois bibliothèques** : `phonenumbers` 9.0.39, `PyJWT` 2.14.0, `argon2-cffi` 25.1.0.
+**Bloqué / à faire ensuite** : `/speckit-tasks`. Q30 se confirme avant `implement` ; la revue
+visuelle peut encore se tenir avant.
 
 ## 2026-09-17 : T1a, se connecter et savoir où l'on est, est spécifiée
 

@@ -188,7 +188,7 @@ toutes les vérifications d'accès du produit.
 | **`capacite`** | Référentiel : `code`, `domaine`, `libelle_cle`, `version_introduction`, `cloisonnee` (booléen) |
 | **`modele_role`** | `etablissement_id?`, `code`, `libelle_cle`, `segment`, `livre_par_editeur` (booléen) |
 | **`modele_role_capacite`** | `modele_role_id`, `capacite_code` |
-| **`affectation`** | `compte_id`, `modele_role_id`, `annee_id`, `perimetre`, `debut`, `fin?`, `delegation_de?` |
+| **`affectation`** | `compte_id`, `modele_role_id`, `annee_id`, `etablissement_id` (celui de l'année, copié à l'écriture : c'est contre lui que l'en-tête d'établissement se vérifie sans traverser un module), `perimetre`, `debut`, `fin?`, `delegation_de?` |
 | **`perimetre`** | `site_ids[]`, `cycle_codes[]`, `classe_ids[]`, `matiere_ids[]` — vide signifie « tout le périmètre du niveau supérieur » |
 | **`acces_nominatif`** | `compte_id`, `capacite_code` **cloisonnée**, `motif`, `accorde_par`, `debut`, `fin?` |
 | **`journal_acces`** | **Immuable** : `compte_id`, `capacite_code`, `ressource`, `motif?`, `horodatage`, `adresse_ip` |
