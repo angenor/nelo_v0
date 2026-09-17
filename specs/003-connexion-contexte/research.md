@@ -422,6 +422,25 @@ contexte, coquille, plateforme, portes) ; ce que la recherche affirme du code ex
 - Une seconde construction de production pour prouver l'élagage de la démonstration : remplacée
   par la mesure P-10 de l'accueil réel (R-10).
 
+## Après la revue visuelle : sept écarts tranchés
+
+La planche ([spec.md § Revue visuelle](spec.md#revue-visuelle), validée le 2026-09-17) a rendu
+visibles sept écarts. Aucun n'est un choix produit : chacun se tranche par le corpus ou par une
+contrainte déjà écrite, et chacun est reporté dans la spec.
+
+| | Écart | Décision | Ce qui tranche |
+|---|---|---|---|
+| **E-01** | Avant la session, le tenant n'est pas connu : ni nom d'établissement sur l'écran du numéro, ni numéro du secrétariat sur la carte du code | L'écran du numéro porte le nom du produit ; la carte oriente vers le secrétariat **sans numéro** | La contrainte non négociable ; un numéro de déploiement serait celui de l'éditeur |
+| **E-02** | Six cases et pavé numérique d'A1 | Refusés ; `CanonChamp` avec `saisie: 'code'` (`inputmode="numeric"`, `autocomplete="one-time-code"`) | [05-design.md § 9.1](../../docs/05-design.md), cas 2 : les composants existent, on assemble |
+| **E-03** | Trois états sans code ni mot | `ANNEE_ACTIVE` (neutre) et `ANNEE_PREPARATION` (ocre) dans `ETATS_METIER` et au lexique ; compte et partage « à venir » | Un état porte une forme et un mot ; aucun écran de T1a n'affiche un état de compte |
+| **E-04** | Le refus « identifiant déjà utilisé » n'est pas prévisible | Libre-service : refus **différé à la vérification du code** (jamais d'oracle sur les numéros). Secrétariat : `POST /comptes/verification`, **diff appliqué** sur [03-api.md § 2.5](../../docs/03-api.md) | La contrainte non négociable, puis la règle 3 de [03-api.md § 3](../../docs/03-api.md) |
+| **E-05** | Pas de place pour « Fermer la session » à 390 px | L'avatar ouvre le **menu de compte** ; dès `md`, le geste est aussi direct dans l'en-tête | FR-015 reformulée : accessible en un geste depuis l'en-tête, jamais enfoui |
+| **E-06** | « SMS » ou « message court » | **SMS** à l'écran ; « message court » reste un mot de documentation | A1, la pastille de canal (`canal.SMS`), le terrain |
+| **E-07** | Le mot d'écran du compte suspendu | « Votre accès est fermé » + administrateur nommé quand le compte est connu ; « Votre session est terminée » + « Ouvrir une nouvelle session » ; rien à la demande de code | [05-design.md § 8.2](../../docs/05-design.md) règle 1 ; [02-domaine.md § 3.4](../../docs/02-domaine.md) « aucune capacité » |
+
+R-21 s'en trouve précisé (le menu de compte, la prop `saisie`), R-07 inchangé (E-04 ne touche que
+`/moi/telephone/verification`), et le lexique gagne ses entrées à `implement`.
+
 ## Diffs sur les documents projet
 
 Appliqués le 2026-09-17, tracés au journal ; chacun dérive du corpus ou d'une contrainte
@@ -433,5 +452,6 @@ mécanique du dépôt.
 | `03-api.md § 1.8, § 2.1, § 2.2, § 2.5` | `API_LIMITE_DEBIT`, neuf codes `AUT_`, `/moi/telephone`, `/comptes` | Appliqué à `specify` |
 | `02-domaine.md § 3.2` | `affectation` porte `etablissement_id` (R-03) | **Appliqué** |
 | `03-api.md § 2.1` | `GET /auth/appareil` (R-20) | **Appliqué** |
+| `03-api.md § 2.5` | `POST /comptes/verification` (E-04) | **Appliqué** |
 | `01-stack.md § 2.1, § 3` | l'état du dépôt et la commande de l'API en test | À `implement`, avec le code |
 | `progress.md` | Q30 ouverte à `specify` ; l'entrée du plan | Fin de session |

@@ -21,7 +21,7 @@ __all__ = [
     # en-têtes
     "affectation_vivante", "rattachements",
     # administration
-    "creer_compte", "renvoyer_invitation", "changer_identifiant_administratif", "suspendre",
+    "creer_compte", "verifier_creation", "renvoyer_invitation", "changer_identifiant_administratif", "suspendre",
     "identifiant_partage",
     # changement en libre-service
     "demander_changement", "verifier_changement",
@@ -73,6 +73,8 @@ async def creer_compte(tenant_id: UUID, personne_id: UUID, identifiant: str, par
                        cree_par: UUID, *, valkey, langue: str) -> CompteCree:
     """TEN_RESSOURCE_INTROUVABLE (personne invisible), TEN_RESSOURCE_DEJA_EXISTANTE (déjà un compte),
     AUT_IDENTIFIANT_DEJA_UTILISE (sans déclaration). Événements compte.cree puis compte.invite."""
+async def verifier_creation(tenant_id: UUID, personne_id: UUID, identifiant: str, partage_familial: bool) -> VerificationCreationCompte:
+    """Le pendant (E-04) : bloquages et issues, sans écriture ni envoi."""
 async def renvoyer_invitation(tenant_id: UUID, compte_id: UUID, *, valkey) -> CompteCree
 async def changer_identifiant_administratif(tenant_id: UUID, compte_id: UUID, nouveau: str, par: UUID, *, valkey) -> None
 async def suspendre(tenant_id: UUID, compte_id: UUID, par: UUID, *, valkey) -> None:

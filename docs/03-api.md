@@ -409,6 +409,7 @@ Légende de la colonne **Cap.** : la capacité requise. `—` = authentifié suf
 | `GET` | `/journal-acces` | Lectures de données cloisonnées | ▣ `habilitations.journal.consulter` |
 | `POST` | `/comptes/{id}/suspension` | Immédiate, révoque les sessions | `habilitations.compte.suspendre` |
 | `POST` | `/comptes` | Créer le compte d'une personne et envoyer son lien d'activation ; un second compte sur un numéro exige la **déclaration de partage familial** | `habilitations.compte.gerer` |
+| `POST` | `/comptes/verification` | **Le pendant : ce qui bloquerait la création**, sans rien écrire ni envoyer | `habilitations.compte.gerer` |
 | `POST` | `/comptes/{id}/invitation` | Renvoyer un lien d'activation ; le précédent est invalidé | `habilitations.compte.gerer` |
 | `POST` | `/comptes/{id}/telephone` | Changer le numéro d'une personne qui n'a plus l'ancien ; révoque les sessions, oublie les appareils | `habilitations.compte.gerer` |
 

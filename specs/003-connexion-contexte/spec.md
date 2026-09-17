@@ -105,8 +105,9 @@ avec un code expiré. Aucune autre story n'est nécessaire.
 10. **Given** l'écran d'erreur « numéro inconnu du système » de la maquette A1, **When** on le
     confronte au contrat, **Then** **le contrat gagne** : aucun écran ne dit qu'un numéro est
     inconnu. L'écran de saisie du code porte à la place, sous « Le SMS n'est pas encore arrivé ? »,
-    l'orientation vers le secrétariat de l'établissement avec son numéro : *le numéro que
-    l'établissement a enregistré pour vous est peut-être un autre*. L'écart est documenté.
+    l'orientation vers le secrétariat de l'établissement, **sans numéro** : avant la session le
+    tenant n'est pas connu (E-01) : *le numéro que votre établissement a enregistré pour vous est
+    peut-être un autre ; demandez au secrétariat de le vérifier*. L'écart est documenté.
 
 ---
 
@@ -376,9 +377,11 @@ la révocation. Dépend des stories 1 et 5.
    du compte devient le nouveau numéro, l'ancien numéro reçoit un message d'information rédigé pour
    le message court, la session courante survit, et un événement porte l'ancien et le nouveau
    numéro.
-3. **Given** un nouveau numéro qui est déjà l'identifiant d'un autre compte, **When** la personne
-   demande le changement, **Then** le refus est `AUT_IDENTIFIANT_DEJA_UTILISE` ; le partage d'un
-   numéro se déclare au secrétariat (story 8), jamais depuis son propre espace.
+3. **Given** un nouveau numéro qui est déjà l'identifiant d'un autre compte du tenant, **When**
+   la personne demande le changement, **Then** un code part vers ce numéro comme pour tout autre ;
+   **When** elle le vérifie, **Then** le refus est `AUT_IDENTIFIANT_DEJA_UTILISE`, avec son versant
+   positif : le partage d'un numéro se déclare au secrétariat (story 8), jamais depuis son propre
+   espace. Rien, avant la vérification, ne dit qu'un numéro est pris (E-04).
 4. **Given** une personne qui n'a plus accès à son ancien numéro, **When** la secrétaire change son
    numéro par la route administrative, **Then** l'identifiant change, toutes les sessions du compte
    sont révoquées, tous ses appareils connus sont oubliés, l'ancien numéro reçoit un message
@@ -509,8 +512,10 @@ personne et sa trace. Dépend des stories 1 et 6.
 - **FR-014** : Une session appartient à **un seul compte d'un seul tenant** et dure au plus
   `securite.duree_session_minutes` ; au-delà, le renouvellement est refusé.
 - **FR-015** : La fermeture de session révoque sur-le-champ le jeton d'accès et le jeton de
-  rafraîchissement, efface le cookie, et laisse l'appareil connu ; le geste est visible dans
-  l'en-tête de la coquille.
+  rafraîchissement, efface le cookie, et laisse l'appareil connu ; le geste est accessible depuis
+  l'en-tête de la coquille en un geste : le **menu de compte** porté par l'avatar (nom, établissement
+  et année avec leur changement, mon numéro, fermer la session), et directement dans l'en-tête dès
+  la largeur `md` (E-05).
 - **FR-016** : Sessions, liste de révocation, codes à usage unique et appareils connus vivent dans
   le magasin éphémère ; sa perte ne coûte que des reconnexions. Compte, identifiant, état, code
   personnel, désignation d'administrateur et événements sont durables.
@@ -580,8 +585,11 @@ personne et sa trace. Dépend des stories 1 et 6.
   code part vers ce numéro, avec les règles de FR-006 et FR-007 ; l'identifiant ne change qu'à la
   vérification ; l'ancien numéro reçoit un message d'information ; la session courante survit ;
   un événement porte l'ancien et le nouveau numéro.
-- **FR-036** : Un nouveau numéro déjà identifiant d'un autre compte est refusé
-  `AUT_IDENTIFIANT_DEJA_UTILISE` en libre-service.
+- **FR-036** : Un nouveau numéro déjà identifiant d'un autre compte du tenant est refusé
+  `AUT_IDENTIFIANT_DEJA_UTILISE` en libre-service, **à la vérification du code, jamais à la
+  demande** : le code part vers le nouveau numéro quoi qu'il en soit, et seule la personne qui
+  possède ce numéro apprend qu'il est déjà pris (E-04). Une demande n'est donc jamais un oracle sur
+  les numéros.
 - **FR-037** : Une route administrative change le numéro d'un compte sans vérification préalable
   du nouveau numéro, révoque toutes les sessions du compte, oublie tous ses appareils, informe
   l'ancien numéro, écrit un événement, et exige `habilitations.compte.gerer` par le point
@@ -656,7 +664,21 @@ personne et sa trace. Dépend des stories 1 et 6.
 - **FR-056** : L'écran de connexion est budgété au même plafond que l'accueil dans le registre des
   écrans ; son poids est mesuré (P-10).
 - **FR-057** : L'écran « numéro inconnu » de la maquette A1 n'est pas livré ; l'orientation vers
-  le secrétariat est portée par l'écran du code reçu, et l'écart est documenté.
+  le secrétariat, sans numéro, est portée par l'écran du code reçu, et l'écart est documenté.
+  L'écran du numéro porte le nom du produit, jamais celui d'un établissement (E-01).
+- **FR-063** : La création d'un compte expose son pendant de vérification, `POST /comptes/verification`,
+  qui dit ce qui bloquerait (personne déjà titulaire d'un compte, numéro déjà porté et partage
+  familial à déclarer) sans rien écrire ni envoyer ; il exige la même capacité (E-04).
+- **FR-064** : Les mots d'écran d'un compte suspendu et d'une session révoquée existent en `fr` et
+  `en`, disent un fait et leur versant positif : « Votre accès est fermé » avec le nom et le
+  téléphone de l'administrateur de l'établissement quand le compte est connu (code personnel,
+  lien) ; « Votre session est terminée » avec « Ouvrir une nouvelle session » (E-07). Une demande de
+  code sur un compte suspendu n'affiche rien : la réponse est la même que pour tout numéro.
+- **FR-065** : Les deux états de l'année que la coquille affiche portent un code de pastille et un
+  mot du lexique (`ANNEE_ACTIVE`, voix neutre ; `ANNEE_PREPARATION`, voix ocre) ; les états du
+  compte et le partage familial n'ont aucun écran dans cette tranche et entrent au lexique « à
+  venir » pour T1b (E-03). Le mot visible du canal est **SMS**, jamais « message court » ni
+  « texto » (E-06).
 
 **La traçabilité, les paramètres et la vérification**
 
@@ -826,4 +848,45 @@ dans `specs/003-connexion-contexte/design/`. Trois écarts avec la maquette A1 y
 l'écran « numéro inconnu » (le contrat gagne), l'empreinte digitale (le domaine gagne), l'appel
 vocal (V3).
 
-**Canvas publié** : *à reporter ici à la validation.*
+**Canvas publié** le 2026-09-17, **validé** le 2026-09-17 :
+<https://claude.ai/artifact/2jb9b3vRrhWTMmyKBSNRdW>. Huit artboards `US1` à `US8`, sources
+`specs/003-connexion-contexte/design/US1..US8.dc.html` + `canvas.json` ; le fichier assemblé
+`canvas.html` n'est pas versionné. Les trois écarts annoncés avec A1 y sont barrés (numéro inconnu,
+empreinte digitale, appel vocal). La planche en relève sept autres, encadrés en pointillé ocre,
+**tranchés le 2026-09-17** (E-01 à E-07, détail dans [research.md](research.md#après-la-revue-visuelle--sept-écarts-tranchés)) :
+
+- **Avant la session, le tenant n'est pas connu** : l'écran du numéro ne peut pas nommer
+  l'établissement, et la carte « Le SMS n'est pas encore arrivé ? » ne peut pas tenir le numéro du
+  secrétariat depuis le contexte (§ 1.9 ne sert qu'après). Configuration du déploiement, comme
+  l'indicatif (FR-002), ou la carte sans numéro : le scénario 10 de US1 et FR-057 en dépendent.
+  **E-01 : la carte sans numéro, l'écran du numéro au nom du produit.** Un numéro de déploiement
+  serait celui de l'éditeur, pas du secrétariat.
+- **Les six cases du code et le pavé numérique d'A1 sont des composants neufs** que le plan refuse
+  (R-21) : champ nombre du canon. Si les cases sont voulues, c'est un arrêt de cycle.
+  **E-02 : refusés.** Le champ nombre du canon, avec `inputmode="numeric"` et `autocomplete="one-time-code"`,
+  fait la même chose ; un composant neuf pour un gain visuel ne vaut pas un arrêt de cycle.
+- **Trois états sans code de pastille ni mot du lexique** : l'année (`ACTIVE`, `PREPARATION`),
+  le compte (`invite`, `actif`, `suspendu`), le partage familial d'un numéro.
+  **E-03 : `ANNEE_ACTIVE` et `ANNEE_PREPARATION` entrent dans les codes de pastille et au lexique** ;
+  les états du compte et le partage n'ont aucun écran ici et entrent au lexique « à venir » (T1b).
+- **Le refus « identifiant déjà utilisé » n'est pas prévisible avant l'envoi** : ni `POST /comptes`
+  ni `POST /moi/telephone` n'ont de pendant `/verification` (03-api § 3, règle 3). La planche
+  annonce au retour du premier envoi ; sinon le contrat gagne une route.
+  **E-04 : deux réponses.** En libre-service, le refus est **différé à la vérification du code** :
+  un pendant qui dirait « ce numéro est pris » serait un oracle sur les numéros, l'inverse de la
+  contrainte non négociable. Pour le secrétariat, le contrat gagne `POST /comptes/verification`
+  (règle 3 de § 3), sous la même capacité.
+- **L'en-tête à 390 px n'a pas la place du geste « Fermer la session »** sans rogner le nom de
+  l'établissement ; FR-015 exclut de le cacher dans le menu de l'avatar.
+  **E-05 : l'avatar ouvre le menu de compte** (nom, établissement et année, mon numéro, fermer la
+  session), un geste depuis l'en-tête à toute largeur ; dès `md`, « Fermer la session » est aussi
+  directement dans l'en-tête. FR-015 est reformulée.
+- **« SMS » ou « message court »** : la spec cite l'un, A1 et la pastille de canal disent l'autre ;
+  le lexique doit fixer le mot visible.
+  **E-06 : SMS.** C'est le mot d'A1, de la pastille de canal et du terrain ; « message court » reste
+  un mot de documentation.
+- **Ce que lit un compte suspendu** (`AUT_COMPTE_SUSPENDU`, `AUT_SESSION_REVOQUEE`) : la spec donne
+  les codes, pas le mot d'écran ni son versant positif.
+  **E-07 : « Votre accès est fermé », avec l'administrateur nommé** quand le compte est connu ;
+  « Votre session est terminée », « Ouvrir une nouvelle session » ; rien à la demande de code
+  (FR-064).

@@ -239,6 +239,7 @@ Déclarés dans `modules/socle/habilitations/schemas.py` ; les formes exactes so
 | `ReponseAppareil` | `comptes: list[{compte_id, nom, prenoms, pin_defini}]` : les comptes connus de cet appareil |
 | `CorpsCreationCompte` | `personne_id`, `identifiant`, `partage_familial` (défaut `false`) |
 | `CompteCree` | `id`, `statut`, `invite_le` (**jamais** le jeton) |
+| `VerificationCreationCompte` | `bloquages: list[{code, details}]`, `issues: list[str]` : le pendant de la création (E-04) |
 | `CorpsChangementTelephone` | `nouvel_identifiant` |
 | `CorpsVerificationChangement` | `code` |
 | `CorpsChangementAdministratif` | `nouvel_identifiant` |

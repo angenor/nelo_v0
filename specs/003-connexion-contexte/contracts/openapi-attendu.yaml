@@ -311,6 +311,32 @@ paths:
         "409":
           description: TEN_RESSOURCE_DEJA_EXISTANTE, la personne a déjà un compte
 
+  /comptes/verification:
+    post:
+      operationId: verifier_creation_compte
+      summary: Le pendant de la création, ce qui bloquerait, sans rien écrire ni envoyer. Capacité habilitations.compte.gerer.
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/XNeloEtablissement"
+        - $ref: "#/components/parameters/XNeloRequete"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CorpsCreationCompte"
+      responses:
+        "200":
+          description: VerificationCreationCompte, ce qui bloque (personne déjà titulaire, numéro déjà porté et partage à déclarer, numéro mal formé) et ce qu'on peut faire
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerificationCreationCompte"
+        "401":
+          $ref: "#/components/responses/Session"
+        "403":
+          $ref: "#/components/responses/EtablissementNonAutorise"
+
   /comptes/{id}/invitation:
     post:
       operationId: renvoyer_invitation
@@ -471,6 +497,7 @@ components:
     ReponseAppareil: {}
     CorpsCreationCompte: {}
     CompteCree: {}
+    VerificationCreationCompte: {}
     CorpsChangementTelephone: {}
     CorpsVerificationChangement: {}
     CorpsChangementAdministratif: {}

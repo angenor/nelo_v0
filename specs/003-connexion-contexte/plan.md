@@ -8,10 +8,10 @@ foi : [02-domaine.md](../../docs/02-domaine.md) § 0, § 1.2, § 2.2, § 3, § 4
 [03-api.md](../../docs/03-api.md) § 1.2, § 1.3, § 1.6 à § 1.9, § 2.1, § 2.2, § 2.5, § 3 ;
 [01-stack.md](../../docs/01-stack.md) § 2.3 à § 2.5, § 5.1, § 7, § 8.3 ; [ADR 005](../../docs/adr/005-isolation-des-tenants-par-rls-et-double-barriere.md),
 [ADR 007](../../docs/adr/007-valkey-pour-l-ephemere.md), [ADR 013](../../docs/adr/013-le-sms-est-un-canal-de-premier-rang.md) ;
-la maquette A1 ; la [constitution](../../.specify/memory/constitution.md) v1.0.0. **La revue
-visuelle n'a pas eu lieu** : le plan est lancé directement après `specify`, à la demande de
-l'utilisateur ; le prompt de forme A reste prêt dans [design/prompt-design.md](design/prompt-design.md),
-et les écrans s'assemblent à partir de la maquette A1 et des composants de T0b en attendant.
+la maquette A1 ; la [constitution](../../.specify/memory/constitution.md) v1.0.0 ; et les huit
+artboards de [design/](design/), publiés et validés le 2026-09-17 **après** ce plan (l'utilisateur
+avait d'abord enchaîné `plan` sans revue) : leurs sept écarts sont tranchés en
+[research.md](research.md#après-la-revue-visuelle--sept-écarts-tranchés) et reportés dans la spec.
 
 ## Résumé
 
@@ -104,9 +104,12 @@ ci-dessous.
 
 ```text
 specs/003-connexion-contexte/
-├── spec.md                       # la spécification ; l'adresse du canvas quand la revue aura eu lieu
+├── spec.md                       # la spécification, avec l'adresse du canvas validé et les sept écarts tranchés
 ├── checklists/requirements.md
-├── design/prompt-design.md       # forme A, prêt ; la revue n'a pas eu lieu
+├── design/
+│   ├── prompt-design.md
+│   ├── US1.dc.html … US8.dc.html # revue visuelle, forme A, validée le 2026-09-17
+│   └── canvas.json
 ├── plan.md                       # ce fichier
 ├── research.md                   # phase 0 : R-01 à R-22, diffs
 ├── data-model.md                 # phase 1 : quatre schémas, Valkey, jeton, cookies, schémas Pydantic, politique
@@ -135,7 +138,7 @@ nelo_v0/
 │   ├── contrat.py                # Authorization, X-Nelo-Annee, chemins sans établissement, schéma servi
 │   ├── configuration.py          # secret, indicatif, cookies, produit, url publique, journal SMS, relais
 │   ├── tenant_provisoire.py      # SUPPRIMÉ
-│   └── routes/authentification.py · moi.py · comptes.py   # NOUVEAUX
+│   └── routes/authentification.py · moi.py · comptes.py   # NOUVEAUX (comptes : + /comptes/verification, E-04)
 ├── modules/
 │   ├── shared/outbox.py          # NOUVEAU : prise, marquage, reprise, génériques sur la table (R-08)
 │   ├── shared/contexte.py        # Administrateur.prenoms accepte la chaîne vide
@@ -243,6 +246,7 @@ mécanique ; ils sont appliqués selon l'arbitrage délégué du 2026-09-14 et t
 | `03-api.md § 1.8, § 2.1, § 2.2, § 2.5` | `API_LIMITE_DEBIT`, codes `AUT_`, `/moi/telephone`, `/comptes` | Appliqué à `specify` |
 | `02-domaine.md § 3.2` | `affectation.etablissement_id` | **Appliqué** |
 | `03-api.md § 2.1` | `GET /auth/appareil` | **Appliqué** |
+| `03-api.md § 2.5` | `POST /comptes/verification` (E-04, après la revue) | **Appliqué** |
 | `01-stack.md § 2.1, § 3` | l'état du dépôt, l'API en test | À `implement` |
 | `progress.md` | l'entrée du plan | Fin de session |
 
@@ -251,5 +255,7 @@ mécanique ; ils sont appliqués selon l'arbitrage délégué du 2026-09-14 et t
 Le contrôle de constitution a été relu après la phase 1 : aucune règle côté client, aucun rôle,
 aucune littérale de pays hors des seeds, une transaction par module, RLS partout, l'outbox dans
 la transaction avec ses deux effets éphémères nommés, le SMS rédigé pour le SMS, cinq écrans
-budgétés. **Verdict inchangé : passe, avec Q30 ouverte et la revue visuelle en attente.**
-Prochaine étape : `/speckit-tasks`.
+budgétés. **Verdict inchangé : passe, avec Q30 ouverte.** La revue visuelle, tenue ensuite, n'a
+rien changé au contrôle : ses sept écarts touchent des mots, un composant refusé, une route de
+vérification et le report d'un refus après la preuve de possession du numéro, qui renforce la
+contrainte non négociable au lieu de l'affaiblir. Prochaine étape : `/speckit-tasks`.

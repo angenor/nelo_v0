@@ -10,6 +10,12 @@
 Format court, quatre lignes maximum :
 
 ```
+
+## 2026-09-17 : T1a, la revue visuelle est publiée
+**Fait** : huit artboards `US1..US8.dc.html` + `canvas.json` dans `specs/003-connexion-contexte/design/`, générés à partir de `theme.css` (aucune couleur retapée), page assemblée publiée et adresse reportée dans le spec sous « Revue visuelle ». Données du primaire (CM1 B, maîtresse titulaire, famille Koné).
+**Décidé** : rien n'est tranché ; la planche rend visibles sept écarts (tenant inconnu avant la session et numéro du secrétariat, cases et pavé d'A1 refusés par R-21, trois états sans code ni mot, refus « déjà utilisé » non prévisible sans route `/verification`, geste de fermeture à 390 px, « SMS » ou « message court », mot d'écran du compte suspendu).
+**Bloqué / à faire ensuite** : planche validée le jour même ; arbitrage des sept écarts, puis `/speckit-tasks`.
+
 ## 2026-08-21 — Titre de ce qui a avancé
 **Fait** : ce qui existe maintenant et n'existait pas avant.
 **Décidé** : les arbitrages pris, avec leur motif en une phrase.
@@ -32,8 +38,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **spécifiée et planifiée le 2026-09-17** sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md), [plan.md](../specs/003-connexion-contexte/plan.md)). La revue visuelle n'a pas eu lieu. T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
-| **Prochaine** | `/speckit-tasks` sur T1a. La **revue visuelle** (forme A, [prompt-design.md](../specs/003-connexion-contexte/design/prompt-design.md)) peut encore se tenir avant `implement`. **Q29** attend toujours son ADR, sans bloquer ; **Q30** (les valeurs par défaut de l'authentification) se confirme avant `implement` |
+| **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **spécifiée et planifiée le 2026-09-17** sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md), [plan.md](../specs/003-connexion-contexte/plan.md)). **Revue visuelle publiée et validée le 2026-09-17** ([spec.md § Revue visuelle](../specs/003-connexion-contexte/spec.md#revue-visuelle)). T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
+| **Prochaine** | `/speckit-tasks` sur T1a. **Q29** attend toujours son ADR, sans bloquer ; **Q30** (les valeurs par défaut de l'authentification) se confirme avant `implement` |
 | **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -95,6 +101,25 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-17 : T1a, les sept écarts de la planche sont tranchés
+
+**Fait** : la maquette validée par l'utilisateur, le rangement était déjà en place (sources dans
+`specs/003-connexion-contexte/design/`, adresse dans le spec) ; il est commité. Les sept écarts
+que la planche avait rendus visibles sont tranchés (E-01 à E-07,
+[research.md](../specs/003-connexion-contexte/research.md)) et reportés dans la spec (FR-015,
+FR-036, FR-057 reformulées ; FR-063 à FR-065 ajoutées), le plan, le contrat.
+**Décidé**, dérivé du corpus, sans question à l'utilisateur : avant la session le tenant n'est pas
+connu, donc l'écran du numéro porte le nom du produit et la carte du code oriente vers le
+secrétariat sans numéro · les cases et le pavé d'A1 sont refusés, le champ nombre du canon suffit ·
+deux états d'année entrent aux pastilles et au lexique, les états de compte attendent T1b · en
+libre-service, « numéro déjà utilisé » se refuse **après** la vérification du code, jamais à la
+demande, pour ne pas faire de la route un oracle sur les numéros ; pour le secrétariat, le contrat
+gagne `POST /comptes/verification` (règle 3 de [03-api.md § 3](03-api.md), diff appliqué) ·
+l'avatar ouvre le menu de compte, « Fermer la session » y est en un geste, et directement dans
+l'en-tête dès `md` · le mot visible est **SMS** · un compte suspendu lit « Votre accès est fermé »
+avec l'administrateur nommé, une session révoquée « Votre session est terminée ».
+**Bloqué / à faire ensuite** : `/speckit-tasks`.
 
 ## 2026-09-17 : le travailleur s'arrête proprement, le test instable de T0a ne l'est plus
 
