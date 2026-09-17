@@ -1,0 +1,10 @@
+{
+  "plafondsDuCorpus": [
+    "05-design.md § 9.3 : appel de séance 120 Ko transférés, premier affichage utile sous 2 s en 3G lente",
+    "saisie de notes 200 Ko ; portail parent 150 Ko par vue ; back-office 500 Ko au premier chargement",
+    "Q29, issue B à titre provisoire : budgetKo compte l'application, budgetPolicesKo les polices à part"
+  ],
+  "ecrans": [
+    { "nom": "accueil", "route": "/", "budgetKo": 120, "budgetPolicesKo": 45 }
+  ]
+}

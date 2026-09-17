@@ -555,7 +555,7 @@ prompt et la procédure de rangement sont en fin de [05-design.md](05-design.md)
 
 | Régime | Licences |
 |---|---|
-| **Autorisé** | MIT, Apache-2.0, BSD-2/3, ISC, Zlib, Unicode, MPL-2.0, **OFL 1.1** pour les polices |
+| **Autorisé** | MIT, Apache-2.0, BSD-2/3, ISC, Zlib, Unicode, MPL-2.0, **OFL 1.1** pour les polices ; BlueOak-1.0.0 et CC0-1.0, permissives, arrivées avec Nuxt ; CC-BY-4.0 pour `caniuse-lite` seul, donnée de construction qui ne voyage pas (T0b) |
 | **Refusé** | GPL, AGPL, LGPL et tout copyleft fort — le produit est un logiciel propriétaire vendu par abonnement |
 | **Contrôle** | Un vérificateur de licences côté Python et un côté npm, adossés aux lockfiles (porte P-07) |
 

@@ -22,6 +22,17 @@ etape() { # nom commande...
   fi
 }
 
+etape_muette() { # nom commande... : la sortie ne s'imprime qu'en cas d'échec
+  local nom="$1"; shift
+  local sortie
+  if ! sortie=$("$@" 2>&1); then
+    echo "$sortie" | tail -30 >&2
+    echo "VÉRIFICATION ÉCHOUÉE : $nom" >&2
+    exit 1
+  fi
+  echo "$nom : ok"
+}
+
 porte() { # P-XX
   local numero="$1"
   local script
@@ -43,6 +54,9 @@ porte P-01
 porte P-12
 porte P-03
 etape "reparcours sous suspension" scripts/portes/reparcours-suspension.sh
+etape_muette "typecheck" pnpm --filter nelo-web typecheck
+etape_muette "vitest" pnpm --filter nelo-web test:unit
+etape_muette "construction" pnpm --filter nelo-web build
 
 duree=$(( $(date +%s) - debut ))
 echo "VÉRIFICATION : $portes_vertes portes vertes en $((duree / 60)) min $((duree % 60)) s"
