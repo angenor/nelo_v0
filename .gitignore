@@ -39,6 +39,7 @@ web/.output/
 web/public/icones/
 web/test-results/
 web/playwright-report/
+*.tsbuildinfo
 
 # Python
 __pycache__/
