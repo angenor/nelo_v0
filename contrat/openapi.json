@@ -1,6 +1,253 @@
 {
   "components": {
     "schemas": {
+      "AccesNominatif": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "pattern": "^[a-z_]+\\.[a-z_]+\\.[a-z_]+$",
+            "title": "Code",
+            "type": "string"
+          },
+          "fin": {
+            "description": "Date scolaire de fin, incluse",
+            "format": "date",
+            "title": "Fin",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "fin"
+        ],
+        "title": "AccesNominatif",
+        "type": "object"
+      },
+      "Administrateur": {
+        "additionalProperties": false,
+        "description": "Qui peut attribuer ses domaines à une personne sans capacité : l'écran le nomme.",
+        "properties": {
+          "nom": {
+            "minLength": 1,
+            "title": "Nom",
+            "type": "string"
+          },
+          "prenoms": {
+            "minLength": 1,
+            "title": "Prenoms",
+            "type": "string"
+          },
+          "telephone": {
+            "description": "Au format du pack, jamais vide",
+            "minLength": 1,
+            "title": "Telephone",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nom",
+          "prenoms",
+          "telephone"
+        ],
+        "title": "Administrateur",
+        "type": "object"
+      },
+      "AlerteContexte": {
+        "additionalProperties": false,
+        "properties": {
+          "details": {
+            "additionalProperties": true,
+            "title": "Details",
+            "type": "object"
+          },
+          "gravite": {
+            "$ref": "#/components/schemas/Gravite"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CodeNeutre_A-Z__A-Z0-9______"
+          }
+        },
+        "required": [
+          "type",
+          "gravite",
+          "details"
+        ],
+        "title": "AlerteContexte",
+        "type": "object"
+      },
+      "AnneeContexte": {
+        "additionalProperties": false,
+        "properties": {
+          "etat": {
+            "$ref": "#/components/schemas/EtatAnnee"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "libelle": {
+            "minLength": 1,
+            "title": "Libelle",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "libelle",
+          "etat"
+        ],
+        "title": "AnneeContexte",
+        "type": "object"
+      },
+      "CapaciteContexte": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "description": "domaine.objet.verbe",
+            "pattern": "^[a-z_]+\\.[a-z_]+\\.[a-z_]+$",
+            "title": "Code",
+            "type": "string"
+          },
+          "perimetre": {
+            "additionalProperties": {
+              "items": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "Listes d'identifiants nommées `*_ids`",
+            "title": "Perimetre",
+            "type": "object"
+          }
+        },
+        "required": [
+          "code",
+          "perimetre"
+        ],
+        "title": "CapaciteContexte",
+        "type": "object"
+      },
+      "CodeNeutre": {
+        "type": "string"
+      },
+      "CodeNeutre_A-Z__A-Z0-9______": {
+        "pattern": "^[A-Z][A-Z0-9_]*$",
+        "type": "string"
+      },
+      "Compte": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "langue": {
+            "description": "Code de langue à deux lettres",
+            "pattern": "^[a-z]{2}$",
+            "title": "Langue",
+            "type": "string"
+          },
+          "nom": {
+            "minLength": 1,
+            "title": "Nom",
+            "type": "string"
+          },
+          "prenoms": {
+            "minLength": 1,
+            "title": "Prenoms",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "nom",
+          "prenoms",
+          "langue"
+        ],
+        "title": "Compte",
+        "type": "object"
+      },
+      "ContexteCapacites": {
+        "additionalProperties": false,
+        "description": "Une seule requête au démarrage : tout ce qu'il faut pour ne rendre que ce qui existe.",
+        "properties": {
+          "acces_nominatifs": {
+            "items": {
+              "$ref": "#/components/schemas/AccesNominatif"
+            },
+            "title": "Acces Nominatifs",
+            "type": "array"
+          },
+          "alertes": {
+            "items": {
+              "$ref": "#/components/schemas/AlerteContexte"
+            },
+            "title": "Alertes",
+            "type": "array"
+          },
+          "annee_active": {
+            "format": "uuid",
+            "title": "Annee Active",
+            "type": "string"
+          },
+          "annees": {
+            "items": {
+              "$ref": "#/components/schemas/AnneeContexte"
+            },
+            "minItems": 1,
+            "title": "Annees",
+            "type": "array"
+          },
+          "capacites": {
+            "items": {
+              "$ref": "#/components/schemas/CapaciteContexte"
+            },
+            "title": "Capacites",
+            "type": "array"
+          },
+          "compte": {
+            "$ref": "#/components/schemas/Compte"
+          },
+          "country_pack": {
+            "$ref": "#/components/schemas/CountryPackContexte"
+          },
+          "etablissement_actif": {
+            "format": "uuid",
+            "title": "Etablissement Actif",
+            "type": "string"
+          },
+          "etablissements": {
+            "items": {
+              "$ref": "#/components/schemas/EtablissementContexte"
+            },
+            "minItems": 1,
+            "title": "Etablissements",
+            "type": "array"
+          },
+          "parametres_effectifs": {
+            "additionalProperties": true,
+            "title": "Parametres Effectifs",
+            "type": "object"
+          }
+        },
+        "required": [
+          "compte",
+          "etablissements",
+          "etablissement_actif",
+          "annees",
+          "annee_active",
+          "capacites",
+          "acces_nominatifs",
+          "country_pack",
+          "parametres_effectifs",
+          "alertes"
+        ],
+        "title": "ContexteCapacites",
+        "type": "object"
+      },
       "CorpsPoserParametre": {
         "additionalProperties": false,
         "properties": {
@@ -22,6 +269,89 @@
           "valeur"
         ],
         "title": "CorpsPoserParametre",
+        "type": "object"
+      },
+      "CountryPackContexte": {
+        "additionalProperties": false,
+        "properties": {
+          "decoupage": {
+            "$ref": "#/components/schemas/CodeNeutre_A-Z__A-Z0-9______"
+          },
+          "devise": {
+            "$ref": "#/components/schemas/Devise"
+          },
+          "langues": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Langues",
+            "type": "array"
+          },
+          "pays": {
+            "pattern": "^[A-Z]{2}$",
+            "title": "Pays",
+            "type": "string"
+          },
+          "version": {
+            "minimum": 1,
+            "title": "Version",
+            "type": "integer"
+          },
+          "vocabulaire": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "description": "Codes neutres de docs/02-domaine.md § 15, un libellé par langue du pack",
+            "propertyNames": {
+              "$ref": "#/components/schemas/CodeNeutre"
+            },
+            "title": "Vocabulaire",
+            "type": "object"
+          }
+        },
+        "required": [
+          "pays",
+          "version",
+          "devise",
+          "langues",
+          "decoupage",
+          "vocabulaire"
+        ],
+        "title": "CountryPackContexte",
+        "type": "object"
+      },
+      "Devise": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "pattern": "^[A-Z]{3}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "exposant": {
+            "description": "Nombre de chiffres de l'unité mineure",
+            "maximum": 4,
+            "minimum": 0,
+            "title": "Exposant",
+            "type": "integer"
+          },
+          "symbole": {
+            "description": "Ce que l'interface écrit après un montant",
+            "minLength": 1,
+            "title": "Symbole",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "exposant",
+          "symbole"
+        ],
+        "title": "Devise",
         "type": "object"
       },
       "EnveloppeErreur": {
@@ -76,6 +406,72 @@
         ],
         "title": "EnveloppeErreur",
         "type": "object"
+      },
+      "EtablissementContexte": {
+        "additionalProperties": false,
+        "properties": {
+          "administrateur": {
+            "$ref": "#/components/schemas/Administrateur"
+          },
+          "cycles_actifs": {
+            "items": {
+              "$ref": "#/components/schemas/CodeNeutre"
+            },
+            "title": "Cycles Actifs",
+            "type": "array"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "modules_actifs": {
+            "items": {
+              "$ref": "#/components/schemas/CodeNeutre"
+            },
+            "title": "Modules Actifs",
+            "type": "array"
+          },
+          "nom": {
+            "minLength": 1,
+            "title": "Nom",
+            "type": "string"
+          },
+          "sites": {
+            "items": {
+              "$ref": "#/components/schemas/Site"
+            },
+            "title": "Sites",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "nom",
+          "sites",
+          "cycles_actifs",
+          "modules_actifs",
+          "administrateur"
+        ],
+        "title": "EtablissementContexte",
+        "type": "object"
+      },
+      "EtatAnnee": {
+        "enum": [
+          "PREPARATION",
+          "ACTIVE",
+          "CLOTUREE",
+          "ARCHIVEE"
+        ],
+        "type": "string"
+      },
+      "Gravite": {
+        "enum": [
+          "INFO",
+          "ALERTE",
+          "CRITIQUE"
+        ],
+        "type": "string"
       },
       "ParametreEffectif": {
         "properties": {
@@ -211,6 +607,27 @@
           "etat"
         ],
         "title": "ReponseSante",
+        "type": "object"
+      },
+      "Site": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "nom": {
+            "minLength": 1,
+            "title": "Nom",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "nom"
+        ],
+        "title": "Site",
         "type": "object"
       },
       "TypeParametre": {

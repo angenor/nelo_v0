@@ -55,12 +55,12 @@ rendre où**, et le critère est le poids et le temps de premier affichage :
 |---|---|---|
 | **Site public** | Statique | Référencement, poids minimal, aucune donnée |
 | **Portail parent, portail élève** | **Rendu serveur** | Premier affichage rapide sur connexion lente et appareil d'entrée de gamme. C'est la surface la plus exposée à la contrainte réseau |
-| **Back-office** | **Rendu client** | Session longue, navigation dense, aucun besoin de référencement |
+| **Back-office** | **Rendu serveur par défaut** ; rendu client écran par écran, par règle de route, quand la mesure P-10 le permet | La coquille et les écrans de saisie en classe portent le budget le plus serré : à 400 kbit/s, 120 Ko font 2,4 s de transfert, et un rendu client ne peint rien avant de les avoir reçus. Un écran de poste à session longue peut passer en rendu client, écran par écran, sur mesure ([T0b, research R-06](../specs/002-socle-interface/research.md)) |
 
-> ⚠️ **C'est une hypothèse de travail, pas une décision figée.** Elle est notée dans
-> [progress.md](progress.md) comme une des quatre décisions à trancher avant la première ligne de
-> code. Elle est retenue par défaut parce qu'elle découle du critère de poids ; elle se réexamine si
-> la mesure la contredit.
+> **Tranchée le 2026-09-17 par le plan de T0b** (Q4 du journal). L'hypothèse d'origine classait le
+> back-office en rendu client ; la mesure l'a contredite pour la coquille et l'écran d'appel, qui
+> sont du back-office et portent le plafond le plus serré. Le critère reste le poids et le premier
+> affichage : chaque écran peut changer de mode par règle de route, sur mesure, jamais par principe.
 
 ---
 
@@ -68,20 +68,22 @@ rendre où**, et le critère est le poids et le temps de premier affichage :
 
 ### 2.1 Ce qui existe aujourd'hui
 
-Le socle serveur de **T0a** ([specs/001-socle-serveur/](../specs/001-socle-serveur/)) :
+Le socle serveur de **T0a** ([specs/001-socle-serveur/](../specs/001-socle-serveur/)) et le socle
+d'interface de **T0b** ([specs/002-socle-interface/](../specs/002-socle-interface/)) :
 
 ```
 nelo_v0/
 ├── CLAUDE.md · README.md · .gitignore · .env.exemple
 ├── pyproject.toml · uv.lock · .python-version       # espace de travail uv : racine installable, huit membres déclaratifs
-├── package.json · pnpm-lock.yaml · pnpm-workspace.yaml   # openapi-typescript épinglé ; web/ viendra avec T0b
+├── package.json · pnpm-lock.yaml · pnpm-workspace.yaml   # openapi-typescript épinglé ; lockfile unique, membre web/
 ├── compose.yml · garage.toml # postgres, valkey, garage — trois services
-├── contrat/                  # openapi.json et client.d.ts, régénérés par P-03
+├── contrat/                  # openapi.json et client.d.ts, régénérés par P-03 ; ContexteCapacites sans route
 ├── api/                      # composition : main, middlewares (établissement provisoire, idempotence),
 │                             #   erreurs, capacités (point d'insertion), travailleur, contrat, routes/
 ├── modules/
 │   ├── domaine/              # vide — la base de la hiérarchie
-│   ├── shared/               # transaction(tenant_id), erreurs, modes de simulation, événement
+│   ├── shared/               # transaction(tenant_id), erreurs, modes de simulation, événement,
+│   │                         #   contexte.py : le contexte qui compose l'interface (03-api § 1.9)
 │   ├── socle/
 │   │   ├── tenants/          # LE MODULE DORÉ — catalogue de paramètres, outbox du schéma
 │   │   ├── assistance/       # six capacités, aucune livrée ; service d'inférence simulé
@@ -91,15 +93,32 @@ nelo_v0/
 │   │   └── protection/       # CLOISONNÉ — l'interface de service, rien d'autre
 │   └── segments/             # vide
 ├── migrations/tenants/       # Alembic : le schéma tenants, réversible
-├── scripts/                  # verifier.sh, tests-negatifs.sh, bd-vierge.sh, portes/
+├── web/                      # l'application Nuxt 4, rendue par le serveur, installable
+│   ├── ecrans.json           # LE SEUL ENDROIT : écrans, personas, budgets (application, polices)
+│   ├── app/
+│   │   ├── assets/css/       # theme.css et mesures.css copiés tel quel ; jetons.css (Tailwind) ; polices.css
+│   │   ├── components/canon/ # les quatorze composants et les sous-composants de la coquille
+│   │   ├── composables/      # libellés, pack, plateforme, réseau, thème, contexte, saisie, mise à jour
+│   │   ├── core/             # la logique pure : composition, état du ruban, pack, libellés fr/en,
+│   │   │                     #   plateforme (interface et unique implémentation web), démonstration
+│   │   ├── pages/            # accueil composé, d/[domaine], à propos, style (développement seulement)
+│   │   ├── plugins/          # plateforme, réseau, contexte
+│   │   └── sw/sw.ts          # le service worker mince
+│   ├── server/plugins/       # compression des pages rendues
+│   ├── scripts/icones.mjs    # les icônes, dessinées depuis la lettre d'Archivo et les jetons
+│   └── tests/                # unit/ (Vitest), e2e/ et portes/ (Playwright, Chromium et WebKit)
+├── scripts/                  # verifier.sh, tests-negatifs.sh, avec-serveur-dev.sh, bd-vierge.sh, portes/
 ├── tests/                    # module doré, isolation, idempotence, outbox, frontières, simulations, assistance
 ├── .specify/ · .claude/skills/   # Spec Kit — voir 2.2
 ├── specs/                    # une spécification par tranche
 └── docs/                     # ce corpus
 ```
 
-**Aucune interface, aucune règle métier pédagogique.** Sept portes serveur tiennent — P-01, P-02,
-P-03, P-04, P-07, P-11, P-12 — et chacune a son test négatif (`scripts/tests-negatifs.sh`).
+**Aucune règle métier pédagogique.** L'interface existe en socle : une coquille composée depuis le
+contexte, quatorze composants, une page de style, un écran d'appel de démonstration, sur des
+données du primaire. **Dix portes tiennent**, P-01 à P-07, P-10, P-11 et P-12, et chacune a son test
+négatif (`scripts/tests-negatifs.sh`). P-08 et P-09 viendront avec les tranches qui leur donnent
+quelque chose à vérifier.
 
 ### 2.2 Spec Kit — ce qui est posé
 
@@ -255,7 +274,8 @@ ne peut pas dépendre du réseau.
 ```
 docker compose up -d          # postgres + valkey + garage
 uv run fastapi dev api/main.py  # depuis la racine — l'API sur :8000, OpenAPI sur /openapi.json
-cd web && pnpm dev            # l'application sur :3000
+pnpm --filter nelo-web dev    # l'application sur :3000 (ou le port libre suivant), la page de style sur /style
+pnpm --filter nelo-web exec playwright install chromium webkit   # une fois, avec réseau : les moteurs de P-05 et P-10
 ```
 
 | Service | Rôle en développement | En production |
@@ -375,7 +395,7 @@ Pas dix scripts qu'on lance de mémoire.
 | **P-03** | Le client TypeScript régénéré depuis OpenAPI ne produit aucun diff |
 | **P-04** | **Aucun paquet de `socle/` n'importe un paquet de `metier/`** — test de graphe d'imports |
 | **P-05** | L'application démarre et **chaque écran s'atteint**, en clair et en sombre, sur Chromium et sur WebKit |
-| **P-06** | Aucune chaîne d'interface en dur : les clés `fr` et `en` existent toutes les deux |
+| **P-06** | **Aucune littérale d'interface en dur** : chaîne visible, valeur de couleur hors du thème, appel direct d'une API de plateforme hors de l'interface unique, rôle ; et les clés `fr` et `en` existent toutes les deux. Cinq règles, un script, chaque échec nomme le fichier |
 | **P-07** | Aucune dépendance sous licence copyleft fort (voir § 9) |
 | **P-08** | **Les provisions d'extension tiennent** (voir § 7.1) |
 | **P-09** | **Le pays ne fuit pas hors du country pack** (voir § 7.2) |
@@ -554,7 +574,7 @@ prompt et la procédure de rangement sont en fin de [05-design.md](05-design.md)
 
 | Régime | Licences |
 |---|---|
-| **Autorisé** | MIT, Apache-2.0, BSD-2/3, ISC, Zlib, Unicode, MPL-2.0, **OFL 1.1** pour les polices |
+| **Autorisé** | MIT, Apache-2.0, BSD-2/3, ISC, Zlib, Unicode, MPL-2.0, **OFL 1.1** pour les polices ; BlueOak-1.0.0 et CC0-1.0, permissives, arrivées avec Nuxt ; CC-BY-4.0 pour `caniuse-lite` seul, donnée de construction qui ne voyage pas (T0b) |
 | **Refusé** | GPL, AGPL, LGPL et tout copyleft fort — le produit est un logiciel propriétaire vendu par abonnement |
 | **Contrôle** | Un vérificateur de licences côté Python et un côté npm, adossés aux lockfiles (porte P-07) |
 

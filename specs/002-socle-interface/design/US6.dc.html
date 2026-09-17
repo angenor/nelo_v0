@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>US6 · Le poids mesuré</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+  <style>
+/* Jetons de design — thème clair et thème sombre.
+   Basculer le thème : <html data-theme="dark">. */
+:root, [data-theme="light"] {
+  --bg:#F6F7F4; --surface:#FFFFFF; --surface-sunken:#EFF2ED;
+  --border:#E1E6DE; --border-strong:#C9D2C7;
+  --text:#131A16; --text-muted:#5C6B63;
+  --primary:#12503F; --primary-hover:#0D3D30; --primary-soft:#E3F0EA; --primary-ink:#FFFFFF;
+  --accent:#B8791C; --accent-soft:#FAF0DC; --accent-ink:#FFFFFF;
+  --danger:#A8291F; --danger-soft:#FBE9E6; --danger-ink:#FFFFFF;
+  --success:#1F7A4D; --success-soft:#E4F3EA;
+  --board:#E7EAE4;
+}
+[data-theme="dark"] {
+  --bg:#0F1110; --surface:#181A19; --surface-sunken:#131514;
+  --border:#282B29; --border-strong:#3C403E;
+  --text:#EAEBEA; --text-muted:#9BA09D;
+  --primary:#4FB48C; --primary-hover:#68C79F; --primary-soft:#1B2A25; --primary-ink:#0F1110;
+  --accent:#D9A44E; --accent-soft:#33280F; --accent-ink:#0F1110;
+  --danger:#E0705F; --danger-soft:#3A1A15; --danger-ink:#0F1110;
+  --success:#4FB48C; --success-soft:#182A24;
+  --board:#0A0B0A;
+}
+* { box-sizing: border-box; }
+body { margin:0; background:var(--board); color:var(--text); font-family:'Public Sans',system-ui,sans-serif; font-size:14px; line-height:1.45; -webkit-font-smoothing:antialiased; }
+a { color:var(--primary); text-decoration:none; }
+a:hover { color:var(--primary-hover); text-decoration:underline; }
+button { font-family:'Public Sans',system-ui,sans-serif; }
+
+
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important} }
+.cle{text-decoration:underline dotted;text-decoration-color:var(--primary);text-underline-offset:3px;text-decoration-thickness:1px}
+.pack{background:var(--accent-soft);border-radius:4px;padding:0 3px;box-shadow:inset 0 0 0 1px var(--accent)}
+.chg{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
+
+  </style>
+</helmet>
+<div style="width:1560px;min-height:1200px;background:var(--board);color:var(--text);padding:40px;display:flex;flex-direction:column;gap:32px">
+
+<header style="display:flex;flex-direction:column;gap:8px;max-width:960px">
+  <div style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)">T0b · US6 · le poids est déclaré, mesuré, et le dépassement refuse</div>
+  <h1 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;line-height:1.15;margin:0">Un budget dépassé est un refus de fusion, pas une dette</h1>
+  <p style="font-size:16px;color:var(--text-muted);margin:0;text-wrap:pretty">L’écran déclare son plafond en octets transférés ; un vrai navigateur mesure ; la porte P-10 échoue au dépassement en nommant l’écran, le plafond et la mesure. Sur le chemin du premier affichage, aucune ressource ne vient d’un service distant : les trois polices sont servies par l’application.</p>
+</header>
+<section style="display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--border);padding-top:24px"><div style="display:flex;flex-direction:column;gap:4px">
+  <div style="display:flex;align-items:baseline;gap:12px"><span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;color:var(--text-muted)">A</span><h2 style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;margin:0">La mesure</h2></div>
+  
+</div><div style="display:flex;align-items:stretch;gap:0">
+<div style="width:260px;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center"><div style="border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;border:1px solid var(--border-strong);background:var(--surface);"><div style="display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg><span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px">L’écran déclare son plafond</span></div><div style="font-size:12px;color:var(--text-muted);text-wrap:pretty">accueil de la coquille · <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">120 Ko</span> transférés, le plafond le plus serré du corpus, celui de l’appel de séance</div></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:110px;flex:0 0 auto;align-self:center"><span style="font-size:11px;color:var(--text-muted);white-space:nowrap">en un seul endroit</span><div style="display:flex;align-items:center;width:100%"><div style="flex:1;border-top:2px solid var(--text-muted);"></div><svg width="10" height="12" viewBox="0 0 10 12" style="margin-left:-1px;color:var(--text-muted)"><path d="M0 0l10 6-10 6z" fill="currentColor"></path></svg></div></div>
+<div style="width:260px;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center"><div style="border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;border:1px solid var(--border-strong);background:var(--surface);"><div style="display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;"><path d="M12 3v18M5 7l7-2 7 2"></path><path d="M2 14l3-7 3 7a3 3 0 0 1-6 0zM16 14l3-7 3 7a3 3 0 0 1-6 0z"></path></svg><span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px">Un vrai navigateur mesure</span></div><div style="font-size:12px;color:var(--text-muted);text-wrap:pretty">Chromium ouvre l’écran, additionne les octets transférés sur le chemin du premier affichage · mesure : <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">96 Ko</span></div></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:110px;flex:0 0 auto;align-self:center"><span style="font-size:11px;color:var(--text-muted);white-space:nowrap">plafond ↔ mesure</span><div style="display:flex;align-items:center;width:100%"><div style="flex:1;border-top:2px solid var(--text-muted);"></div><svg width="10" height="12" viewBox="0 0 10 12" style="margin-left:-1px;color:var(--text-muted)"><path d="M0 0l10 6-10 6z" fill="currentColor"></path></svg></div></div>
+<div style="width:220px;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center"><div style="border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;border:1px solid var(--border-strong);border-color:var(--primary);background:var(--primary-soft);"><div style="display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;"><path d="m5 13 4 4L19 7"></path></svg><span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px">Porte P-10</span></div><div style="font-size:12px;color:var(--text-muted);text-wrap:pretty">compare, pour chaque écran budgété</div></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:110px;flex:0 0 auto;align-self:center"><span style="font-size:11px;color:var(--text-muted);white-space:nowrap">sous le plafond</span><div style="display:flex;align-items:center;width:100%"><div style="flex:1;border-top:2px solid var(--text-muted);"></div><svg width="10" height="12" viewBox="0 0 10 12" style="margin-left:-1px;color:var(--text-muted)"><path d="M0 0l10 6-10 6z" fill="currentColor"></path></svg></div></div>
+<div style="width:300px;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center"><div style="border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;border:1px solid var(--border-strong);background:var(--success-soft);"><div style="display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;color:var(--success)"><path d="m5 13 4 4L19 7"></path></svg><span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px">Passe, et le rapport dit</span></div><div style="font-size:12px;color:var(--text-muted);text-wrap:pretty"><span style="font-family:'IBM Plex Mono',monospace;font-weight:500">accueil-coquille · plafond 120 Ko · mesuré 96 Ko</span><br>écran non budgété → listé « non budgété » pour que l’oubli se voie</div></div></div>
+</div><div style="display:flex;align-items:center;gap:8px;padding-left:370px;font-size:12px;color:var(--text-muted)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;"><path d="M12 5v14M5 12l7 7 7-7"></path></svg>en pointillé : le test négatif, puis le dépôt restitué à l’identique</div><div style="display:flex;align-items:stretch;gap:0;padding-left:370px">
+<div style="width:260px;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center"><div style="border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;border:1px dashed var(--border-strong);color:var(--text-muted);background:var(--surface);"><div style="display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;"><path d="M12 5v14M5 12h14"></path></svg><span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px">Test négatif</span></div><div style="font-size:12px;color:var(--text-muted);text-wrap:pretty">une image de <span style="font-family:'IBM Plex Mono',monospace;font-weight:500">300 Ko</span> ajoutée à l’écran budgété le plus serré</div></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:80px;flex:0 0 auto;align-self:center"><div style="display:flex;align-items:center;width:100%"><div style="flex:1;border-top:2px dashed var(--border-strong);"></div><svg width="10" height="12" viewBox="0 0 10 12" style="margin-left:-1px;color:var(--border-strong)"><path d="M0 0l10 6-10 6z" fill="currentColor"></path></svg></div></div>
+<div style="width:220px;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center"><div style="border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;border:1px dashed var(--border-strong);color:var(--text-muted);background:var(--surface);"><div style="display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;"><path d="M12 3v18M5 7l7-2 7 2"></path><path d="M2 14l3-7 3 7a3 3 0 0 1-6 0zM16 14l3-7 3 7a3 3 0 0 1-6 0z"></path></svg><span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px">mesure > plafond</span></div><div style="font-size:12px;color:var(--text-muted);text-wrap:pretty"><span style="font-family:'IBM Plex Mono',monospace;font-weight:500">396 Ko</span></div></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:80px;flex:0 0 auto;align-self:center"><div style="display:flex;align-items:center;width:100%"><div style="flex:1;border-top:2px dashed var(--border-strong);"></div><svg width="10" height="12" viewBox="0 0 10 12" style="margin-left:-1px;color:var(--border-strong)"><path d="M0 0l10 6-10 6z" fill="currentColor"></path></svg></div></div>
+<div style="width:300px;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center"><div style="border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;border:1px solid var(--border-strong);border-color:var(--danger);background:var(--danger-soft);border-style:dashed"><div style="display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;color:var(--danger)"><path d="M6 6l12 12M18 6 6 18"></path></svg><span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px">P-10 échoue en nommant</span></div><div style="font-size:12px;color:var(--text-muted);text-wrap:pretty"><span style="font-family:'IBM Plex Mono',monospace;font-weight:500">accueil-coquille · plafond 120 Ko · mesuré 396 Ko</span><br>puis le dépôt est restitué intact</div></div></div>
+</div></section>
+<section style="display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--border);padding-top:24px"><div style="display:flex;flex-direction:column;gap:4px">
+  <div style="display:flex;align-items:baseline;gap:12px"><span style="font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;color:var(--text-muted)">B</span><h2 style="font-family:'Archivo',sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em;margin:0">Les plafonds du corpus</h2></div>
+  <p style="font-size:14px;color:var(--text-muted);margin:0;max-width:760px;text-wrap:pretty">L’accueil de la coquille est budgété au plafond le plus serré : si la coquille seule dépasse, aucun écran d’appel ne tiendra jamais.</p>
+</div><div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;max-width:760px"><table style="width:100%;border-collapse:collapse;font-size:14px"><thead><tr style="background:var(--surface-sunken)"><th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Écran</th><th style="text-align:right;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Plafond</th><th style="text-align:left;padding:8px 16px;font-size:13px;font-weight:600;color:var(--text-muted);border-bottom:1px solid var(--border)">Source</th></tr></thead><tbody>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;font-weight:500">Accueil de la coquille</td><td style="padding:10px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap">120 Ko</td><td style="padding:10px 16px;font-size:13px;color:var(--text-muted)">FR-062 : l’appel s’y assemblera</td></tr><tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;font-weight:500">Appel de séance</td><td style="padding:10px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap">120 Ko</td><td style="padding:10px 16px;font-size:13px;color:var(--text-muted)">05-design § 9.3 · premier affichage utile < 2 s sur 3G lente</td></tr><tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;font-weight:500">Saisie de notes</td><td style="padding:10px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap">200 Ko</td><td style="padding:10px 16px;font-size:13px;color:var(--text-muted)">05-design § 9.3</td></tr><tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;font-weight:500">Portail parent</td><td style="padding:10px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap">150 Ko par vue</td><td style="padding:10px 16px;font-size:13px;color:var(--text-muted)">05-design § 9.3</td></tr><tr style="border-bottom:1px solid var(--border)"><td style="padding:10px 16px;font-weight:500">Back-office</td><td style="padding:10px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap">500 Ko au premier chargement</td><td style="padding:10px 16px;font-size:13px;color:var(--text-muted)">05-design § 9.3</td></tr><tr style=""><td style="padding:10px 16px;font-weight:500">Page de style</td><td style="padding:10px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap">non budgétée</td><td style="padding:10px 16px;font-size:13px;color:var(--text-muted)">FR-064 · servie en développement seulement, absente en production</td></tr>
+</tbody></table></div></section>
+
+</div>
+</x-dc>
+</body>
+</html>

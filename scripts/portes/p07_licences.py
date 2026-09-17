@@ -25,6 +25,15 @@ AUTORISEES = {
     # La licence de la bibliothèque standard Python, et sa forme SPDX historique (argparse).
     "PSF-2.0",
     "Python-2.0",
+    # Permissives, arrivées avec Nuxt et son outillage de construction (T0b, research.md R-01) :
+    # BlueOak est une licence de type MIT, CC0 une renonciation au droit d'auteur.
+    "BlueOak-1.0.0",
+    "CC0-1.0",
+}
+# Une licence permise pour un paquet nommé seulement, avec son motif. caniuse-lite porte les
+# données de browserslist : elles servent à la construction et ne voyagent pas jusqu'au client.
+EXCEPTIONS_NOMMEES = {
+    ("caniuse-lite", "CC-BY-4.0"),
 }
 SYNONYMES = {
     "mit license": "MIT",
@@ -92,7 +101,7 @@ def principal() -> None:
     for licence, paquets in npm.items():
         for paquet in paquets:
             paquets_npm += 1
-            if not autorisee(licence):
+            if not autorisee(licence) and (paquet["name"], licence) not in EXCEPTIONS_NOMMEES:
                 echec(f"{paquet['name']} (npm) — licence « {licence} » refusée")
 
     if not paquets_python:

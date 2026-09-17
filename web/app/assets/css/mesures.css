@@ -1,0 +1,20 @@
+/* Mesures non colorées du système de design : hauteurs de cible, rayons, filet, points de
+   rupture, mouvement. Compagnon de theme.css, copié tel quel dans l'application et comparé
+   octet à octet par la vérification. Les valeurs viennent de 05-design.md § 3 et de la planche
+   13 ; rien n'est inventé ici. Une valeur nouvelle entre ici avant d'entrer dans un composant. */
+:root {
+  --cible-classe: 52px;        /* cible tactile en classe : l'appel se fait debout */
+  --cible-standard: 48px;      /* portail parent, saisie sur tablette */
+  --cible-plancher: 44px;      /* jamais moins, nulle part, sur aucun gabarit */
+  --controle-poste: 36px;      /* dessin d'un contrôle sur poste ; sa zone interactive garde --cible-plancher */
+  --pastille: 24px;            /* pastille d'état et de canal : elle accompagne, elle ne commande pas */
+  --rayon-carte: 8px;          /* cartes, panneaux, blocs */
+  --rayon-champ: 6px;          /* champs, boutons, tuiles */
+  --rayon-pastille: 999px;     /* pastilles d'état et de canal, et rien d'autre */
+  --rayon-micro: 4px;          /* micro-éléments seulement */
+  --filet: 1px;                /* bordures ; aucune ombre hors popover et modale */
+  --rupture-deux-colonnes: 768px;
+  --rupture-trois-colonnes: 1200px;
+  --pulsation-duree: 1.2s;     /* le point « envoi en cours », planche 13 */
+  --pulsation-courbe: ease-in-out;
+}

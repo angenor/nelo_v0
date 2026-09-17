@@ -32,6 +32,15 @@ node_modules/
 .output/
 dist/
 
+# L'interface : construction, icônes générées, rapports de navigateur.
+# web/public/licences/ se versionne : « à propos » y renvoie.
+web/.nuxt/
+web/.output/
+web/public/icones/
+web/test-results/
+web/playwright-report/
+*.tsbuildinfo
+
 # Python
 __pycache__/
 *.pyc

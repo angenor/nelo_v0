@@ -2,14 +2,16 @@
 # Chaque porte prouve qu'elle mord (docs/01-stack.md § 7, research.md R-13).
 #
 # Pour chaque porte : une copie de travail git temporaire sur HEAD, la mutation de
-# scripts/portes/negatifs/p-XX.sh, la porte seule — qui doit échouer en se nommant. Le dépôt
-# d'origine n'est jamais muté : son `git status` est comparé avant et après.
+# scripts/portes/negatifs/p-XX.sh, la porte seule, qui doit échouer en se nommant. Le dépôt
+# d'origine n'est jamais muté : son `git status` est comparé avant et après. Pour P-05 et P-10,
+# la copie construit l'interface après la mutation, et sert sur des ports à elle.
 set -euo pipefail
 
 RACINE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$RACINE"
 
-PORTES=(P-01 P-02 P-03 P-04 P-07 P-11 P-12)
+PORTES=(P-01 P-02 P-03 P-04 P-05 P-06 P-07 P-10 P-11 P-12)
+INTERFACE_CONSTRUITE=" P-05 P-10 "
 etat_initial=$(git status --porcelain)
 base=$(mktemp -d "${TMPDIR:-/tmp}/nelo-negatifs.XXXXXX")
 obtenus=0
@@ -38,7 +40,11 @@ for porte in "${PORTES[@]}"; do
   sortie=$(
     cd "$copie" &&
     "scripts/portes/negatifs/$numero.sh" &&
-    NELO_BD_NOM=nelo_negatif NELO_BD_NOM_TEST=nelo_negatif_test "scripts/portes/$numero.sh" 2>&1
+    if [[ "$INTERFACE_CONSTRUITE" == *" $porte "* ]]; then
+      pnpm --filter nelo-web build >/dev/null 2>&1 || echo "construction de la copie échouée"
+    fi &&
+    NELO_BD_NOM=nelo_negatif NELO_BD_NOM_TEST=nelo_negatif_test \
+      NELO_WEB_PORT=4320 NELO_WEB_PORT_DEV=4321 "scripts/portes/$numero.sh" 2>&1
   ) && code=0 || code=$?
 
   if [ "$code" -ne 0 ] && grep -q "PORTE $porte ÉCHOUÉE" <<<"$sortie"; then

@@ -9,11 +9,12 @@
 
 | Rang | Fichier | Statut |
 |---|---|---|
-| 1 | **`design/theme.css`** | **La seule source des valeurs.** Couleurs, thèmes clair et sombre, base typographique |
-| 2 | `design/tokens.json` | Les mêmes valeurs, en JSON, pour l'outillage |
-| 3 | `design/ecrans/index.html` | Le sommaire — **à ouvrir en premier** |
-| 4 | `design/ecrans/13_systeme-de-design.html` | Jetons et composants, tous états |
-| 5 | `design/ecrans/*.html` | Douze écrans maquettés, du mobile 390 px au poste 1440 px |
+| 1 | **`design/theme.css`** | **La seule source des valeurs de couleur.** Thèmes clair et sombre, base typographique |
+| 2 | **`design/mesures.css`** | **La seule source des mesures non colorées** : hauteurs de cible, rayons, filet, points de rupture, pulsation. Copié tel quel dans l'application, comme `theme.css` ; les valeurs sont celles de la [§ 3](#3-espacement-hauteurs-rayons-ombres) et de la planche, rien n'y est inventé |
+| 3 | `design/tokens.json` | Les mêmes valeurs que `theme.css`, en JSON, pour l'outillage |
+| 4 | `design/ecrans/index.html` | Le sommaire — **à ouvrir en premier** |
+| 5 | `design/ecrans/13_systeme-de-design.html` | Jetons et composants, tous états |
+| 6 | `design/ecrans/*.html` | Douze écrans maquettés, du mobile 390 px au poste 1440 px |
 
 **Deux règles de lecture de `theme.css`** :
 
@@ -32,16 +33,19 @@
 > et le vocabulaire** — pas la disposition sur un téléphone. Celle-ci se conçoit à chaque écran, avec
 > les règles de la [§ 9](#9-coder-un-écran).
 
-### 0.1 Ce qui manque encore
+### 0.1 Les documents du système
 
-Le système est arrêté sur la couleur, la typographie et les composants. Trois fichiers de Kaya n'ont
-pas d'équivalent ici et se produiront quand la première tranche d'interface les exigera :
+Le système est arrêté sur la couleur, la typographie et les composants. Trois documents le
+précisent depuis T0b, écrits avec le code qu'ils décrivent :
 
-| Fichier | Ce qu'il porterait | Quand |
-|---|---|---|
-| `design/lexique.md` | Le vocabulaire visible, **opposable, primant sur les clés i18n** | **Avant le premier écran** — voir [§ 8](#8-la-langue) |
-| `design/composants.md` | Les quatorze composants, tous états, en spécification | Avec la tranche de la coquille |
-| `design/mouvement.md` | Durées, courbes, patrons d'animation | Avec la tranche de la coquille |
+| Fichier | Ce qu'il porte |
+|---|---|
+| [`design/lexique.md`](design/lexique.md) | Le vocabulaire visible, **opposable, primant sur les clés i18n** ; un test le compare aux clés |
+| [`design/composants.md`](design/composants.md) | Les quatorze composants, leurs états, leurs formes, leurs voix, leurs mots ; les écarts de la revue tranchés ; un test le compare au code |
+| [`design/mouvement.md`](design/mouvement.md) | La seule animation, et la règle qui en empêche une seconde |
+
+Ce qui manque encore : **les jeux de données des douze écrans maquettés sont du secondaire**, et se
+reprennent écran par écran aux revues visuelles.
 
 ---
 
@@ -127,7 +131,7 @@ devise du country pack. `145 000 F`, jamais `145000F`.
 | **Cible tactile en classe** | **52 px** | L'appel se fait debout, en marchant entre les rangs, parfois avec une craie dans l'autre main |
 | Cible tactile standard | 48 px | Le portail parent, la saisie sur tablette |
 | **Plancher absolu** | **44 px** | Jamais moins, nulle part, sur aucun gabarit |
-| Contrôle sur poste | 36 px | Souris et clavier, densité de tableau |
+| Contrôle sur poste | 36 px **dessinés**, zone interactive de 44 px | Souris et clavier, densité de tableau. Le plancher vaut aussi ici : le contrôle se dessine bas, sa zone interactive ne descend jamais sous 44 px |
 | Pastille d'état | 22–24 px | Elle accompagne, elle ne commande pas |
 
 > **Le 52 px n'est pas un confort.** Un appel raté parce que la case voisine a été cochée coûte un SMS
@@ -182,7 +186,7 @@ Tous sont maquettés dans `13_systeme-de-design.html`, en clair et en sombre.
 | 8 | **Fil d'Ariane** | La position dans une hiérarchie profonde : cycle → niveau → classe → élève |
 | 9 | **Onglets** | Les vues d'une même fiche, pas une navigation |
 | 10 | **Carte d'indicateur** | Un chiffre clé, son libellé, sa variation. Archivo tabulaire |
-| 11 | **Alerte** | Information, attente, danger. **Jamais deux niveaux dans le même bloc** |
+| 11 | **Alerte** | Information, attente (ocre), danger (rouge), enregistré (voix de réussite). **Jamais deux niveaux dans le même bloc** |
 | 12 | **Ligne de tableau** | Élève, matricule, classe, reste à payer, état, dernier contact |
 | 13 | **Ruban d'état de saisie** | Voir [§ 5.1](#51-le-ruban-détat-de-saisie) |
 | 14 | **Shell d'application** | Voir [§ 5.2](#52-le-shell-se-compose-il-ne-se-choisit-pas) |

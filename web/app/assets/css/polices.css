@@ -1,0 +1,43 @@
+/* Les trois polices du système de design, servies par l'application (research.md R-07).
+   Fontsource 5.3.0, sous-ensemble latin, OFL 1.1 : avis dans public/licences/, atteint par
+   « à propos ». Quatre fichiers et quatre seulement (écart E-23) : Public Sans 400 et 500 et
+   Archivo 700 font le premier affichage, préchargés par app.vue, dans les 45 Ko que P-10
+   mesure ; IBM Plex Mono 500 ne sert qu'aux données et se charge à sa première utilisation.
+   Une graisse absente n'est jamais simulée. Aucun de ces fichiers ne porte U+202F : la police
+   de repli des familles le rend (écart E-06). */
+
+:root {
+  font-synthesis-weight: none;
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('@fontsource/public-sans/files/public-sans-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('@fontsource/public-sans/files/public-sans-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('@fontsource/archivo/files/archivo-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2') format('woff2');
+}

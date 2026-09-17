@@ -28,13 +28,25 @@ scripts/bd-vierge.sh --avec-jeu-d-essai    # la base, ses deux rôles, les migra
 uv run fastapi dev api/main.py             # l'API sur :8000 — /api/v1/sante, /api/v1/parametres
 ```
 
+## L'interface
+
+```bash
+pnpm --filter nelo-web exec playwright install chromium webkit   # une fois, avec réseau
+pnpm --filter nelo-web dev       # l'application ; ?persona=un-domaine|cinq-domaines|sept-domaines|aucune-capacite
+                                 # la page de style sur /style, le pack fictif avec ?pack=fictif
+pnpm --filter nelo-web build     # la construction, dans web/.output
+pnpm --filter nelo-web preview   # la construction servie, installable
+```
+
 ## Vérifier
 
 ```bash
-scripts/verifier.sh          # ruff et les sept portes, puis le reparcours sous suspension de l'assistance
+scripts/verifier.sh          # ruff, les dix portes, le reparcours sous suspension, typecheck, Vitest,
+                             #   la construction, et les tests de l'interface dans un vrai navigateur
 scripts/tests-negatifs.sh    # chaque porte cassée dans une copie git, et chacune doit échouer
 ```
 
-Le guide pas à pas est [specs/001-socle-serveur/quickstart.md](specs/001-socle-serveur/quickstart.md).
+Les guides pas à pas sont [specs/001-socle-serveur/quickstart.md](specs/001-socle-serveur/quickstart.md)
+et [specs/002-socle-interface/quickstart.md](specs/002-socle-interface/quickstart.md).
 
 Les instructions destinées aux agents sont dans [CLAUDE.md](CLAUDE.md), lu automatiquement.

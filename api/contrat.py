@@ -5,6 +5,10 @@ dépendances de route (research.md R-05) : FastAPI ne les voit pas. Ce crochet l
 spécification, **requis**, pour que le client typé les porte ; il déclare aussi le refus
 `422 VAL_SCHEMA_INVALIDE` sur toute route avec corps.
 
+Il enregistre enfin les schémas d'échange qu'aucune route ne sert encore, pour que le client en
+dérive ses types au lieu de les écrire : le contexte de composition de l'interface (T0b, servi par
+`GET /moi/capacites` à partir de T1a).
+
     uv run python -m api.contrat      # écrit contrat/openapi.json, stable octet pour octet
 """
 
@@ -13,8 +17,10 @@ from typing import Any
 
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
+from pydantic.json_schema import models_json_schema
 
 from api.configuration import RACINE
+from modules.shared import ContexteCapacites
 
 EN_TETE_ETABLISSEMENT = {
     "name": "X-Nelo-Etablissement",
@@ -37,6 +43,17 @@ REFUS_DE_SCHEMA = {
     "content": {"application/json": {"schema": {"$ref": "#/components/schemas/EnveloppeErreur"}}},
 }
 
+SCHEMAS_SANS_ROUTE = [ContexteCapacites]
+
+
+def schemas_sans_route() -> dict[str, Any]:
+    """Les schémas d'échange sans route et leurs sous-modèles, tels qu'une réponse les sérialise."""
+    _, definitions = models_json_schema(
+        [(modele, "serialization") for modele in SCHEMAS_SANS_ROUTE],
+        ref_template="#/components/schemas/{model}",
+    )
+    return definitions["$defs"]
+
 
 def specification(application: FastAPI) -> dict[str, Any]:
     if application.openapi_schema:
@@ -57,6 +74,11 @@ def specification(application: FastAPI) -> dict[str, Any]:
             operation["parameters"] = en_tetes + operation.get("parameters", [])
             if "requestBody" in operation:
                 operation["responses"].setdefault("422", REFUS_DE_SCHEMA)
+    schemas = document.setdefault("components", {}).setdefault("schemas", {})
+    for nom, schema in schemas_sans_route().items():
+        if nom in schemas:
+            raise RuntimeError(f"le schéma sans route « {nom} » porte le nom d'un schéma existant")
+        schemas[nom] = schema
     application.openapi_schema = document
     return document
 
