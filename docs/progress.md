@@ -32,8 +32,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T0b, le socle d'interface : implémentée le 2026-09-17, en attente de fusion.** Branche `002-socle-interface`, 83 tâches sur 83 cochées ([tasks.md](../specs/002-socle-interface/tasks.md)) ; T058, le parcours d'installation, est passé sur Chrome le 2026-09-17 (Safari différé par l'utilisateur). T0a est fusionnée dans `main` depuis le 2026-09-15 |
-| **Prochaine** | **Relire et fusionner T0b**, puis trancher **Q29** dans un ADR. Ensuite la tranche suivante au rang de la [roadmap](04-roadmap.md) |
+| **Tranche en cours** | Aucune. **T0b, le socle d'interface, est fusionnée dans `main` le 2026-09-17** (83 tâches sur 83, [tasks.md](../specs/002-socle-interface/tasks.md)), `scripts/verifier.sh` vert avant fusion ; T058 passé sur Chrome, Safari différé par l'utilisateur. T0a est fusionnée depuis le 2026-09-15 |
+| **Prochaine** | Trancher **Q29** dans un ADR. Ensuite la tranche suivante au rang de la [roadmap](04-roadmap.md) |
 | **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -55,7 +55,7 @@ Rien ici ne bloque le démarrage. Chaque ligne dit ce qu'elle bloquera, et quand
 | **Q4** | ~~La stratégie de rendu par surface.~~ **Tranchée le 2026-09-17** ([T0b, research R-06](../specs/002-socle-interface/research.md)) : la mesure a contredit « back-office en rendu client » ; rendu serveur par défaut, rendu client écran par écran par règle de route quand P-10 le permet ([01-stack.md § 1.2](01-stack.md)) | Rien |
 | **Q5** | **La granularité des capacités** : cinq à douze par service est l'ordre de grandeur visé. Trop fines, l'administration devient illisible pour un censeur ; trop grossières, la séparation scolarité / pédagogie devient impossible | **T1b.** *Après, c'est une reprise de toutes les affectations* |
 | **Q6** | **Un agrégateur de paiement ou deux dès le départ ?** L'abstraction est posée quoi qu'il arrive ([ADR 009](adr/009-agregateur-de-paiement-derriere-une-interface.md)) | Les **valeurs par défaut** de T8b, pas son modèle |
-| **Q29** | **Le plafond de 120 Ko de l'accueil et de l'appel contient-il les polices ?** Mesuré en bac à sable ([T0b, research R-16](../specs/002-socle-interface/research.md)), puis **par P-10 sur l'application réelle le 2026-09-17** : accueil **103 à 109 Ko** d'application, polices **43,6 Ko**, total **147 à 153 Ko**. Trois issues : **A** polices système sur les écrans budgétés ; **B** 120 Ko pour l'application et 45 Ko à part pour les polices, immuables et précachées (recommandée, **appliquée**) ; **C** relever à 170 Ko. Tenir B a demandé de ramener le premier affichage à trois fichiers de police (écart E-23 : plus de graisse 600). Le principe XV nomme le chiffre : la réponse entre dans un ADR | La fusion de T0b, qui l'applique. Changer d'issue touche une ligne de `web/ecrans.json` et une règle de P-10 |
+| **Q29** | **Le plafond de 120 Ko de l'accueil et de l'appel contient-il les polices ?** Mesuré en bac à sable ([T0b, research R-16](../specs/002-socle-interface/research.md)), puis **par P-10 sur l'application réelle le 2026-09-17** : accueil **103 à 109 Ko** d'application, polices **43,6 Ko**, total **147 à 153 Ko**. Trois issues : **A** polices système sur les écrans budgétés ; **B** 120 Ko pour l'application et 45 Ko à part pour les polices, immuables et précachées (recommandée, **appliquée**) ; **C** relever à 170 Ko. Tenir B a demandé de ramener le premier affichage à trois fichiers de police (écart E-23 : plus de graisse 600). Le principe XV nomme le chiffre : la réponse entre dans un ADR | T0b, fusionnée, applique B. Changer d'issue touche une ligne de `web/ecrans.json` et une règle de P-10 |
 
 ### Ce qui exige un conseil juridique local — avant tout engagement contractuel
 
@@ -94,6 +94,13 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-17 : T0b est fusionnée dans `main`
+
+**Fait** : `002-socle-interface` fusionnée dans `main` (`--no-ff`), à la demande de l'utilisateur.
+`scripts/verifier.sh` : un premier passage rouge sur `test_arrete_accumule_relance_consomme` (P-12),
+vert seul trois fois, puis 10 portes vertes en 1 min 40 s. Deuxième échec observé de ce test de T0a :
+**instable, à corriger**. **Bloqué / à faire ensuite** : Q29 dans un ADR, puis la tranche suivante.
 
 ## 2026-09-17 : T058, le parcours d'installation passe sur Chrome, la tranche est complète
 
