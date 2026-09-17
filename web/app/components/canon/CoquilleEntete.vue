@@ -92,6 +92,7 @@ function themeSuivant() {
 
 .entete {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   min-height: calc(var(--cible, var(--cible-standard)) + 8px);
@@ -180,10 +181,13 @@ function themeSuivant() {
 }
 .outils {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   margin-left: auto;
-  flex: 0 0 auto;
+  flex: 0 1 auto;
 }
 .langues {
   display: flex;

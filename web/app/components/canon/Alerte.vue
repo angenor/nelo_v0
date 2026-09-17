@@ -102,7 +102,8 @@ const etat = computed(() => `${props.niveau} ${props.action ? 'avec_action' : 's
 .action {
   display: inline-flex;
   align-items: center;
-  min-height: var(--cible-plancher);
+  min-width: var(--cible-plancher);
+  min-height: var(--cible, var(--cible-standard));
   font-size: 13px;
   font-weight: 500;
 }

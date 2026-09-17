@@ -90,6 +90,7 @@
   "demo.justifier": "Justifier l’absence",
   "demo.legende_tableau": "Situation des familles",
   "demo.matricule": "Matricule",
+  "demo.mode_auto": "Selon la largeur : en cartes sous 768 px, en lignes au-delà",
   "demo.mode_cartes": "En cartes, sous 768 px",
   "demo.mode_lignes": "En lignes, à partir de 768 px",
   "demo.montant_verse": "Montant versé",

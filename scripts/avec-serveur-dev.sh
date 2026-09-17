@@ -37,4 +37,9 @@ for _ in $(seq 1 120); do
   sleep 0.5
 done
 
+if ! (cd web && node tests/prechauffer.mjs) >>"$journal" 2>&1; then
+  echo "SERVEUR DE DÉVELOPPEMENT : la page de style ne s'hydrate pas ($(tail -3 "$journal"))" >&2
+  exit 1
+fi
+
 "$@"

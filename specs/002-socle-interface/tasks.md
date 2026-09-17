@@ -245,7 +245,7 @@ critère de fin de la roadmap.
 
 - [X] T070 [US7] Étendre `scripts/tests-negatifs.sh` : `PORTES` += `P-05 P-06 P-10` ; pour ces trois portes la copie de travail fait `pnpm install --frozen-lockfile --offline` et, pour P-05 et P-10, `pnpm --filter web icones && pnpm --filter web build` avant la porte ; l'échec attendu porte `PORTE P-XX ÉCHOUÉE` ; comparaison du `git status` avant et après inchangée
 - [X] T071 [US7] Ordonner `scripts/verifier.sh` selon [research.md R-15](research.md) : `ruff` → P-02 → P-07 → P-04 → P-11 → P-06 → P-01 → P-12 → P-03 → reparcours → typecheck → vitest → construction → P-05 → P-10 → e2e (`pnpm --filter web test:e2e`) ; compteur à dix portes ; mettre à jour le commentaire d'en-tête avec l'ordre et le motif
-- [ ] T072 [US7] Lancer `scripts/verifier.sh` et `scripts/tests-negatifs.sh`, noter les deux durées et « dix cassées, dix échecs, dépôt intact » dans `docs/progress.md` ; si la vérification dépasse trois minutes, le dire au journal avec le découpage proposé (SC-011), sans retirer une porte
+- [X] T072 [US7] Lancer `scripts/verifier.sh` et `scripts/tests-negatifs.sh`, noter les deux durées et « dix cassées, dix échecs, dépôt intact » dans `docs/progress.md` ; si la vérification dépasse trois minutes, le dire au journal avec le découpage proposé (SC-011), sans retirer une porte
 
 ---
 
@@ -257,15 +257,15 @@ critère de fin de la roadmap.
 
 ### Tests pour la User Story 8
 
-- [ ] T073 [P] [US8] Écrire `web/tests/e2e/disposition.spec.ts` : à 390, 768 et 1200 px sur `/`, `/d/vie_scolaire`, `/a-propos`, `/style` : `document.documentElement.scrollWidth <= innerWidth` ; `CanonTableau` rend des cartes (`data-mode="cartes"`) à 390 et des lignes à 768 ; le bouton principal de `/d/vie_scolaire` est en bas et pleine largeur à 390 ; à 125 % (`deviceScaleFactor` et `zoom` CSS) aucun débordement
-- [ ] T074 [P] [US8] Écrire `web/tests/e2e/cibles.spec.ts` : pour chaque élément interactif (`a, button, input, select, [role=switch], [role=tab]`) de chaque écran, `getBoundingClientRect` ou la zone du pseudo-élément ≥ 44 × 44 ; ≥ 52 sur `/d/vie_scolaire` (contexte `classe`) ; ≥ 48 sur `/a-propos` (`standard`)
-- [ ] T075 [P] [US8] Écrire `web/tests/e2e/survol-clavier.spec.ts` : capturer les éléments visibles, `hover` sur chaque zone, aucun élément nouveau n'apparaît ; `Tab` parcourt toutes les actions de la coquille et de `/style` dans l'ordre du DOM avec `:focus-visible` (contour non nul)
-- [ ] T076 [P] [US8] Écrire `web/tests/e2e/contraste.spec.ts` : `@axe-core/playwright` sur `/style` en `light` et en `dark`, règles `color-contrast` (AA) sans violation ; sur `/` et `/d/vie_scolaire` aussi
+- [X] T073 [P] [US8] Écrire `web/tests/e2e/disposition.spec.ts` : à 390, 768 et 1200 px sur `/`, `/d/vie_scolaire`, `/a-propos`, `/style` : `document.documentElement.scrollWidth <= innerWidth` ; `CanonTableau` rend des cartes (`data-mode="cartes"`) à 390 et des lignes à 768 ; le bouton principal de `/d/vie_scolaire` est en bas et pleine largeur à 390 ; à 125 % (`deviceScaleFactor` et `zoom` CSS) aucun débordement
+- [X] T074 [P] [US8] Écrire `web/tests/e2e/cibles.spec.ts` : pour chaque élément interactif (`a, button, input, select, [role=switch], [role=tab]`) de chaque écran, `getBoundingClientRect` ou la zone du pseudo-élément ≥ 44 × 44 ; ≥ 52 sur `/d/vie_scolaire` (contexte `classe`) ; ≥ 48 sur `/a-propos` (`standard`)
+- [X] T075 [P] [US8] Écrire `web/tests/e2e/survol-clavier.spec.ts` : capturer les éléments visibles, `hover` sur chaque zone, aucun élément nouveau n'apparaît ; `Tab` parcourt toutes les actions de la coquille et de `/style` dans l'ordre du DOM avec `:focus-visible` (contour non nul)
+- [X] T076 [P] [US8] Écrire `web/tests/e2e/contraste.spec.ts` : `@axe-core/playwright` sur `/style` en `light` et en `dark`, règles `color-contrast` (AA) sans violation ; sur `/` et `/d/vie_scolaire` aussi
 
 ### Implémentation de la User Story 8
 
-- [ ] T077 [US8] Écrire `web/app/composables/useContexteTactile.ts` (`provide`/`inject` de `'contexte-tactile'`, pose `--cible` sur le conteneur, `poste` pose `--cible: var(--controle-poste)` plus un pseudo-élément de `var(--cible-plancher)` sur les contrôles) ; l'appliquer à `/d/vie_scolaire` (`classe`), `/a-propos` et `/` (`standard`), et proposer `poste` sur `/style` pour la démonstration
-- [ ] T078 [US8] Corriger ce que T073 à T076 révèlent dans les composants (`web/app/components/canon/*.vue`) et les pages, sans toucher au thème ni aux mesures ; vérifier que les quatre tests passent sur Chromium et que P-05 passe sur WebKit
+- [X] T077 [US8] Écrire `web/app/composables/useContexteTactile.ts` (`provide`/`inject` de `'contexte-tactile'`, pose `--cible` sur le conteneur, `poste` pose `--cible: var(--controle-poste)` plus un pseudo-élément de `var(--cible-plancher)` sur les contrôles) ; l'appliquer à `/d/vie_scolaire` (`classe`), `/a-propos` et `/` (`standard`), et proposer `poste` sur `/style` pour la démonstration
+- [X] T078 [US8] Corriger ce que T073 à T076 révèlent dans les composants (`web/app/components/canon/*.vue`) et les pages, sans toucher au thème ni aux mesures ; vérifier que les quatre tests passent sur Chromium et que P-05 passe sur WebKit
 
 ---
 

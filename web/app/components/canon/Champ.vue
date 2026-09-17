@@ -131,23 +131,26 @@ function saisir(evenement: Event) {
   font-weight: 500;
   color: var(--text);
 }
+/* Le filet est une ombre intérieure : il ne rogne pas la cible, que le champ occupe en entier. */
 .boite {
   position: relative;
   display: flex;
   align-items: center;
   min-height: var(--cible, var(--cible-standard));
-  border: var(--filet) solid var(--border-strong);
   border-radius: var(--rayon-champ);
   background: var(--surface);
+  box-shadow: inset 0 0 0 var(--filet) var(--border-strong);
 }
 .boite:focus-within,
 .boite.focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-soft);
+  box-shadow:
+    inset 0 0 0 var(--filet) var(--primary),
+    0 0 0 3px var(--primary-soft);
 }
 .saisie {
   flex: 1;
   min-width: 0;
+  min-height: var(--cible, var(--cible-standard));
   align-self: stretch;
   padding: 0 10px;
   border: 0;
@@ -182,11 +185,16 @@ select.saisie {
   color: var(--text-muted);
 }
 [data-voix='danger'] .boite {
-  border-color: var(--danger);
+  box-shadow: inset 0 0 0 var(--filet) var(--danger);
+}
+[data-voix='danger'] .boite:focus-within {
+  box-shadow:
+    inset 0 0 0 var(--filet) var(--danger),
+    0 0 0 3px var(--danger-soft);
 }
 .champ[data-etat~='inactif'] .boite {
   background: var(--surface-sunken);
-  border-color: var(--border);
+  box-shadow: inset 0 0 0 var(--filet) var(--border);
 }
 .champ[data-etat~='inactif'] .saisie {
   color: var(--text-muted);

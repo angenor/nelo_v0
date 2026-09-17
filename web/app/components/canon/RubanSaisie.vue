@@ -95,9 +95,13 @@ const heure = computed(() => (vue.value.moment.heure ? pack.value.heure(vue.valu
 .voix-marque .titre {
   color: var(--primary);
 }
+/* Hors ligne : le lien barré est ocre, le mot reste en couleur de texte (contraste AA, E-27). */
 .voix-ocre .titre {
-  color: var(--accent);
+  color: var(--text);
   font-weight: 500;
+}
+.voix-ocre .titre :deep(.icone) {
+  color: var(--accent);
 }
 .point {
   width: 7px;

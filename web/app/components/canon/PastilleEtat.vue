@@ -53,9 +53,14 @@ const etat = computed(() => ETATS_METIER[props.code])
   background: var(--success-soft);
   color: var(--success);
 }
+/* L'ocre porte la voix par le fond, le point et le filet ; le mot reste en couleur de texte,
+   car l'ocre sur son fond doux n'atteint pas le contraste AA (FR-085, écart E-27). */
 .voix-ocre {
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--text);
+}
+.voix-ocre .point {
+  background: var(--accent);
 }
 .voix-rouge {
   background: var(--danger-soft);
@@ -68,11 +73,11 @@ const etat = computed(() => ETATS_METIER[props.code])
 .voix-contour {
   background: transparent;
   border: var(--filet) dashed var(--accent);
-  color: var(--accent);
+  color: var(--text-muted);
 }
 .voix-contour .point {
   background: transparent;
-  border: var(--filet) solid currentColor;
+  border: var(--filet) solid var(--accent);
 }
 .forme-rond {
   padding: 0 2px;

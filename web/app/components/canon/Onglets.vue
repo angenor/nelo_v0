@@ -52,7 +52,9 @@ function deplacer(depuis: number, pas: number) {
 .onglet {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  min-width: var(--cible-plancher);
   min-height: var(--cible, var(--cible-standard));
   padding: 0;
   border: 0;

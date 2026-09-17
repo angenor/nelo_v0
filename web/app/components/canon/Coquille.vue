@@ -28,11 +28,7 @@ const emit = defineEmits<{ retour: [] }>()
 const tiroirOuvert = ref(false)
 const sansCapacite = computed(() => props.composition.situation === 'AUCUNE_CAPACITE')
 const enFamilles = computed(() => props.composition.situation === 'MULTI_FAMILLES')
-const CIBLES: Record<ContexteTactile, string> = {
-  classe: 'var(--cible-classe)',
-  standard: 'var(--cible-standard)',
-  poste: 'var(--controle-poste)',
-}
+const styleTactile = fournirContexteTactile(toRef(props, 'contexteTactile'))
 watch(
   () => props.routeActive,
   () => {
@@ -45,7 +41,7 @@ watch(
   <div
     class="coquille"
     :class="{ apercu, 'avec-barre-basse': !sansCapacite && !enFamilles }"
-    :style="{ '--cible': CIBLES[contexteTactile] }"
+    :style="styleTactile"
     :data-situation="composition.situation"
     :data-etat="composition.situation"
     :data-contexte-tactile="contexteTactile"
@@ -98,6 +94,8 @@ watch(
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  min-width: 0;
   height: 100dvh;
   background: var(--bg);
   color: var(--text);

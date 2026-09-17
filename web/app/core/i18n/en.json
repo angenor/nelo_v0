@@ -90,6 +90,7 @@
   "demo.justifier": "Excuse the absence",
   "demo.legende_tableau": "Families’ fee status",
   "demo.matricule": "Student ID",
+  "demo.mode_auto": "By width: cards below 768 px, rows above",
   "demo.mode_cartes": "As cards, below 768 px",
   "demo.mode_lignes": "As rows, from 768 px",
   "demo.montant_verse": "Amount paid",

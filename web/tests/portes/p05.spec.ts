@@ -47,7 +47,9 @@ for (const visite of visites()) {
       })
       expect(reponse?.status(), echec(`statut ${reponse?.status()}`)).toBeLessThan(400)
       await expect(page.locator('main#principal'), echec('repère main#principal absent')).toBeVisible()
-      await expect(page.locator('html'), echec('thème non appliqué')).toHaveAttribute('data-theme', theme)
+      await expect(page.locator('html'), echec('thème non appliqué')).toHaveAttribute('data-theme', theme, {
+        timeout: 30_000,
+      })
       await page.waitForLoadState('networkidle')
       expect(erreurs, echec(erreurs.join(' | '))).toEqual([])
     })

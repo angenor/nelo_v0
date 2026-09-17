@@ -25,6 +25,8 @@ const THEMES = [
 </template>
 
 <style scoped>
+@reference "../../assets/css/jetons.css";
+
 .section {
   padding: 32px 0;
   border-top: var(--filet) solid var(--border);
@@ -51,6 +53,9 @@ const THEMES = [
 .theme {
   min-width: 0;
   padding: 24px;
+  @variant max-md {
+    padding: 16px;
+  }
   border: var(--filet) solid var(--border);
   border-radius: var(--rayon-carte);
   background: var(--bg);

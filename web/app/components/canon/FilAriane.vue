@@ -44,6 +44,8 @@ li {
 .lien {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-width: var(--cible-plancher);
   min-height: var(--cible-plancher);
 }
 .courant {

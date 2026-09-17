@@ -40,6 +40,7 @@ const appel = computed(() => `tel:${administrateur.value.telephone.replace(/[^\d
   padding: 24px 16px;
 }
 .carte {
+  min-width: 0;
   max-width: 520px;
   padding: 24px;
   border: var(--filet) solid var(--border);

@@ -9,7 +9,7 @@ import { ETATS_COMPOSANT as CANAL } from '~/components/canon/PastilleCanal.vue'
 import { ETATS_COMPOSANT as PASTILLE } from '~/components/canon/PastilleEtat.vue'
 import { ETATS_COMPOSANT as RECHERCHE } from '~/components/canon/Recherche.vue'
 import type { ColonneTableau, LigneDeTableau } from '~/components/canon/Tableau.vue'
-import type { CodeEtat, ContexteTactile } from '~/core/composants/etats'
+import type { CodeEtat } from '~/core/composants/etats'
 import { CONTEXTES_TACTILES, ETATS_METIER } from '~/core/composants/etats'
 import { composer } from '~/core/composition/composer'
 import * as demo from '~/core/demonstration/donnees'
@@ -27,11 +27,6 @@ const LIBELLES_BOUTON = {
   danger: 'demo.supprimer_inscription',
 } as const
 const ETATS_BOUTON_INTERACTIFS = BOUTON.ETATS.filter((e) => e !== 'inactif')
-const CIBLES: Record<ContexteTactile, string> = {
-  classe: 'var(--cible-classe)',
-  standard: 'var(--cible-standard)',
-  poste: 'var(--controle-poste)',
-}
 
 const nom = ref('Koffi Aya Estelle')
 const effectif = ref('36')
@@ -301,6 +296,12 @@ const photo = '/icones/180.png'
           <p class="mention">{{ t('demo.mode_lignes') }}</p>
           <div class="defilement">
             <CanonTableau :colonnes="colonnes" :lignes="lignes" legende="demo.legende_tableau" mode="lignes" />
+          </div>
+        </InterneEtatStyle>
+        <InterneEtatStyle etats="lignes cartes">
+          <p class="mention">{{ t('demo.mode_auto') }}</p>
+          <div class="defilement">
+            <CanonTableau :colonnes="colonnes" :lignes="lignes.slice(0, 2)" legende="demo.legende_tableau" />
           </div>
         </InterneEtatStyle>
         <InterneEtatStyle etats="cartes">

@@ -87,6 +87,8 @@ onBeforeUnmount(() => retirer())
   display: flex;
   flex-direction: column;
   gap: 6px;
+  width: 100%;
+  min-width: 0;
 }
 .boite {
   display: flex;
@@ -94,14 +96,15 @@ onBeforeUnmount(() => retirer())
   gap: 8px;
   min-height: var(--cible, var(--cible-standard));
   padding: 0 10px;
-  border: var(--filet) solid var(--border-strong);
   border-radius: var(--rayon-champ);
   background: var(--surface);
+  box-shadow: inset 0 0 0 var(--filet) var(--border-strong);
 }
 .boite:focus-within,
 .boite.focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-soft);
+  box-shadow:
+    inset 0 0 0 var(--filet) var(--primary),
+    0 0 0 3px var(--primary-soft);
 }
 .loupe {
   color: var(--text-muted);
@@ -109,6 +112,7 @@ onBeforeUnmount(() => retirer())
 .saisie {
   flex: 1;
   min-width: 0;
+  min-height: var(--cible, var(--cible-standard));
   align-self: stretch;
   border: 0;
   background: transparent;
