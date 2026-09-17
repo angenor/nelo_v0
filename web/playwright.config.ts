@@ -4,7 +4,7 @@
 //   p10      : la mesure du poids, service worker bloqué pour compter une première visite.
 import { defineConfig, devices } from '@playwright/test'
 
-const PORT = 3000
+const PORT = Number(process.env.NELO_WEB_PORT ?? 4310)
 
 export default defineConfig({
   testDir: 'tests',

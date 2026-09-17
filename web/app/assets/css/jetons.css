@@ -1,0 +1,46 @@
+/* La passerelle entre le système de design et Tailwind (research.md R-02, R-17).
+   Ce fichier ne porte aucune valeur de couleur : chaque jeton renvoie à theme.css ou à
+   mesures.css. Les palettes par défaut de Tailwind sont vidées, pour qu'aucune couleur hors
+   du thème ne s'écrive par une classe. Seule exception mécanique : une requête média ne lit
+   pas une variable, les deux points de rupture sont donc répétés ici, et un test les compare
+   à mesures.css. */
+@import "tailwindcss";
+
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-ink: var(--primary-ink);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-ink: var(--danger-ink);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-board: var(--board);
+
+  --radius-*: initial;
+  --radius-carte: var(--rayon-carte);
+  --radius-champ: var(--rayon-champ);
+  --radius-pastille: var(--rayon-pastille);
+  --radius-micro: var(--rayon-micro);
+
+  --breakpoint-*: initial;
+  --breakpoint-md: 768px;
+  --breakpoint-xl: 1200px;
+
+  --font-*: initial;
+  --font-titres: 'Archivo', system-ui, sans-serif;
+  --font-texte: 'Public Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}

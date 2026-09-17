@@ -5,7 +5,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-09-01',
   devtools: { enabled: false },
   telemetry: false,
-  css: [],
+  css: [
+    '~/assets/css/theme.css',
+    '~/assets/css/mesures.css',
+    '~/assets/css/polices.css',
+    '~/assets/css/jetons.css',
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

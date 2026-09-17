@@ -493,3 +493,19 @@ lisent. Q2 reste ouverte ; un renommage touche une ligne.
 Chacun dérive du corpus ou d'une mesure ; aucun n'est un choix produit, **sauf Q29**, qui touche
 la constitution et attend l'utilisateur. Ils sont appliqués selon
 l'arbitrage délégué du 2026-09-14 et tracés dans le journal.
+
+## Écarts d'implémentation
+
+*Ce que `implement` a trouvé et que le plan n'avait pas prévu. Chaque ligne dit l'écart, sa cause,
+et ce qui a été fait. Aucun ne touche le contrat.*
+
+| # | Écart | Cause | Ce qui a été fait |
+|---|---|---|---|
+| E-01 | `sharp` n'est pas installé ; les icônes sont rastérisées par le Chromium de Playwright | `sharp` tire `@img/sharp-libvips-*`, sous LGPL-3.0-or-later, refusée par P-07 (T007) | `web/scripts/icones.mjs` ouvre le SVG typographique dans Chromium (Apache-2.0, déjà requis) avec la police Archivo servie localement, et capture chaque taille |
+| E-02 | P-07 admet BlueOak-1.0.0 et CC0-1.0, et CC-BY-4.0 pour `caniuse-lite` seul | Nuxt, nitropack, workbox-build et browserslist les tirent ; aucune n'est un copyleft, que [01-stack.md § 9](../../docs/01-stack.md) refuse | Liste élargie dans `p07_licences.py`, exception nommée pour `caniuse-lite` (donnée de construction, ne voyage pas) ; ligne « Autorisé » de § 9 complétée |
+| E-03 | Les commandes s'écrivent `pnpm --filter nelo-web`, pas `--filter web` | Le filtre de `pnpm` porte sur le nom du paquet, que T002 fixe à `nelo-web` | `verifier.sh` et le quickstart emploient `--filter nelo-web` |
+| E-04 | `web/ecrans.json` est un objet `{ plafondsDuCorpus, ecrans }` et non une liste | JSON n'a pas de commentaire, et R-16 veut les plafonds du corpus recopiés dans le fichier | Le lecteur `core/ecrans.ts` lit `ecrans` ; la forme de chaque entrée est celle de data-model § 5 |
+| E-05 | `openapi-typescript` voit TypeScript 6.0.3 au lieu de 5.9.3 | Le pair est résolu par l'espace de travail une fois `web/` installé | P-03 régénère le contrat sans écart : aucune conséquence |
+| E-06 | Aucun des sept fichiers de police servis ne porte U+202F (Archivo n'a que U+2009, Public Sans et Plex Mono ni l'un ni l'autre) | Le sous-ensemble latin de Fontsource 5.3.0 couvre la plage mais pas le glyphe ; R-07 ne pouvait pas le lire | Le cas prévu par R-07 : la police de repli (`system-ui`, `ui-monospace`) rend ce seul glyphe ; `polices.test.ts` le signale en avertissement à chaque exécution. La demande de la revue visuelle (« les sous-ensembles doivent la conserver ») n'est pas tenue par les fichiers ; la tenir exigerait de modifier les polices |
+| E-07 | L'application de test écoute sur 4310, le serveur de développement de P-05 sur 4311 | Le port 3000 est pris sur le poste par un autre projet ; une porte qui interroge le mauvais serveur passerait à tort | `NELO_WEB_PORT` et `NELO_WEB_PORT_DEV` les changent ; `playwright.config.ts` et `p-05.sh` les lisent |
+| E-08 | Les trois polices du premier affichage sont préchargées par `app.vue` et non par `app.head.link` de `nuxt.config.ts` | Leur adresse porte l'empreinte de la construction, inconnue au moment de la configuration | `import …woff2?url` puis `useHead` ; la feuille de style et le préchargement désignent le même fichier |
