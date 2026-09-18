@@ -45,7 +45,11 @@ END
 \$\$;
 SQL
 
-uv run alembic -c migrations/tenants/alembic.ini upgrade head
+# Un dossier de migrations par module, appliqué dans l'ordre : les noyaux avant ce qui les
+# référence. Aucune clé étrangère ne traverse un schéma, mais les seeds, eux, s'appuient dessus.
+for schema in tenants personnes annees habilitations; do
+  uv run alembic -c "migrations/$schema/alembic.ini" upgrade head
+done
 
 if [ "$avec_jeu_d_essai" -eq 1 ]; then
   uv run python -m scripts.jeu_essai

@@ -38,8 +38,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **spécifiée et planifiée le 2026-09-17** sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md), [plan.md](../specs/003-connexion-contexte/plan.md)). **Revue visuelle publiée et validée le 2026-09-17** ([spec.md § Revue visuelle](../specs/003-connexion-contexte/spec.md#revue-visuelle)). T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
-| **Prochaine** | `/speckit-implement` sur T1a ([tasks.md](../specs/003-connexion-contexte/tasks.md), 88 tâches). **Q30** (les valeurs par défaut de l'authentification) se confirme avant, ou reste provisoire (T003 et T010 seules changent). **Q29** attend toujours son ADR, sans bloquer |
+| **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **implémentée le 2026-09-18**, spécifiée et planifiée le 2026-09-17 sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md), [plan.md](../specs/003-connexion-contexte/plan.md)). **Revue visuelle publiée et validée le 2026-09-17** ([spec.md § Revue visuelle](../specs/003-connexion-contexte/spec.md#revue-visuelle)). T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
+| **Prochaine** | La relecture de T1a, puis sa fusion dans `main` ; ensuite T1b (les capacités). **Q30** (les valeurs par défaut de l'authentification) reste à confirmer : elle ne touche que `politique.py` et la migration `0002`. **Q29** attend toujours son ADR, sans bloquer |
 | **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -101,6 +101,37 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-18 : T1a, la première frontière de sécurité est implémentée
+
+**Fait** : `/speckit-implement` sur les 88 tâches. Quatre schémas migrés sous RLS activée et
+forcée (`tenants` étendu, et les noyaux `personnes`, `annees`, plus `habilitations`), dix-neuf
+routes servies et au contrat, quatre middlewares ASGI (session, établissement, année,
+idempotence) qui rendent vraie la table de refus de [03-api.md § 1.2](03-api.md), le tenant
+provisoire de T0a supprimé avec sa fonction `SECURITY DEFINER`. Une personne ouvre sa session par
+un code reçu par SMS, puis par un code personnel sur un appareil connu ; elle peut être invitée
+par lien, suspendue, changer de numéro, et partager son téléphone avec un autre parent. Côté
+interface, un relais Nitro met l'API sous l'origine de Nuxt et garde tout jeton hors de portée du
+script, la coquille de T0b vit sur le contexte réel, et six écrans s'assemblent sans composant
+neuf. Le pack de pays a sa table et deux packs semés, dont un fictif qui fait tourner le test
+d'agnosticité.
+
+**Décidé** : quatre écarts d'implémentation, tous tracés ici et dans le code. (1) `compter()` de
+la limitation reste dans `api/` et est **injectée** au service : un module du socle ne remonte pas
+vers `api/`, et la hiérarchie d'imports le refuserait (P-04). (2) Le retrait de
+`tenants.tenant_de_etablissement` est passé dans une migration `0003` au lieu de la `0002` :
+le tenant provisoire s'en servait encore pendant US1, et `verifier.sh` devait rester vert à chaque
+point de contrôle. (3) Chaque entrée du catalogue de paramètres porte désormais la révision qui
+l'introduit (`entrees_de("0002")`) : sans cela, la migration `0001`, qui lit le catalogue à
+l'exécution, aurait réinséré les clés neuves. (4) L'appareil connu et son cookie sont livrés dès
+US1 plutôt qu'en US3, parce que le test de la vérification du code les exigeait déjà. La licence
+`MIT-0` entre dans la liste autorisée de P-07 : elle arrive avec `cffi`, transitive d'`argon2-cffi`,
+et elle est plus permissive que `MIT`, déjà autorisée.
+
+**Bloqué / à faire ensuite** : Q30 (les valeurs par défaut de l'authentification) reste à
+confirmer ; elle ne touche que `politique.py` et la migration `0002`. La tranche n'est pas
+fusionnée : elle attend la relecture.
+
 
 ## 2026-09-17 : T1a, les tâches sont écrites
 

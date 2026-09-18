@@ -1,0 +1,5 @@
+{
+  "otp": "{produit}: your sign-in code is {code}. It is valid for {minutes} minutes. Do not share it with anyone.",
+  "invitation": "{etablissement} opened your account. Activate it within {jours} days: {lien}",
+  "changement_ancien_numero": "{produit}: your account number is now {nouveau}. If this was not you, please call your school."
+}

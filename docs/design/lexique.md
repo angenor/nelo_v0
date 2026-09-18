@@ -47,6 +47,14 @@ le signalement, qu'on n'appelle jamais une alerte.
 | Hors ligne | Déconnecté, erreur réseau | Une coupure n'est pas une faute ; le ruban la dit en ocre |
 | Rien ne sera perdu | Rechargez la page, réessayez plus tard | La saisie ne se perd pas et ne demande aucun geste (FR-013, FR-042) |
 | Famille | Parents d'élèves | Hors du mot du pack, on parle de la famille |
+| SMS | Message court, texto | Le mot du terrain et celui de la pastille de canal (écart E-06 de T1a) ; « message court » reste le mot de la documentation |
+| Code reçu | Mot de passe à usage unique, OTP | Ce qui arrive par SMS est un code, et il se dit comme la personne le lit |
+| Code personnel | Code secret, PIN | Quatre chiffres sur un appareil connu, ce n'est pas un mot de passe |
+| Ouvrir une session | Se connecter, login | Le poste est partagé : une session s'ouvre, puis se ferme |
+| Fermer la session | Se déconnecter, logout | Le même mot, dans l'autre sens ; jamais un anglicisme |
+| Votre compte n'est pas bloqué | Compte verrouillé, compte banni | Cinq codes faux détruisent le code, jamais le compte : le refus dit ce qui reste ouvert |
+| Le secrétariat peut le vérifier avec vous | Numéro inconnu, numéro non enregistré | Aucun écran ne dit qu'un numéro est inconnu (écart E-01) ; le versant positif est le geste qui débloque |
+| Reprise possible dans une durée | Trop de tentatives, accès refusé | Une attente se dit par sa durée, et le dernier code reçu reste valable |
 
 ## 3. Les mots de la tranche
 
@@ -70,6 +78,8 @@ Chaque mot ci-dessous est la valeur exacte de sa clé en français. L'anglais na
 | Présent | `etat.present` |
 | Brouillon | `etat.brouillon` |
 | Proposé, non validé | `etat.propose` |
+| Active | `etat.annee_active` |
+| En préparation | `etat.annee_preparation` |
 | Activé | `interrupteur.active` |
 | Désactivé | `interrupteur.desactive` |
 
@@ -115,6 +125,58 @@ Chaque mot ci-dessous est la valeur exacte de sa clé en français. L'anglais na
 | WhatsApp | `canal.WHATSAPP` |
 | SMS | `canal.SMS` |
 | Papier | `canal.PAPIER` |
+
+### La session
+
+| Mot | Clé |
+|---|---|
+| Suivez la scolarité de vos enfants | `session.numero.titre` |
+| Votre numéro de téléphone | `session.numero.champ` |
+| Recevoir le code par SMS | `session.numero.action` |
+| Entrez le code à six chiffres | `session.code.titre` |
+| Code reçu par SMS | `session.code.champ` |
+| Ouvrir ma session | `session.code.ouvrir` |
+| Renvoyer le code | `session.code.renvoyer` |
+| Recevoir un nouveau code | `session.code.nouveau` |
+| Modifier | `session.code.modifier` |
+| Le SMS n’est pas encore arrivé ? | `session.code.pas_arrive.titre` |
+| Fermer la session | `session.fermer` |
+| Votre session est terminée | `session.revoquee.titre` |
+| Votre accès est fermé | `session.suspendu.titre` |
+| Choisissez un code à quatre chiffres | `session.pin.titre` |
+| Code à quatre chiffres | `session.pin.champ` |
+| Le même code, une seconde fois | `session.pin.confirmation` |
+| Enregistrer ce code | `session.pin.enregistrer` |
+| Plus tard : me connecter par SMS | `session.pin.plus_tard` |
+| Votre code personnel | `session.ouverture.champ` |
+| Ouvrir ma session | `session.ouverture.ouvrir` |
+| Code personnel verrouillé après cinq essais | `session.ouverture.verrou` |
+| Code personnel défini | `session.ouverture.pin_defini` |
+| Pas encore de code personnel | `session.ouverture.pin_absent` |
+| Qui ouvre la session ? | `session.choix.titre` |
+| Code vérifié | `session.choix.verifie` |
+| Un autre numéro | `session.ouverture.autre_numero` |
+| Ce lien ne fonctionne plus | `session.activation.invalide.titre` |
+| Entrer mon numéro et recevoir un code | `session.activation.numero` |
+| Changer mon numéro | `session.telephone.titre` |
+| Nouveau numéro | `session.telephone.nouveau` |
+| Recevoir le code sur le nouveau numéro | `session.telephone.action` |
+| Confirmer le nouveau numéro | `session.telephone.confirmer` |
+| Votre numéro est changé | `session.telephone.change` |
+
+### Le menu de compte
+
+| Mot | Clé |
+|---|---|
+| Établissement | `coquille.etablissement` |
+| Année de travail | `coquille.annee` |
+| Mon numéro | `coquille.mon_numero` |
+
+**Trois états n'ont encore aucun écran, et n'ont donc aucun mot : à venir.** L'état d'un compte
+(`invite`, `actif`, `suspendu`) et le partage familial d'un numéro entrent au lexique avec T1b, qui
+les affiche le premier ; l'écart E-03 de T1a le dit, et rien ne les dessine d'ici là. Les deux états
+de l'année, eux, ont leur code de pastille et leur mot dès maintenant, parce que l'en-tête les
+montre.
 
 ## La règle de rédaction
 

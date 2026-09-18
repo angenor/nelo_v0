@@ -34,8 +34,17 @@ def test_le_contrat_publie_le_contexte_et_ses_sous_modeles():
     assert "administrateur" in schemas["EtablissementContexte"]["required"]
 
 
-def test_aucune_route_ne_le_sert_encore():
-    assert not any("capacites" in chemin for chemin in GENERE["paths"])
+def test_une_route_le_sert():
+    """T0b l'enregistrait sans route ; T1a le sert, et le nom ne s'est pas dédoublé."""
+    assert "/moi/capacites" in GENERE["paths"]
+    reponse = GENERE["paths"]["/moi/capacites"]["get"]["responses"]["200"]
+    schema = reponse["content"]["application/json"]["schema"]
+    assert schema["$ref"] == "#/components/schemas/ContexteCapacites"
+    # Aucune collision : un seul schéma porte ce nom, et aucun suffixe n'a été inventé.
+    collisions = [
+        nom for nom in GENERE["components"]["schemas"] if nom.startswith("ContexteCapacites")
+    ]
+    assert collisions == ["ContexteCapacites"]
 
 
 def test_le_client_type_en_derive():

@@ -22,7 +22,7 @@ test('accueil → domaine → à propos → retour, sans aucun rechargement', as
 })
 
 test('un lien profond se rend dans la coquille', async ({ page }) => {
-  await page.goto('/d/vie_scolaire')
+  await page.goto('/d/vie_scolaire?persona=un-domaine')
   await expect(page.locator('header.entete')).toBeVisible()
   await expect(page.locator('[data-situation="MONO_DOMAINE"]')).toBeVisible()
   await expect(page.getByRole('status', { name: 'État de la saisie' })).toBeVisible()

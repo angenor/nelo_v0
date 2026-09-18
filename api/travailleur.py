@@ -1,9 +1,12 @@
-"""Le travailleur d'événements — une tâche `asyncio` dans le processus du serveur (research.md R-09).
+"""Le travailleur d'événements : une tâche `asyncio` dans le processus du serveur (research.md R-09).
 
-Sa boucle : lister les tenants, et pour chacun reprendre les orphelins et les échecs, puis
-consommer un lot dans l'ordre d'écriture. Livraison au moins une fois : un consommateur doit
-savoir qu'un événement peut lui arriver deux fois. **Aucune file de messages, aucun autre
-processus.** Le consommateur de T0a est le journal applicatif.
+Sa boucle : lister les tenants, et pour chacun, **module par module**, reprendre les orphelins et
+les échecs, puis consommer un lot dans l'ordre d'écriture. Chaque module porte sa propre table
+d'outbox et expose `consommer_lot` et `reprendre_evenements` sur elle : le travailleur ne connaît
+pas les tables, seulement les modules qui en ont une.
+
+Livraison au moins une fois : un consommateur doit savoir qu'un événement peut lui arriver deux
+fois. **Aucune file de messages, aucun autre processus.**
 """
 
 import asyncio
@@ -13,7 +16,13 @@ from uuid import UUID
 
 from api.configuration import Configuration
 from modules.shared import Evenement
-from modules.socle import tenants
+from modules.shared import outbox as outbox_partagee
+from modules.socle import habilitations, tenants
+
+# Les modules qui portent une table d'outbox. `personnes` et `annees` en ont une, vide en T1a :
+# elle existe pour que P-01 et le travailleur les traitent comme les autres, et pour que la
+# tranche qui y écrira n'ait rien à changer ici.
+MODULES_AVEC_OUTBOX = (tenants, habilitations)
 
 journal = logging.getLogger("nelo.travailleur")
 
@@ -32,7 +41,7 @@ class Travailleur:
     def __init__(
         self,
         configuration: Configuration,
-        consommateur: tenants.Consommateur = consommateur_journal,
+        consommateur: outbox_partagee.Consommateur = consommateur_journal,
     ) -> None:
         self.configuration = configuration
         self.consommateur = consommateur
@@ -40,14 +49,19 @@ class Travailleur:
         self._arret = asyncio.Event()
 
     async def un_tour(self) -> int:
+        return await self.un_tour_de(await tenants.tenants_pour_travailleur())
+
+    async def un_tour_de(self, tenants_a_parcourir: list[UUID]) -> int:
+        """Le tour, borné aux tenants donnés. `un_tour` les prend tous ; les tests en nomment un."""
         traites = 0
-        for tenant_id in await tenants.tenants_pour_travailleur():
-            await tenants.reprendre_evenements(
-                tenant_id, self.configuration.travailleur_delai_orphelin
-            )
-            traites += await tenants.consommer_lot(
-                tenant_id, self.consommateur, self.configuration.travailleur_taille_lot
-            )
+        for tenant_id in tenants_a_parcourir:
+            for module in MODULES_AVEC_OUTBOX:
+                await module.reprendre_evenements(
+                    tenant_id, self.configuration.travailleur_delai_orphelin
+                )
+                traites += await module.consommer_lot(
+                    tenant_id, self.consommateur, self.configuration.travailleur_taille_lot
+                )
         return traites
 
     async def _boucle(self) -> None:

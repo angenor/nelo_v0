@@ -6,6 +6,9 @@ description = "La composition des modules — routes fines, aucune règle métie
 requires-python = "==3.14.*"
 dependencies = [
     "nelo-socle-tenants",
+    "nelo-socle-habilitations",
+    "nelo-socle-personnes",
+    "nelo-socle-annees",
     "nelo-socle-assistance",
     "nelo-socle-communication",
     "nelo-metier-finance",
@@ -17,6 +20,9 @@ package = false
 
 [tool.uv.sources]
 nelo-socle-tenants = { workspace = true }
+nelo-socle-habilitations = { workspace = true }
+nelo-socle-personnes = { workspace = true }
+nelo-socle-annees = { workspace = true }
 nelo-socle-assistance = { workspace = true }
 nelo-socle-communication = { workspace = true }
 nelo-metier-finance = { workspace = true }

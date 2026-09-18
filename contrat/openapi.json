@@ -25,7 +25,7 @@
       },
       "Administrateur": {
         "additionalProperties": false,
-        "description": "Qui peut attribuer ses domaines à une personne sans capacité : l'écran le nomme.",
+        "description": "Qui peut attribuer ses domaines à une personne sans capacité : l'écran le nomme.\n\nÀ défaut de personne désignée, c'est l'établissement lui-même qu'on appelle (FR-049) : son\nnom, son téléphone, et des **prénoms vides**, parce qu'une institution n'en a pas. Le champ\nn'est jamais absent : un écran qui dit « demandez à quelqu'un » sans dire à qui ne sert à rien.",
         "properties": {
           "nom": {
             "minLength": 1,
@@ -33,13 +33,12 @@
             "type": "string"
           },
           "prenoms": {
-            "minLength": 1,
+            "description": "Vides quand l'administrateur est l'établissement lui-même",
             "title": "Prenoms",
             "type": "string"
           },
           "telephone": {
-            "description": "Au format du pack, jamais vide",
-            "minLength": 1,
+            "description": "Au format du pack. Vide seulement quand personne n'est désigné et que l'établissement lui-même n'a pas de téléphone enregistré : l'écran nomme alors l'école sans pouvoir donner de numéro, ce qui vaut mieux qu'un refus du serveur",
             "title": "Telephone",
             "type": "string"
           }
@@ -100,6 +99,25 @@
         "title": "AnneeContexte",
         "type": "object"
       },
+      "Bloquage": {
+        "description": "Ce qui empêcherait la création, dit **avant** la saisie plutôt qu'après (E-04, FR-063).",
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "additionalProperties": true,
+            "title": "Details",
+            "type": "object"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "title": "Bloquage",
+        "type": "object"
+      },
       "CapaciteContexte": {
         "additionalProperties": false,
         "properties": {
@@ -127,6 +145,60 @@
           "perimetre"
         ],
         "title": "CapaciteContexte",
+        "type": "object"
+      },
+      "ChoixCompte": {
+        "description": "Un des comptes que ce numéro porte. Aucun numéro ici : la personne le connaît déjà.",
+        "properties": {
+          "compte_id": {
+            "format": "uuid",
+            "title": "Compte Id",
+            "type": "string"
+          },
+          "etablissement_nom": {
+            "title": "Etablissement Nom",
+            "type": "string"
+          },
+          "nom": {
+            "title": "Nom",
+            "type": "string"
+          },
+          "prenoms": {
+            "title": "Prenoms",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compte_id",
+          "nom",
+          "prenoms",
+          "etablissement_nom"
+        ],
+        "title": "ChoixCompte",
+        "type": "object"
+      },
+      "ChoixRequis": {
+        "description": "Le code est bon, mais le numéro porte plusieurs comptes : qui ouvre la session ?",
+        "properties": {
+          "comptes": {
+            "items": {
+              "$ref": "#/components/schemas/ChoixCompte"
+            },
+            "minItems": 2,
+            "title": "Comptes",
+            "type": "array"
+          },
+          "resultat": {
+            "const": "CHOIX",
+            "default": "CHOIX",
+            "title": "Resultat",
+            "type": "string"
+          }
+        },
+        "required": [
+          "comptes"
+        ],
+        "title": "ChoixRequis",
         "type": "object"
       },
       "CodeNeutre": {
@@ -168,6 +240,105 @@
           "langue"
         ],
         "title": "Compte",
+        "type": "object"
+      },
+      "CompteConnu": {
+        "description": "Un compte que cet appareil connaît. **Jamais un numéro** : un nom suffit à se reconnaître.",
+        "properties": {
+          "compte_id": {
+            "format": "uuid",
+            "title": "Compte Id",
+            "type": "string"
+          },
+          "nom": {
+            "title": "Nom",
+            "type": "string"
+          },
+          "pin_defini": {
+            "title": "Pin Defini",
+            "type": "boolean"
+          },
+          "prenoms": {
+            "title": "Prenoms",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compte_id",
+          "nom",
+          "prenoms",
+          "pin_defini"
+        ],
+        "title": "CompteConnu",
+        "type": "object"
+      },
+      "CompteCree": {
+        "description": "Ce que la création rend. **Jamais le lien** : il part par message, et nulle part ailleurs.",
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "invite_le": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Invite Le"
+          },
+          "statut": {
+            "$ref": "#/components/schemas/StatutCompte"
+          }
+        },
+        "required": [
+          "id",
+          "statut",
+          "invite_le"
+        ],
+        "title": "CompteCree",
+        "type": "object"
+      },
+      "CompteSession": {
+        "description": "Ce que l'écran a besoin de savoir du compte qui vient d'ouvrir sa session.",
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "langue": {
+            "pattern": "^[a-z]{2}$",
+            "title": "Langue",
+            "type": "string"
+          },
+          "nom": {
+            "title": "Nom",
+            "type": "string"
+          },
+          "pin_defini": {
+            "description": "L'écran propose de définir un code personnel, ou non",
+            "title": "Pin Defini",
+            "type": "boolean"
+          },
+          "prenoms": {
+            "title": "Prenoms",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "nom",
+          "prenoms",
+          "langue",
+          "pin_defini"
+        ],
+        "title": "CompteSession",
         "type": "object"
       },
       "ContexteCapacites": {
@@ -248,6 +419,134 @@
         "title": "ContexteCapacites",
         "type": "object"
       },
+      "CorpsChangementAdministratif": {
+        "additionalProperties": false,
+        "properties": {
+          "nouvel_identifiant": {
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Nouvel Identifiant",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nouvel_identifiant"
+        ],
+        "title": "CorpsChangementAdministratif",
+        "type": "object"
+      },
+      "CorpsChangementTelephone": {
+        "additionalProperties": false,
+        "properties": {
+          "nouvel_identifiant": {
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Nouvel Identifiant",
+            "type": "string"
+          }
+        },
+        "required": [
+          "nouvel_identifiant"
+        ],
+        "title": "CorpsChangementTelephone",
+        "type": "object"
+      },
+      "CorpsCreationCompte": {
+        "additionalProperties": false,
+        "properties": {
+          "identifiant": {
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Identifiant",
+            "type": "string"
+          },
+          "partage_familial": {
+            "default": false,
+            "description": "Déclare que ce numéro est sciemment partagé avec un autre compte du tenant",
+            "title": "Partage Familial",
+            "type": "boolean"
+          },
+          "personne_id": {
+            "description": "Une personne du tenant, qui n'a pas encore de compte",
+            "format": "uuid",
+            "title": "Personne Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "personne_id",
+          "identifiant"
+        ],
+        "title": "CorpsCreationCompte",
+        "type": "object"
+      },
+      "CorpsDefinitionPin": {
+        "additionalProperties": false,
+        "properties": {
+          "pin": {
+            "pattern": "^\\d{4}$",
+            "title": "Pin",
+            "type": "string"
+          },
+          "pin_courant": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Exigé quand un code existe déjà, sauf dans les dix minutes suivant une ouverture par code reçu ou par lien",
+            "title": "Pin Courant"
+          }
+        },
+        "required": [
+          "pin"
+        ],
+        "title": "CorpsDefinitionPin",
+        "type": "object"
+      },
+      "CorpsDemandeCode": {
+        "additionalProperties": false,
+        "properties": {
+          "identifiant": {
+            "description": "Le numéro de téléphone, dans n'importe quelle écriture ; le serveur le normalise",
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Identifiant",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identifiant"
+        ],
+        "title": "CorpsDemandeCode",
+        "type": "object"
+      },
+      "CorpsOuverturePin": {
+        "additionalProperties": false,
+        "properties": {
+          "compte_id": {
+            "description": "Le compte choisi parmi ceux que l'appareil connaît",
+            "format": "uuid",
+            "title": "Compte Id",
+            "type": "string"
+          },
+          "pin": {
+            "description": "Les quatre chiffres du code personnel",
+            "pattern": "^\\d{4}$",
+            "title": "Pin",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compte_id",
+          "pin"
+        ],
+        "title": "CorpsOuverturePin",
+        "type": "object"
+      },
       "CorpsPoserParametre": {
         "additionalProperties": false,
         "properties": {
@@ -269,6 +568,57 @@
           "valeur"
         ],
         "title": "CorpsPoserParametre",
+        "type": "object"
+      },
+      "CorpsVerificationChangement": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "pattern": "^\\d{6}$",
+            "title": "Code",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "title": "CorpsVerificationChangement",
+        "type": "object"
+      },
+      "CorpsVerificationCode": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "description": "Les six chiffres reçus par message court",
+            "pattern": "^\\d{6}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "compte_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Le compte choisi, quand le numéro en porte plusieurs (partage familial)",
+            "title": "Compte Id"
+          },
+          "identifiant": {
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Identifiant",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identifiant",
+          "code"
+        ],
+        "title": "CorpsVerificationCode",
         "type": "object"
       },
       "CountryPackContexte": {
@@ -294,7 +644,7 @@
             "type": "string"
           },
           "version": {
-            "minimum": 1,
+            "minimum": 1.0,
             "title": "Version",
             "type": "integer"
           },
@@ -334,8 +684,8 @@
           },
           "exposant": {
             "description": "Nombre de chiffres de l'unité mineure",
-            "maximum": 4,
-            "minimum": 0,
+            "maximum": 4.0,
+            "minimum": 0.0,
             "title": "Exposant",
             "type": "integer"
           },
@@ -473,6 +823,19 @@
         ],
         "type": "string"
       },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
       "ParametreEffectif": {
         "properties": {
           "cle": {
@@ -573,6 +936,23 @@
         "title": "Portee",
         "type": "string"
       },
+      "ReponseAppareil": {
+        "description": "Les comptes connus de cet appareil ; vide quand il ne l'est d'aucun.",
+        "properties": {
+          "comptes": {
+            "items": {
+              "$ref": "#/components/schemas/CompteConnu"
+            },
+            "title": "Comptes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "comptes"
+        ],
+        "title": "ReponseAppareil",
+        "type": "object"
+      },
       "ReponseParametres": {
         "properties": {
           "etablissement_id": {
@@ -609,6 +989,61 @@
         "title": "ReponseSante",
         "type": "object"
       },
+      "ReponseVerificationCode": {
+        "description": "Une session, ou un choix à faire : `resultat` dit lequel, le client n'a pas à deviner.",
+        "discriminator": {
+          "mapping": {
+            "CHOIX": "#/components/schemas/ChoixRequis",
+            "SESSION": "#/components/schemas/SessionOuverte"
+          },
+          "propertyName": "resultat"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SessionOuverte"
+          },
+          {
+            "$ref": "#/components/schemas/ChoixRequis"
+          }
+        ],
+        "title": "ReponseVerificationCode"
+      },
+      "SessionOuverte": {
+        "description": "La session est ouverte. Le jeton de rafraîchissement n'est **pas** ici : il est en cookie.",
+        "properties": {
+          "appareil_connu": {
+            "title": "Appareil Connu",
+            "type": "boolean"
+          },
+          "compte": {
+            "$ref": "#/components/schemas/CompteSession"
+          },
+          "expire_dans": {
+            "description": "Secondes avant l'expiration du jeton d'accès",
+            "title": "Expire Dans",
+            "type": "integer"
+          },
+          "jeton_acces": {
+            "description": "JWT signé, soixante minutes ; le relais le range en cookie",
+            "title": "Jeton Acces",
+            "type": "string"
+          },
+          "resultat": {
+            "const": "SESSION",
+            "default": "SESSION",
+            "title": "Resultat",
+            "type": "string"
+          }
+        },
+        "required": [
+          "jeton_acces",
+          "expire_dans",
+          "compte",
+          "appareil_connu"
+        ],
+        "title": "SessionOuverte",
+        "type": "object"
+      },
       "Site": {
         "additionalProperties": false,
         "properties": {
@@ -629,6 +1064,15 @@
         ],
         "title": "Site",
         "type": "object"
+      },
+      "StatutCompte": {
+        "enum": [
+          "invite",
+          "actif",
+          "suspendu"
+        ],
+        "title": "StatutCompte",
+        "type": "string"
       },
       "TypeParametre": {
         "enum": [
@@ -656,6 +1100,71 @@
             "type": "null"
           }
         ]
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "VerificationCreationCompte": {
+        "properties": {
+          "bloquages": {
+            "items": {
+              "$ref": "#/components/schemas/Bloquage"
+            },
+            "title": "Bloquages",
+            "type": "array"
+          },
+          "issues": {
+            "description": "Les clés d'issue à proposer : ce qu'on peut faire, pas seulement ce qui est refusé",
+            "items": {
+              "type": "string"
+            },
+            "title": "Issues",
+            "type": "array"
+          }
+        },
+        "required": [
+          "bloquages",
+          "issues"
+        ],
+        "title": "VerificationCreationCompte",
+        "type": "object"
       }
     }
   },
@@ -665,17 +1174,1137 @@
   },
   "openapi": "3.1.0",
   "paths": {
-    "/parametres": {
+    "/auth/appareil": {
       "get": {
-        "operationId": "lire_parametres",
+        "operationId": "comptes_de_l_appareil",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseAppareil"
+                }
+              }
+            },
+            "description": "Vide si l'appareil n'est connu d'aucun compte"
+          }
+        },
+        "summary": "Les comptes connus de cet appareil (nom, prénoms, code personnel défini ou non). Jamais un numéro"
+      }
+    },
+    "/auth/invitation/{jeton}": {
+      "post": {
+        "operationId": "activer_par_invitation",
         "parameters": [
           {
-            "description": "UUID de l'établissement actif. Lu par un middleware — absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` ; inconnu, `404 TEN_RESSOURCE_INTROUVABLE`. Résolution provisoire du tenant jusqu'à T1a.",
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "jeton",
+            "required": true,
+            "schema": {
+              "title": "Jeton",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionOuverte"
+                }
+              }
+            },
+            "description": "`SessionOuverte`"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_INVITATION_INVALIDE` (consommé, expiré, remplacé, inconnu), `AUT_COMPTE_SUSPENDU`"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Activer un compte depuis un lien à usage unique : la session s'ouvre, l'appareil devient connu"
+      }
+    },
+    "/auth/otp": {
+      "post": {
+        "operationId": "demander_code",
+        "parameters": [
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsDemandeCode"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Accusé sans contenu, identique pour tout numéro bien formé"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_NUMERO_INVALIDE` (règle) ou `VAL_SCHEMA_INVALIDE` (schéma)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`API_LIMITE_DEBIT` : trop de demandes pour ce numéro ou depuis ce client ; `Retry-After` dit la reprise"
+          }
+        },
+        "summary": "Demander un code par SMS. Répond 204 quel que soit le numéro bien formé ; le code ne part que si un compte actif ou invité le porte, par l'outbox"
+      }
+    },
+    "/auth/otp/verification": {
+      "post": {
+        "operationId": "verifier_code",
+        "parameters": [
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsVerificationCode"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReponseVerificationCode"
+                }
+              }
+            },
+            "description": "`SessionOuverte` (jeton d'accès dans le corps, rafraîchissement et appareil en cookies) ou `ChoixRequis`",
+            "headers": {
+              "Set-Cookie": {
+                "description": "`nelo_refresh` et `nelo_appareils`, HttpOnly, Secure, SameSite=Strict",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_OTP_INVALIDE` (`details.tentatives_restantes`), `AUT_OTP_EXPIRE`, `AUT_OTP_TENTATIVES_EPUISEES`, `AUT_COMPTE_SUSPENDU`"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Échanger le code contre une session ; si le numéro porte plusieurs comptes, renvoie le choix à faire"
+      }
+    },
+    "/auth/pin": {
+      "post": {
+        "operationId": "ouvrir_par_pin",
+        "parameters": [
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsOuverturePin"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionOuverte"
+                }
+              }
+            },
+            "description": "`SessionOuverte`"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_APPAREIL_INCONNU`, `AUT_PIN_ABSENT`, `AUT_PIN_INVALIDE` (`details.tentatives_restantes`), `AUT_PIN_TENTATIVES_EPUISEES`, `AUT_COMPTE_SUSPENDU` (et l'appareil oublie le compte)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ouvrir une session par code personnel, sur un appareil connu du compte"
+      }
+    },
+    "/auth/pin/definition": {
+      "post": {
+        "operationId": "definir_pin",
+        "parameters": [
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsDefinitionPin"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Code personnel défini ; rien n'est renvoyé"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT`, `AUT_JETON_INVALIDE`, `AUT_SESSION_REVOQUEE`"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_PIN_ABSENT` ou `AUT_PIN_INVALIDE` (code courant), `VAL_SCHEMA_INVALIDE` (pas quatre chiffres)"
+          }
+        },
+        "summary": "Définir ou changer son code personnel. Le code courant est exigé s'il existe, sauf dans les dix minutes suivant une ouverture par code reçu ou par lien"
+      }
+    },
+    "/auth/rafraichissement": {
+      "post": {
+        "operationId": "rafraichir",
+        "parameters": [
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionOuverte"
+                }
+              }
+            },
+            "description": "`SessionOuverte`",
+            "headers": {
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT` (pas de cookie), `AUT_JETON_INVALIDE` (inconnu, ou réutilisé hors fenêtre, ce qui ferme la session), `AUT_SESSION_REVOQUEE`"
+          }
+        },
+        "summary": "Rotation du rafraîchissement (cookie nelo_refresh) : un jeton d'accès neuf dans le corps, un rafraîchissement neuf dans le cookie"
+      }
+    },
+    "/auth/session": {
+      "delete": {
+        "operationId": "fermer_session",
+        "parameters": [
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Session fermée"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT`, `AUT_JETON_INVALIDE`, `AUT_SESSION_REVOQUEE`"
+          }
+        },
+        "summary": "Fermer la session courante : jeton d'accès et rafraîchissement révoqués, cookie effacé, appareil toujours connu"
+      }
+    },
+    "/comptes": {
+      "post": {
+        "operationId": "creer_compte",
+        "parameters": [
+          {
+            "description": "UUID de l'établissement actif. Lu par un middleware : absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` (avec `details.etablissements`, les rattachements du compte) ; sans affectation vivante du compte, `403 TEN_ETABLISSEMENT_NON_AUTORISE`, que l'établissement soit d'un autre tenant, inexistant ou non rattaché.",
             "in": "header",
             "name": "X-Nelo-Etablissement",
             "required": true,
             "schema": {
               "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsCreationCompte"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompteCree"
+                }
+              }
+            },
+            "description": "Compte créé, invitation envoyée. **Jamais le lien** : il part par message",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT`, `AUT_JETON_INVALIDE`, `AUT_SESSION_REVOQUEE`"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_ETABLISSEMENT_NON_AUTORISE` : le compte n'est pas affecté à l'établissement de l'en-tête"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_RESSOURCE_INTROUVABLE` : le compte n'existe pas dans le périmètre du tenant"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_RESSOURCE_DEJA_EXISTANTE` : cette personne a déjà un compte"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_IDENTIFIANT_DEJA_UTILISE` (`details.partage_familial_requis`), `AUT_NUMERO_INVALIDE`, `VAL_SCHEMA_INVALIDE`"
+          }
+        },
+        "summary": "Créer le compte d'une personne du tenant : il naît invité, et son lien part par SMS"
+      }
+    },
+    "/comptes/verification": {
+      "post": {
+        "operationId": "verifier_creation_compte",
+        "parameters": [
+          {
+            "description": "UUID de l'établissement actif. Lu par un middleware : absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` (avec `details.etablissements`, les rattachements du compte) ; sans affectation vivante du compte, `403 TEN_ETABLISSEMENT_NON_AUTORISE`, que l'établissement soit d'un autre tenant, inexistant ou non rattaché.",
+            "in": "header",
+            "name": "X-Nelo-Etablissement",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsCreationCompte"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationCreationCompte"
+                }
+              }
+            },
+            "description": "Les bloquages et leurs issues ; une liste vide veut dire « rien ne s'y oppose »"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT`, `AUT_JETON_INVALIDE`, `AUT_SESSION_REVOQUEE`"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_ETABLISSEMENT_NON_AUTORISE` : le compte n'est pas affecté à l'établissement de l'en-tête"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ce qui bloquerait la création, dit pendant la saisie : aucune écriture, aucun envoi"
+      }
+    },
+    "/comptes/{id}/invitation": {
+      "post": {
+        "operationId": "renvoyer_invitation",
+        "parameters": [
+          {
+            "description": "UUID de l'établissement actif. Lu par un middleware : absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` (avec `details.etablissements`, les rattachements du compte) ; sans affectation vivante du compte, `403 TEN_ETABLISSEMENT_NON_AUTORISE`, que l'établissement soit d'un autre tenant, inexistant ou non rattaché.",
+            "in": "header",
+            "name": "X-Nelo-Etablissement",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompteCree"
+                }
+              }
+            },
+            "description": "Invitation renvoyée ; la réponse dit la date, jamais le lien"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT`, `AUT_JETON_INVALIDE`, `AUT_SESSION_REVOQUEE`"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_ETABLISSEMENT_NON_AUTORISE` : le compte n'est pas affecté à l'établissement de l'en-tête"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_RESSOURCE_INTROUVABLE` : le compte n'existe pas dans le périmètre du tenant"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_COMPTE_DEJA_ACTIF`, `AUT_COMPTE_SUSPENDU`"
+          }
+        },
+        "summary": "Renvoyer un lien d'activation : le précédent cesse aussitôt de valoir"
+      }
+    },
+    "/comptes/{id}/suspension": {
+      "post": {
+        "operationId": "suspendre_compte",
+        "parameters": [
+          {
+            "description": "UUID de l'établissement actif. Lu par un middleware : absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` (avec `details.etablissements`, les rattachements du compte) ; sans affectation vivante du compte, `403 TEN_ETABLISSEMENT_NON_AUTORISE`, que l'établissement soit d'un autre tenant, inexistant ou non rattaché.",
+            "in": "header",
+            "name": "X-Nelo-Etablissement",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Compte suspendu ; la requête suivante de ce compte répond 401"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT`, `AUT_JETON_INVALIDE`, `AUT_SESSION_REVOQUEE`"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_ETABLISSEMENT_NON_AUTORISE` : le compte n'est pas affecté à l'établissement de l'en-tête"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_RESSOURCE_INTROUVABLE` : le compte n'existe pas dans le périmètre du tenant"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Suspendre un compte : ses sessions tombent, ses appareils l'oublient, et la levée n'est pas livrée"
+      }
+    },
+    "/comptes/{id}/telephone": {
+      "post": {
+        "operationId": "changer_telephone_administratif",
+        "parameters": [
+          {
+            "description": "UUID de l'établissement actif. Lu par un middleware : absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` (avec `details.etablissements`, les rattachements du compte) ; sans affectation vivante du compte, `403 TEN_ETABLISSEMENT_NON_AUTORISE`, que l'établissement soit d'un autre tenant, inexistant ou non rattaché.",
+            "in": "header",
+            "name": "X-Nelo-Etablissement",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsChangementAdministratif"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Numéro changé, sessions révoquées, appareils oubliés, ancien numéro informé"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT`, `AUT_JETON_INVALIDE`, `AUT_SESSION_REVOQUEE`"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_ETABLISSEMENT_NON_AUTORISE` : le compte n'est pas affecté à l'établissement de l'en-tête"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_RESSOURCE_INTROUVABLE` : le compte n'existe pas dans le périmètre du tenant"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_IDENTIFIANT_DEJA_UTILISE`, `AUT_NUMERO_INVALIDE`"
+          }
+        },
+        "summary": "Changer le numéro d'un compte sans vérification préalable : toutes ses sessions tombent"
+      }
+    },
+    "/moi/capacites": {
+      "get": {
+        "operationId": "lire_contexte",
+        "parameters": [
+          {
+            "description": "UUID de l'établissement actif. Lu par un middleware : absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` (avec `details.etablissements`, les rattachements du compte) ; sans affectation vivante du compte, `403 TEN_ETABLISSEMENT_NON_AUTORISE`, que l'établissement soit d'un autre tenant, inexistant ou non rattaché.",
+            "in": "header",
+            "name": "X-Nelo-Etablissement",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContexteCapacites"
+                }
+              }
+            },
+            "description": "Tout ce qu'il faut pour ne rendre que ce qui existe"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_ETABLISSEMENT_REQUIS` : en-tête absent ou malformé. `details.etablissements` rappelle au compte ses propres rattachements"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT`, `AUT_JETON_INVALIDE`, `AUT_SESSION_REVOQUEE`"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`TEN_ETABLISSEMENT_NON_AUTORISE` : le compte n'est pas affecté à cet établissement"
+          }
+        },
+        "summary": "Le contexte qui compose l'interface ; capacités et accès nominatifs vides jusqu'à T1b"
+      }
+    },
+    "/moi/telephone": {
+      "post": {
+        "operationId": "demander_changement_telephone",
+        "parameters": [
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsChangementTelephone"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Code envoyé au nouveau numéro. L'identifiant ne change qu'à la vérification"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_JETON_MANQUANT`, `AUT_JETON_INVALIDE`, `AUT_SESSION_REVOQUEE`"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_NUMERO_INVALIDE`, `VAL_SCHEMA_INVALIDE`"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`API_LIMITE_DEBIT` ; `Retry-After` dit la reprise"
+          }
+        },
+        "summary": "Demander le changement de son numéro : un code part vers le **nouveau** numéro"
+      }
+    },
+    "/moi/telephone/verification": {
+      "post": {
+        "operationId": "verifier_changement_telephone",
+        "parameters": [
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
+            "in": "header",
+            "name": "X-Nelo-Requete",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorpsVerificationChangement"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Identifiant changé ; la session courante survit"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_OTP_INVALIDE`, `AUT_OTP_EXPIRE`, `AUT_OTP_TENTATIVES_EPUISEES`, ou la session"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnveloppeErreur"
+                }
+              }
+            },
+            "description": "`AUT_IDENTIFIANT_DEJA_UTILISE` : ce numéro est déjà celui d'un autre compte"
+          }
+        },
+        "summary": "Vérifier le code reçu sur le nouveau numéro : l'identifiant change, l'ancien numéro est informé"
+      }
+    },
+    "/parametres": {
+      "get": {
+        "operationId": "lire_parametres",
+        "parameters": [
+          {
+            "description": "UUID de l'établissement actif. Lu par un middleware : absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` (avec `details.etablissements`, les rattachements du compte) ; sans affectation vivante du compte, `403 TEN_ETABLISSEMENT_NON_AUTORISE`, que l'établissement soit d'un autre tenant, inexistant ou non rattaché.",
+            "in": "header",
+            "name": "X-Nelo-Etablissement",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
               "type": "string"
             }
           }
@@ -699,7 +2328,7 @@
                 }
               }
             },
-            "description": "`TEN_ETABLISSEMENT_REQUIS` — en-tête absent ou malformé, refusé par le middleware"
+            "description": "`TEN_ETABLISSEMENT_REQUIS` : en-tête absent ou malformé, refusé par le middleware"
           },
           "404": {
             "content": {
@@ -709,7 +2338,7 @@
                 }
               }
             },
-            "description": "`TEN_RESSOURCE_INTROUVABLE` — ressource inexistante dans le périmètre du tenant ; jamais `403`"
+            "description": "`TEN_RESSOURCE_INTROUVABLE` : ressource inexistante dans le périmètre du tenant ; jamais `403`, sauf l'en-tête d'établissement, nommé par le principe XII"
           },
           "500": {
             "content": {
@@ -719,7 +2348,7 @@
                 }
               }
             },
-            "description": "`API_ERREUR_INTERNE` — aucun détail technique dans `message` ; `requete_id` suffit à retrouver la trace"
+            "description": "`API_ERREUR_INTERNE` : aucun détail technique dans `message` ; `requete_id` suffit à retrouver la trace"
           }
         },
         "summary": "Paramètres effectifs du catalogue, résolus à la portée de l'établissement de l'en-tête"
@@ -730,7 +2359,7 @@
         "operationId": "poser_parametre",
         "parameters": [
           {
-            "description": "UUID de l'établissement actif. Lu par un middleware — absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` ; inconnu, `404 TEN_RESSOURCE_INTROUVABLE`. Résolution provisoire du tenant jusqu'à T1a.",
+            "description": "UUID de l'établissement actif. Lu par un middleware : absent ou malformé, `400 TEN_ETABLISSEMENT_REQUIS` (avec `details.etablissements`, les rattachements du compte) ; sans affectation vivante du compte, `403 TEN_ETABLISSEMENT_NON_AUTORISE`, que l'établissement soit d'un autre tenant, inexistant ou non rattaché.",
             "in": "header",
             "name": "X-Nelo-Etablissement",
             "required": true,
@@ -740,7 +2369,16 @@
             }
           },
           {
-            "description": "UUID v7 généré par le client. Lu par un middleware — absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant.",
+            "description": "`Bearer {jwt}`, lu par le middleware de session. Absent ou sans `Bearer`, `401 AUT_JETON_MANQUANT` ; signature ou expiration, `401 AUT_JETON_INVALIDE` ; session révoquée, `401 AUT_SESSION_REVOQUEE`.",
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "UUID v7 généré par le client. Lu par un middleware : absent, `400 REQUETE_CLE_MANQUANTE` ; pas un UUID v7, `400 REQUETE_CLE_INVALIDE`. La réponse est mémorisée 24 h, bornée au tenant, ou à l'authentification sur un chemin libre.",
             "in": "header",
             "name": "X-Nelo-Requete",
             "required": true,
@@ -798,7 +2436,7 @@
                 }
               }
             },
-            "description": "`TEN_RESSOURCE_INTROUVABLE` — ressource inexistante dans le périmètre du tenant ; jamais `403`"
+            "description": "`TEN_RESSOURCE_INTROUVABLE` : ressource inexistante dans le périmètre du tenant ; jamais `403`, sauf l'en-tête d'établissement, nommé par le principe XII"
           },
           "409": {
             "content": {
@@ -828,7 +2466,7 @@
                 }
               }
             },
-            "description": "`API_ERREUR_INTERNE` — aucun détail technique dans `message` ; `requete_id` suffit à retrouver la trace"
+            "description": "`API_ERREUR_INTERNE` : aucun détail technique dans `message` ; `requete_id` suffit à retrouver la trace"
           }
         },
         "summary": "Poser une valeur à une portée — capacité `tenant.parametre.definir` (point d'insertion jusqu'à T1b)"

@@ -12,6 +12,9 @@ import sys
 
 AUTORISEES = {
     "MIT",
+    # MIT sans obligation d'attribution : strictement plus permissive que MIT.
+    # Arrivée en T1a avec cffi, transitive de argon2-cffi.
+    "MIT-0",
     "Apache-2.0",
     "BSD-2-Clause",
     "BSD-3-Clause",

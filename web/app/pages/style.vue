@@ -31,6 +31,7 @@ const ETATS_BOUTON_INTERACTIFS = BOUTON.ETATS.filter((e) => e !== 'inactif')
 const nom = ref('Koffi Aya Estelle')
 const effectif = ref('36')
 const matricule = ref('ELV-2026-0413')
+const codeRecu = ref('482913')
 const motif = ref('')
 const note = computed(() => pack.value.decimal(demo.NOTE_DICTEE.valeur))
 const affectation = ref('cm2a')
@@ -132,6 +133,9 @@ const photo = '/icones/180.png'
         </InterneEtatStyle>
         <InterneEtatStyle etats="nombre erreur">
           <CanonChamp v-model="effectif" libelle="demo.effectif_present" type="nombre" erreur="demo.erreur_effectif" :parametres-erreur="{ n: demo.EFFECTIF }" />
+        </InterneEtatStyle>
+        <InterneEtatStyle etats="code">
+          <CanonChamp v-model="codeRecu" libelle="demo.code_recu" saisie="code" />
         </InterneEtatStyle>
         <InterneEtatStyle etats="texte inactif">
           <CanonChamp v-model="matricule" libelle="demo.matricule" mono inactif />

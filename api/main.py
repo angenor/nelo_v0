@@ -13,11 +13,13 @@ from uuid import UUID
 import valkey.asyncio as valkey
 from fastapi import FastAPI
 
-from api import contrat, erreurs
+from api import consommateurs, contrat, erreurs
+from api.annee import Annee
 from api.configuration import Configuration
+from api.etablissement import Etablissement
 from api.idempotence import Idempotence
-from api.routes import parametres, sante
-from api.tenant_provisoire import TenantProvisoire
+from api.routes import authentification, comptes, moi, parametres, sante
+from api.session import Session
 from api.travailleur import Travailleur
 from modules.metier.finance import SimulationAgregateurPaiement
 from modules.shared import bd
@@ -45,7 +47,14 @@ def creer_application(configuration: Configuration | None = None) -> FastAPI:
     async def cycle_de_vie(application: FastAPI) -> AsyncIterator[None]:
         configurer_journal()
         bd.configurer(configuration.bd_url_application, taille_pool=configuration.bd_taille_pool)
-        travailleur = Travailleur(configuration)
+        # L'aiguilleur reçoit ici ses dépendances externes : le module qui traite l'événement ne
+        # les importe jamais lui-même.
+        travailleur = Travailleur(
+            configuration,
+            consommateurs.aiguilleur(
+                application.state.passerelle_sms, application.state.valkey, configuration
+            ),
+        )
         await travailleur.demarrer()
         try:
             yield
@@ -67,7 +76,7 @@ def creer_application(configuration: Configuration | None = None) -> FastAPI:
     # elles existent pour être remplacées (T4a, T8b).
     delai = configuration.simulation_delai
     application.state.passerelle_sms = SimulationPasserelleSms(
-        configuration.simulation_sms_mode, delai
+        configuration.simulation_sms_mode, delai, configuration.sms_journal
     )
     application.state.agregateur_paiement = SimulationAgregateurPaiement(
         configuration.simulation_paiement_mode, delai
@@ -87,11 +96,18 @@ def creer_application(configuration: Configuration | None = None) -> FastAPI:
         assistance_suspendue, application.state.service_inference
     )
 
-    # Le dernier ajouté est le plus extérieur : l'établissement d'abord, l'idempotence ensuite.
+    # Le dernier ajouté est le plus extérieur, donc exécuté le premier : la session dit qui
+    # parle, l'établissement et l'année disent d'où et de quand, l'idempotence mémorise, une fois
+    # le tenant connu. Aucun de ces quatre middlewares ne décide d'une règle métier.
     application.add_middleware(Idempotence)
-    application.add_middleware(TenantProvisoire, resolveur=tenants.tenant_de_etablissement)
+    application.add_middleware(Annee)
+    application.add_middleware(Etablissement)
+    application.add_middleware(Session)
     erreurs.installer(application)
     application.include_router(sante.routeur)
+    application.include_router(authentification.routeur)
+    application.include_router(moi.routeur)
+    application.include_router(comptes.routeur)
     application.include_router(parametres.routeur)
     contrat.installer(application)
     return application

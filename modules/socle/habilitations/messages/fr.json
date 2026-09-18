@@ -1,0 +1,5 @@
+{
+  "otp": "{produit} : votre code de connexion est {code}. Il est valable {minutes} minutes. Ne le communiquez à personne.",
+  "invitation": "{etablissement} vous ouvre un compte. Activez-le sous {jours} jours : {lien}",
+  "changement_ancien_numero": "{produit} : le numéro de votre compte est désormais {nouveau}. Si ce n'est pas vous, prévenez votre école."
+}

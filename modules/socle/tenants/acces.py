@@ -1,7 +1,7 @@
 """Toutes les fonctions d'accès aux données du module `tenants`.
 
 SQLAlchemy Core, valeurs liées, aucune concaténation. Chaque fonction reçoit une connexion ouverte
-par `transaction(tenant_id)` — elle n'en ouvre jamais. **Chaque fonction est exercée par la suite de
+par `transaction(tenant_id)`, elle n'en ouvre jamais. **Chaque fonction est exercée par la suite de
 tests contre une base fraîchement migrée, ou la porte P-12 échoue en la nommant.**
 """
 
@@ -13,8 +13,9 @@ from sqlalchemy import RowMapping, func, select, update
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncConnection
 
-from modules.shared import Evenement
+from modules.shared import Evenement, outbox
 from modules.socle.tenants.tables import (
+    country_pack,
     etablissement,
     evenement_outbox,
     parametre_catalogue,
@@ -56,12 +57,6 @@ async def inserer_etablissement(
     )
 
 
-async def appeler_tenant_de_etablissement(
-    connexion: AsyncConnection, etablissement_id: UUID
-) -> UUID | None:
-    return await connexion.scalar(select(func.tenants.tenant_de_etablissement(etablissement_id)))
-
-
 async def appeler_tenants_pour_travailleur(connexion: AsyncConnection) -> list[UUID]:
     resultat = await connexion.execute(
         select(func.tenants.tenants_pour_travailleur().column_valued("tenant_id"))
@@ -93,9 +88,41 @@ async def lire_valeurs_posees(
 async def lire_etablissement(
     connexion: AsyncConnection, etablissement_id: UUID
 ) -> RowMapping | None:
-    """L'établissement s'il est visible du tenant courant ; `None` sinon — inexistant ou d'un autre."""
+    """L'établissement s'il est visible du tenant courant ; `None` sinon : inexistant ou d'un autre."""
     resultat = await connexion.execute(
         select(etablissement).where(etablissement.c.id == etablissement_id)
+    )
+    return resultat.mappings().one_or_none()
+
+
+async def lire_etablissements_par_ids(
+    connexion: AsyncConnection, ids: list[UUID]
+) -> list[RowMapping]:
+    """Les établissements visibles du tenant courant parmi ceux demandés, dans l'ordre du nom."""
+    resultat = await connexion.execute(
+        select(etablissement).where(etablissement.c.id.in_(ids)).order_by(etablissement.c.nom)
+    )
+    return list(resultat.mappings())
+
+
+async def poser_administrateur(
+    connexion: AsyncConnection, etablissement_id: UUID, compte_id: UUID | None
+) -> int:
+    """Désigne (ou retire) qui attribue ses domaines dans cet établissement."""
+    resultat = await connexion.execute(
+        update(etablissement)
+        .where(etablissement.c.id == etablissement_id)
+        .values(administrateur_compte_id=compte_id)
+    )
+    return resultat.rowcount
+
+
+async def lire_pack(connexion: AsyncConnection, pays_code: str, version: int) -> RowMapping | None:
+    """Un pack publié ; il n'appartient à aucun tenant, mais ne se lit que d'une transaction tenantée."""
+    resultat = await connexion.execute(
+        select(country_pack).where(
+            country_pack.c.pays_code == pays_code, country_pack.c.version == version
+        )
     )
     return resultat.mappings().one_or_none()
 
@@ -136,90 +163,25 @@ async def upsert_valeur(
     return resultat.mappings().one()
 
 
+# L'outbox du module : les requêtes vivent dans `modules.shared.outbox`, paramétrées par la
+# table ; ces fonctions les appellent sur celle de `tenants`, et rien d'autre.
 async def inserer_evenement(
     connexion: AsyncConnection, tenant_id: UUID, evenement: Evenement
 ) -> UUID:
-    evenement_id = uuid.uuid7()
-    await connexion.execute(
-        insert(evenement_outbox).values(
-            id=evenement_id, tenant_id=tenant_id, type=evenement.type, charge=evenement.charge
-        )
-    )
-    return evenement_id
+    return await outbox.inserer(connexion, evenement_outbox, tenant_id, evenement)
 
 
 async def prendre_evenements(
     connexion: AsyncConnection, tenant_id: UUID, n: int
 ) -> list[RowMapping]:
-    """Les `n` plus anciens événements en attente, verrouillés puis passés à `pris`, dans l'ordre.
-
-    La sélection est une CTE `MATERIALIZED`, évaluée **une seule fois** : placée dans un
-    `IN (SELECT … LIMIT n FOR UPDATE SKIP LOCKED)`, PostgreSQL peut la réévaluer selon le plan et
-    passer à `pris` plus de `n` lignes — celles qu'on ne rend pas resteraient bloquées.
-    """
-    candidats = (
-        select(evenement_outbox.c.id)
-        .where(evenement_outbox.c.tenant_id == tenant_id, evenement_outbox.c.etat == "en_attente")
-        .order_by(evenement_outbox.c.ecrit_le, evenement_outbox.c.id)
-        .limit(n)
-        .with_for_update(skip_locked=True)
-        .cte("candidats")
-        .prefix_with("MATERIALIZED")
-    )
-    resultat = await connexion.execute(
-        update(evenement_outbox)
-        .where(evenement_outbox.c.id == candidats.c.id)
-        .values(etat="pris", pris_le=func.now())
-        .returning(
-            evenement_outbox.c.id,
-            evenement_outbox.c.type,
-            evenement_outbox.c.charge,
-            evenement_outbox.c.ecrit_le,
-        )
-    )
-    return sorted(resultat.mappings(), key=lambda e: (e["ecrit_le"], e["id"]))
-
-
-async def marquer_traite(connexion: AsyncConnection, evenement_id: UUID) -> None:
-    await connexion.execute(
-        update(evenement_outbox)
-        .where(evenement_outbox.c.id == evenement_id)
-        .values(etat="traite", traite_le=func.now())
-    )
-
-
-async def marquer_echec(connexion: AsyncConnection, evenement_id: UUID, erreur: str) -> None:
-    await connexion.execute(
-        update(evenement_outbox)
-        .where(evenement_outbox.c.id == evenement_id)
-        .values(
-            etat="en_echec",
-            tentatives=evenement_outbox.c.tentatives + 1,
-            derniere_erreur=erreur,
-        )
-    )
+    return await outbox.prendre(connexion, evenement_outbox, tenant_id, n)
 
 
 async def reprendre_pris_orphelins(
     connexion: AsyncConnection, tenant_id: UUID, delai: timedelta
 ) -> int:
-    """Un `pris` dont le processus est mort repasse `en_attente` passé le délai : jamais perdu."""
-    resultat = await connexion.execute(
-        update(evenement_outbox)
-        .where(
-            evenement_outbox.c.tenant_id == tenant_id,
-            evenement_outbox.c.etat == "pris",
-            evenement_outbox.c.pris_le < func.now() - delai,
-        )
-        .values(etat="en_attente", pris_le=None)
-    )
-    return resultat.rowcount
+    return await outbox.reprendre_pris_orphelins(connexion, evenement_outbox, tenant_id, delai)
 
 
 async def reprendre_en_echec(connexion: AsyncConnection, tenant_id: UUID) -> int:
-    resultat = await connexion.execute(
-        update(evenement_outbox)
-        .where(evenement_outbox.c.tenant_id == tenant_id, evenement_outbox.c.etat == "en_echec")
-        .values(etat="en_attente", pris_le=None)
-    )
-    return resultat.rowcount
+    return await outbox.reprendre_en_echec(connexion, evenement_outbox, tenant_id)

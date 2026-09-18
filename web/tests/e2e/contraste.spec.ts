@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test'
 import { PORT_DEV } from '../portes/outils'
 import { scriptTheme } from '../portes/outils'
 
-const ECRANS = [`http://localhost:${PORT_DEV}/style`, '/?persona=sept-domaines', '/d/vie_scolaire', '/?persona=aucune-capacite']
+const ECRANS = [`http://localhost:${PORT_DEV}/style`, '/?persona=sept-domaines', '/d/vie_scolaire?persona=un-domaine', '/?persona=aucune-capacite']
 
 for (const theme of ['light', 'dark']) {
   for (const adresse of ECRANS) {

@@ -9,6 +9,7 @@ export const COMPOSANTS = {
   },
   Champ: {
     TYPES: ['texte', 'nombre', 'choix', 'case'],
+    SAISIES: ['texte', 'code'],
     ETATS: ['repos', 'focus', 'erreur', 'inactif'],
     COMPLEMENTS: ['aide', 'unite'],
   },
@@ -64,6 +65,7 @@ type Valeur<C extends keyof typeof COMPOSANTS, E extends keyof (typeof COMPOSANT
 export type VarianteBouton = Valeur<'Bouton', 'VARIANTES'>
 export type EtatBouton = Valeur<'Bouton', 'ETATS'>
 export type TypeChamp = Valeur<'Champ', 'TYPES'>
+export type SaisieChamp = Valeur<'Champ', 'SAISIES'>
 export type EtatChamp = Valeur<'Champ', 'ETATS'>
 export type VoixPastille = Valeur<'PastilleEtat', 'VOIX'>
 export type FormePastille = Valeur<'PastilleEtat', 'FORMES'>
@@ -95,6 +97,10 @@ export const ETATS_METIER = {
   PRESENT: { voix: 'neutre', cle: 'etat.present' },
   BROUILLON: { voix: 'neutre', cle: 'etat.brouillon' },
   PROPOSE: { voix: 'contour', cle: 'etat.propose' },
+  // L'année de travail (écart E-03 de T1a) : une année en préparation n'est pas une faute,
+  // c'est une attente, et l'année active ne parle d'aucune réussite.
+  ANNEE_ACTIVE: { voix: 'neutre', cle: 'etat.annee_active' },
+  ANNEE_PREPARATION: { voix: 'ocre', cle: 'etat.annee_preparation' },
 } as const satisfies Record<string, { voix: VoixPastille; cle: string }>
 
 export type CodeEtat = keyof typeof ETATS_METIER

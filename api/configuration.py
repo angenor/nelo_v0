@@ -14,6 +14,22 @@ RACINE = Path(__file__).resolve().parents[1]
 class Configuration(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="NELO_", env_file=RACINE / ".env", extra="ignore")
 
+    # Le secret de signature des jetons d'accès : **aucun défaut**. Un serveur sans
+    # NELO_SECRET_JETON ne démarre pas, plutôt que de signer avec une valeur connue de tous.
+    secret_jeton: str
+    # L'indicatif proposé avant toute session (FR-002) : une donnée de déploiement, jamais une
+    # littérale de pays dans le code (principe V).
+    indicatif_defaut: str
+    # Levé en développement local sur http://localhost, jamais en production.
+    cookies_secure: bool = True
+    nom_produit: str = "Nelo"
+    url_publique: str = "http://localhost:3000"
+    # Un journal des messages courts en simulation, pour le développement et les tests seulement.
+    sms_journal: Path | None = None
+    # L'adresse du mandataire inverse dont X-Forwarded-For fait foi ; sans lui, l'adresse du
+    # client est celle de la connexion (research.md R-05).
+    relais_de_confiance: str | None = None
+
     bd_url: str = "postgresql+asyncpg://nelo_app:nelo_app@localhost:5432/nelo"
     bd_url_proprietaire: str = (
         "postgresql+asyncpg://nelo_proprietaire:nelo_proprietaire@localhost:5432/nelo"

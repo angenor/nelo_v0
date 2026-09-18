@@ -1,4 +1,4 @@
-"""US7-2, US7-3 — assistance.suspendue, posée par la route d'écriture, suspend à sa portée."""
+"""US7-2, US7-3 : assistance.suspendue, posée par la route d'écriture, suspend à sa portée."""
 
 import pytest
 
@@ -13,9 +13,11 @@ async def etats(application, tenant_id, etab_id):
     return set((await application.state.assistance.etat_des_capacites(tenant_id, etab_id)).values())
 
 
-async def test_suspendue_a_l_etablissement(client, application, tenants_ab):
+async def test_suspendue_a_l_etablissement(client, application, sessions_ab, tenants_ab):
     second = await tenants.creer_etablissement(tenants_ab.tenant_b, "École B2", "Africa/Abidjan")
-    reponse = await poser(client, tenants_ab.etab_b, CLE, "ETABLISSEMENT", tenants_ab.etab_b, True)
+    reponse = await poser(
+        client, sessions_ab.b, tenants_ab.etab_b, CLE, "ETABLISSEMENT", tenants_ab.etab_b, True
+    )
     assert reponse.status_code == 200, reponse.text
 
     assert await etats(application, tenants_ab.tenant_b, tenants_ab.etab_b) == {
@@ -30,14 +32,20 @@ async def test_suspendue_a_l_etablissement(client, application, tenants_ab):
     assert await etats(application, tenants_ab.tenant_b, second) == {attendu}
 
 
-async def test_suspendue_au_tenant_puis_surcharge_locale(client, application, tenants_ab):
+async def test_suspendue_au_tenant_puis_surcharge_locale(
+    client, application, sessions_ab, tenants_ab
+):
     second = await tenants.creer_etablissement(tenants_ab.tenant_b, "École B2", "Africa/Abidjan")
-    reponse = await poser(client, tenants_ab.etab_b, CLE, "TENANT", tenants_ab.tenant_b, True)
+    reponse = await poser(
+        client, sessions_ab.b, tenants_ab.etab_b, CLE, "TENANT", tenants_ab.tenant_b, True
+    )
     assert reponse.status_code == 200, reponse.text
     for etab in (tenants_ab.etab_b, second):
         assert await etats(application, tenants_ab.tenant_b, etab) == {EtatCapacite.SUSPENDUE}
 
-    reponse = await poser(client, tenants_ab.etab_b, CLE, "ETABLISSEMENT", second, False)
+    reponse = await poser(
+        client, sessions_ab.b, tenants_ab.etab_b, CLE, "ETABLISSEMENT", second, False
+    )
     assert reponse.status_code == 200, reponse.text
     assert await etats(application, tenants_ab.tenant_b, tenants_ab.etab_b) == {
         EtatCapacite.SUSPENDUE

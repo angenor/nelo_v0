@@ -8,6 +8,12 @@ export interface Ecran {
   budgetKo: number | null
   budgetPolicesKo?: number | null
   personas?: string[]
+  /**
+   * Visité avec la session semée par `web/tests/session.setup.ts` (research.md R-11). Un écran
+   * de session ne porte pas de persona : la démonstration et la session réelle sont deux
+   * sources, jamais les deux à la fois.
+   */
+  session?: boolean
   developpement?: boolean
 }
 
@@ -31,6 +37,12 @@ export function valider(entrees: unknown): Ecran[] {
     }
     if (e.budgetPolicesKo !== undefined && !entierPositifOuNull(e.budgetPolicesKo)) {
       throw new Error(`ecrans.json : « ${e.nom} », budgetPolicesKo doit être un entier positif ou null`)
+    }
+    if (e.session !== undefined && typeof e.session !== 'boolean') {
+      throw new Error(`ecrans.json : « ${e.nom} », session doit être un booléen`)
+    }
+    if (e.session && e.personas) {
+      throw new Error(`ecrans.json : « ${e.nom} » est de session, il ne porte pas de personas`)
     }
     if (e.developpement && e.budgetKo !== null) {
       throw new Error(`ecrans.json : « ${e.nom} » est de développement, son budgetKo doit être null`)

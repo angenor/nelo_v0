@@ -68,8 +68,9 @@ rendre où**, et le critère est le poids et le temps de premier affichage :
 
 ### 2.1 Ce qui existe aujourd'hui
 
-Le socle serveur de **T0a** ([specs/001-socle-serveur/](../specs/001-socle-serveur/)) et le socle
-d'interface de **T0b** ([specs/002-socle-interface/](../specs/002-socle-interface/)) :
+Le socle serveur de **T0a** ([specs/001-socle-serveur/](../specs/001-socle-serveur/)), le socle
+d'interface de **T0b** ([specs/002-socle-interface/](../specs/002-socle-interface/)) et la
+connexion de **T1a** ([specs/003-connexion-contexte/](../specs/003-connexion-contexte/)) :
 
 ```
 nelo_v0/
@@ -77,22 +78,27 @@ nelo_v0/
 ├── pyproject.toml · uv.lock · .python-version       # espace de travail uv : racine installable, huit membres déclaratifs
 ├── package.json · pnpm-lock.yaml · pnpm-workspace.yaml   # openapi-typescript épinglé ; lockfile unique, membre web/
 ├── compose.yml · garage.toml # postgres, valkey, garage — trois services
-├── contrat/                  # openapi.json et client.d.ts, régénérés par P-03 ; ContexteCapacites sans route
-├── api/                      # composition : main, middlewares (établissement provisoire, idempotence),
-│                             #   erreurs, capacités (point d'insertion), travailleur, contrat, routes/
+├── contrat/                  # openapi.json et client.d.ts, régénérés par P-03
+├── api/                      # composition : main, quatre middlewares (session, établissement,
+│                             #   année, idempotence), limitation, consommateurs, erreurs,
+│                             #   capacités (point d'insertion), travailleur, contrat, routes/
 ├── modules/
-│   ├── domaine/              # vide — la base de la hiérarchie
+│   ├── domaine/              # vide : la base de la hiérarchie
 │   ├── shared/               # transaction(tenant_id), erreurs, modes de simulation, événement,
-│   │                         #   contexte.py : le contexte qui compose l'interface (03-api § 1.9)
+│   │                         #   outbox générique, contexte.py (03-api § 1.9)
 │   ├── socle/
-│   │   ├── tenants/          # LE MODULE DORÉ — catalogue de paramètres, outbox du schéma
+│   │   ├── tenants/          # LE MODULE DORÉ : catalogue de paramètres, packs de pays, outbox
+│   │   ├── habilitations/    # comptes, sessions, codes, appareils, affectations : T1a
+│   │   ├── personnes/        # le noyau : nom, prénoms, langue préférée
+│   │   ├── annees/           # le noyau : libellé, bornes, état
 │   │   ├── assistance/       # six capacités, aucune livrée ; service d'inférence simulé
-│   │   └── communication/    # passerelle SMS simulée
+│   │   └── communication/    # passerelle SMS simulée, qui garde ses envois
 │   ├── metier/
 │   │   ├── finance/          # agrégateur de paiement simulé
-│   │   └── protection/       # CLOISONNÉ — l'interface de service, rien d'autre
+│   │   └── protection/       # CLOISONNÉ : l'interface de service, rien d'autre
 │   └── segments/             # vide
-├── migrations/tenants/       # Alembic : le schéma tenants, réversible
+├── migrations/<schéma>/      # Alembic, un dossier par module : tenants, personnes, annees,
+│                             #   habilitations ; chacun sa table de version, tous réversibles
 ├── web/                      # l'application Nuxt 4, rendue par le serveur, installable
 │   ├── ecrans.json           # LE SEUL ENDROIT : écrans, personas, budgets (application, polices)
 │   ├── app/
@@ -101,24 +107,30 @@ nelo_v0/
 │   │   ├── composables/      # libellés, pack, plateforme, réseau, thème, contexte, saisie, mise à jour
 │   │   ├── core/             # la logique pure : composition, état du ruban, pack, libellés fr/en,
 │   │   │                     #   plateforme (interface et unique implémentation web), démonstration
-│   │   ├── pages/            # accueil composé, d/[domaine], à propos, style (développement seulement)
+│   │   ├── pages/            # accueil composé, connexion (numéro, code, code personnel),
+│   │   │                     #   activation, d/[domaine], à propos, style (développement seulement)
+│   │   ├── middleware/       # la garde de session : sans contexte, on va se connecter
 │   │   ├── plugins/          # plateforme, réseau, contexte
 │   │   └── sw/sw.ts          # le service worker mince
+│   ├── server/api/v1/        # le relais : la seule brique qui connaisse un cookie de jeton
 │   ├── server/plugins/       # compression des pages rendues
 │   ├── scripts/icones.mjs    # les icônes, dessinées depuis la lettre d'Archivo et les jetons
 │   └── tests/                # unit/ (Vitest), e2e/ et portes/ (Playwright, Chromium et WebKit)
 ├── scripts/                  # verifier.sh, tests-negatifs.sh, avec-serveur-dev.sh, bd-vierge.sh, portes/
-├── tests/                    # module doré, isolation, idempotence, outbox, frontières, simulations, assistance
+├── tests/                    # module doré, isolation, idempotence, outbox, frontières, simulations,
+│                             #   assistance, authentification, en-têtes, contexte
 ├── .specify/ · .claude/skills/   # Spec Kit — voir 2.2
 ├── specs/                    # une spécification par tranche
 └── docs/                     # ce corpus
 ```
 
 **Aucune règle métier pédagogique.** L'interface existe en socle : une coquille composée depuis le
-contexte, quatorze composants, une page de style, un écran d'appel de démonstration, sur des
-données du primaire. **Dix portes tiennent**, P-01 à P-07, P-10, P-11 et P-12, et chacune a son test
-négatif (`scripts/tests-negatifs.sh`). P-08 et P-09 viendront avec les tranches qui leur donnent
-quelque chose à vérifier.
+contexte **réel**, quatorze composants, une page de style, un écran d'appel de démonstration, sur
+des données du primaire. Une personne ouvre sa session par un code reçu par SMS puis par un code
+personnel sur un appareil connu ; la double barrière d'isolation est en place, et le tenant
+provisoire de T0a a disparu. **Dix portes tiennent**, P-01 à P-07, P-10, P-11 et P-12, et chacune a
+son test négatif (`scripts/tests-negatifs.sh`). P-08 et P-09 viendront avec les tranches qui leur
+donnent quelque chose à vérifier.
 
 ### 2.2 Spec Kit — ce qui est posé
 
@@ -273,10 +285,20 @@ ne peut pas dépendre du réseau.
 
 ```
 docker compose up -d          # postgres + valkey + garage
-uv run fastapi dev api/main.py  # depuis la racine — l'API sur :8000, OpenAPI sur /openapi.json
-pnpm --filter nelo-web dev    # l'application sur :3000 (ou le port libre suivant), la page de style sur /style
+cp -n .env.exemple .env       # NELO_SECRET_JETON et NELO_INDICATIF_DEFAUT n'ont aucun défaut
+scripts/bd-vierge.sh --avec-jeu-d-essai   # quatre schémas migrés, deux tenants complets, deux packs
+uv run fastapi dev api/main.py  # depuis la racine : l'API sur :8000, OpenAPI sur /openapi.json
+NELO_DEMONSTRATION=1 pnpm --filter nelo-web dev   # l'application sur :3000 ; le relais /api/v1/** est dans Nuxt
 pnpm --filter nelo-web exec playwright install chromium webkit   # une fois, avec réseau : les moteurs de P-05 et P-10
 ```
+
+**Les variables sans défaut.** `NELO_SECRET_JETON` signe les jetons d'accès et
+`NELO_INDICATIF_DEFAUT` dit dans quel plan de numérotation lire un numéro écrit sans indicatif :
+aucune des deux n'a de valeur par défaut, et le serveur ne démarre pas sans elles. Un secret par
+défaut serait un secret connu de tous ; un indicatif par défaut serait un pays écrit dans le code.
+`NELO_COOKIES_SECURE=false` est nécessaire en local, où le navigateur refuse un cookie `Secure` sur
+`http://localhost` : jamais en production. `NELO_SMS_JOURNAL` fait écrire à la passerelle simulée
+une ligne JSON par envoi, ce que les tests de bout en bout lisent pour retrouver un code.
 
 | Service | Rôle en développement | En production |
 |---|---|---|

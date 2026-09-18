@@ -1,0 +1,22 @@
+# Membre déclaratif de l'espace de travail : non installé, il déclare ses dépendances internes.
+[project]
+name = "nelo-socle-habilitations"
+version = "0.1.0"
+description = "Les comptes, les sessions, les affectations : la première frontière de sécurité"
+requires-python = "==3.14.*"
+# Deux lectures inter-modules, par leur interface de service et jamais par leurs tables :
+# l'identité de la personne (nom, prénoms, langue du message) et le nom de l'établissement
+# proposé au choix, plus la durée de session réglée au catalogue.
+dependencies = [
+    "nelo-shared",
+    "nelo-socle-personnes",
+    "nelo-socle-tenants",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+nelo-shared = { workspace = true }
+nelo-socle-personnes = { workspace = true }
+nelo-socle-tenants = { workspace = true }

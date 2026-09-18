@@ -5,6 +5,9 @@ L'interface de service, et rien d'autre : ni tables, ni accès aux données, ni 
 
 from modules.socle.tenants.schemas import (
     CorpsPoserParametre,
+    Devise,
+    Etablissement,
+    Pack,
     ParametreEffectif,
     ParametrePose,
     Portee,
@@ -16,10 +19,12 @@ from modules.socle.tenants.service import (
     consommer_lot,
     creer_etablissement,
     creer_tenant,
+    designer_administrateur,
+    lire_etablissements,
+    lire_pack,
     lire_parametres_effectifs,
     poser_parametre,
     reprendre_evenements,
-    tenant_de_etablissement,
     tenants_pour_travailleur,
     valeur_effective,
 )
@@ -28,7 +33,6 @@ __all__ = [
     "lire_parametres_effectifs",
     "poser_parametre",
     "valeur_effective",
-    "tenant_de_etablissement",
     "ParametreEffectif",
     "ParametrePose",
     "Portee",
@@ -41,4 +45,10 @@ __all__ = [
     "Consommateur",
     "consommer_lot",
     "reprendre_evenements",
+    "lire_etablissements",
+    "designer_administrateur",
+    "lire_pack",
+    "Pack",
+    "Devise",
+    "Etablissement",
 ]

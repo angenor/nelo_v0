@@ -19,6 +19,9 @@ dependencies = [
     "asyncpg==0.31.0",
     "alembic==1.19.2",
     "valkey==6.1.1",
+    "phonenumbers==9.0.39",
+    "PyJWT==2.14.0",
+    "argon2-cffi==25.1.0",
 ]
 
 [dependency-groups]
@@ -46,6 +49,9 @@ members = [
     "modules/shared",
     "modules/domaine",
     "modules/socle/tenants",
+    "modules/socle/habilitations",
+    "modules/socle/personnes",
+    "modules/socle/annees",
     "modules/socle/assistance",
     "modules/socle/communication",
     "modules/metier/protection",

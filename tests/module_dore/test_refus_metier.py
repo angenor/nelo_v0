@@ -1,4 +1,4 @@
-"""US1-5 — les refus métier : même statut que le refus de schéma, code différent."""
+"""US1-5, les refus métier : même statut que le refus de schéma, code différent."""
 
 import pytest
 
@@ -12,19 +12,28 @@ async def refus(reponse) -> dict:
     return corps
 
 
-async def test_cle_inconnue(client, tenants_ab):
-    corps = await refus(
-        await poser(client, tenants_ab.etab_a, "inconnue.cle", "TENANT", tenants_ab.tenant_a, 1)
-    )
-    assert corps["code"] == "TEN_PARAMETRE_INCONNU"
-    assert "assistance.suspendue" in corps["details"]["cles_connues"]
-    assert len(corps["details"]["cles_connues"]) == 17
-
-
-async def test_portee_plus_basse_que_permise(client, tenants_ab):
+async def test_cle_inconnue(client, sessions_ab, tenants_ab):
     corps = await refus(
         await poser(
             client,
+            sessions_ab.a,
+            tenants_ab.etab_a,
+            "inconnue.cle",
+            "TENANT",
+            tenants_ab.tenant_a,
+            1,
+        )
+    )
+    assert corps["code"] == "TEN_PARAMETRE_INCONNU"
+    assert "assistance.suspendue" in corps["details"]["cles_connues"]
+    assert len(corps["details"]["cles_connues"]) == 20
+
+
+async def test_portee_plus_basse_que_permise(client, sessions_ab, tenants_ab):
+    corps = await refus(
+        await poser(
+            client,
+            sessions_ab.a,
             tenants_ab.etab_a,
             "securite.duree_session_minutes",
             "ETABLISSEMENT",
@@ -37,20 +46,32 @@ async def test_portee_plus_basse_que_permise(client, tenants_ab):
 
 
 @pytest.mark.parametrize("portee", ["SITE", "CYCLE"])
-async def test_portee_sans_entite(client, tenants_ab, portee):
+async def test_portee_sans_entite(client, sessions_ab, tenants_ab, portee):
     corps = await refus(
         await poser(
-            client, tenants_ab.etab_a, "assistance.suspendue", portee, tenants_ab.etab_a, True
+            client,
+            sessions_ab.a,
+            tenants_ab.etab_a,
+            "assistance.suspendue",
+            portee,
+            tenants_ab.etab_a,
+            True,
         )
     )
     assert corps["code"] == "TEN_PORTEE_INVALIDE"
     assert corps["details"]["portees_disponibles"] == ["TENANT", "ETABLISSEMENT"]
 
 
-async def test_portee_tenant_hors_tenant(client, tenants_ab):
+async def test_portee_tenant_hors_tenant(client, sessions_ab, tenants_ab):
     corps = await refus(
         await poser(
-            client, tenants_ab.etab_a, "assistance.suspendue", "TENANT", tenants_ab.tenant_b, True
+            client,
+            sessions_ab.a,
+            tenants_ab.etab_a,
+            "assistance.suspendue",
+            "TENANT",
+            tenants_ab.tenant_b,
+            True,
         )
     )
     assert corps["code"] == "TEN_PORTEE_INVALIDE"
@@ -70,9 +91,17 @@ async def test_portee_tenant_hors_tenant(client, tenants_ab):
         ("absence.regroupement_recapitulatif", 3, "CHAINE"),
     ],
 )
-async def test_valeur_du_mauvais_type(client, tenants_ab, cle, valeur, type_attendu):
+async def test_valeur_du_mauvais_type(client, sessions_ab, tenants_ab, cle, valeur, type_attendu):
     corps = await refus(
-        await poser(client, tenants_ab.etab_a, cle, "ETABLISSEMENT", tenants_ab.etab_a, valeur)
+        await poser(
+            client,
+            sessions_ab.a,
+            tenants_ab.etab_a,
+            cle,
+            "ETABLISSEMENT",
+            tenants_ab.etab_a,
+            valeur,
+        )
     )
     assert corps["code"] == "TEN_VALEUR_INVALIDE"
     assert corps["champ"] == "valeur"
@@ -87,9 +116,9 @@ async def test_valeur_du_mauvais_type(client, tenants_ab, cle, valeur, type_atte
         ("sms.plafond_mensuel", 500),
     ],
 )
-async def test_valeur_du_bon_type(client, tenants_ab, cle, valeur):
+async def test_valeur_du_bon_type(client, sessions_ab, tenants_ab, cle, valeur):
     reponse = await poser(
-        client, tenants_ab.etab_a, cle, "ETABLISSEMENT", tenants_ab.etab_a, valeur
+        client, sessions_ab.a, tenants_ab.etab_a, cle, "ETABLISSEMENT", tenants_ab.etab_a, valeur
     )
     assert reponse.status_code == 200, reponse.text
     assert reponse.json()["valeur"] == valeur

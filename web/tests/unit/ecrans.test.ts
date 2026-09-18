@@ -26,6 +26,14 @@ describe('ecrans.json', () => {
     expect(valider([{ nom: 's', route: '/s', budgetKo: null, developpement: true }])).toHaveLength(1)
   })
 
+  it('accepte un écran de session, et lui refuse des personas', () => {
+    expect(valider([{ nom: 's', route: '/s', budgetKo: 120, session: true }])).toHaveLength(1)
+    expect(() => valider([{ nom: 's', route: '/s', budgetKo: 120, session: 'oui' }])).toThrow(/booléen/)
+    expect(() =>
+      valider([{ nom: 's', route: '/s', budgetKo: 120, session: true, personas: ['un-domaine'] }]),
+    ).toThrow(/personas/)
+  })
+
   it('refuse un doublon, une route sans barre et une liste vide', () => {
     const e = { nom: 'a', route: '/a', budgetKo: null }
     expect(() => valider([e, e])).toThrow(/deux fois/)

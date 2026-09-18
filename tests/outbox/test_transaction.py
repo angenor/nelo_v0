@@ -1,4 +1,4 @@
-"""US3-4 — l'événement s'écrit dans la transaction du changement d'état : un échec emporte tout."""
+"""US3-4, l'événement s'écrit dans la transaction du changement d'état : un échec emporte tout."""
 
 from sqlalchemy import text
 
@@ -7,7 +7,9 @@ from modules.socle.tenants import acces
 from tests.module_dore.outils import poser
 
 
-async def test_rollback_n_ecrit_aucun_evenement(client, tenants_ab, valkey, monkeypatch):
+async def test_rollback_n_ecrit_aucun_evenement(
+    client, sessions_ab, tenants_ab, valkey, monkeypatch
+):
     inserer_evenement = acces.inserer_evenement
 
     async def puis_echoue(*args, **kwargs):
@@ -17,6 +19,7 @@ async def test_rollback_n_ecrit_aucun_evenement(client, tenants_ab, valkey, monk
     monkeypatch.setattr(acces, "inserer_evenement", puis_echoue)
     reponse = await poser(
         client,
+        sessions_ab.a,
         tenants_ab.etab_a,
         "absence.delai_notification_minutes",
         "ETABLISSEMENT",

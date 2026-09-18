@@ -40,6 +40,7 @@ async def envoyer_erreur_asgi(
     requete_id: str | None,
     *,
     details: dict[str, Any] | None = None,
+    en_tetes: dict[str, str] | None = None,
 ) -> None:
     """Pour les middlewares ASGI purs, qui refusent avant que FastAPI ne voie la requête."""
     corps = json.dumps(
@@ -52,6 +53,10 @@ async def envoyer_erreur_asgi(
             "headers": [
                 (b"content-type", b"application/json"),
                 (b"content-length", str(len(corps)).encode()),
+                *(
+                    (nom.encode("latin-1"), valeur.encode("latin-1"))
+                    for nom, valeur in (en_tetes or {}).items()
+                ),
             ],
         }
     )
@@ -87,6 +92,7 @@ async def _refus_metier(request: Request, exc: ErreurMetier) -> JSONResponse:
         content=enveloppe(
             exc.code, exc.message, _requete_id(request), champ=exc.champ, details=exc.details
         ),
+        headers=exc.en_tetes or None,
     )
 
 

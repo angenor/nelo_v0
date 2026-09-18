@@ -4,7 +4,7 @@ import type { Page } from '@playwright/test'
 import { expect, test } from '@playwright/test'
 import { PORT_DEV } from '../portes/outils'
 
-const ECRANS = ['/?persona=sept-domaines', '/d/vie_scolaire', '/a-propos', `http://localhost:${PORT_DEV}/style`]
+const ECRANS = ['/?persona=sept-domaines', '/d/vie_scolaire?persona=un-domaine', '/a-propos?persona=un-domaine', `http://localhost:${PORT_DEV}/style`]
 
 async function debordement(page: Page): Promise<string[]> {
   return page.evaluate(() => {
@@ -44,7 +44,7 @@ test('le tableau suit la largeur : cartes à 390 px, lignes à 768 px', async ({
 
 test('à 390 px, l’action principale de l’appel est en bas et pleine largeur', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
-  await page.goto('/d/vie_scolaire')
+  await page.goto('/d/vie_scolaire?persona=un-domaine')
   const bouton = (await page.locator('.bouton--principal').boundingBox())!
   expect(bouton.width).toBeGreaterThanOrEqual(390 - 32 - 1)
   expect(bouton.y).toBeGreaterThan(844 / 2)

@@ -1,4 +1,4 @@
-"""FR-018 — A puis B sur la même connexion du pool : rien ne traverse."""
+"""FR-018, A puis B sur la même connexion du pool : rien ne traverse."""
 
 from sqlalchemy import text
 
@@ -7,9 +7,17 @@ from tests.isolation.schema import colonne, compter
 from tests.module_dore.outils import poser
 
 
-async def test_meme_connexion_rien_ne_traverse(client, tenants_ab, moteur_pool_un, monkeypatch):
+async def test_meme_connexion_rien_ne_traverse(
+    client, sessions_ab, tenants_ab, moteur_pool_un, monkeypatch
+):
     reponse = await poser(
-        client, tenants_ab.etab_a, "assistance.suspendue", "ETABLISSEMENT", tenants_ab.etab_a, True
+        client,
+        sessions_ab.a,
+        tenants_ab.etab_a,
+        "assistance.suspendue",
+        "ETABLISSEMENT",
+        tenants_ab.etab_a,
+        True,
     )
     assert reponse.status_code == 200, reponse.text
 

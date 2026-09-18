@@ -8,6 +8,7 @@ export const PLATEFORME_INDISPONIBLE: Plateforme = {
   apparence: { sombre: false, surChangement: () => () => {} },
   clavier: { libelle: (touche) => `Ctrl ${touche.toUpperCase()}`, surRaccourci: () => () => {} },
   stockage: { disponible: false, lire: () => null, ecrire: () => {}, effacer: () => {} },
+  cookies: { disponible: false, ecrire: () => {}, effacer: () => {} },
   camera: { disponible: false, capturer: async () => null },
   notifications: { disponible: false, demander: async () => 'refusee', afficher: () => {} },
 }

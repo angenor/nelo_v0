@@ -16,11 +16,11 @@ routeur = APIRouter()
 
 INTROUVABLE = {
     "model": EnveloppeErreur,
-    "description": "`TEN_RESSOURCE_INTROUVABLE` — ressource inexistante dans le périmètre du tenant ; jamais `403`",
+    "description": "`TEN_RESSOURCE_INTROUVABLE` : ressource inexistante dans le périmètre du tenant ; jamais `403`, sauf l'en-tête d'établissement, nommé par le principe XII",
 }
 ERREUR_INTERNE = {
     "model": EnveloppeErreur,
-    "description": "`API_ERREUR_INTERNE` — aucun détail technique dans `message` ; `requete_id` suffit à retrouver la trace",
+    "description": "`API_ERREUR_INTERNE` : aucun détail technique dans `message` ; `requete_id` suffit à retrouver la trace",
 }
 
 
@@ -35,7 +35,7 @@ ERREUR_INTERNE = {
         },
         400: {
             "model": EnveloppeErreur,
-            "description": "`TEN_ETABLISSEMENT_REQUIS` — en-tête absent ou malformé, refusé par le middleware",
+            "description": "`TEN_ETABLISSEMENT_REQUIS` : en-tête absent ou malformé, refusé par le middleware",
         },
         404: INTROUVABLE,
         500: ERREUR_INTERNE,

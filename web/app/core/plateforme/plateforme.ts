@@ -17,6 +17,17 @@ export interface Stockage {
   effacer(cle: string): void
 }
 
+/**
+ * Les cookies que la page pose elle-même : jamais un jeton, jamais un secret. Le seul de la
+ * tranche est `nelo_etablissement`, un identifiant que le compte a le droit de voir, posé pour
+ * que le rendu serveur connaisse l'établissement choisi sur cet appareil (research.md R-21).
+ */
+export interface Cookies {
+  readonly disponible: boolean
+  ecrire(nom: string, valeur: string): void
+  effacer(nom: string): void
+}
+
 export interface Camera {
   readonly disponible: boolean
   capturer(): Promise<Blob | null>
@@ -52,6 +63,7 @@ export interface Plateforme {
   apparence: Apparence
   clavier: Clavier
   stockage: Stockage
+  cookies: Cookies
   camera: Camera
   notifications: Notifications
 }

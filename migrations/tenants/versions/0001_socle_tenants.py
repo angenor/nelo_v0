@@ -20,7 +20,7 @@ import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects.postgresql import JSONB, TIMESTAMP, UUID
 
-from modules.socle.tenants.catalogue_seed import CATALOGUE
+from modules.socle.tenants.catalogue_seed import entrees_de
 
 revision = "0001"
 down_revision = None
@@ -136,8 +136,9 @@ def upgrade() -> None:
         schema="tenants",
     )
 
-    # Le catalogue — docs/02-domaine.md § 17, alimenté sous le rôle propriétaire.
-    op.bulk_insert(catalogue, list(CATALOGUE))
+    # Le catalogue de docs/02-domaine.md § 17, alimenté sous le rôle propriétaire. Les clés
+    # qu'une révision ultérieure ajoute ne sont pas de cette migration.
+    op.bulk_insert(catalogue, list(entrees_de("0001")))
 
     # L'isolation : ENABLE et FORCE, une ligne par table.
     op.execute("ALTER TABLE tenants.tenant ENABLE ROW LEVEL SECURITY")

@@ -47,6 +47,11 @@ légaux n'en ont pas.
   répond `403 TEN_ETABLISSEMENT_NON_AUTORISE`, jamais `404` — ne pas publier l'existence d'un établissement tiers.
 - **Omettre `X-Nelo-Annee` sur une route pédagogique est une erreur `400 ANN_ANNEE_REQUISE`**, jamais
   un repli silencieux sur l'année active. Un repli implicite écrit une note dans la mauvaise année.
+- *Ajouté par T1a.* Pour un compte **authentifié**, le `400 TEN_ETABLISSEMENT_REQUIS` porte
+  `details.etablissements` : les identifiants des établissements auxquels **ce compte** est affecté.
+  C'est une donnée du compte lui-même, jamais d'un tiers : il ne s'agit pas de dire ce qui existe,
+  mais de rappeler à quelqu'un où il travaille, pour que l'interface pose l'en-tête à sa première
+  requête sans avoir à deviner. Sans jeton, le refus reste `401` et ne porte rien.
 
 **Ce que vaut un en-tête absent ou refusé.** La table est opposable : c'est elle qui fixe le statut,
 pas l'endroit du code où le refus a été écrit.

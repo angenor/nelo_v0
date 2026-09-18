@@ -1,4 +1,10 @@
-"""US6 — une dépendance indisponible répond 503 avec l'enveloppe, sur une route déclarée par le test."""
+"""US6 : une dépendance indisponible répond 503 avec l'enveloppe, sur une route déclarée par le test.
+
+L'application est neuve, mais la session vient de celle de la fixture : les deux partagent la même
+base, le même Valkey et le même secret de jeton, et la session ouverte sur l'une vaut sur l'autre.
+Sans elle, le middleware de session refuserait en `401` avant que la dépendance ne soit appelée, et
+le test mesurerait autre chose que le `503`.
+"""
 
 from datetime import timedelta
 
@@ -7,9 +13,10 @@ import httpx
 from api.main import creer_application
 from modules.shared import ModeSimulation
 from modules.socle.communication import SimulationPasserelleSms
+from tests.authentification.outils import en_tetes
 
 
-async def test_503_avec_enveloppe(moteur_application, tenants_ab, requete_id):
+async def test_503_avec_enveloppe(moteur_application, sessions_ab, tenants_ab, requete_id):
     application = creer_application()
     passerelle = SimulationPasserelleSms(ModeSimulation.INDISPONIBLE, timedelta(milliseconds=10))
 
@@ -21,7 +28,10 @@ async def test_503_avec_enveloppe(moteur_application, tenants_ab, requete_id):
     async with httpx.AsyncClient(transport=transport, base_url="http://nelo") as client:
         reponse = await client.get(
             "/api/v1/essai-dependance",
-            headers={"X-Nelo-Etablissement": str(tenants_ab.etab_a), "X-Nelo-Requete": requete_id},
+            headers={
+                **en_tetes(sessions_ab.a, tenants_ab.etab_a),
+                "X-Nelo-Requete": requete_id,
+            },
         )
     assert reponse.status_code == 503
     corps = reponse.json()
