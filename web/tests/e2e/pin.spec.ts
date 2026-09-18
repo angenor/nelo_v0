@@ -62,7 +62,7 @@ test('définir un code personnel, puis rouvrir sans le moindre SMS', async ({ pa
     page.waitForResponse((reponse) => reponse.url().endsWith('/api/v1/auth/pin/definition')),
     soumettre(page).click(),
   ])
-  expect(definition.status(), await definition.text()).toBe(204)
+  expect(definition.status(), 'la définition du code personnel').toBe(204)
   await page.waitForURL(/localhost:\d+\/$/, { timeout: 15000 })
 
   // Fermer la session : l'appareil, lui, reste connu.
@@ -88,7 +88,7 @@ test('définir un code personnel, puis rouvrir sans le moindre SMS', async ({ pa
     ),
     soumettre(page).click(),
   ])
-  expect(ouverture.status(), await ouverture.text()).toBe(200)
+  expect(ouverture.status(), 'l’ouverture par code personnel').toBe(200)
 
   await page.waitForURL(/localhost:\d+\/$/, { timeout: 15000 })
   expect(

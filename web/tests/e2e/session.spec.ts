@@ -90,7 +90,7 @@ test('fermer la session ramène à la connexion, et l’appareil reste connu', a
       headers: { 'X-Nelo-Requete': uuid7() },
       data: { identifiant: NUMERO_FERMETURE },
     })
-    expect(demande.status(), await demande.text()).toBe(204)
+    expect(demande.status(), 'la demande de code').toBe(204)
 
     const code = await attendreCode(NUMERO_FERMETURE, deja)
     const verification = await api.post('/api/v1/auth/otp/verification', {
@@ -117,7 +117,7 @@ test('fermer la session ramène à la connexion, et l’appareil reste connu', a
     const fermeture = await page.request.delete('/api/v1/auth/session', {
       headers: { 'X-Nelo-Requete': uuid7() },
     })
-    expect(fermeture.status(), await fermeture.text()).toBe(204)
+    expect(fermeture.status(), 'la fermeture de la session').toBe(204)
 
     await page.goto('/')
     await expect(page).toHaveURL(/\/connexion/, { timeout: 15000 })
