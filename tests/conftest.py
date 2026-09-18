@@ -261,13 +261,15 @@ async def tenants_ab(moteur_application: AsyncEngine, client: httpx.AsyncClient)
     tenant_a, etab_a = a.tenant, a.etablissement
     tenant_b, etab_b = b.tenant, b.etablissement
     if SUSPENSION:
-        for tenant_id, etab_id in ((tenant_a, etab_a), (tenant_b, etab_b)):
-            reponse = await client.put(
-                "/api/v1/parametres/assistance.suspendue",
-                headers={"X-Nelo-Etablissement": str(etab_id), "X-Nelo-Requete": str(uuid.uuid7())},
-                json={"portee": "TENANT", "portee_id": str(tenant_id), "valeur": True},
+        # Le paramètre est posé par le service, pas par la route : une fixture prépare un état,
+        # elle ne teste pas une route, et celle-ci exige désormais une session que la fixture
+        # n'a pas encore ouverte (c'est `sessions_ab` qui le fait, et elle dépend de celle-ci).
+        from modules.socle import tenants
+
+        for tenant_id in (tenant_a, tenant_b):
+            await tenants.poser_parametre(
+                tenant_id, "assistance.suspendue", tenants.Portee.TENANT, tenant_id, True
             )
-            assert reponse.status_code == 200, reponse.text
     return DeuxTenants(tenant_a, etab_a, tenant_b, etab_b, a, b)
 
 
