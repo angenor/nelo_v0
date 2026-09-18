@@ -5,7 +5,7 @@
 //   - un jeton d'accès disparu se renouvelle sans que la personne s'en aperçoive ;
 //   - **aucun jeton n'est lisible d'un script** : ni en stockage, ni en cookie de page.
 import { existsSync, readFileSync } from 'node:fs'
-import { expect, test } from '@playwright/test'
+import { expect, request, test } from '@playwright/test'
 import { uuid7 } from '../../app/core/api/uuid7'
 import { ETAT_SESSION } from '../portes/outils'
 
@@ -71,24 +71,48 @@ test('un jeton d’accès disparu se renouvelle sans que la page change', async 
   await expect(page.locator('body')).not.toContainText('AUT_')
 })
 
-test('fermer la session ramène à la connexion, et l’appareil reste connu', async ({ browser }) => {
+test('fermer la session ramène à la connexion, et l’appareil reste connu', async ({
+  browser,
+  baseURL,
+}) => {
   // Cette suite ferme ce qu'elle ouvre : elle ne touche pas à la session semée, dont les autres
-  // suites se servent en parallèle. Son compte lui appartient (NUMERO_FERMETURE).
+  // se servent en parallèle. Son compte lui appartient (NUMERO_FERMETURE).
+  //
+  // La session s'ouvre **par l'API**, comme le fait le projet « setup » : ce que ce test prouve
+  // est la fermeture, et le parcours d'écran est déjà prouvé par `connexion.spec.ts`.
   expect(NUMERO_FERMETURE, 'NUMERO_FERMETURE n’est pas posé').not.toBe('')
-  const contexte = await browser.newContext({ viewport: { width: 390, height: 844 } })
+  const deja = envoisVers(NUMERO_FERMETURE).length
+
+  const api = await request.newContext({ baseURL })
+  let etat
+  try {
+    const demande = await api.post('/api/v1/auth/otp', {
+      headers: { 'X-Nelo-Requete': uuid7() },
+      data: { identifiant: NUMERO_FERMETURE },
+    })
+    expect(demande.status(), await demande.text()).toBe(204)
+
+    const code = await attendreCode(NUMERO_FERMETURE, deja)
+    const verification = await api.post('/api/v1/auth/otp/verification', {
+      headers: { 'X-Nelo-Requete': uuid7() },
+      data: { identifiant: NUMERO_FERMETURE, code },
+    })
+    expect(verification.status(), await verification.text()).toBe(200)
+    etat = await api.storageState()
+  } finally {
+    await api.dispose()
+  }
+
+  const contexte = await browser.newContext({
+    baseURL,
+    storageState: etat,
+    viewport: { width: 390, height: 844 },
+  })
   try {
     const page = await contexte.newPage()
-    const deja = envoisVers(NUMERO_FERMETURE).length
-
-    await page.goto('/connexion')
-    // L'écran doit être prêt : un clic avant l'hydratation ne déclencherait rien.
-    await expect(page.locator('form button[type="submit"]')).toBeEnabled()
-    await page.getByRole('textbox').fill(NUMERO_FERMETURE.replace(/^\+225/, ''))
-    await page.locator('form button[type="submit"]').click()
-    await expect(page).toHaveURL(/\/connexion\/code/)
-    await page.getByRole('textbox').fill(await attendreCode(NUMERO_FERMETURE, deja))
-    await page.locator('form button[type="submit"]').click()
-    await page.waitForURL(/\/connexion\/pin$|localhost:\d+\/$/, { timeout: 15000 })
+    await page.goto('/')
+    // La session vit : l'accueil se rend, sans renvoyer à la connexion.
+    await expect(page).not.toHaveURL(/\/connexion/)
 
     const fermeture = await page.request.delete('/api/v1/auth/session', {
       headers: { 'X-Nelo-Requete': uuid7() },
@@ -98,7 +122,7 @@ test('fermer la session ramène à la connexion, et l’appareil reste connu', a
     await page.goto('/')
     await expect(page).toHaveURL(/\/connexion/, { timeout: 15000 })
 
-    // L'appareil reste connu : la réouverture se fait par code personnel, pas par un SMS de plus.
+    // L'appareil reste connu : la réouverture se fera par code personnel, pas par un SMS de plus.
     const comptes = await page.request.get('/api/v1/auth/appareil')
     expect((await comptes.json()).comptes.length).toBeGreaterThan(0)
   } finally {
