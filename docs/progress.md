@@ -130,7 +130,7 @@ et elle est plus permissive que `MIT`, déjà autorisée.
 
 **Mesuré** : SC-003, l'écart des médianes entre un numéro connu et un inconnu, **2,8 ms** sur un
 plafond de 50 (cent demandes alternées) ; SC-009, les six écrans de la tranche entre **110,4 et
-118,6 Ko** sur 120, polices comptées à part ; SC-012, `scripts/verifier.sh` en **3 min 22 s** sur
+118,6 Ko** sur 120, polices comptées à part ; SC-012, `scripts/verifier.sh` en **4 min 16 s** sur
 cinq minutes, dix portes vertes ; `scripts/tests-negatifs.sh` en **10 min 53 s**, treize mutations
 et treize échecs obtenus. SC-006 est prouvé dans un navigateur réel : aucun jeton ne se lit d'un
 script. Le détail est dans [quickstart.md](../specs/003-connexion-contexte/quickstart.md).

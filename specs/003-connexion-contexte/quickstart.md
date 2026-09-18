@@ -145,7 +145,7 @@ mesures d'écran viennent de P-10, celles de temps des suites qui les portent.
 | **SC-006** aucun jeton lisible d'un script | aucun | **aucun** : `nelo_acces`, `nelo_refresh` et `nelo_appareils` sont `HttpOnly`, et rien qui ressemble à un jeton ne se lit dans le stockage (`web/tests/e2e/session.spec.ts`) |
 | **SC-008** délai de remise à la passerelle simulée | quelques secondes | **sous 1 s** : le travailleur passe toutes les 500 ms, et les tests lisent le message sans attente perceptible |
 | **SC-009** poids des écrans de la connexion | 120 Ko d'application, 45 Ko de polices (60 avec la police du champ de code) | `connexion` **118,1 Ko** et 58,4 Ko de polices ; `connexion-code` **116,7 Ko** ; `connexion-pin` **117,3 Ko** ; `activation` **110,4 Ko** ; `compte-telephone` **118,6 Ko** ; `accueil-session` **113 Ko** |
-| **SC-012** durée de `scripts/verifier.sh` | sous cinq minutes | **3 min 22 s**, dix portes vertes |
+| **SC-012** durée de `scripts/verifier.sh` | sous cinq minutes | **4 min 16 s**, dix portes vertes |
 | durée de `scripts/tests-negatifs.sh` | non budgétée | **10 min 53 s**, treize mutations, treize échecs obtenus |
 
 **SC-001** (ouvrir par code reçu en trois écrans et moins de 90 s) et **SC-002** (rouvrir par code
