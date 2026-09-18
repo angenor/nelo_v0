@@ -2,7 +2,8 @@
 
 Middleware ASGI pur, placé **à l'intérieur** du middleware d'établissement : le tenant est connu,
 et la mémorisation lui est bornée. La réponse d'une écriture est mémorisée 24 h dans Valkey sous
-`idem:{tenant_id}:{requete_id}` :
+`idem:{tenant_id}:{requete_id}`, ou `idem:auth:{requete_id}` sur un chemin libre, avant qu'un
+tenant ne soit connu :
 
 - clé inconnue → l'écriture s'exécute, sa réponse est mémorisée ;
 - même clé, même empreinte, exécution terminée → la réponse mémorisée est rendue, rien ne se
@@ -73,7 +74,11 @@ class Idempotence:
             return
 
         valkey = scope["app"].state.valkey
-        cle = f"idem:{etat['tenant_id']}:{requete_id}"
+        # Sur un chemin libre, aucun tenant n'est connu : la personne n'est pas encore
+        # entrée. La mémorisation est alors globale, et c'est sans danger : la clé de requête
+        # est tirée au hasard par le client.
+        portee = etat["tenant_id"] if "tenant_id" in etat else "auth"
+        cle = f"idem:{portee}:{requete_id}"
         corps = await lire_corps(receive)
         empreinte = hashlib.sha256(
             scope["method"].encode() + b" " + scope["path"].encode() + b"\n" + corps

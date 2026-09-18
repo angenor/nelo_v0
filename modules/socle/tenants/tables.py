@@ -1,4 +1,4 @@
-"""Les cinq tables du schéma `tenants`, déclarées une fois en SQLAlchemy Core.
+"""Les six tables du schéma `tenants`, déclarées une fois en SQLAlchemy Core.
 
 Cette déclaration sert aux requêtes de `acces.py` et à la comparaison de la porte P-12 contre le
 schéma réellement migré. La migration, elle, écrit ses tables en toutes lettres : une migration
@@ -56,8 +56,21 @@ etablissement = Table(
     Column("fuseau_horaire", Text, nullable=False),
     Column("telephone", Text),
     Column("direction_regionale", Text),
+    # Identifiant vers `habilitations.compte`, sans clé étrangère : qui attribue ses domaines à
+    # une personne qui n'en a aucun. L'écran « aucun domaine » le nomme.
+    Column("administrateur_compte_id", UUID(as_uuid=True)),
     Column("cree_le", TIMESTAMP(timezone=True), nullable=False, server_default=func.now()),
     Index("ix_etablissement_tenant", "tenant_id"),
+)
+
+country_pack = Table(
+    "country_pack",
+    metadata,
+    Column("pays_code", Text, primary_key=True),
+    Column("version", Integer, primary_key=True),
+    Column("contenu", JSONB, nullable=False),
+    # Un pack publié ne se modifie jamais en place : on en publie une version de plus.
+    Column("publie_le", TIMESTAMP(timezone=True), nullable=False, server_default=func.now()),
 )
 
 parametre_catalogue = Table(

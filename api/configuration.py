@@ -14,6 +14,22 @@ RACINE = Path(__file__).resolve().parents[1]
 class Configuration(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="NELO_", env_file=RACINE / ".env", extra="ignore")
 
+    # Le secret de signature des jetons d'accès : **aucun défaut**. Un serveur sans
+    # NELO_SECRET_JETON ne démarre pas, plutôt que de signer avec une valeur connue de tous.
+    secret_jeton: str
+    # L'indicatif proposé avant toute session (FR-002) : une donnée de déploiement, jamais une
+    # littérale de pays dans le code (principe V).
+    indicatif_defaut: str
+    # Levé en développement local sur http://localhost, jamais en production.
+    cookies_secure: bool = True
+    nom_produit: str = "Nelo"
+    url_publique: str = "http://localhost:3000"
+    # Un journal des messages courts en simulation, pour le développement et les tests seulement.
+    sms_journal: Path | None = None
+    # L'adresse du mandataire inverse dont X-Forwarded-For fait foi ; sans lui, l'adresse du
+    # client est celle de la connexion (research.md R-05).
+    relais_de_confiance: str | None = None
+
     bd_url: str = "postgresql+asyncpg://nelo_app:nelo_app@localhost:5432/nelo"
     bd_url_proprietaire: str = (
         "postgresql+asyncpg://nelo_proprietaire:nelo_proprietaire@localhost:5432/nelo"
@@ -25,6 +41,7 @@ class Configuration(BaseSettings):
     travailleur_intervalle_ms: int = 500
     travailleur_delai_orphelin_ms: int = 300_000
     travailleur_taille_lot: int = 50
+    travailleur_delai_arret_ms: int = 10_000
 
     simulation_sms_mode: ModeSimulation = ModeSimulation.SUCCES
     simulation_paiement_mode: ModeSimulation = ModeSimulation.SUCCES
@@ -42,6 +59,10 @@ class Configuration(BaseSettings):
     @property
     def travailleur_intervalle(self) -> timedelta:
         return timedelta(milliseconds=self.travailleur_intervalle_ms)
+
+    @property
+    def travailleur_delai_arret(self) -> timedelta:
+        return timedelta(milliseconds=self.travailleur_delai_arret_ms)
 
     @property
     def travailleur_delai_orphelin(self) -> timedelta:

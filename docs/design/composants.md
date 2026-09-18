@@ -88,12 +88,16 @@ Fichier : `Champ.vue`
 | Énumération | Valeurs |
 |---|---|
 | `TYPES` | `texte`, `nombre`, `choix`, `case` |
+| `SAISIES` | `texte`, `code` |
 | `ETATS` | `repos`, `focus`, `erreur`, `inactif` |
 | `COMPLEMENTS` | `aide`, `unite` |
 
 - L'étiquette est **toujours visible, au-dessus** du champ ; jamais un texte indicatif à la place.
 - Le filet est une ombre intérieure : le champ occupe toute la hauteur de la cible (52 px en classe).
 - **Nombre** : clavier numérique (`inputmode`), chiffres en IBM Plex Mono tabulaire.
+- **Saisie de code** : `saisie: 'code'` pose le clavier numérique, le remplissage automatique du
+  code reçu par SMS et les chiffres en mono. Ce n'est ni un type ni un état : un champ de texte
+  qui attend des chiffres, rien de plus (écart E-02 de T1a).
 - **Choix** : une liste native, chevron dessiné. **Case** : case de 16 px dessinée, zone
   interactive à la hauteur de cible.
 - **Erreur** : filet et message **en voix rouge**, avec une icône ; le message dit la règle et ce
@@ -130,7 +134,11 @@ Fichier : `PastilleEtat.vue`
 - **Ocre** : fond doux et point ocres, mot en couleur de texte.
 - **Contour** : filet pointillé ocre et point ouvert ocre, mot atténué, pour « Proposé, non
   validé » : rien n'est encore inscrit au registre.
-- **Neutre** : « Présent », « Brouillon » ; fond `--surface-sunken`, texte atténué.
+- **Neutre** : « Présent », « Brouillon », « Active » ; fond `--surface-sunken`, texte atténué.
+- **L'année de travail** a ses deux codes depuis T1a (écart E-03) : `ANNEE_ACTIVE` en neutre,
+  `ANNEE_PREPARATION` en ocre, parce qu'une année qui se prépare est une attente, jamais une
+  faute. Les états du compte et le partage familial d'un numéro n'ont encore aucun écran : ils
+  entrent au registre avec T1b, pas avant.
 - Le code `IMPAYE` s'affiche **« En retard »** : « impayé » est un mot que le lexique refuse
   ([lexique.md § 1](lexique.md)).
 - Hauteur `--pastille` (24 px) : une pastille accompagne, elle ne commande pas.
@@ -142,6 +150,8 @@ Fichier : `PastilleEtat.vue`
 | `IMPAYE`, `NON_JUSTIFIE` | rouge | `etat.impaye`, `etat.non_justifie` |
 | `PRESENT`, `BROUILLON` | neutre | `etat.present`, `etat.brouillon` |
 | `PROPOSE` | contour | `etat.propose` |
+| `ANNEE_ACTIVE` | neutre | `etat.annee_active` |
+| `ANNEE_PREPARATION` | ocre | `etat.annee_preparation` |
 
 ### 5. Pastille de canal
 
@@ -299,10 +309,17 @@ Elle **se compose depuis le contexte, jamais depuis un rôle** (`composer(contex
 [ADR 015](../adr/015-l-interface-se-compose-a-partir-des-capacites.md)). Sous-composants :
 `CoquilleEntete.vue`, `CoquilleNavigation.vue`, `CoquilleSansCapacite.vue`.
 
-- **En-tête** : établissement et site (un lien vers l'accueil), année de travail, sélecteur de
-  langue, sélecteur de thème (appareil, clair, sombre), lien « à propos », avatar, et un bouton
-  retour hors de l'accueil. Ni cloche ni déconnexion : la session arrive avec T1a, les alertes
+- **En-tête** : établissement et site (un lien vers l'accueil), année de travail avec sa pastille
+  quand elle est en préparation, sélecteur de langue, sélecteur de thème (appareil, clair, sombre),
+  lien « à propos », avatar, et un bouton retour hors de l'accueil. Pas de cloche : les alertes
   passent par le composant alerte. Quand la largeur manque, les outils passent à la ligne.
+- **Menu de compte** : l'avatar l'ouvre (écart E-05 de T1a). Il porte le nom du compte,
+  l'établissement actif avec **la liste des rattachés et eux seuls**, l'année de travail avec les
+  siennes, « Mon numéro » et « Fermer la session ». Il émet `changerEtablissement`, `changerAnnee`
+  et `deconnexion` : il ne choisit rien lui-même, et le choix vit **sur l'appareil**, jamais côté
+  serveur. Le voile ferme au premier geste hors du panneau. **Dès `md`, « Fermer la session » est
+  aussi directement dans l'en-tête** : FR-015 le veut visible d'un geste, et un poste partagé se
+  ferme sans chercher. À 390 px, la place manque, et le menu est ce geste.
 - **Navigation** : les domaines dont la personne détient au moins une capacité, **et eux seuls**.
   **À plat jusqu'à cinq domaines inclus ; regroupée par famille dès six** : le domaine
   ([02-domaine.md § 3.4](../02-domaine.md)) l'emporte sur la planche, qui écrivait « en dessous de

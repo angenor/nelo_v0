@@ -25,7 +25,12 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 RACINE = Path(__file__).resolve().parents[2]
 # Chaque module déclare ses tables dans `modules/**/tables.py`, sous le schéma de son nom.
-DECLARATIONS = {"tenants": "modules.socle.tenants.tables"}
+DECLARATIONS = {
+    "tenants": "modules.socle.tenants.tables",
+    "personnes": "modules.socle.personnes.tables",
+    "annees": "modules.socle.annees.tables",
+    "habilitations": "modules.socle.habilitations.tables",
+}
 
 
 def fonctions_d_acces() -> list[tuple[Path, str, set[int]]]:

@@ -2,7 +2,8 @@
   "plafondsDuCorpus": [
     "05-design.md § 9.3 : appel de séance 120 Ko transférés, premier affichage utile sous 2 s en 3G lente",
     "saisie de notes 200 Ko ; portail parent 150 Ko par vue ; back-office 500 Ko au premier chargement",
-    "Q29, issue B à titre provisoire : budgetKo compte l'application, budgetPolicesKo les polices à part"
+    "Q29, issue B à titre provisoire : budgetKo compte l'application, budgetPolicesKo les polices à part",
+    "polices.css (écart E-23) : trois fichiers font le premier affichage, dans 45 Ko ; un écran dont le premier affichage porte un champ de code y ajoute IBM Plex Mono 500 (15 Ko), d’où 60 Ko pour les écrans qui demandent un numéro, un code reçu ou un code personnel (écart E-02 de T1a)"
   ],
   "ecrans": [
     {
@@ -18,6 +19,13 @@
       ]
     },
     {
+      "nom": "accueil-session",
+      "route": "/",
+      "budgetKo": 120,
+      "budgetPolicesKo": 45,
+      "session": true
+    },
+    {
       "nom": "domaine",
       "route": "/d/vie_scolaire",
       "budgetKo": 120,
@@ -30,7 +38,42 @@
       "nom": "a-propos",
       "route": "/a-propos",
       "budgetKo": 150,
+      "budgetPolicesKo": 45,
+      "personas": [
+        "un-domaine"
+      ]
+    },
+    {
+      "nom": "connexion",
+      "route": "/connexion",
+      "budgetKo": 120,
+      "budgetPolicesKo": 60
+    },
+    {
+      "nom": "connexion-code",
+      "route": "/connexion/code",
+      "budgetKo": 120,
+      "budgetPolicesKo": 60
+    },
+    {
+      "nom": "connexion-pin",
+      "route": "/connexion/pin",
+      "budgetKo": 120,
+      "budgetPolicesKo": 60,
+      "session": true
+    },
+    {
+      "nom": "activation",
+      "route": "/activation/[jeton]",
+      "budgetKo": 120,
       "budgetPolicesKo": 45
+    },
+    {
+      "nom": "compte-telephone",
+      "route": "/compte/telephone",
+      "budgetKo": 120,
+      "budgetPolicesKo": 60,
+      "session": true
     },
     {
       "nom": "style",

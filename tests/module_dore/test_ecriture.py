@@ -1,4 +1,4 @@
-"""US1-3 — poser une valeur, la relire, et l'événement écrit dans la même transaction."""
+"""US1-3 : poser une valeur, la relire, et l'événement écrit dans la même transaction."""
 
 from sqlalchemy import text
 
@@ -18,8 +18,10 @@ async def compter_evenements(tenant_id) -> int:
         )
 
 
-async def test_poser_puis_relire(client, tenants_ab):
-    reponse = await poser(client, tenants_ab.etab_a, CLE, "ETABLISSEMENT", tenants_ab.etab_a, True)
+async def test_poser_puis_relire(client, sessions_ab, tenants_ab):
+    reponse = await poser(
+        client, sessions_ab.a, tenants_ab.etab_a, CLE, "ETABLISSEMENT", tenants_ab.etab_a, True
+    )
     assert reponse.status_code == 200, reponse.text
     corps = reponse.json()
     assert corps["cle"] == CLE
@@ -28,7 +30,7 @@ async def test_poser_puis_relire(client, tenants_ab):
     assert corps["valeur"] is True
     assert corps["pose_le"]
 
-    parametre = (await lire(client, tenants_ab.etab_a))[CLE]
+    parametre = (await lire(client, sessions_ab.a, tenants_ab.etab_a))[CLE]
     assert (parametre["valeur"], parametre["source"], parametre["portee_resolue"]) == (
         True,
         "VALEUR",
@@ -51,10 +53,16 @@ async def test_poser_puis_relire(client, tenants_ab):
     }
 
 
-async def test_second_put_met_a_jour_sans_doublon(client, tenants_ab):
+async def test_second_put_met_a_jour_sans_doublon(client, sessions_ab, tenants_ab):
     for valeur in (True, False):
         reponse = await poser(
-            client, tenants_ab.etab_a, CLE, "ETABLISSEMENT", tenants_ab.etab_a, valeur
+            client,
+            sessions_ab.a,
+            tenants_ab.etab_a,
+            CLE,
+            "ETABLISSEMENT",
+            tenants_ab.etab_a,
+            valeur,
         )
         assert reponse.status_code == 200, reponse.text
     async with transaction(tenants_ab.tenant_a) as connexion:
@@ -66,4 +74,4 @@ async def test_second_put_met_a_jour_sans_doublon(client, tenants_ab):
             {"cle": CLE},
         )
     assert lignes == 1
-    assert (await lire(client, tenants_ab.etab_a))[CLE]["valeur"] is False
+    assert (await lire(client, sessions_ab.a, tenants_ab.etab_a))[CLE]["valeur"] is False

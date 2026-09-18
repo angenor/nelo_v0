@@ -66,3 +66,37 @@ class ParametrePose(BaseModel):
 
 class ReponseSante(BaseModel):
     etat: Literal["OK"]
+
+
+class Devise(BaseModel):
+    """Ce que le pack dit de la monnaie ; l'exposant porte les décimales, jamais le montant."""
+
+    code: str = Field(pattern=r"^[A-Z]{3}$")
+    exposant: int = Field(ge=0, le=4)
+    symbole: str = Field(min_length=1)
+
+
+class Pack(BaseModel):
+    """Le country pack, tel que T1a le lit : ce que le contexte projette, et le format de numéro.
+
+    `contenu` porte davantage en base (docs/02-domaine.md § 1.3) ; cette forme est le
+    sous-ensemble dont la tranche a besoin. Une tranche qui en lit plus l'ajoute ici.
+    """
+
+    pays_code: str = Field(pattern=r"^[A-Z]{2}$")
+    version: int = Field(ge=1)
+    devise: Devise
+    langues: list[str] = Field(min_length=1)
+    decoupage: str
+    indicatif: str = Field(min_length=1)
+    vocabulaire: dict[str, dict[str, str]]
+
+
+class Etablissement(BaseModel):
+    """L'établissement tel que le contexte le lit, et le repli quand aucun administrateur n'est désigné."""
+
+    id: UUID
+    nom: str = Field(min_length=1)
+    telephone: str | None
+    fuseau_horaire: str
+    administrateur_compte_id: UUID | None

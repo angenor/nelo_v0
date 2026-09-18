@@ -38,6 +38,7 @@ class ErreurMetier(Exception):
         statut: int = 422,
         champ: str | None = None,
         details: dict[str, Any] | None = None,
+        en_tetes: dict[str, str] | None = None,
     ) -> None:
         super().__init__(message)
         self.code = code
@@ -45,6 +46,9 @@ class ErreurMetier(Exception):
         self.statut = statut
         self.champ = champ
         self.details = details or {}
+        # Les en-têtes que la réponse doit porter : `Retry-After` sur une limite de débit. Le
+        # module dit ce que le protocole exige ; `api/` le pose sans le décider.
+        self.en_tetes = en_tetes or {}
 
 
 class DependanceIndisponible(Exception):

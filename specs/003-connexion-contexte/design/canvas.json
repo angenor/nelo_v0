@@ -1,0 +1,80 @@
+{
+  "artboards": [
+    {
+      "file": "US1.dc.html",
+      "title": "US1 · Le code reçu",
+      "x": 0,
+      "y": 0,
+      "w": 1760,
+      "h": 2620
+    },
+    {
+      "file": "US2.dc.html",
+      "title": "US2 · Quatre en-têtes, deux barrières",
+      "x": 0,
+      "y": 2780,
+      "w": 1760,
+      "h": 1500
+    },
+    {
+      "file": "US3.dc.html",
+      "title": "US3 · Le code personnel",
+      "x": 0,
+      "y": 4440,
+      "w": 1760,
+      "h": 2560
+    },
+    {
+      "file": "US4.dc.html",
+      "title": "US4 · La coquille sur le contexte réel",
+      "x": 0,
+      "y": 7160,
+      "w": 1760,
+      "h": 2900
+    },
+    {
+      "file": "US5.dc.html",
+      "title": "US5 · Le cycle de la session",
+      "x": 1900,
+      "y": 0,
+      "w": 1760,
+      "h": 1500
+    },
+    {
+      "file": "US6.dc.html",
+      "title": "US6 · Le lien d’activation",
+      "x": 1900,
+      "y": 1660,
+      "w": 1760,
+      "h": 1980
+    },
+    {
+      "file": "US7.dc.html",
+      "title": "US7 · Changer de numéro",
+      "x": 1900,
+      "y": 3800,
+      "w": 1760,
+      "h": 2300
+    },
+    {
+      "file": "US8.dc.html",
+      "title": "US8 · Deux parents, un téléphone",
+      "x": 1900,
+      "y": 6260,
+      "w": 1760,
+      "h": 1900
+    }
+  ],
+  "annotations": [
+    {
+      "id": "lecture",
+      "x": 0,
+      "y": -190,
+      "w": 760,
+      "text": "T1a, se connecter et savoir où l’on est : huit artboards, un par user story, dans specs/003-connexion-contexte/design/.\nLe but : rendre visible une dérive. Un écran, un état, un champ ou un mot qui n’existe pas dans le contrat, dans le domaine ou dans le système de design est encadré en pointillé ocre (ÉCART) ; ce que la spec laisse sans réponse est encadré en pointillé gris (QUESTION OUVERTE) ; ce qu’A1 dessinait et que la tranche ne livre pas est barré.\nDonnées de démonstration du primaire : Mme Traoré Salimata, maîtresse titulaire d’un CM1 B ; la famille Koné ; Les Palmiers · Angré."
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

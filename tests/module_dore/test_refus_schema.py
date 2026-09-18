@@ -1,9 +1,10 @@
-"""US1-4 — le refus de schéma cite chaque champ fautif, et précède toute règle métier."""
+"""US1-4 : le refus de schéma cite chaque champ fautif, et précède toute règle métier."""
 
 from modules.socle.tenants import acces
+from tests.authentification.outils import en_tetes
 
 
-async def test_deux_champs_fautifs(client, tenants_ab, requete_id, monkeypatch):
+async def test_deux_champs_fautifs(client, sessions_ab, tenants_ab, requete_id, monkeypatch):
     appels = []
     lire_catalogue = acces.lire_catalogue
 
@@ -15,7 +16,10 @@ async def test_deux_champs_fautifs(client, tenants_ab, requete_id, monkeypatch):
 
     reponse = await client.put(
         "/api/v1/parametres/assistance.suspendue",
-        headers={"X-Nelo-Etablissement": str(tenants_ab.etab_a), "X-Nelo-Requete": requete_id},
+        headers={
+            **en_tetes(sessions_ab.a, tenants_ab.etab_a),
+            "X-Nelo-Requete": requete_id,
+        },
         json={"portee": "NULLE_PART", "valeur": True},
     )
     assert reponse.status_code == 422

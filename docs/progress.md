@@ -10,6 +10,12 @@
 Format court, quatre lignes maximum :
 
 ```
+
+## 2026-09-17 : T1a, la revue visuelle est publiée
+**Fait** : huit artboards `US1..US8.dc.html` + `canvas.json` dans `specs/003-connexion-contexte/design/`, générés à partir de `theme.css` (aucune couleur retapée), page assemblée publiée et adresse reportée dans le spec sous « Revue visuelle ». Données du primaire (CM1 B, maîtresse titulaire, famille Koné).
+**Décidé** : rien n'est tranché ; la planche rend visibles sept écarts (tenant inconnu avant la session et numéro du secrétariat, cases et pavé d'A1 refusés par R-21, trois états sans code ni mot, refus « déjà utilisé » non prévisible sans route `/verification`, geste de fermeture à 390 px, « SMS » ou « message court », mot d'écran du compte suspendu).
+**Bloqué / à faire ensuite** : planche validée le jour même ; arbitrage des sept écarts, puis `/speckit-tasks`.
+
 ## 2026-08-21 — Titre de ce qui a avancé
 **Fait** : ce qui existe maintenant et n'existait pas avant.
 **Décidé** : les arbitrages pris, avec leur motif en une phrase.
@@ -32,9 +38,9 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | Aucune. **T0b, le socle d'interface, est fusionnée dans `main` le 2026-09-17** (83 tâches sur 83, [tasks.md](../specs/002-socle-interface/tasks.md)), `scripts/verifier.sh` vert avant fusion ; T058 passé sur Chrome, Safari différé par l'utilisateur. T0a est fusionnée depuis le 2026-09-15 |
-| **Prochaine** | Trancher **Q29** dans un ADR. Ensuite la tranche suivante au rang de la [roadmap](04-roadmap.md) |
-| **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
+| **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **implémentée le 2026-09-18**, spécifiée et planifiée le 2026-09-17 sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md), [plan.md](../specs/003-connexion-contexte/plan.md)). **Revue visuelle publiée et validée le 2026-09-17** ([spec.md § Revue visuelle](../specs/003-connexion-contexte/spec.md#revue-visuelle)). T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
+| **Prochaine** | La relecture de T1a, puis sa fusion dans `main` ; ensuite T1b (les capacités). **Q30** (les valeurs par défaut de l'authentification) reste à confirmer : elle ne touche que `politique.py` et la migration `0002`. **Q29** attend toujours son ADR, sans bloquer |
+| **Code existant** | Le socle serveur de T0a, le socle d'interface de T0b et la connexion de T1a (**430 tests Python, 268 Vitest, 78 de bout en bout (dont l'ouverture de la session semée)**, dix portes) : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et treize mutations négatives), `tests/` (module doré, isolation, idempotence, outbox, frontières, simulations, assistance, authentification, en-têtes, contexte), `web/tests/` (unitaires, bout en bout et portes P-05 et P-10 sur Chromium et WebKit, avec une session semée), `contrat/` avec ses **dix-neuf routes** ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
 | **Design** | Le système est arrêté sur la couleur, la typographie et les composants. Douze écrans maquettés dans `design/ecrans/`, plus la planche du système. **Leurs jeux de données sont du secondaire** : ils se reprennent écran par écran aux revues visuelles, pas en une passe ([05-design.md § 6](05-design.md)) |
@@ -56,6 +62,7 @@ Rien ici ne bloque le démarrage. Chaque ligne dit ce qu'elle bloquera, et quand
 | **Q5** | **La granularité des capacités** : cinq à douze par service est l'ordre de grandeur visé. Trop fines, l'administration devient illisible pour un censeur ; trop grossières, la séparation scolarité / pédagogie devient impossible | **T1b.** *Après, c'est une reprise de toutes les affectations* |
 | **Q6** | **Un agrégateur de paiement ou deux dès le départ ?** L'abstraction est posée quoi qu'il arrive ([ADR 009](adr/009-agregateur-de-paiement-derriere-une-interface.md)) | Les **valeurs par défaut** de T8b, pas son modèle |
 | **Q29** | **Le plafond de 120 Ko de l'accueil et de l'appel contient-il les polices ?** Mesuré en bac à sable ([T0b, research R-16](../specs/002-socle-interface/research.md)), puis **par P-10 sur l'application réelle le 2026-09-17** : accueil **103 à 109 Ko** d'application, polices **43,6 Ko**, total **147 à 153 Ko**. Trois issues : **A** polices système sur les écrans budgétés ; **B** 120 Ko pour l'application et 45 Ko à part pour les polices, immuables et précachées (recommandée, **appliquée**) ; **C** relever à 170 Ko. Tenir B a demandé de ramener le premier affichage à trois fichiers de police (écart E-23 : plus de graisse 600). Le principe XV nomme le chiffre : la réponse entre dans un ADR | T0b, fusionnée, applique B. Changer d'issue touche une ligne de `web/ecrans.json` et une règle de P-10 |
+| **Q30** | **Les valeurs par défaut de l'authentification**, posées à titre provisoire par la spec de T1a ([Assumptions](../specs/003-connexion-contexte/spec.md#assumptions)) : code reçu à **six chiffres**, valable **dix minutes**, **cinq** tentatives, renvoi après **soixante secondes**, **cinq** demandes par heure et par numéro ; code personnel à **quatre chiffres**, **cinq** tentatives ; appareil connu **90 jours** ; invitation **7 jours**. La maquette A1 donne les trois premières ; les autres sont des pratiques courantes. Les seuils qui dépendent du tenant sont des clés du catalogue (`securite.*`, [02-domaine.md § 17](02-domaine.md)) ; ceux évalués avant qu'un compte soit connu sont des constantes du produit, en un seul endroit | **Rien avant `implement` de T1a.** Changer une valeur touche une clé ou une constante nommée, jamais un écran |
 
 ### Ce qui exige un conseil juridique local — avant tout engagement contractuel
 
@@ -94,6 +101,195 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-18 : T1a, la première frontière de sécurité est implémentée
+
+**Fait** : `/speckit-implement` sur les 88 tâches. Quatre schémas migrés sous RLS activée et
+forcée (`tenants` étendu, et les noyaux `personnes`, `annees`, plus `habilitations`), dix-neuf
+routes servies et au contrat, quatre middlewares ASGI (session, établissement, année,
+idempotence) qui rendent vraie la table de refus de [03-api.md § 1.2](03-api.md), le tenant
+provisoire de T0a supprimé avec sa fonction `SECURITY DEFINER`. Une personne ouvre sa session par
+un code reçu par SMS, puis par un code personnel sur un appareil connu ; elle peut être invitée
+par lien, suspendue, changer de numéro, et partager son téléphone avec un autre parent. Côté
+interface, un relais Nitro met l'API sous l'origine de Nuxt et garde tout jeton hors de portée du
+script, la coquille de T0b vit sur le contexte réel, et six écrans s'assemblent sans composant
+neuf. Le pack de pays a sa table et deux packs semés, dont un fictif qui fait tourner le test
+d'agnosticité.
+
+**Décidé** : quatre écarts d'implémentation, tous tracés ici et dans le code. (1) `compter()` de
+la limitation reste dans `api/` et est **injectée** au service : un module du socle ne remonte pas
+vers `api/`, et la hiérarchie d'imports le refuserait (P-04). (2) Le retrait de
+`tenants.tenant_de_etablissement` est passé dans une migration `0003` au lieu de la `0002` :
+le tenant provisoire s'en servait encore pendant US1, et `verifier.sh` devait rester vert à chaque
+point de contrôle. (3) Chaque entrée du catalogue de paramètres porte désormais la révision qui
+l'introduit (`entrees_de("0002")`) : sans cela, la migration `0001`, qui lit le catalogue à
+l'exécution, aurait réinséré les clés neuves. (4) L'appareil connu et son cookie sont livrés dès
+US1 plutôt qu'en US3, parce que le test de la vérification du code les exigeait déjà. La licence
+`MIT-0` entre dans la liste autorisée de P-07 : elle arrive avec `cffi`, transitive d'`argon2-cffi`,
+et elle est plus permissive que `MIT`, déjà autorisée.
+
+**Mesuré** : SC-003, l'écart des médianes entre un numéro connu et un inconnu, **2,8 ms** sur un
+plafond de 50 (cent demandes alternées) ; SC-009, les six écrans de la tranche entre **110,4 et
+118,6 Ko** sur 120, polices comptées à part ; SC-012, `scripts/verifier.sh` en **4 min 16 s** sur
+cinq minutes, dix portes vertes ; `scripts/tests-negatifs.sh` en **10 min 53 s**, treize mutations
+et treize échecs obtenus. SC-006 est prouvé dans un navigateur réel : aucun jeton ne se lit d'un
+script. Le détail est dans [quickstart.md](../specs/003-connexion-contexte/quickstart.md).
+
+**La définition de terminé** ([01-stack.md § 8.3](01-stack.md)), point par point : les critères
+sont couverts (430 tests Python, 268 Vitest, 78 de bout en bout (dont l'ouverture de la session semée)) ; le client TypeScript est
+régénéré sans retouche (P-03) ; les migrations sont réversibles, appliquées sur base vierge, et
+chaque requête est exercée (P-01, P-12) ; la RLS est activée et forcée sur les treize tables, avec
+le test d'isolation étendu aux quatre schémas ; chaque changement d'état écrit son événement ;
+les clés `fr` et `en` sont nées ensemble (P-06) ; les écrans sont vérifiés en clair et en sombre
+sur Chromium et WebKit (P-05) et budgétés (P-10) ; les trois clés de sécurité sont au catalogue ;
+toute écriture porte sa clé d'idempotence, et le rejeu est testé. **Points hors périmètre** :
+aucun document imprimé, et P-08 n'existe pas encore (elle attend la tranche qui lui donnera
+quelque chose à vérifier).
+
+**Le contrôle de constitution du [plan](../specs/003-connexion-contexte/plan.md) relu contre le
+code livré** : les deux écarts nommés sont toujours les seuls, et le premier est désormais couvert
+par un test. (1) La révocation des sessions et l'oubli des appareils restent des effets sur
+l'éphémère, faits après le `COMMIT` de la suspension, parce que Valkey ne participe pas à la
+transaction : `session_valide` relit donc le statut du compte à chaque requête, et une panne entre
+les deux ne sert plus rien à un compte suspendu. (2) La vivacité d'une affectation s'évalue en UTC,
+pas dans le fuseau de l'établissement. Rien d'autre n'a bougé : aucune règle côté client, aucun
+rôle nulle part, aucune littérale de pays hors des lignes semées, une transaction par module, la
+RLS partout, l'outbox dans la transaction, le SMS rédigé pour le SMS, six écrans budgétés.
+
+**Bloqué / à faire ensuite** : Q30 (les valeurs par défaut de l'authentification) reste à
+confirmer ; elle ne touche que `politique.py` et la migration `0002`. **SC-001 et SC-002**
+demandent un chronomètre sur un vrai téléphone en 3G : le parcours passe de bout en bout, la
+mesure au chronomètre reste à faire avec l'utilisateur. **Deux fronts à arbitrer**, nés de cette
+tranche : le plafond de 120 Ko ne tient plus qu'à 0,2 Ko sur l'accueil, parce que `fr.json` et
+`en.json` sont importés en entier par chaque écran (découpage à trancher, décision de T0b) ; et
+l'établissement devrait porter un téléphone, faute de quoi l'écran « aucun domaine » nomme l'école
+sans pouvoir donner de numéro. La tranche n'est pas fusionnée : elle attend la relecture.
+
+
+## 2026-09-17 : T1a, les tâches sont écrites
+
+**Fait** : `/speckit-tasks` : [tasks.md](../specs/003-connexion-contexte/tasks.md), **88 tâches**
+en onze phases : mise en place (6), fondations (18 : quatre schémas migrés sous RLS, noyaux,
+outbox générique, simulation qui garde ses messages, fixtures, relais Nitro, client, source,
+garde, serveur d'API sous les e2e), puis une phase par story (US1 19, US2 7, US3 5, US4 8, US5 7,
+US6 5, US7 4, US8 4), finition (4). Les tests précèdent l'implémentation dans chaque story ; les
+sept écarts de la revue ont chacun leur tâche.
+**Décidé** : la session (US1) est le socle de toutes les stories, puis les en-têtes (US2) ; le
+provisoire de T0a est supprimé en US2, pas avant ; les trois mutations négatives des règles de
+sécurité entrent dans `tests-negatifs.sh` sous P-12, celle du cookie sous P-05 ; un diff de plus
+attend `implement` (T060, T085) : `TEN_ETABLISSEMENT_REQUIS` porte les établissements rattachés
+du compte authentifié, pour que la source de contexte sache par où commencer.
+**Bloqué / à faire ensuite** : `/speckit-implement`. Q30 se confirme avant, ou reste provisoire.
+
+## 2026-09-17 : T1a, les sept écarts de la planche sont tranchés
+
+**Fait** : la maquette validée par l'utilisateur, le rangement était déjà en place (sources dans
+`specs/003-connexion-contexte/design/`, adresse dans le spec) ; il est commité. Les sept écarts
+que la planche avait rendus visibles sont tranchés (E-01 à E-07,
+[research.md](../specs/003-connexion-contexte/research.md)) et reportés dans la spec (FR-015,
+FR-036, FR-057 reformulées ; FR-063 à FR-065 ajoutées), le plan, le contrat.
+**Décidé**, dérivé du corpus, sans question à l'utilisateur : avant la session le tenant n'est pas
+connu, donc l'écran du numéro porte le nom du produit et la carte du code oriente vers le
+secrétariat sans numéro · les cases et le pavé d'A1 sont refusés, le champ nombre du canon suffit ·
+deux états d'année entrent aux pastilles et au lexique, les états de compte attendent T1b · en
+libre-service, « numéro déjà utilisé » se refuse **après** la vérification du code, jamais à la
+demande, pour ne pas faire de la route un oracle sur les numéros ; pour le secrétariat, le contrat
+gagne `POST /comptes/verification` (règle 3 de [03-api.md § 3](03-api.md), diff appliqué) ·
+l'avatar ouvre le menu de compte, « Fermer la session » y est en un geste, et directement dans
+l'en-tête dès `md` · le mot visible est **SMS** · un compte suspendu lit « Votre accès est fermé »
+avec l'administrateur nommé, une session révoquée « Votre session est terminée ».
+**Bloqué / à faire ensuite** : `/speckit-tasks`.
+
+## 2026-09-17 : le travailleur s'arrête proprement, le test instable de T0a ne l'est plus
+
+**Fait** : `scripts/verifier.sh` rouge une troisième fois sur
+`tests/outbox/test_travailleur.py::test_arrete_accumule_relance_consomme` (P-12), sans qu'aucun
+code ait changé. Cause lue, pas devinée : `Travailleur.arreter()` **annulait** la tâche ; tombée
+entre l'appel du consommateur et le marquage `traite` (deux transactions), l'annulation laissait
+l'événement `pris`, orphelin jusqu'au délai de reprise. Le test observait exactement cela
+(`{'pris', 'traite'}`), trois échecs sur six passages. C'était un défaut du serveur, pas du test :
+un arrêt du processus aurait produit le même orphelin.
+**Décidé** : l'arrêt est un signal (`asyncio.Event`), le tour en cours se termine, et l'annulation
+n'intervient qu'au-delà de `NELO_TRAVAILLEUR_DELAI_ARRET_MS` (10 s, `.env.exemple`). Vingt
+exécutions vertes d'affilée ; `scripts/verifier.sh` : 10 portes vertes en 1 min 13 s. Corrigé sur
+`003-connexion-contexte`, comme écart d'implémentation de T0a repris par la première tranche qui
+le rencontre.
+**Bloqué / à faire ensuite** : rien de nouveau ; `/speckit-tasks` sur T1a.
+
+## 2026-09-17 : T1a, le plan est écrit, la première frontière de sécurité est dessinée
+
+**Fait** : `/speckit-plan` sur `003-connexion-contexte`, lancé directement après `specify`, sans
+revue visuelle (choix de l'utilisateur ; le prompt reste prêt). [plan.md](../specs/003-connexion-contexte/plan.md)
+avec son contrôle des quinze principes (passe, deux écarts nommés), [research.md](../specs/003-connexion-contexte/research.md)
+(R-01 à R-22), [data-model.md](../specs/003-connexion-contexte/data-model.md) (quatre schémas,
+Valkey, jeton, cookies), [contracts/openapi-attendu.yaml](../specs/003-connexion-contexte/contracts/openapi-attendu.yaml)
+(quinze routes), [contracts/interfaces-python.md](../specs/003-connexion-contexte/contracts/interfaces-python.md),
+[quickstart.md](../specs/003-connexion-contexte/quickstart.md). Deux explorations du dépôt ont
+précédé, par sous-agents, sur le socle serveur et le socle d'interface.
+**Décidé**, dérivé du corpus, tracé, selon l'arbitrage délégué du 2026-09-14 :
+- **Trois paquets neufs dans `socle/`** : `habilitations` (le module de la tranche), et les noyaux
+  `personnes` et `annees`, chacun avec son schéma, sa migration, son outbox ; T3a et T2a complètent
+  sans renommer ni retirer. La table `country_pack` naît dans `tenants` avec deux packs semés, dont
+  le fictif.
+- **Quatre middlewares ASGI** (session, établissement, année, idempotence) remplacent le tenant
+  provisoire de T0a, supprimé ; la fonction `SECURITY DEFINER` provisoire est retirée par une
+  migration, trois nouvelles sont nommées. La liste de révocation est l'absence de la session en
+  Valkey, lue à chaque requête.
+- **Le code à usage unique part par l'outbox du tenant du premier compte trouvé**, son texte en
+  clair ne transite que par Valkey, jamais par une table conservée ; le travailleur gagne un
+  aiguillage par type d'événement et reçoit la passerelle par fermeture.
+- **Un relais Nitro met l'API sous l'origine de Nuxt** et range le jeton d'accès dans un cookie
+  non lisible par script : aucun jeton n'est jamais visible d'un script, ni en stockage ni en
+  mémoire ; le rendu serveur de la coquille garde ses cookies.
+- **La source de démonstration ne vit que dans les constructions d'essai** ; les portes ouvrent
+  une session semée par un `globalSetup` qui lit le code dans le journal des messages simulés.
+- **Deux diffs de plus** : `affectation.etablissement_id` ([02-domaine.md § 3.2](02-domaine.md)),
+  copié de l'année pour vérifier l'en-tête sans traverser un module ; `GET /auth/appareil`
+  ([03-api.md § 2.1](03-api.md)), sans lequel l'écran du code personnel ne peut nommer personne.
+- **Deux écarts nommés** au contrôle de constitution : les effets éphémères d'une suspension
+  (révocation, oubli des appareils) s'exécutent après le `COMMIT`, couverts par la vérification du
+  statut à la requête suivante ; la vivacité d'une affectation est calculée en UTC, le fuseau
+  attend T1b.
+- **Trois bibliothèques** : `phonenumbers` 9.0.39, `PyJWT` 2.14.0, `argon2-cffi` 25.1.0.
+**Bloqué / à faire ensuite** : `/speckit-tasks`. Q30 se confirme avant `implement` ; la revue
+visuelle peut encore se tenir avant.
+
+## 2026-09-17 : T1a, se connecter et savoir où l'on est, est spécifiée
+
+**Fait** : `/speckit-specify` sur la branche `003-connexion-contexte`, créée depuis `main`.
+[spec.md](../specs/003-connexion-contexte/spec.md) : huit user stories, soixante scénarios, FR-001 à
+FR-062, SC-001 à SC-012, treize cas limites, checklist de qualité verte en une itération. Le prompt
+de revue visuelle est prêt en **forme A**
+([prompt-design.md](../specs/003-connexion-contexte/design/prompt-design.md)) : un artboard par
+story, la maquette A1 comme référence de facture, trois de ses éléments à encadrer parce que le
+corpus les contredit (l'écran « numéro inconnu », l'empreinte digitale, l'appel vocal).
+**Décidé**, dérivé du corpus, tracé, sans question bloquante, selon l'arbitrage délégué du 2026-09-14 :
+- **Sept diffs appliqués.** [02-domaine.md](02-domaine.md) : `etablissement.administrateur_compte_id?`
+  (le contexte de § 1.9 exigeait un administrateur nommé « que T1a sert ») ; les états du `compte`
+  en § 16 (`invite` → `actif` → `suspendu`) ; trois clés `securite.*` en § 17. [03-api.md](03-api.md) :
+  le `429` nommé `API_LIMITE_DEBIT` ; neuf codes `AUT_` et la règle « refus de preuve `401`, refus
+  de règle `422` » en § 2.1 ; `POST /moi/telephone` et sa vérification en § 2.2 (le changement de
+  numéro que le prompt impose et que le contrat ne portait pas) ; `POST /comptes`,
+  `/comptes/{id}/invitation`, `/comptes/{id}/telephone` sous `habilitations.compte.gerer` en § 2.5.
+- **La dépendance d'ordre est assumée, pas cachée** : T1a vérifie des en-têtes contre des
+  affectations (T1b) et des années (T2a), et compose un contexte avec une personne (T3a). La roadmap
+  l'accepte déjà (T1b « autorise l'accès à des ressources qui n'existent pas encore »). La spec exige
+  le comportement ; le plan pose le socle minimal, colonne pour colonne celles du domaine, que la
+  tranche propriétaire complète sans renommer ni retirer. C'est le point d'insertion de T0a, étendu.
+- **Une session est pour un seul compte d'un seul tenant** ; un numéro partagé (famille, ou deux
+  tenants) conduit à un choix après le code, tracé par l'événement d'ouverture. Le partage se
+  déclare explicitement à la création du second compte ; le refus d'un rattachement de personnel sur
+  un numéro partagé est laissé à T1b, le fait « partagé » lui est rendu lisible.
+- **L'envoi du code est un événement outbox, jamais sur le chemin de la réponse** : sinon une
+  passerelle indisponible publierait l'existence des comptes (503 pour les connus, 204 pour les
+  autres). Le rejeu d'une demande n'envoie pas un second message.
+- **Trois écarts maquette / corpus tranchés par le corpus** : aucun écran ne dit qu'un numéro est
+  inconnu (l'orientation vers le secrétariat passe sur l'écran du code) ; aucune biométrie ; l'appel
+  vocal est V3.
+- **Q30 ouverte** : les valeurs par défaut (durées, tentatives, longueurs) sont provisoires.
+**Bloqué / à faire ensuite** : la revue visuelle en session dédiée, puis `/speckit-plan`. Le plan
+doit dire comment il pose le socle minimal (compte, rattachement, année, personne, pack de pays que
+T0a n'a pas semé) et nommer les constantes de sécurité du produit en un seul endroit.
 
 ## 2026-09-17 : T0b est fusionnée dans `main`
 

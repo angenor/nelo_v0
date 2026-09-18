@@ -21,10 +21,24 @@ const props = withDefaults(
     surAccueil?: boolean
     /** Page de style : une coquille réduite, sans repère principal. */
     apercu?: boolean
+    /** L'année choisie sur cet appareil (research.md R-21) ; sinon l'année active du contexte. */
+    anneeChoisie?: string | null
   }>(),
-  { contexteTactile: 'standard', montrerRetour: false, surAccueil: true, apercu: false },
+  {
+    contexteTactile: 'standard',
+    montrerRetour: false,
+    surAccueil: true,
+    apercu: false,
+    anneeChoisie: null,
+  },
 )
-const emit = defineEmits<{ retour: [] }>()
+// La coquille relaie les gestes de l'en-tête : elle ne choisit rien, elle ne stocke rien.
+const emit = defineEmits<{
+  retour: []
+  changerEtablissement: [identifiant: string]
+  changerAnnee: [identifiant: string]
+  deconnexion: []
+}>()
 const tiroirOuvert = ref(false)
 const sansCapacite = computed(() => props.composition.situation === 'AUCUNE_CAPACITE')
 const enFamilles = computed(() => props.composition.situation === 'MULTI_FAMILLES')
@@ -52,8 +66,12 @@ watch(
       :montrer-menu="enFamilles"
       :montrer-retour="montrerRetour"
       :menu-ouvert="tiroirOuvert"
+      :annee-choisie="anneeChoisie"
       @menu="tiroirOuvert = !tiroirOuvert"
       @retour="emit('retour')"
+      @changer-etablissement="emit('changerEtablissement', $event)"
+      @changer-annee="emit('changerAnnee', $event)"
+      @deconnexion="emit('deconnexion')"
     />
     <div class="corps">
       <CanonCoquilleNavigation

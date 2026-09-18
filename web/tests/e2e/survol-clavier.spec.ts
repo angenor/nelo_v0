@@ -6,7 +6,7 @@ import { PORT_DEV } from '../portes/outils'
 const visibles = (page: Page) =>
   page.evaluate(() => [...document.querySelectorAll('body *')].filter((e) => (e as HTMLElement).checkVisibility?.()).length)
 
-for (const adresse of ['/?persona=sept-domaines', '/d/vie_scolaire', '/a-propos']) {
+for (const adresse of ['/?persona=sept-domaines', '/d/vie_scolaire?persona=un-domaine', '/a-propos?persona=un-domaine']) {
   test(`${adresse} : survoler chaque zone ne fait rien apparaître`, async ({ page }) => {
     await page.setViewportSize({ width: 1200, height: 900 })
     await page.goto(adresse)
@@ -19,7 +19,7 @@ for (const adresse of ['/?persona=sept-domaines', '/d/vie_scolaire', '/a-propos'
   })
 }
 
-for (const adresse of ['/?persona=sept-domaines', '/d/vie_scolaire', `http://localhost:${PORT_DEV}/style`]) {
+for (const adresse of ['/?persona=sept-domaines', '/d/vie_scolaire?persona=un-domaine', `http://localhost:${PORT_DEV}/style`]) {
   test(`${adresse} : la tabulation parcourt les actions dans l’ordre, le focus se voit`, async ({ page }) => {
     await page.setViewportSize({ width: 1200, height: 900 })
     await page.goto(adresse, { timeout: 60_000 })

@@ -1,9 +1,11 @@
-"""Le contexte qui compose l'interface : docs/03-api.md § 1.9, schéma d'échange sans route.
+"""Le contexte qui compose l'interface : docs/03-api.md § 1.9.
 
-T0b l'enregistre dans les composants du contrat OpenAPI (specs/002-socle-interface/research.md
-R-05) pour que le client en dérive son type au lieu de l'écrire ; T1a branchera ici la route
-`GET /moi/capacites`. Aucun rôle, aucune littérale de pays : la personne est décrite par ses
-capacités, le pays par son pack.
+T0b l'enregistrait dans les composants du contrat OpenAPI, sans route, pour que le client en
+dérive son type au lieu de l'écrire (specs/002-socle-interface/research.md R-05) ; depuis T1a,
+`GET /moi/capacites` le sert, et FastAPI le publie lui-même.
+
+Aucun rôle, aucune littérale de pays : la personne est décrite par ses capacités, le pays par son
+pack. C'est la **seule** source de ce que l'interface a le droit de rendre.
 """
 
 import re
@@ -43,11 +45,22 @@ class Site(Strict):
 
 
 class Administrateur(Strict):
-    """Qui peut attribuer ses domaines à une personne sans capacité : l'écran le nomme."""
+    """Qui peut attribuer ses domaines à une personne sans capacité : l'écran le nomme.
+
+    À défaut de personne désignée, c'est l'établissement lui-même qu'on appelle (FR-049) : son
+    nom, son téléphone, et des **prénoms vides**, parce qu'une institution n'en a pas. Le champ
+    n'est jamais absent : un écran qui dit « demandez à quelqu'un » sans dire à qui ne sert à rien.
+    """
 
     nom: str = Field(min_length=1)
-    prenoms: str = Field(min_length=1)
-    telephone: str = Field(min_length=1, description="Au format du pack, jamais vide")
+    prenoms: str = Field(description="Vides quand l'administrateur est l'établissement lui-même")
+    telephone: str = Field(
+        description=(
+            "Au format du pack. Vide seulement quand personne n'est désigné et que "
+            "l'établissement lui-même n'a pas de téléphone enregistré : l'écran nomme alors "
+            "l'école sans pouvoir donner de numéro, ce qui vaut mieux qu'un refus du serveur"
+        )
+    )
 
 
 class EtablissementContexte(Strict):

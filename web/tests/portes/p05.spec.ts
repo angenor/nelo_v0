@@ -5,9 +5,26 @@ import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, relative } from 'node:path'
 import { chromium, expect, test } from '@playwright/test'
-import { ECRANS, THEMES, scriptTheme, visites } from './outils'
+import { ECRANS, RACINE_API, THEMES, ouvrirLaSession, scriptTheme, visites } from './outils'
 
 const PAGES = join(import.meta.dirname, '../../app/pages')
+
+/**
+ * Un refus du serveur que l'écran **rend** n'est pas une erreur de l'écran : le lien
+ * d'activation déjà consommé (US6) répond `401`, et la porte le visite exprès pour voir ce que
+ * la personne lit. Le navigateur en journalise la ligne, sans qu'aucun script ait fauté.
+ *
+ * La règle reste entière partout ailleurs : toute erreur de console qui vient du code, et toute
+ * ressource de l'application qui manque, échouent la porte comme avant.
+ */
+function refusServi(message: { text: () => string; location: () => { url?: string } }): boolean {
+  const adresse = message.location().url ?? ''
+  const texte = message.text()
+  return (
+    /Failed to load resource|Échec du chargement/.test(texte) &&
+    (adresse.includes(RACINE_API) || texte.includes(RACINE_API))
+  )
+}
 
 function routesDesPages(dossier = PAGES): string[] {
   return readdirSync(dossier, { withFileTypes: true }).flatMap((entree) => {
@@ -33,15 +50,17 @@ test('P-05 : chaque page de web/app/pages est déclarée dans ecrans.json', () =
 
 for (const visite of visites()) {
   for (const theme of THEMES) {
-    test(`P-05 : ${visite.nom}, thème ${theme}`, async ({ page, browserName }) => {
+    test(`P-05 : ${visite.nom}, thème ${theme}`, async ({ page, context, browserName }) => {
       const erreurs: string[] = []
       page.on('pageerror', (e) => erreurs.push(`erreur de page : ${e.message}`))
       page.on('console', (m) => {
-        if (m.type() === 'error') erreurs.push(`console : ${m.text()}`)
+        if (m.type() === 'error' && !refusServi(m)) erreurs.push(`console : ${m.text()}`)
       })
       const echec = (motif: string) =>
         `PORTE P-05 ÉCHOUÉE : écran ${visite.nom}, moteur ${browserName}, thème ${theme} : ${motif}`
 
+      // Un écran de session se visite avec l'état enregistré par le projet « setup ».
+      if (visite.session) await ouvrirLaSession(context)
       await page.addInitScript(scriptTheme(theme))
       const reponse = await page.goto(visite.adresse, { timeout: 60_000 }).catch((e: Error) => {
         throw new Error(echec(`navigation impossible (${e.message.split('\n')[0]})`))

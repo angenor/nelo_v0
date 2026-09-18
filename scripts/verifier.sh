@@ -8,6 +8,14 @@
 # statiques d'abord, la base ensuite, puis l'interface, construite une seule fois et partagée par
 # les trois dernières étapes. Sort au premier contrôle rouge, en nommant la porte et le motif.
 # Cible : moins de trois minutes (SC-010, SC-011) ; la durée mesurée est au journal.
+#
+# La construction porte NELO_DEMONSTRATION=1 (research.md R-10) : sans elle, les personas sont
+# élagués et P-05, P-10 et les e2e de composition n'auraient plus de contexte à montrer.
+#
+# NELO_SESSION_SEMEE=1 ajoute la session semée (research.md R-11) : scripts/avec-serveur-dev.sh
+# lance alors l'API de test sur sa base semée, et le projet Playwright « setup » ouvre une vraie
+# session avant les autres projets. Tant qu'US1 n'a livré aucune route d'authentification, la
+# variable reste vide et rien ne dépend de l'API ; US1 la posera par défaut.
 set -euo pipefail
 
 RACINE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -59,7 +67,7 @@ porte P-03
 etape "reparcours sous suspension" scripts/portes/reparcours-suspension.sh
 etape_muette "typecheck" pnpm --filter nelo-web typecheck
 etape_muette "vitest" pnpm --filter nelo-web test:unit
-etape_muette "construction" pnpm --filter nelo-web build
+etape_muette "construction" env NELO_DEMONSTRATION=1 pnpm --filter nelo-web build
 porte P-05
 porte P-10
 etape_muette "e2e" scripts/avec-serveur-dev.sh pnpm --filter nelo-web test:e2e

@@ -4,7 +4,7 @@ export const ETATS_COMPOSANT = COMPOSANTS.Champ
 </script>
 
 <script setup lang="ts">
-import type { EtatChamp, TypeChamp } from '~/core/composants/etats'
+import type { EtatChamp, SaisieChamp, TypeChamp } from '~/core/composants/etats'
 import type { Parametres } from '~/core/i18n/libelles'
 
 const props = withDefaults(
@@ -12,6 +12,8 @@ const props = withDefaults(
     /** Clé de l'étiquette, toujours visible au-dessus du champ. */
     libelle: string
     type?: TypeChamp
+    /** Ce que le champ attend : du texte, ou un code de chiffres reçu par SMS. */
+    saisie?: SaisieChamp
     modelValue?: string | boolean
     /** Clé de l'aide, sous le champ. */
     aide?: string
@@ -30,6 +32,7 @@ const props = withDefaults(
   }>(),
   {
     type: 'texte',
+    saisie: 'texte',
     modelValue: '',
     aide: undefined,
     unite: undefined,
@@ -56,6 +59,10 @@ const decrit = computed(
   () => [props.erreur ? idErreur : '', props.aide ? idAide : ''].filter(Boolean).join(' ') || undefined,
 )
 const complements = computed(() => [props.aide ? 'aide' : '', props.unite ? 'unite' : ''].filter(Boolean))
+// Un code se saisit au pavé numérique et se laisse remplir par le message qui l'apporte ; le
+// champ n'y gagne aucun état, seulement trois attributs et la police des chiffres.
+const code = computed(() => props.saisie === 'code')
+const mode = computed(() => (code.value ? 'numeric' : props.type === 'nombre' ? 'decimal' : undefined))
 
 function saisir(evenement: Event) {
   const cible = evenement.target as HTMLInputElement | HTMLSelectElement
@@ -98,9 +105,11 @@ function saisir(evenement: Event) {
           v-else
           :id="id"
           class="saisie"
-          :class="{ mono: mono || type === 'nombre' }"
+          :class="{ mono: mono || type === 'nombre' || code }"
           type="text"
-          :inputmode="type === 'nombre' ? 'decimal' : undefined"
+          :inputmode="mode"
+          :autocomplete="code ? 'one-time-code' : undefined"
+          :pattern="code ? '[0-9]*' : undefined"
           :value="modelValue"
           :disabled="inactif"
           :aria-describedby="decrit"

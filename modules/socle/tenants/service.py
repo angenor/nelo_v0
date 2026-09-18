@@ -7,22 +7,26 @@ toute écriture ; l'événement s'écrit dans la transaction du changement d'ét
 
 import re
 import uuid
-from collections.abc import Awaitable, Callable, Mapping
+from collections.abc import Mapping
 from datetime import timedelta
 from decimal import Decimal, InvalidOperation
 from typing import Any
 from uuid import UUID
 
-from modules.shared import ErreurMetier, Evenement, transaction
+from modules.shared import ErreurMetier, Evenement, outbox, transaction
 from modules.shared.bd import sans_tenant
 from modules.socle.tenants import acces
 from modules.socle.tenants.schemas import (
+    Devise,
+    Etablissement,
+    Pack,
     ParametreEffectif,
     ParametrePose,
     Portee,
     TypeParametre,
     ValeurParametre,
 )
+from modules.socle.tenants.tables import evenement_outbox
 
 # De la plus large à la plus fine : la résolution remonte cet ordre à l'envers.
 ORDRE_DES_PORTEES = (Portee.TENANT, Portee.ETABLISSEMENT, Portee.SITE, Portee.CYCLE)
@@ -62,16 +66,56 @@ async def creer_etablissement(tenant_id: UUID, nom: str, fuseau_horaire: str) ->
     return etablissement_id
 
 
-async def tenant_de_etablissement(etablissement_id: UUID) -> UUID | None:
-    """PROVISOIRE jusqu'à T1a — passe par la fonction SECURITY DEFINER du schéma."""
-    async with sans_tenant() as connexion:
-        return await acces.appeler_tenant_de_etablissement(connexion, etablissement_id)
-
-
 async def tenants_pour_travailleur() -> list[UUID]:
     """Les tenants que le travailleur d'événements parcourt — fonction SECURITY DEFINER."""
     async with sans_tenant() as connexion:
         return await acces.appeler_tenants_pour_travailleur(connexion)
+
+
+async def lire_etablissements(tenant_id: UUID, ids: list[UUID]) -> list[Etablissement]:
+    """Les établissements demandés qui appartiennent au tenant ; les autres sont simplement absents."""
+    if not ids:
+        return []
+    async with transaction(tenant_id) as connexion:
+        lignes = await acces.lire_etablissements_par_ids(connexion, ids)
+    return [
+        Etablissement(
+            id=ligne["id"],
+            nom=ligne["nom"],
+            telephone=ligne["telephone"],
+            fuseau_horaire=ligne["fuseau_horaire"],
+            administrateur_compte_id=ligne["administrateur_compte_id"],
+        )
+        for ligne in lignes
+    ]
+
+
+async def designer_administrateur(
+    tenant_id: UUID, etablissement_id: UUID, compte_id: UUID | None
+) -> None:
+    """Qui attribue ses domaines à une personne qui n'en a aucun. `None` retire la désignation."""
+    async with transaction(tenant_id) as connexion:
+        touchees = await acces.poser_administrateur(connexion, etablissement_id, compte_id)
+    if touchees == 0:
+        raise ErreurMetier("TEN_RESSOURCE_INTROUVABLE", "établissement introuvable", statut=404)
+
+
+async def lire_pack(tenant_id: UUID, pays_code: str, version: int) -> Pack | None:
+    """Le pack publié, ou `None`. Le tenant ne le possède pas, mais seule sa transaction le lit."""
+    async with transaction(tenant_id) as connexion:
+        ligne = await acces.lire_pack(connexion, pays_code, version)
+    if ligne is None:
+        return None
+    contenu = ligne["contenu"]
+    return Pack(
+        pays_code=ligne["pays_code"],
+        version=ligne["version"],
+        devise=Devise(**contenu["devise"]),
+        langues=contenu["langues"],
+        decoupage=contenu["decoupage"],
+        indicatif=contenu["telephone"]["indicatif"],
+        vocabulaire=contenu["vocabulaire"],
+    )
 
 
 # --- La résolution : un seul trait, quatre portées -------------------------------------------
@@ -271,7 +315,7 @@ def _portee_invalide(portee: Portee, la_plus_basse: Portee | None) -> ErreurMeti
 
 # --- L'outbox : consommée par tenant, dans l'ordre d'écriture, au moins une fois ---------------
 
-type Consommateur = Callable[[UUID, UUID, Evenement], Awaitable[None]]
+type Consommateur = outbox.Consommateur
 
 
 async def reprendre_evenements(tenant_id: UUID, delai_orphelin: timedelta) -> None:
@@ -282,28 +326,5 @@ async def reprendre_evenements(tenant_id: UUID, delai_orphelin: timedelta) -> No
 
 
 async def consommer_lot(tenant_id: UUID, consommateur: Consommateur, n: int) -> int:
-    """Jusqu'à `n` événements du tenant, un par un, dans l'ordre d'écriture.
-
-    Chaque événement est pris dans sa transaction, passé au consommateur hors transaction, puis
-    marqué dans une autre. Au premier échec, le lot s'arrête : l'événement suivant ne passe pas
-    devant celui qui a échoué, qui sera repris au tour suivant. Rend le nombre d'événements traités.
-    """
-    traites = 0
-    for _ in range(n):
-        async with transaction(tenant_id) as connexion:
-            pris = await acces.prendre_evenements(connexion, tenant_id, 1)
-        if not pris:
-            break
-        ligne = pris[0]
-        try:
-            await consommateur(tenant_id, ligne["id"], Evenement(ligne["type"], ligne["charge"]))
-        except Exception as erreur:
-            async with transaction(tenant_id) as connexion:
-                await acces.marquer_echec(
-                    connexion, ligne["id"], f"{type(erreur).__name__} : {erreur}"[:500]
-                )
-            break
-        async with transaction(tenant_id) as connexion:
-            await acces.marquer_traite(connexion, ligne["id"])
-        traites += 1
-    return traites
+    """Jusqu'à `n` événements du tenant, sur la table d'outbox de ce module."""
+    return await outbox.consommer_lot(tenant_id, evenement_outbox, consommateur, n)

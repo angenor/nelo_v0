@@ -47,6 +47,11 @@ légaux n'en ont pas.
   répond `403 TEN_ETABLISSEMENT_NON_AUTORISE`, jamais `404` — ne pas publier l'existence d'un établissement tiers.
 - **Omettre `X-Nelo-Annee` sur une route pédagogique est une erreur `400 ANN_ANNEE_REQUISE`**, jamais
   un repli silencieux sur l'année active. Un repli implicite écrit une note dans la mauvaise année.
+- *Ajouté par T1a.* Pour un compte **authentifié**, le `400 TEN_ETABLISSEMENT_REQUIS` porte
+  `details.etablissements` : les identifiants des établissements auxquels **ce compte** est affecté.
+  C'est une donnée du compte lui-même, jamais d'un tiers : il ne s'agit pas de dire ce qui existe,
+  mais de rappeler à quelqu'un où il travaille, pour que l'interface pose l'en-tête à sa première
+  requête sans avoir à deviner. Sans jeton, le refus reste `401` et ne porte rien.
 
 **Ce que vaut un en-tête absent ou refusé.** La table est opposable : c'est elle qui fixe le statut,
 pas l'endroit du code où le refus a été écrit.
@@ -185,7 +190,7 @@ GET /api/v1/eleves?curseur=…&taille=50&tri=nom&classe_id=…&statut=ACTIF
 | `404` | Ressource inexistante **dans le périmètre du tenant** |
 | `409` | Conflit d'état : année clôturée, note verrouillée, rejeu divergent |
 | `422` | **Deux natures, un seul statut** : corps, paramètre de route ou de requête, ou en-tête déclaré en dépendance, invalide au regard du schéma — code préfixé `VAL_`, la sortie standard de Pydantic, `details` portant le chemin de chaque champ fautif — **ou** règle métier violée sur un corps par ailleurs valide, avec son code de domaine |
-| `429` | Limitation de débit — `Retry-After` obligatoire |
+| `429` | Limitation de débit — `API_LIMITE_DEBIT`, `Retry-After` obligatoire |
 | `500` | **Défaillance non prévue** — `API_ERREUR_INTERNE`, **aucun détail technique dans `message`** : ni trace d'exécution, ni requête SQL, ni nom de table ; `requete_id` suffit à retrouver la trace côté serveur |
 | `503` | Dépendance externe indisponible — `API_DEPENDANCE_INDISPONIBLE`, `details.dependance` nomme l'abstraction (agrégateur de paiement, passerelle SMS, service d'inférence) |
 
@@ -306,9 +311,18 @@ Légende de la colonne **Cap.** : la capacité requise. `—` = authentifié suf
 | `POST` | `/auth/rafraichissement` | Rotation du refresh | — |
 | `DELETE` | `/auth/session` | Fermer la session courante | — |
 | `POST` | `/auth/invitation/{jeton}` | Activer un compte depuis un lien à usage unique | — |
+| `GET` | `/auth/appareil` | Les comptes connus de cet appareil (nom, prénoms, code personnel défini), pour l'écran du code personnel ; jamais un numéro | — |
 
-`AUT_OTP_EXPIRE`, `AUT_OTP_TENTATIVES_EPUISEES`, `AUT_NUMERO_INCONNU`, `AUT_COMPTE_SUSPENDU`,
-`AUT_SESSION_REVOQUEE`, `AUT_JETON_MANQUANT` (`401`), `AUT_JETON_INVALIDE` (`401`).
+`AUT_OTP_EXPIRE`, `AUT_OTP_INVALIDE`, `AUT_OTP_TENTATIVES_EPUISEES`, `AUT_NUMERO_INCONNU`,
+`AUT_NUMERO_INVALIDE` (`422`), `AUT_COMPTE_SUSPENDU`, `AUT_COMPTE_DEJA_ACTIF` (`422`),
+`AUT_PIN_INVALIDE`, `AUT_PIN_ABSENT`, `AUT_PIN_TENTATIVES_EPUISEES`, `AUT_APPAREIL_INCONNU`,
+`AUT_INVITATION_INVALIDE`, `AUT_IDENTIFIANT_DEJA_UTILISE` (`422`), `AUT_SESSION_REVOQUEE`,
+`AUT_JETON_MANQUANT` (`401`), `AUT_JETON_INVALIDE` (`401`).
+
+> **Sur `/auth/*`, un refus de preuve est un `401`** : code reçu faux, expiré ou épuisé, code
+> personnel faux, absent ou verrouillé, appareil inconnu, lien consommé ou expiré, compte suspendu.
+> **Un refus de règle sur un corps valide est un `422`** avec son code `AUT_` : numéro mal formé,
+> compte déjà actif, identifiant déjà porté par un autre compte. *Ajouté par T1a.*
 
 > **Les deux derniers ne sont jamais un refus de schéma.** Un `Authorization` absent, illisible,
 > expiré ou révoqué est un `401` sur **toute** route protégée, jamais un `400` ni un `422` : le
@@ -327,6 +341,8 @@ Légende de la colonne **Cap.** : la capacité requise. `—` = authentifié suf
 | `PATCH` | `/moi/profil` | Langue, coordonnées | — |
 | `GET` | `/moi/enfants` | Les élèves dont je suis responsable, et mes rubriques | — |
 | `GET` | `/moi/notifications` | Filtrables par domaine et urgence | — |
+| `POST` | `/moi/telephone` | Demander le changement de son numéro : un code part vers le **nouveau** | — |
+| `POST` | `/moi/telephone/verification` | Vérifier ce code ; l'identifiant change, l'ancien numéro est informé | — |
 
 ### 2.3 Tenant, établissements, country pack
 
@@ -397,6 +413,10 @@ Légende de la colonne **Cap.** : la capacité requise. `—` = authentifié suf
 | `GET` | `/revue-acces` | Comptes actifs et périmètres, exportable | `habilitations.revue.consulter` |
 | `GET` | `/journal-acces` | Lectures de données cloisonnées | ▣ `habilitations.journal.consulter` |
 | `POST` | `/comptes/{id}/suspension` | Immédiate, révoque les sessions | `habilitations.compte.suspendre` |
+| `POST` | `/comptes` | Créer le compte d'une personne et envoyer son lien d'activation ; un second compte sur un numéro exige la **déclaration de partage familial** | `habilitations.compte.gerer` |
+| `POST` | `/comptes/verification` | **Le pendant : ce qui bloquerait la création**, sans rien écrire ni envoyer | `habilitations.compte.gerer` |
+| `POST` | `/comptes/{id}/invitation` | Renvoyer un lien d'activation ; le précédent est invalidé | `habilitations.compte.gerer` |
+| `POST` | `/comptes/{id}/telephone` | Changer le numéro d'une personne qui n'a plus l'ancien ; révoque les sessions, oublie les appareils | `habilitations.compte.gerer` |
 
 `HAB_CAPACITE_CLOISONNEE_NON_ROLABLE`, `HAB_DELEGATION_SANS_FIN`, `HAB_PERIMETRE_HORS_AFFECTATION`,
 `HAB_ACCES_NOMINATIF_REQUIS`, `HAB_CAPACITE_NON_RECONDUITE`.

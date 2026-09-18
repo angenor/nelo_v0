@@ -1,0 +1,15 @@
+# Membre déclaratif de l'espace de travail : non installé, il déclare ses dépendances internes.
+[project]
+name = "nelo-socle-annees"
+version = "0.1.0"
+description = "Le noyau des années scolaires"
+requires-python = "==3.14.*"
+dependencies = [
+    "nelo-shared",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+nelo-shared = { workspace = true }

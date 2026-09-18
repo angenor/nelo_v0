@@ -4,8 +4,8 @@ import { PORT_DEV } from '../portes/outils'
 
 const ECRANS = [
   { adresse: '/?persona=sept-domaines', minimum: 48 },
-  { adresse: '/d/vie_scolaire', minimum: 52 },
-  { adresse: '/a-propos', minimum: 48 },
+  { adresse: '/d/vie_scolaire?persona=un-domaine', minimum: 52 },
+  { adresse: '/a-propos?persona=un-domaine', minimum: 48 },
   { adresse: `http://localhost:${PORT_DEV}/style`, minimum: 44 },
 ]
 const INTERACTIFS = 'a, button, input, select, [role="switch"], [role="tab"]'

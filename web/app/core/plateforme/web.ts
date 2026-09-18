@@ -1,7 +1,7 @@
 // L'unique implémentation de la plateforme : le navigateur (research.md R-09). C'est le seul
 // fichier de l'application, avec le service worker, qui touche navigator, window et document ;
 // P-06 (règle 4) refuse ces appels partout ailleurs.
-import type { Apparence, Application, Clavier, EtatReseau, Plateforme, Reseau, Stockage } from './plateforme'
+import type { Apparence, Application, Clavier, Cookies, EtatReseau, Plateforme, Reseau, Stockage } from './plateforme'
 
 const TYPES_FAIBLES = new Set(['slow-2g', '2g', '3g'])
 
@@ -159,6 +159,38 @@ function creerStockage(): Stockage {
   }
 }
 
+/**
+ * Les cookies sans secret de l'appareil (research.md R-21). `SameSite=Strict` et le chemin de
+ * l'application ; jamais `HttpOnly`, puisque c'est la page qui l'écrit, et jamais un jeton :
+ * les trois cookies de session appartiennent au relais, qui est seul à les connaître.
+ */
+function creerCookies(): Cookies {
+  const AN = 60 * 60 * 24 * 365
+  function poser(nom: string, valeur: string, duree: number): void {
+    try {
+      const sur = document.location.protocol === 'https:' ? '; Secure' : ''
+      document.cookie = `${nom}=${encodeURIComponent(valeur)}; Path=/; Max-Age=${duree}; SameSite=Strict${sur}`
+    } catch {
+      // Cookies refusés : le rendu serveur retombera sur le premier rattachement, rien ne casse.
+    }
+  }
+  return {
+    get disponible() {
+      try {
+        return typeof document !== 'undefined'
+      } catch {
+        return false
+      }
+    },
+    ecrire(nom, valeur) {
+      poser(nom, valeur, AN)
+    },
+    effacer(nom) {
+      poser(nom, '', 0)
+    },
+  }
+}
+
 async function capturer(): Promise<Blob | null> {
   let flux: MediaStream | null = null
   try {
@@ -201,6 +233,7 @@ export function creerPlateformeWeb(): Plateforme {
     apparence: creerApparence(),
     clavier: creerClavier(),
     stockage: creerStockage(),
+    cookies: creerCookies(),
     camera: {
       disponible: cameraDisponible,
       capturer: () => (cameraDisponible ? capturer() : Promise.resolve(null)),

@@ -51,9 +51,11 @@ async def transaction(tenant_id: UUID) -> AsyncIterator[AsyncConnection]:
 async def sans_tenant() -> AsyncIterator[AsyncConnection]:
     """Une transaction **sans** tenant, pour les seules fonctions `SECURITY DEFINER` du schéma.
 
-    Sous la RLS forcée, elle ne voit aucune ligne et n'écrit rien : elle ne sert qu'à appeler
-    `tenants.tenant_de_etablissement` et `tenants.tenants_pour_travailleur`, qui ne renvoient que
-    des identifiants. Un test énumère ces fonctions et échoue si une troisième apparaît.
+    Sous la RLS forcée, elle ne voit aucune ligne et n'écrit rien : elle ne sert qu'aux fonctions
+    qui répondent **avant que le tenant ne soit connu**, et qui ne renvoient que des identifiants
+    et un statut : `tenants.tenants_pour_travailleur`, `habilitations.comptes_par_identifiant`,
+    `compte_par_invitation`, `compte_par_id_sans_tenant`. Un test les énumère et échoue si une
+    cinquième apparaît.
     """
     async with moteur().begin() as connexion:
         yield connexion
