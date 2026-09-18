@@ -38,8 +38,8 @@ Trois règles :
 | | |
 |---|---|
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
-| **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **implémentée le 2026-09-18**, spécifiée et planifiée le 2026-09-17 sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md), [plan.md](../specs/003-connexion-contexte/plan.md)). **Revue visuelle publiée et validée le 2026-09-17** ([spec.md § Revue visuelle](../specs/003-connexion-contexte/spec.md#revue-visuelle)). T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
-| **Prochaine** | La relecture de T1a, puis sa fusion dans `main` ; ensuite T1b (les capacités). **Q30** (les valeurs par défaut de l'authentification) reste à confirmer : elle ne touche que `politique.py` et la migration `0002`. **Q29** attend toujours son ADR, sans bloquer |
+| **Tranche en cours** | Aucune. **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé, **est fusionnée dans `main` le 2026-09-18** (88 tâches sur 88, [tasks.md](../specs/003-connexion-contexte/tasks.md)), `scripts/verifier.sh` vert avant fusion : dix portes en 3 min 31 s. Revue visuelle publiée et validée le 2026-09-17 ([spec.md § Revue visuelle](../specs/003-connexion-contexte/spec.md#revue-visuelle)). T0a et T0b sont fusionnées depuis le 2026-09-15 et le 2026-09-17 |
+| **Prochaine** | **T1b, les capacités.** **Q30** (les valeurs par défaut de l'authentification) reste à confirmer : elle ne touche que `politique.py` et la migration `0002`. **Q29** attend toujours son ADR, sans bloquer |
 | **Code existant** | Le socle serveur de T0a, le socle d'interface de T0b et la connexion de T1a (**430 tests Python, 268 Vitest, 78 de bout en bout (dont l'ouverture de la session semée)**, dix portes) : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et treize mutations négatives), `tests/` (module doré, isolation, idempotence, outbox, frontières, simulations, assistance, authentification, en-têtes, contexte), `web/tests/` (unitaires, bout en bout et portes P-05 et P-10 sur Chromium et WebKit, avec une session semée), `contrat/` avec ses **dix-neuf routes** ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
@@ -62,7 +62,7 @@ Rien ici ne bloque le démarrage. Chaque ligne dit ce qu'elle bloquera, et quand
 | **Q5** | **La granularité des capacités** : cinq à douze par service est l'ordre de grandeur visé. Trop fines, l'administration devient illisible pour un censeur ; trop grossières, la séparation scolarité / pédagogie devient impossible | **T1b.** *Après, c'est une reprise de toutes les affectations* |
 | **Q6** | **Un agrégateur de paiement ou deux dès le départ ?** L'abstraction est posée quoi qu'il arrive ([ADR 009](adr/009-agregateur-de-paiement-derriere-une-interface.md)) | Les **valeurs par défaut** de T8b, pas son modèle |
 | **Q29** | **Le plafond de 120 Ko de l'accueil et de l'appel contient-il les polices ?** Mesuré en bac à sable ([T0b, research R-16](../specs/002-socle-interface/research.md)), puis **par P-10 sur l'application réelle le 2026-09-17** : accueil **103 à 109 Ko** d'application, polices **43,6 Ko**, total **147 à 153 Ko**. Trois issues : **A** polices système sur les écrans budgétés ; **B** 120 Ko pour l'application et 45 Ko à part pour les polices, immuables et précachées (recommandée, **appliquée**) ; **C** relever à 170 Ko. Tenir B a demandé de ramener le premier affichage à trois fichiers de police (écart E-23 : plus de graisse 600). Le principe XV nomme le chiffre : la réponse entre dans un ADR | T0b, fusionnée, applique B. Changer d'issue touche une ligne de `web/ecrans.json` et une règle de P-10 |
-| **Q30** | **Les valeurs par défaut de l'authentification**, posées à titre provisoire par la spec de T1a ([Assumptions](../specs/003-connexion-contexte/spec.md#assumptions)) : code reçu à **six chiffres**, valable **dix minutes**, **cinq** tentatives, renvoi après **soixante secondes**, **cinq** demandes par heure et par numéro ; code personnel à **quatre chiffres**, **cinq** tentatives ; appareil connu **90 jours** ; invitation **7 jours**. La maquette A1 donne les trois premières ; les autres sont des pratiques courantes. Les seuils qui dépendent du tenant sont des clés du catalogue (`securite.*`, [02-domaine.md § 17](02-domaine.md)) ; ceux évalués avant qu'un compte soit connu sont des constantes du produit, en un seul endroit | **Rien avant `implement` de T1a.** Changer une valeur touche une clé ou une constante nommée, jamais un écran |
+| **Q30** | **Les valeurs par défaut de l'authentification**, posées à titre provisoire par la spec de T1a ([Assumptions](../specs/003-connexion-contexte/spec.md#assumptions)) : code reçu à **six chiffres**, valable **dix minutes**, **cinq** tentatives, renvoi après **soixante secondes**, **cinq** demandes par heure et par numéro ; code personnel à **quatre chiffres**, **cinq** tentatives ; appareil connu **90 jours** ; invitation **7 jours**. La maquette A1 donne les trois premières ; les autres sont des pratiques courantes. Les seuils qui dépendent du tenant sont des clés du catalogue (`securite.*`, [02-domaine.md § 17](02-domaine.md)) ; ceux évalués avant qu'un compte soit connu sont des constantes du produit, en un seul endroit | **Rien.** T1a, fusionnée, applique ces valeurs. Les changer touche une clé ou une constante nommée, jamais un écran |
 
 ### Ce qui exige un conseil juridique local — avant tout engagement contractuel
 
@@ -101,6 +101,13 @@ l'architecture** (marquées ⚠).
 ---
 
 ## Journal
+
+## 2026-09-18 : T1a est fusionnée dans `main`
+
+**Fait** : `003-connexion-contexte` fusionnée dans `main` (`--no-ff`), à la demande de l'utilisateur.
+`scripts/verifier.sh` vert du premier coup avant la fusion : **dix portes en 3 min 31 s**, 430 tests
+Python, 268 Vitest, 78 de bout en bout sur Chromium et WebKit, P-10 sous plafond sur les douze écrans
+budgétés. **Bloqué / à faire ensuite** : confirmer Q30, trancher Q29 dans un ADR, puis T1b.
 
 ## 2026-09-18 : T1a, la première frontière de sécurité est implémentée
 
