@@ -76,6 +76,11 @@ async def test_cent_demandes_alternees_ne_se_distinguent_ni_par_la_reponse_ni_pa
     median_connu = statistics.median(durees["connu"])
     median_inconnu = statistics.median(durees["inconnu"])
     ecart = abs(median_connu - median_inconnu)
+    # La mesure se lit au journal de la tranche (SC-003) : elle est imprimée pour cela.
+    print(
+        f"SC-003 : connu {median_connu:.1f} ms, inconnu {median_inconnu:.1f} ms, "
+        f"écart {ecart:.1f} ms (toléré {ECART_TOLERE_MS} ms)"
+    )
     assert ecart < ECART_TOLERE_MS, (
         f"écart des médianes de {ecart:.1f} ms : connu {median_connu:.1f} ms, "
         f"inconnu {median_inconnu:.1f} ms"

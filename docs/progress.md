@@ -40,7 +40,7 @@ Trois règles :
 | **Segment** | **Le primaire, et lui seul** — CP1 à CM2, maître polyvalent, appel par demi-journée, aucune série ([ADR 018](adr/018-le-mvp-commence-par-le-primaire.md)) |
 | **Tranche en cours** | **T1a, se connecter et savoir où l'on est**, rang 3, risque élevé : **implémentée le 2026-09-18**, spécifiée et planifiée le 2026-09-17 sur la branche `003-connexion-contexte` ([spec.md](../specs/003-connexion-contexte/spec.md), [plan.md](../specs/003-connexion-contexte/plan.md)). **Revue visuelle publiée et validée le 2026-09-17** ([spec.md § Revue visuelle](../specs/003-connexion-contexte/spec.md#revue-visuelle)). T0a et T0b sont fusionnées dans `main` (2026-09-15 et 2026-09-17) |
 | **Prochaine** | La relecture de T1a, puis sa fusion dans `main` ; ensuite T1b (les capacités). **Q30** (les valeurs par défaut de l'authentification) reste à confirmer : elle ne touche que `politique.py` et la migration `0002`. **Q29** attend toujours son ADR, sans bloquer |
-| **Code existant** | Le socle serveur de T0a et le socle d'interface de T0b : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et leurs tests négatifs), `tests/` (111 tests Python), `web/tests/` (181 tests Vitest, les scénarios e2e et les portes P-05 et P-10 sur Chromium et WebKit), `contrat/` avec `ContexteCapacites` ([01-stack.md § 2.1](01-stack.md)) |
+| **Code existant** | Le socle serveur de T0a, le socle d'interface de T0b et la connexion de T1a (**430 tests Python, 268 Vitest, 79 de bout en bout**, dix portes) : `web/` (Nuxt 4.5.2, quatorze composants, coquille composée, PWA), `modules/shared/contexte.py`, `scripts/` (**dix portes** et treize mutations négatives), `tests/` (module doré, isolation, idempotence, outbox, frontières, simulations, assistance, authentification, en-têtes, contexte), `web/tests/` (unitaires, bout en bout et portes P-05 et P-10 sur Chromium et WebKit, avec une session semée), `contrat/` avec ses **dix-neuf routes** ([01-stack.md § 2.1](01-stack.md)) |
 | **Pile serveur** | **FastAPI + Pydantic**, SQLAlchemy Core + `asyncpg`, Alembic par module, `uv` / `ruff` / `pytest` — [ADR 017](adr/017-fastapi-et-pydantic-remplacent-rust-et-actix.md) |
 | **Outillage** | **Spec Kit 0.16.5 initialisé** — `.specify/` et les dix skills `.claude/skills/speckit-*`. **La constitution est écrite** : `.specify/memory/constitution.md`, v1.0.0, quinze principes |
 | **Design** | Le système est arrêté sur la couleur, la typographie et les composants. Douze écrans maquettés dans `design/ecrans/`, plus la planche du système. **Leurs jeux de données sont du secondaire** : ils se reprennent écran par écran aux revues visuelles, pas en une passe ([05-design.md § 6](05-design.md)) |
@@ -128,9 +128,42 @@ US1 plutôt qu'en US3, parce que le test de la vérification du code les exigeai
 `MIT-0` entre dans la liste autorisée de P-07 : elle arrive avec `cffi`, transitive d'`argon2-cffi`,
 et elle est plus permissive que `MIT`, déjà autorisée.
 
+**Mesuré** : SC-003, l'écart des médianes entre un numéro connu et un inconnu, **2,8 ms** sur un
+plafond de 50 (cent demandes alternées) ; SC-009, les six écrans de la tranche entre **110,4 et
+118,6 Ko** sur 120, polices comptées à part ; SC-012, `scripts/verifier.sh` en **3 min 22 s** sur
+cinq minutes, dix portes vertes ; `scripts/tests-negatifs.sh` en **10 min 53 s**, treize mutations
+et treize échecs obtenus. SC-006 est prouvé dans un navigateur réel : aucun jeton ne se lit d'un
+script. Le détail est dans [quickstart.md](../specs/003-connexion-contexte/quickstart.md).
+
+**La définition de terminé** ([01-stack.md § 8.3](01-stack.md)), point par point : les critères
+sont couverts (430 tests Python, 268 Vitest, 79 de bout en bout) ; le client TypeScript est
+régénéré sans retouche (P-03) ; les migrations sont réversibles, appliquées sur base vierge, et
+chaque requête est exercée (P-01, P-12) ; la RLS est activée et forcée sur les treize tables, avec
+le test d'isolation étendu aux quatre schémas ; chaque changement d'état écrit son événement ;
+les clés `fr` et `en` sont nées ensemble (P-06) ; les écrans sont vérifiés en clair et en sombre
+sur Chromium et WebKit (P-05) et budgétés (P-10) ; les trois clés de sécurité sont au catalogue ;
+toute écriture porte sa clé d'idempotence, et le rejeu est testé. **Points hors périmètre** :
+aucun document imprimé, et P-08 n'existe pas encore (elle attend la tranche qui lui donnera
+quelque chose à vérifier).
+
+**Le contrôle de constitution du [plan](../specs/003-connexion-contexte/plan.md) relu contre le
+code livré** : les deux écarts nommés sont toujours les seuls, et le premier est désormais couvert
+par un test. (1) La révocation des sessions et l'oubli des appareils restent des effets sur
+l'éphémère, faits après le `COMMIT` de la suspension, parce que Valkey ne participe pas à la
+transaction : `session_valide` relit donc le statut du compte à chaque requête, et une panne entre
+les deux ne sert plus rien à un compte suspendu. (2) La vivacité d'une affectation s'évalue en UTC,
+pas dans le fuseau de l'établissement. Rien d'autre n'a bougé : aucune règle côté client, aucun
+rôle nulle part, aucune littérale de pays hors des lignes semées, une transaction par module, la
+RLS partout, l'outbox dans la transaction, le SMS rédigé pour le SMS, six écrans budgétés.
+
 **Bloqué / à faire ensuite** : Q30 (les valeurs par défaut de l'authentification) reste à
-confirmer ; elle ne touche que `politique.py` et la migration `0002`. La tranche n'est pas
-fusionnée : elle attend la relecture.
+confirmer ; elle ne touche que `politique.py` et la migration `0002`. **SC-001 et SC-002**
+demandent un chronomètre sur un vrai téléphone en 3G : le parcours passe de bout en bout, la
+mesure au chronomètre reste à faire avec l'utilisateur. **Deux fronts à arbitrer**, nés de cette
+tranche : le plafond de 120 Ko ne tient plus qu'à 0,2 Ko sur l'accueil, parce que `fr.json` et
+`en.json` sont importés en entier par chaque écran (découpage à trancher, décision de T0b) ; et
+l'établissement devrait porter un téléphone, faute de quoi l'écran « aucun domaine » nomme l'école
+sans pouvoir donner de numéro. La tranche n'est pas fusionnée : elle attend la relecture.
 
 
 ## 2026-09-17 : T1a, les tâches sont écrites

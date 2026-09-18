@@ -134,6 +134,26 @@ scripts/tests-negatifs.sh     # + les mutations de T1a : révocation non consult
 Attendu : vert en une commande, sous cinq minutes (SC-012) ; chaque mutation fait échouer la
 porte en la nommant, le dépôt reste intact.
 
+## Ce que la tranche a mesuré, le 2026-09-18
+
+Sur un poste de développement (Apple Silicon, PostgreSQL et Valkey en conteneurs locaux). Les
+mesures d'écran viennent de P-10, celles de temps des suites qui les portent.
+
+| Critère | Attendu | Mesuré |
+|---|---|---|
+| **SC-003** écart des médianes entre un numéro connu et un inconnu | sous 50 ms | **2,8 ms** (connu 5,2 ms, inconnu 2,4 ms), sur cent demandes alternées |
+| **SC-006** aucun jeton lisible d'un script | aucun | **aucun** : `nelo_acces`, `nelo_refresh` et `nelo_appareils` sont `HttpOnly`, et rien qui ressemble à un jeton ne se lit dans le stockage (`web/tests/e2e/session.spec.ts`) |
+| **SC-008** délai de remise à la passerelle simulée | quelques secondes | **sous 1 s** : le travailleur passe toutes les 500 ms, et les tests lisent le message sans attente perceptible |
+| **SC-009** poids des écrans de la connexion | 120 Ko d'application, 45 Ko de polices (60 avec la police du champ de code) | `connexion` **118,1 Ko** et 58,4 Ko de polices ; `connexion-code` **116,7 Ko** ; `connexion-pin` **117,3 Ko** ; `activation` **110,4 Ko** ; `compte-telephone` **118,6 Ko** ; `accueil-session` **113 Ko** |
+| **SC-012** durée de `scripts/verifier.sh` | sous cinq minutes | **3 min 22 s**, dix portes vertes |
+| durée de `scripts/tests-negatifs.sh` | non budgétée | **10 min 53 s**, treize mutations, treize échecs obtenus |
+
+**SC-001** (ouvrir par code reçu en trois écrans et moins de 90 s) et **SC-002** (rouvrir par code
+personnel sous 10 s) se chronomètrent à la main sur un téléphone, en 3G simulée : les trois écrans
+existent et le parcours passe de bout en bout dans un navigateur réel, mais la mesure au
+chronomètre reste à faire avec l'utilisateur. P-10 mesure le premier affichage utile à **640 ms**
+en 3G lente, sur un plafond de 2 000 ms.
+
 ## Tout éteindre
 
 ```bash
