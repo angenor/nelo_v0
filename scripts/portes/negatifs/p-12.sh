@@ -24,8 +24,8 @@ case "${1:-schema}" in
     # La liste de révocation n'est plus consultée : un jeton encore valable rouvrirait une porte
     # qu'une suspension vient de fermer.
     muter api/session.py \
-      'if not await session_module.session_valide(' \
-      'if False and not await session_module.session_valide('
+      'if not await habilitations.session_valide(' \
+      'if False and not await habilitations.session_valide('
     ;;
   b)
     # La demande de code répond autrement quand personne ne porte le numéro : la réponse devient

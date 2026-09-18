@@ -45,7 +45,10 @@ for porte in "${PORTES[@]}"; do
     cd "$copie" &&
     "scripts/portes/negatifs/$numero.sh" $mutation &&
     if [[ "$INTERFACE_CONSTRUITE" == *" $porte "* ]]; then
-      pnpm --filter nelo-web build >/dev/null 2>&1 || echo "construction de la copie échouée"
+      # La même construction que `verifier.sh` : sans NELO_DEMONSTRATION, les écrans à persona
+      # redirigent vers /connexion, et P-05 mesurerait des redirections au lieu des écrans.
+      env NELO_DEMONSTRATION=1 pnpm --filter nelo-web build >/dev/null 2>&1 \
+        || echo "construction de la copie échouée"
     fi &&
     NELO_BD_NOM=nelo_negatif NELO_BD_NOM_TEST=nelo_negatif_test \
       NELO_WEB_PORT=4320 NELO_WEB_PORT_DEV=4321 "scripts/portes/$numero.sh" 2>&1
